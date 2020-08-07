@@ -53,12 +53,12 @@ context('Edit snapshot', () => {
       cy.get('[data-testid=accordion-item]').eq(0).click();
       cy.get('[data-testid=food-needs-v-halal-checkbox]').click();
 
-      cy.get('.govuk-details__text.ResourceCard_resource__-Szc9').eq(0)
+      cy.get('[data-testid=resource-rec2FkHGEn9BiiXvW] > h3').eq(0)
         .should('contain', 'Made Up Kitchen')
 
-      cy.get('[data-testid=food-needs-v-vegan-checkbox]').click();
-      cy.get('.govuk-details__text.ResourceCard_resource__-Szc9').eq(0)
-          .should('contain', 'Made in Hackney')
+      cy.get('[data-testid=food-needs-v-vegetarian-checkbox]').click();
+      cy.get('[data-testid=resource-rec2FkHGEn9BiiXvW] > h3').eq(0)
+        .should('contain', 'Made Up Kitchen')
 
     });
 
@@ -79,7 +79,7 @@ context('Edit snapshot', () => {
       cy.get('[data-testid=finish-and-save-button]').click();
 
       cy.get('[data-testid=vulnerabilities-summary]')
-        .should('contain', 'Snapshot')
+        .should('contain', 'Vulnerabilities')
         .and('contain', 'Rent arrears');
 
       cy.get('[data-testid=assets-summary]')
@@ -108,7 +108,7 @@ context('Edit snapshot', () => {
       cy.visit(`/snapshots/2`);
 
       cy.get('[data-testid=vulnerabilities-summary]')
-        .should('contain', 'Snapshot')
+        .should('contain', 'Vulnerabilities')
         .and('contain', 'yup');
 
       cy.task('deleteSnapshot', '2');
@@ -134,7 +134,7 @@ context('Edit snapshot', () => {
       cy.get('[data-testid=finish-and-save-button]').click();
 
       cy.get('[data-testid=vulnerabilities-summary]')
-        .should('contain', 'Snapshot')
+        .should('contain', 'Vulnerabilities')
         .and('contain', 'Service: sample')
         .and('contain', 'Contact name: wubwub')
         .and('contain', 'Phone number: 0700000000000');
@@ -155,7 +155,7 @@ context('Edit snapshot', () => {
 
       cy.get('[data-testid=finish-and-save-button]').click();
       cy.get('[data-testid=vulnerabilities-summary]')
-        .should('contain', 'Snapshot')
+        .should('contain', 'Vulnerabilities')
         .and('contain', 'new vulnerability');
       cy.get('[data-testid=assets-summary]')
         .should('contain', 'Assets')
