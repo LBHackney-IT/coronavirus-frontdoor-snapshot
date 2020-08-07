@@ -2,12 +2,10 @@ import { fireEvent, render } from '@testing-library/react';
 import VulnerabilitiesGrid from './index';
 import groups from './grid.json';
 import { act } from 'react-dom/test-utils';
-import nock from 'nock';
 
 describe('VulnerabilitiesGrid', () => {
   const resources = [];
   const residentCoordinates = Promise.resolve({ data: {} });
-
 
   it('renders the vulnerabilities grid', () => {
     const numberOfGroups = groups.length;
@@ -261,19 +259,6 @@ describe('VulnerabilitiesGrid', () => {
           coordinates: '51.5365,-0.0802'
         }
       ];
-
-      const addressLookup = nock('test./api/v1/addresses')
-        .get(/.*/)
-        .reply(200, {
-          data: {
-            address: [
-              {
-                longitude: 0,
-                latitude: 0
-              }
-            ]
-          }
-        });
 
       const { getByLabelText, queryByTestId } = render(
         <VulnerabilitiesGrid onUpdate={jest.fn()} resources={resources} residentCoordinates={residentCoordinates}/>

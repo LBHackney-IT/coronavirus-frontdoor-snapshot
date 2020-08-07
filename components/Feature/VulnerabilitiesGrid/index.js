@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
   Accordion,
   AccordionItem,
@@ -8,7 +8,7 @@ import {
 } from 'components/Form';
 import ResourceCard from './ResourceCard';
 import groups from './grid.json';
-import helper from './vulnerabilityGridHelper'
+import helper from './vulnerabilityGridHelper';
 
 function createLookup() {
   const lookup = new Map();
@@ -28,7 +28,7 @@ function createLookup() {
   return lookup;
 }
 
-const VulnerabilitiesGrid = ({ resources, onUpdate, residentCoordinates}) => {
+const VulnerabilitiesGrid = ({ resources, onUpdate, residentCoordinates }) => {
   const [grid, setGrid] = useState({
     assets: {},
     vulnerabilities: {},
@@ -40,8 +40,7 @@ const VulnerabilitiesGrid = ({ resources, onUpdate, residentCoordinates}) => {
 
   residentCoordinates.then(result => {
     setResidentData(result);
-  })
-
+  });
 
   const updateSelectedCheckboxes = ({ gridType, key, value }) => {
     updateGrid({
@@ -62,13 +61,19 @@ const VulnerabilitiesGrid = ({ resources, onUpdate, residentCoordinates}) => {
     if (inputType === 'other') {
       updateGrid({
         [gridType]: value
-        ? helper.addItem({ obj: grid[gridType], key, value })
-        : helper.removeItem({ obj: grid[gridType], parentKey, key })
+          ? helper.addItem({ obj: grid[gridType], key, value })
+          : helper.removeItem({ obj: grid[gridType], parentKey, key })
       });
     } else {
       updateGrid({
         [gridType]: value
-          ? helper.addDataItem({ obj: grid[gridType], key, value, label, parentKey })
+          ? helper.addDataItem({
+              obj: grid[gridType],
+              key,
+              value,
+              label,
+              parentKey
+            })
           : helper.removeDataItem({ obj: grid[gridType], parentKey, key })
       });
     }
@@ -98,16 +103,20 @@ const VulnerabilitiesGrid = ({ resources, onUpdate, residentCoordinates}) => {
     const targets = Object.values({
       ...grid.assets,
       ...grid.vulnerabilities
-    }).filter(item => group.has(item.name))
+    })
+      .filter(item => group.has(item.name))
       .map(item => item.name);
 
     let rankedArray = [];
     resources.map(resource => {
       let matches = helper.findArrayMatches(resource.tags, targets);
-      if(matches.length > 0 || resource.tags.includes(groupName)) {
-        resource.distance = helper.calculateResourceDistance(resource.coordinates, resource.postcode, residentData)
-        resource.matches = matches.length
-        rankedArray.push(resource)    
+      if (matches.length > 0 || resource.tags.includes(groupName)) {
+        resource.distance = helper.calculateResourceDistance(
+          resource.coordinates,
+          residentData
+        );
+        resource.matches = matches.length;
+        rankedArray.push(resource);
       }
     });
     let sortedArray = helper.sortArrayByMatches(rankedArray);
@@ -279,9 +288,8 @@ const VulnerabilitiesGrid = ({ resources, onUpdate, residentCoordinates}) => {
                   </div>
                 </div>
 
-
                 <div className="govuk-grid-column-full-width">
-                 { (
+                  {
                     <div key={`${id}-resources`}>
                       {expandedGroups[id] &&
                         filterResources(name).map(resource => {
@@ -291,19 +299,16 @@ const VulnerabilitiesGrid = ({ resources, onUpdate, residentCoordinates}) => {
                               data-testid={`resource-${resource.id}`}
                               {...resource}
                             />
-                          )
+                          );
                         })}
                     </div>
-                  )}
-              </div>
-              
+                  }
+                </div>
               </AccordionItem>
             );
           })}
         </Accordion>
       </div>
-
-
     </>
   );
 };
