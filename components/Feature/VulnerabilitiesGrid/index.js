@@ -8,8 +8,6 @@ import {
 } from 'components/Form';
 import ResourceCard from './ResourceCard';
 import groups from './grid.json';
-import geoDistance from 'lib/api/utils/geoDistance';
-import geoCoordinates from 'lib/api/utils/geoCoordinates';
 import helper from './vulnerabilityGridHelper'
 
 function createLookup() {
@@ -44,32 +42,6 @@ const VulnerabilitiesGrid = ({ resources, onUpdate, residentCoordinates}) => {
     setResidentData(result);
   })
 
-  /**
-   * Calculates the resource distance from the resident's coordinates.
-   * This calculation happen faster if we already have the resource coordinates, 
-   * otherwise we need to lookup the resource coordinates from the resource postcode.
-   * 
-   * Coordinates are latitute and longitude.
-   * 
-   */
-  const calculateResourceDistance = (resourceCoordinates, resourcePostcode, residentData) => {
-        if(residentData){
-          if(resourceCoordinates){
-            // we already have resource coordinates
-            let lat, long;
-            [lat, long] = resourceCoordinates.split(",");
-            return geoDistance(residentData.lat, residentData.long, lat, long)
-          } else {
-            // we need to calculate the resource coordinates
-            geoCoordinates(resourcePostcode).then(resourceData => {
-              if(resourceData){
-                return geoDistance(residentData.lat, residentData.long, resourceData.lat, resourceData.long)
-              }
-            })
-          }
-      }
-    return 0;
-  };
 
   const updateSelectedCheckboxes = ({ gridType, key, value }) => {
     updateGrid({
@@ -90,8 +62,8 @@ const VulnerabilitiesGrid = ({ resources, onUpdate, residentCoordinates}) => {
     if (inputType === 'other') {
       updateGrid({
         [gridType]: value
-        ? helper.addDataItem({ obj: grid[gridType], key, value, inputType, parentKey })
-        : helper.removeDataItem({ obj: grid[gridType], parentKey, key })
+        ? helper.addItem({ obj: grid[gridType], key, value })
+        : helper.removeItem({ obj: grid[gridType], parentKey, key })
       });
     } else {
       updateGrid({
@@ -133,7 +105,7 @@ const VulnerabilitiesGrid = ({ resources, onUpdate, residentCoordinates}) => {
     resources.map(resource => {
       let matches = helper.findArrayMatches(resource.tags, targets);
       if(matches.length > 0 || resource.tags.includes(groupName)) {
-        resource.distance = calculateResourceDistance(resource.coordinates, resource.postcode, residentData)
+        resource.distance = helper.calculateResourceDistance(resource.coordinates, resource.postcode, residentData)
         resource.matches = matches.length
         rankedArray.push(resource)    
       }
