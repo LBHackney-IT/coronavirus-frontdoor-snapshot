@@ -1,7 +1,4 @@
 import css from './index.module.scss';
-import geoDistance from 'lib/api/utils/geoDistance';
-import geoCoordinates from 'lib/api/utils/geoCoordinates';
-import { useState } from 'react';
 import SummaryList from 'components/Form/SummaryList';
 
 const DISTRIBUTION_ARRAY = ['Delivery', 'Collection']
@@ -20,30 +17,10 @@ const ResourceCard = ({
   referralContact,
   selfReferral,
   notes,
-  residentCoordinates,
-  coordinates,
+  distance,
+  matches,
   ...others
 }) => {
-  const [postcodeDistance, setPostcodeDistance] = useState(null);
-  if (postcode && postcode.length > 2 && residentCoordinates) {
-    residentCoordinates.then(resident => {
-      if(resident){
-        if(!coordinates){
-          geoCoordinates(postcode).then(resource => {
-            setPostcodeDistance(
-              geoDistance(resident.lat, resident.long, resource.lat, resource.long)
-            );
-          })
-        } else {
-          let lat, long;
-          [lat, long] = coordinates.split(",");
-          setPostcodeDistance(
-            geoDistance(resident.lat, resident.long, lat, long)
-          );
-        }
-      }
-    });
-  }
   const trimLength = (s, length) => s.length > length ? s.substring(0, length) + "..." : s
 
   const selfReferralElement = (selfReferral == 'No') ? 'Referral required' : 'Self referral'
@@ -58,7 +35,7 @@ const ResourceCard = ({
       </div>
       <h3>{name}</h3>
         <>
-        <SummaryList key="resourceInfo" name={['resourceInfo']} entries={{ 'Distance': (postcodeDistance) ? postcodeDistance + ' miles' : null ,
+        <SummaryList key="resourceInfo" name={['resourceInfo']} entries={{ 'Distance': (distance) ? distance + ' miles' : null ,
       'Availability': currentProvision, 'Days / Times' : openingTimes, 'Distribution' : distributionElement, 'Telephone' : telephone}} customStyle="small" />
 
         </>

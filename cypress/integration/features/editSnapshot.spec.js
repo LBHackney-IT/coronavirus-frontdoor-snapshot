@@ -79,7 +79,7 @@ context('Edit snapshot', () => {
       cy.get('[data-testid=finish-and-save-button]').click();
 
       cy.get('[data-testid=vulnerabilities-summary]')
-        .should('contain', 'Vulnerabilities')
+        .should('contain', 'Snapshot')
         .and('contain', 'Rent arrears');
 
       cy.get('[data-testid=assets-summary]')
@@ -108,7 +108,7 @@ context('Edit snapshot', () => {
       cy.visit(`/snapshots/2`);
 
       cy.get('[data-testid=vulnerabilities-summary]')
-        .should('contain', 'Vulnerabilities')
+        .should('contain', 'Snapshot')
         .and('contain', 'yup');
 
       cy.task('deleteSnapshot', '2');
@@ -134,7 +134,7 @@ context('Edit snapshot', () => {
       cy.get('[data-testid=finish-and-save-button]').click();
 
       cy.get('[data-testid=vulnerabilities-summary]')
-        .should('contain', 'Vulnerabilities')
+        .should('contain', 'Snapshot')
         .and('contain', 'Service: sample')
         .and('contain', 'Contact name: wubwub')
         .and('contain', 'Phone number: 0700000000000');
@@ -155,7 +155,7 @@ context('Edit snapshot', () => {
 
       cy.get('[data-testid=finish-and-save-button]').click();
       cy.get('[data-testid=vulnerabilities-summary]')
-        .should('contain', 'Vulnerabilities')
+        .should('contain', 'Snapshot')
         .and('contain', 'new vulnerability');
       cy.get('[data-testid=assets-summary]')
         .should('contain', 'Assets')
