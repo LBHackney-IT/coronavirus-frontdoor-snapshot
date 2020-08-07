@@ -1,4 +1,4 @@
-service: hn-vulnerabilities
+service: cf-snapshot
 
 provider:
   name: aws
@@ -24,7 +24,7 @@ package:
     - ./**
 
 functions:
-  hn-vulnerabilities:
+  cf-snapshot:
     name: ${self:service}-${self:provider.stage}
     handler: router/lambda.handler
     package:
@@ -52,7 +52,7 @@ functions:
       AIRTABLE_BASE_ID: ${ssm:/vulnerabilities/airtable-base-id}
       AIRTABLE_TABLE_NAMES: ${ssm:/vulnerabilities/airtable-table-names}
 
-  hn-vulnerabilities-authorizer:
+  cf-snapshot-authorizer:
     name: ${self:service}-authorizer-${self:provider.stage}
     handler: authorizer.handler
     package:
@@ -156,5 +156,5 @@ custom:
         - eu-west-2
         - amazonaws.com
   aliases:
-    staging: staging.vulnerabilities.hackney.gov.uk
-    production: vulnerabilities.hackney.gov.uk
+    staging: staging.frontdoor-snapshot.hackney.gov.uk
+    production: frontdoor-snapshot.hackney.gov.uk
