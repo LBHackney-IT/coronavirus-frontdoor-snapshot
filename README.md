@@ -1,5 +1,5 @@
-# Understanding vulnerability
-Allows staff to capture vulnerability and assets and have them surfaced in Single View.
+# Coronavirus frontdoor Snapshot
+This is a fork of the Housing vulnerabilities tools. 
 
 ## Getting started
 This project uses **yarn** for dependency management and is built with Next.js.
@@ -33,8 +33,9 @@ curl -X POST \
 "firstName" : "Sue",
 "lastName" : "Taylor",
 "dob": {},
-"systemIds": ["xyz"],
-"createdBy": ""
+"systemIds": ["inh-123"],
+"createdBy": "",
+"postcode": "E1 6AW"
 
 }'
 ```
