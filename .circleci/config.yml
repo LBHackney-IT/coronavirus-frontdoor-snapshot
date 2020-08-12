@@ -67,11 +67,15 @@ jobs:
         type: string
       SINGLEVIEW_URL:
         type: string
+      aws-access-key-id:
+        type: env_var_name
+      aws-secret-access-key:
+        type: env_var_name
     steps:
       - checkout
       - aws-cli/setup:
-          aws-access-key-id: AWS_ACCESS_KEY_ID
-          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+          aws-access-key-id: << parameters.aws-access-key-id >>
+          aws-secret-access-key: << parameters.aws-secret-access-key >>
           aws-region: AWS_REGION
       - run: sudo yarn global add serverless
       - run:
@@ -94,6 +98,8 @@ workflows:
           name: deploy-staging
           stage_name: staging
           API_URL: ${NEXT_PUBLIC_API_URL_STAGING}
+          aws-access-key-id: AWS_ACCESS_KEY_ID_STAGING
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY_STAGING
           GTM_ID: ${NEXT_PUBLIC_GTM_ID}
           SINGLEVIEW_URL: ${NEXT_PUBLIC_SINGLEVIEW_URL_STAGING}
           filters:
@@ -109,6 +115,8 @@ workflows:
           name: deploy-production
           stage_name: production
           API_URL: ${NEXT_PUBLIC_API_URL_PRODUCTION}
+          aws-access-key-id: AWS_ACCESS_KEY_ID_PRODUCTION
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY_PRODUCTION
           GTM_ID: ${NEXT_PUBLIC_GTM_ID}
           SINGLEVIEW_URL: ${NEXT_PUBLIC_SINGLEVIEW_URL_PRODUCTION}
           requires:
