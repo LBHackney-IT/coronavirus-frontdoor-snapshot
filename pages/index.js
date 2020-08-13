@@ -75,6 +75,7 @@ Index.getInitialProps = async ({
       token
     };
   } catch (err) {
+    console.log(err)
     res.writeHead(err instanceof HttpStatusError ? err.statusCode : 500).end();
   }
 };
