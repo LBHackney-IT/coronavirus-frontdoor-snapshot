@@ -108,7 +108,7 @@ resources:
             - ${self:custom.aliases.${self:provider.stage}}
           PriceClass: PriceClass_100
           ViewerCertificate:
-            AcmCertificateArn: arn:aws:acm:us-east-1:715003523189:certificate/8f7fa30c-a4e5-4775-b827-ade824a33c9a
+            AcmCertificateArn: ${env:AWS_CERTIFICATE_ARN}
             MinimumProtocolVersion: TLSv1.2_2018
             SslSupportMethod: sni-only
           DefaultCacheBehavior:
