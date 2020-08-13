@@ -99,7 +99,7 @@ context('Edit snapshot', () => {
         queryLastName: 'flynn',
         assets: [],
         createdBy: 'Dat',
-        systemIds: ['wub'],
+        systemIds: ['inh-123'],
         created: '2019-06-09T15:46:47.857Z',
         dob: '2000-06-09',
         vulnerabilities: [{ name: 'yup', data: [] }],
@@ -164,14 +164,14 @@ context('Edit snapshot', () => {
   });
 
   describe('Back button', () => {
-    it('Sends the user back to Single View', () => {
+    it('Sends the user back to Support For Hackney Residents', () => {
       cy.visit(`/snapshots/1`);
       cy.get('[data-testid=back-link-test]')
-        .should('contain', 'Back to Single View')
+        .should('contain', 'Back')
         .and(
           'have.attr',
           'href',
-          'https://staging-singleview.hackney.gov.uk/customers/wub/view'
+          'http://localhost:5000/help-requests/edit/wub'
         );
     });
   });

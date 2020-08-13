@@ -6,7 +6,8 @@ const TextInput = ({
   name,
   onChange,
   validate,
-  value
+  value,
+  className
 }) => {
   const [hasError, setHasError] = useState(false);
 
@@ -35,7 +36,7 @@ const TextInput = ({
       )}
       <input
         aria-describedby={hasError ? `${name}-error` : undefined}
-        className={`govuk-input${hasError ? ' govuk-input--error' : ''}`}
+        className={`${className} govuk-input${hasError ? ` ${className}  govuk-input--error` : ''}`}
         id={name}
         name={name}
         type="text"

@@ -49,34 +49,22 @@ const SnapshotSummary = ({ resources, initialSnapshot, token }) => {
 
   const { dob, firstName, lastName, postcode, assets, vulnerabilities, notes } = snapshot;
   let customerId = snapshot.systemIds?.[0];
-  // check the external system id for redirecting back to originating system
-  let backtoSingleView = true;
+  // we are assuming inh redirect are prefixed, to easily distinguish where the ID is originating, but this could be removed later on
   if (customerId && customerId.includes("inh-", 0)) {
     customerId = customerId.substring(4);
-    backtoSingleView = false;
   }
   const residentCoordinates = geoCoordinates(postcode);
   
   return (
     <>
-      <div>
-        { backtoSingleView && (
-        <a
-          href={`${process.env.NEXT_PUBLIC_SINGLEVIEW_URL}/customers/${customerId}/view`}
-          className="govuk-back-link back-button"
-          data-testid="back-link-test"
-        >
-          Back to Single View
-        </a>
-        )}
-        
-        { !backtoSingleView && (
+      <div>      
+        { customerId && (
           <a
           href={`${process.env.INH_URL}/help-requests/edit/${customerId}`}
           className="govuk-back-link back-button"
           data-testid="back-link-test"
         >
-          Back to I Need Help
+          Back
         </a>
 
         )}

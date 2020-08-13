@@ -73,13 +73,13 @@ Merging into `master` triggers an automated deployment into the staging environm
 To promote this to production you will need to manually approve the deployment in CircleCI.
 
 ## Pages and API endpoints
-Login is handled by Single View, so long as the Hackney token cookie is set users will be signed in here too.
+Login is handled by Support For Hackney Residents, so long as the Hackney token cookie is set users will be signed in here too.
 
 ### GET /api/snapshots/{id}
 Retrieves a vulnerabilities snapshot, given a snapshot id.
 
 ### POST /api/snapshots/find
-Used by other applications (such as Single View) to find snapshots related to a particular person given their name, an optionally an array of identifiers.
+Used by other applications (such as Support For Hackney Residents) to find snapshots related to a particular person given their name, an optionally an array of identifiers.
 
 ### POST /api/snapshots
 Creates a new, empty, vulnerabilities snapshot for a specified person.
