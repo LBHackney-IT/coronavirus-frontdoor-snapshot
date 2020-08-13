@@ -36,7 +36,6 @@ curl -X POST \
 "systemIds": ["inh-123"],
 "createdBy": "",
 "postcode": "E1 6AW"
-
 }'
 ```
 which should return a `201` with a snapshot id like: `rrCN4o37`. Then browse to `http://localhost:3000/snapshots/rrCN4o37` to verify the page opens, if that is the case your local setup is complete.

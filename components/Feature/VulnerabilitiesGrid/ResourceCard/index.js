@@ -28,6 +28,7 @@ const ResourceCard = ({
   const distributionElement =  tags.filter(t => HIDDEN_TAGS.includes(t)).join(", ")
   const tagsElement = tags.filter(t => !HIDDEN_TAGS.includes(t)).map(item=> (<span key={"tags-"+item} className={css.tags}>{trimLength(item, 20)}</span>))
 
+
   return (
     <div className={`${css.resource}`} {...others}>
       <div className={css.tags__container}>

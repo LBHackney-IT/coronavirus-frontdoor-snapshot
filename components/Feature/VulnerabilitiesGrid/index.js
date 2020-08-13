@@ -13,6 +13,7 @@ import geoCoordinates from 'lib/api/utils/geoCoordinates';
 
 const MAX_RESOURCES = 12
 
+
 function createLookup() {
   const lookup = new Map();
 
@@ -32,6 +33,7 @@ function createLookup() {
 }
 
 const VulnerabilitiesGrid = ({ resources, onUpdate, residentCoordinates, genericPostcode }) => {
+
   const [grid, setGrid] = useState({
     assets: {},
     vulnerabilities: {},
@@ -129,6 +131,7 @@ const VulnerabilitiesGrid = ({ resources, onUpdate, residentCoordinates, generic
     });
     let sortedArray = helper.sortArrayByMatches(rankedArray);
     return sortedArray ? sortedArray.slice(0, MAX_RESOURCES) : [];
+
   };
 
   const setAllExpandedGroups = () => {
