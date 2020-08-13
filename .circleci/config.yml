@@ -106,9 +106,6 @@ workflows:
           AWS_CERTIFICATE_ARN: arn:aws:acm:us-east-1:715003523189:certificate/8f7fa30c-a4e5-4775-b827-ade824a33c9a
           GTM_ID: ${NEXT_PUBLIC_GTM_ID}
           SINGLEVIEW_URL: ${NEXT_PUBLIC_SINGLEVIEW_URL_STAGING}
-          filters:
-            branches:
-              only: master
           requires:
             - build-and-test
       - permit-deploy-production:
