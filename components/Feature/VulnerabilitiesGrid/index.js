@@ -9,6 +9,9 @@ import {
 import ResourceCard from './ResourceCard';
 import groups from './grid.json';
 import helper from './vulnerabilityGridHelper';
+import geoCoordinates from 'lib/api/utils/geoCoordinates';
+
+const MAX_RESOURCES = 12
 
 function createLookup() {
   const lookup = new Map();
@@ -28,7 +31,7 @@ function createLookup() {
   return lookup;
 }
 
-const VulnerabilitiesGrid = ({ resources, onUpdate, residentCoordinates }) => {
+const VulnerabilitiesGrid = ({ resources, onUpdate, residentCoordinates, genericPostcode }) => {
   const [grid, setGrid] = useState({
     assets: {},
     vulnerabilities: {},
@@ -38,10 +41,15 @@ const VulnerabilitiesGrid = ({ resources, onUpdate, residentCoordinates }) => {
   const [expandedGroups, setExpandedGroups] = useState({});
   const [residentData, setResidentData] = useState(null);
 
-  residentCoordinates.then(result => {
-    setResidentData(result);
-  });
-
+  if (genericPostcode) {
+    geoCoordinates(genericPostcode).then(result => {
+      setResidentData(result);
+    });
+  } else {
+    residentCoordinates.then(result => {
+      setResidentData(result);
+    });
+  }
   const updateSelectedCheckboxes = ({ gridType, key, value }) => {
     updateGrid({
       [gridType]: grid[gridType][key]
@@ -120,7 +128,7 @@ const VulnerabilitiesGrid = ({ resources, onUpdate, residentCoordinates }) => {
       }
     });
     let sortedArray = helper.sortArrayByMatches(rankedArray);
-    return sortedArray ? sortedArray.slice(0, 6) : [];
+    return sortedArray ? sortedArray.slice(0, MAX_RESOURCES) : [];
   };
 
   const setAllExpandedGroups = () => {

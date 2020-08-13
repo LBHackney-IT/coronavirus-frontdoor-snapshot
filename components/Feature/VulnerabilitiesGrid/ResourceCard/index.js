@@ -1,7 +1,7 @@
 import css from './index.module.scss';
 import SummaryList from 'components/Form/SummaryList';
 
-const DISTRIBUTION_ARRAY = ['Delivery', 'Collection']
+const HIDDEN_TAGS = ['Delivery', 'Collection', 'Food'] 
 
 const ResourceCard = ({
   name,
@@ -25,8 +25,8 @@ const ResourceCard = ({
 
   const selfReferralElement = (selfReferral == 'No') ? 'Referral required' : 'Self referral'
   const websiteElement = websites && websites.length > 0 &&  websites.map(website => (<a href={websites[0]} target="_blank" rel="noopener noreferrer">{websites[0]}</a>))
-  const distributionElement =  tags.filter(t => DISTRIBUTION_ARRAY.includes(t)).join(", ")
-  const tagsElement = tags.filter(t => !DISTRIBUTION_ARRAY.includes(t)).map(item=> (<span key={"tags-"+item} className={css.tags}>{trimLength(item, 20)}</span>))
+  const distributionElement =  tags.filter(t => HIDDEN_TAGS.includes(t)).join(", ")
+  const tagsElement = tags.filter(t => !HIDDEN_TAGS.includes(t)).map(item=> (<span key={"tags-"+item} className={css.tags}>{trimLength(item, 20)}</span>))
 
   return (
     <div className={`${css.resource}`} {...others}>

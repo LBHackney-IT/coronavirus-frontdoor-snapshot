@@ -1,7 +1,7 @@
 [
   {
     "id": "food-needs",
-    "name": "Food needs",
+    "name": "Food",
     "assets": [    
       {
         "label": "Delivery"
@@ -10,7 +10,7 @@
         "label": "Collection"
       }
     ],
-    "vulnerabilities": [
+    "vulnerabilities": [  
       {
         "label": "Halal"
       },
