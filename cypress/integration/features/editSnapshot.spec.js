@@ -7,7 +7,7 @@ context('Edit snapshot', () => {
       queryLastName: 'flynn',
       assets: [],
       createdBy: 'Dat',
-      systemIds: ['inh-123'],
+      systemIds: ['wub'],
       created: '2019-06-09T15:46:47.857Z',
       dob: '2000-06-09',
       vulnerabilities: [],
@@ -171,7 +171,7 @@ context('Edit snapshot', () => {
         .and(
           'have.attr',
           'href',
-          'http://localhost:5000/help-requests/edit/123'
+          'http://localhost:5000/help-requests/edit/wub'
         );
     });
   });

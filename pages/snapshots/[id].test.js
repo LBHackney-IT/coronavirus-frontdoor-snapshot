@@ -131,14 +131,14 @@ describe('SnapshotSummary', () => {
       const snapshot = {
         vulnerabilities: [],
         assets: [],
-        systemIds: ['inh-123']
+        systemIds: ['wub']
       };
       const { container, getByTestId } = render(
         <SnapshotSummary initialSnapshot={snapshot} resources={resources} />
       );
       expect(getByTestId('back-link-test')).toHaveAttribute(
         'href',
-        'http://localhost:5000/help-requests/edit/123'
+        'http://localhost:5000/help-requests/edit/wub'
       );
     });
   });
