@@ -26,14 +26,15 @@ export const endpoint = ({ createSnapshot }) =>
         }
       ]
     },
-    async ({ body: { dob, firstName, lastName, systemIds }, headers }) => {
+    async ({ body: { dob, firstName, lastName, systemIds, postcode }, headers }) => {
       const createdBy = getUsername(getTokenFromAuthHeader(headers));
       const snapshot = await createSnapshot.execute({
         dob,
         createdBy,
         firstName,
         lastName,
-        systemIds
+        systemIds,
+        postcode
       });
       return Response.created(snapshot);
     }

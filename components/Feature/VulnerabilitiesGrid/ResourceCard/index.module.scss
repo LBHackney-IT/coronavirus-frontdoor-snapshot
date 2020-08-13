@@ -1,7 +1,12 @@
 @import '../../../../pages/stylesheets/vars.scss';
 
+
 .resource {
   margin-bottom: 0.5em;
+  width: 45%;
+  display: inline-table;
+  margin-right: 30px;
+  margin-bottom: 40px;
 
   h3 {
     margin-top: 0;
@@ -10,6 +15,22 @@
   h4 {
     margin: 1em 0 0.5em 0;
     font-size: 0.9em;
+  }
+  .tags__container {
+    margin-bottom: 10px;
+  }
+  .label{
+    font-weight: bold;
+  }
+  .tags {
+    background-color: $lbh-link;
+    padding: 0px 5px 1px 5px;
+    color: white;
+    text-transform: uppercase;
+    margin-right: 5px;
+    font-size: 11pt;
+    font-weight: 600;
+    white-space: nowrap;
   }
 
   .websites {

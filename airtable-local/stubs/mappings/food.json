@@ -2,10 +2,10 @@
   "priority": 1,
   "request": {
     "method": "GET",
-    "urlPath": "/v0/baseId123/Shared Plan actions"
+    "urlPath": "/v0/baseId123/Food"
   },
   "response": {
     "status": 200,
-    "bodyFileName": "tools.json"
+    "bodyFileName": "food.json"
   }
 }

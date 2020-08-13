@@ -5,6 +5,7 @@ import { act } from 'react-dom/test-utils';
 
 describe('VulnerabilitiesGrid', () => {
   const resources = [];
+  const residentCoordinates = Promise.resolve({ data: {} });
 
   it('renders the vulnerabilities grid', () => {
     const numberOfGroups = groups.length;
@@ -16,7 +17,7 @@ describe('VulnerabilitiesGrid', () => {
     }, 0);
 
     const { container } = render(
-      <VulnerabilitiesGrid onUpdate={jest.fn()} resources={resources} />
+      <VulnerabilitiesGrid onUpdate={jest.fn()} resources={resources} residentCoordinates={residentCoordinates}/>
     );
 
     expect(
@@ -31,11 +32,11 @@ describe('VulnerabilitiesGrid', () => {
     const onUpdate = jest.fn();
     const expected = expect.objectContaining({
       assets: [],
-      vulnerabilities: [{ name: 'Rent arrears', data: [] }]
+      vulnerabilities: [{ name: 'Halal', data: [] }]
     });
 
     const { container } = render(
-      <VulnerabilitiesGrid onUpdate={onUpdate} resources={resources} />
+      <VulnerabilitiesGrid onUpdate={onUpdate} resources={resources} residentCoordinates={residentCoordinates}/>
     );
 
     act(() => container.querySelector('.govuk-checkboxes__input').click());
@@ -44,7 +45,7 @@ describe('VulnerabilitiesGrid', () => {
 
   it('creates a textinput when checkbox is checked', () => {
     const { container } = render(
-      <VulnerabilitiesGrid onUpdate={jest.fn()} resources={resources} />
+      <VulnerabilitiesGrid onUpdate={jest.fn()} resources={resources} residentCoordinates={residentCoordinates}/>
     );
 
     fireEvent(
@@ -67,7 +68,7 @@ describe('VulnerabilitiesGrid', () => {
       vulnerabilities: []
     });
     const { container } = render(
-      <VulnerabilitiesGrid onUpdate={onUpdate} resources={resources} />
+      <VulnerabilitiesGrid onUpdate={onUpdate} resources={resources} residentCoordinates={residentCoordinates}/>
     );
 
     fireEvent(
@@ -95,7 +96,7 @@ describe('VulnerabilitiesGrid', () => {
       vulnerabilities: [{ data: [], name: 'some text' }]
     });
     const { container } = render(
-      <VulnerabilitiesGrid onUpdate={onUpdate} resources={resources} />
+      <VulnerabilitiesGrid onUpdate={onUpdate} resources={resources} residentCoordinates={residentCoordinates}/>
     );
 
     fireEvent(
@@ -120,7 +121,7 @@ describe('VulnerabilitiesGrid', () => {
 
   it('creates text inputs when active case checkbox is checked', () => {
     const { container } = render(
-      <VulnerabilitiesGrid onUpdate={jest.fn()} resources={resources} />
+      <VulnerabilitiesGrid onUpdate={jest.fn()} resources={resources} residentCoordinates={residentCoordinates}/>
     );
 
     fireEvent(
@@ -169,7 +170,7 @@ describe('VulnerabilitiesGrid', () => {
       ]
     });
     const { container } = render(
-      <VulnerabilitiesGrid onUpdate={onUpdate} resources={resources} />
+      <VulnerabilitiesGrid onUpdate={onUpdate} resources={resources} residentCoordinates={residentCoordinates}/>
     );
 
     fireEvent(
@@ -207,7 +208,7 @@ describe('VulnerabilitiesGrid', () => {
       ]
     });
     const { container } = render(
-      <VulnerabilitiesGrid onUpdate={onUpdate} resources={resources} />
+      <VulnerabilitiesGrid onUpdate={onUpdate} resources={resources} residentCoordinates={residentCoordinates}/>
     );
 
     fireEvent(
@@ -250,16 +251,17 @@ describe('VulnerabilitiesGrid', () => {
           description:
             'We provide mentoring for young people and families over the phone or by video call.',
           websites: [
-            'https://twitter.com/HackneyQuest',
-            'http://www.hackneyquest.org.uk/'
+            'https://twitter.com/HackneyQuest'
           ],
           address: '1 Poole Rd, London E9 7AE',
-          tags: ['Social isolation']
+          postcode: 'E9 7AE',
+          tags: ['Social isolation'],
+          coordinates: '51.5365,-0.0802'
         }
       ];
 
       const { getByLabelText, queryByTestId } = render(
-        <VulnerabilitiesGrid onUpdate={jest.fn()} resources={resources} />
+        <VulnerabilitiesGrid onUpdate={jest.fn()} resources={resources} residentCoordinates={residentCoordinates}/>
       );
 
       expect(queryByTestId('resource-hq')).not.toBeInTheDocument();
@@ -284,7 +286,7 @@ describe('VulnerabilitiesGrid', () => {
     ];
 
     const { getByLabelText, queryByTestId } = render(
-      <VulnerabilitiesGrid onUpdate={jest.fn()} resources={resources} />
+      <VulnerabilitiesGrid onUpdate={jest.fn()} resources={resources} residentCoordinates={residentCoordinates}/>
     );
 
     expect(queryByTestId('resource-hs')).not.toBeInTheDocument();
@@ -309,7 +311,7 @@ describe('VulnerabilitiesGrid', () => {
     ];
 
     const { getByLabelText, queryByTestId } = render(
-      <VulnerabilitiesGrid onUpdate={jest.fn()} resources={resources} />
+      <VulnerabilitiesGrid onUpdate={jest.fn()} resources={resources} residentCoordinates={residentCoordinates}/>
     );
 
     expect(queryByTestId('resource-hs')).not.toBeInTheDocument();

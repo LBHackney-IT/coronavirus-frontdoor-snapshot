@@ -1,5 +1,41 @@
 [
   {
+    "id": "food-needs",
+    "name": "Food needs",
+    "assets": [    
+      {
+        "label": "Delivery"
+      },
+      {
+        "label": "Collection"
+      }
+    ],
+    "vulnerabilities": [
+      {
+        "label": "Halal"
+      },
+      {
+        "label": "Vegetarian"
+      }, 
+      {
+        "label": "Vegan"
+      },  
+      {
+        "label": "Hot Food"
+      },
+      {
+        "label": "Other",
+        "arialabel": "Other",
+        "textinputs": [
+          {
+            "type": "other",
+            "label": "Other Dietary requirements"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "financial-stability",
     "name": "Financial stability",
     "assets": [

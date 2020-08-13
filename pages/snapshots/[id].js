@@ -6,6 +6,7 @@ import { getTokenFromCookieHeader } from 'lib/utils/token';
 import { Button, TextArea } from 'components/Form';
 import VulnerabilitiesGrid from 'components/Feature/VulnerabilitiesGrid';
 import { convertIsoDateToString, convertIsoDateToYears } from 'lib/utils/date';
+import geoCoordinates from 'lib/api/utils/geoCoordinates';
 
 const SnapshotSummary = ({ resources, initialSnapshot, token }) => {
   const { snapshot, loading, updateSnapshot } = useSnapshot(
@@ -22,8 +23,8 @@ const SnapshotSummary = ({ resources, initialSnapshot, token }) => {
 
   const [editSnapshot, setEditSnapshot] = useState(
     snapshot.assets.length === 0 &&
-      snapshot.vulnerabilities.length === 0 &&
-      !snapshot.notes
+    snapshot.vulnerabilities.length === 0 &&
+    !snapshot.notes
   );
   const [hasValue, setHasValue] = useState(false);
 
@@ -32,8 +33,8 @@ const SnapshotSummary = ({ resources, initialSnapshot, token }) => {
     snapshot.vulnerabilities = selected.vulnerabilities;
     setHasValue(
       snapshot.assets.length > 0 ||
-        snapshot.vulnerabilities.length > 0 ||
-        snapshot.notes
+      snapshot.vulnerabilities.length > 0 ||
+      snapshot.notes
     );
   };
 
@@ -41,17 +42,25 @@ const SnapshotSummary = ({ resources, initialSnapshot, token }) => {
     snapshot.notes = notes;
     setHasValue(
       snapshot.assets.length > 0 ||
-        snapshot.vulnerabilities.length > 0 ||
-        snapshot.notes
+      snapshot.vulnerabilities.length > 0 ||
+      snapshot.notes
     );
   };
 
-  const { dob, firstName, lastName, assets, vulnerabilities, notes } = snapshot;
-  const customerId = snapshot.systemIds?.[0];
-
+  const { dob, firstName, lastName, postcode, assets, vulnerabilities, notes } = snapshot;
+  let customerId = snapshot.systemIds?.[0];
+  // check the external system id for redirecting back to originating system
+  let backtoSingleView = true;
+  if (customerId && customerId.includes("inh-", 0)) {
+    customerId = customerId.substring(4);
+    backtoSingleView = false;
+  }
+  const residentCoordinates = geoCoordinates(postcode);
+  
   return (
     <>
       <div>
+        { backtoSingleView && (
         <a
           href={`${process.env.NEXT_PUBLIC_SINGLEVIEW_URL}/customers/${customerId}/view`}
           className="govuk-back-link back-button"
@@ -59,10 +68,23 @@ const SnapshotSummary = ({ resources, initialSnapshot, token }) => {
         >
           Back to Single View
         </a>
+        )}
+        
+        { !backtoSingleView && (
+          <a
+          href={`${process.env.INH_URL}/help-requests/edit/${customerId}`}
+          className="govuk-back-link back-button"
+          data-testid="back-link-test"
+        >
+          Back to I Need Help
+        </a>
+
+        )}
       </div>
       <h1>
         {firstName} {lastName}
       </h1>
+      <p>Postcode: {postcode}</p>
       {dob && (
         <span
           className="govuk-body govuk-!-font-weight-bold"
@@ -76,6 +98,7 @@ const SnapshotSummary = ({ resources, initialSnapshot, token }) => {
           <VulnerabilitiesGrid
             onUpdate={updateSelected}
             resources={resources}
+            residentCoordinates={residentCoordinates}
           />
           <TextArea
             name="notes"
@@ -115,8 +138,8 @@ const SnapshotSummary = ({ resources, initialSnapshot, token }) => {
                 ))}
               </ul>
             ) : (
-              'None captured'
-            )}
+                'None captured'
+              )}
           </div>
           <div data-testid="assets-summary">
             <h2>Assets</h2>
@@ -127,12 +150,24 @@ const SnapshotSummary = ({ resources, initialSnapshot, token }) => {
                 ))}
               </ul>
             ) : (
-              'None captured'
-            )}
+                'None captured'
+              )}
           </div>
+
+          <div data-testid="resources-summary">
+            <h2>Resources</h2>
+
+          </div>
+
           <div data-testid="notes-summary">
             <h2>Notes</h2>
             {notes ? notes : 'None captured'}
+          </div>
+
+          <div data-testid="notes-summary">
+            <br></br>
+            <button className="govuk-button" id="print">Print this page</button><br></br>
+            <button className="govuk-button" id="shared-plan">Continue</button>
           </div>
         </>
       )}

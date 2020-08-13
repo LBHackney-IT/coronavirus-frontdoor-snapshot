@@ -45,6 +45,8 @@ jobs:
             export AIRTABLE_API_KEY=${AIRTABLE_API_KEY_INTEGRATION}
             export AIRTABLE_BASE_ID=${AIRTABLE_BASE_ID_INTEGRATION}
             export AIRTABLE_TABLE_NAMES=${AIRTABLE_TABLE_NAMES_INTEGRATION}
+            export ADDRESSES_API_URL=${ADDRESSES_API_URL}
+            export ADDRESSES_API_KEY=${ADDRESSES_API_KEY}
             export ALLOWED_GROUPS=xx
             export NEXT_PUBLIC_SINGLEVIEW_URL=https://staging-singleview.hackney.gov.uk
             CYPRESS_CACHE_FOLDER=~/repo/cypress_cache yarn run int-test

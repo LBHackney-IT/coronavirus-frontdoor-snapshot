@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
   Accordion,
   AccordionItem,
@@ -8,6 +8,7 @@ import {
 } from 'components/Form';
 import ResourceCard from './ResourceCard';
 import groups from './grid.json';
+import helper from './vulnerabilityGridHelper';
 
 function createLookup() {
   const lookup = new Map();
@@ -27,7 +28,7 @@ function createLookup() {
   return lookup;
 }
 
-const VulnerabilitiesGrid = ({ resources, onUpdate }) => {
+const VulnerabilitiesGrid = ({ resources, onUpdate, residentCoordinates }) => {
   const [grid, setGrid] = useState({
     assets: {},
     vulnerabilities: {},
@@ -35,38 +36,17 @@ const VulnerabilitiesGrid = ({ resources, onUpdate }) => {
   });
   const groupItems = useMemo(() => createLookup());
   const [expandedGroups, setExpandedGroups] = useState({});
+  const [residentData, setResidentData] = useState(null);
 
-  const addItem = ({ obj, key, value }) => {
-    return {
-      ...obj,
-      [key]: { name: value, data: {} }
-    };
-  };
-
-  const removeItem = ({ obj, key }) => {
-    return Object.fromEntries(Object.entries(obj).filter(([k]) => k != key));
-  };
-
-  const addDataItem = ({ obj, key, value, label, parentKey }) => {
-    obj[parentKey].data[key] = {
-      label,
-      value
-    };
-    return obj;
-  };
-
-  const removeDataItem = ({ obj, parentKey, key }) => {
-    obj[parentKey].data = Object.fromEntries(
-      Object.entries(obj[parentKey].data).filter(([k]) => k != key)
-    );
-    return obj;
-  };
+  residentCoordinates.then(result => {
+    setResidentData(result);
+  });
 
   const updateSelectedCheckboxes = ({ gridType, key, value }) => {
     updateGrid({
       [gridType]: grid[gridType][key]
-        ? removeItem({ obj: grid[gridType], key })
-        : addItem({ obj: grid[gridType], key, value })
+        ? helper.removeItem({ obj: grid[gridType], key })
+        : helper.addItem({ obj: grid[gridType], key, value })
     });
   };
 
@@ -81,14 +61,20 @@ const VulnerabilitiesGrid = ({ resources, onUpdate }) => {
     if (inputType === 'other') {
       updateGrid({
         [gridType]: value
-          ? addItem({ obj: grid[gridType], key, value })
-          : removeItem({ obj: grid[gridType], key })
+          ? helper.addItem({ obj: grid[gridType], key, value })
+          : helper.removeItem({ obj: grid[gridType], parentKey, key })
       });
     } else {
       updateGrid({
         [gridType]: value
-          ? addDataItem({ obj: grid[gridType], key, value, label, parentKey })
-          : removeDataItem({ obj: grid[gridType], parentKey, key })
+          ? helper.addDataItem({
+              obj: grid[gridType],
+              key,
+              value,
+              label,
+              parentKey
+            })
+          : helper.removeDataItem({ obj: grid[gridType], parentKey, key })
       });
     }
   };
@@ -114,20 +100,27 @@ const VulnerabilitiesGrid = ({ resources, onUpdate }) => {
 
   const filterResources = groupName => {
     const group = groupItems.get(groupName);
-
     const targets = Object.values({
       ...grid.assets,
       ...grid.vulnerabilities
     })
-      .filter(value => group.has(value.name))
-      .map(value => value.name);
+      .filter(item => group.has(item.name))
+      .map(item => item.name);
 
-    return resources.filter(resource => {
-      return (
-        resource.tags.find(tag => targets.includes(tag)) ||
-        (targets.length > 0 && resource.tags.includes(groupName))
-      );
+    let rankedArray = [];
+    resources.map(resource => {
+      let matches = helper.findArrayMatches(resource.tags, targets);
+      if (matches.length > 0 || resource.tags.includes(groupName)) {
+        resource.distance = helper.calculateResourceDistance(
+          resource.coordinates,
+          residentData
+        );
+        resource.matches = matches.length;
+        rankedArray.push(resource);
+      }
     });
+    let sortedArray = helper.sortArrayByMatches(rankedArray);
+    return sortedArray ? sortedArray.slice(0, 6) : [];
   };
 
   const setAllExpandedGroups = () => {
@@ -145,7 +138,7 @@ const VulnerabilitiesGrid = ({ resources, onUpdate }) => {
 
   return (
     <>
-      <div className="govuk-grid-column-two-thirds">
+      <div className="govuk-grid-column-full-width">
         <Accordion
           title="Things to explore with the resident"
           handleExpanded={() => {
@@ -294,29 +287,27 @@ const VulnerabilitiesGrid = ({ resources, onUpdate }) => {
                     </CheckboxList>
                   </div>
                 </div>
+
+                <div className="govuk-grid-column-full-width">
+                  {
+                    <div key={`${id}-resources`}>
+                      {expandedGroups[id] &&
+                        filterResources(name).map(resource => {
+                          return (
+                            <ResourceCard
+                              key={resource.id}
+                              data-testid={`resource-${resource.id}`}
+                              {...resource}
+                            />
+                          );
+                        })}
+                    </div>
+                  }
+                </div>
               </AccordionItem>
             );
           })}
         </Accordion>
-      </div>
-
-      <div className="govuk-grid-column-one-third">
-        {groups.map(({ id, name }) => {
-          return (
-            <div key={`${id}-resources`}>
-              {expandedGroups[id] &&
-                filterResources(name).map(resource => {
-                  return (
-                    <ResourceCard
-                      key={resource.id}
-                      data-testid={`resource-${resource.id}`}
-                      {...resource}
-                    />
-                  );
-                })}
-            </div>
-          );
-        })}
       </div>
     </>
   );

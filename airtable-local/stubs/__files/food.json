@@ -1,0 +1,116 @@
+{
+  "records": [
+    {
+        "id": "6666HJXBrVw8Lasd",
+        "fields": {
+            "Name": "Hackney Food Bank / St John's Hoxton",
+            "Description": "Food Bank - Trussel Trust. Must be referred by an agency registered for foodbank vouchers, ID required on food pickup. Monday 11am-1pm",
+            "Website 1": "St John's Hoxton Crypt, Pitfield Street N1 6NP",
+            "Address": "St John's Hoxton Crypt, Pitfield Street N1 6NP",
+            "Postcode": "N1 6NP",
+            "Tags": [
+            ],
+            "Vulnerability snapshot tags": [
+                "Food", "Collection"
+            ]
+        },
+        "createdTime": "2020-06-17T11:01:33.000Z"
+    },
+    {
+        "id": "6666HJXBrVw8Ldsa",
+        "fields": {
+            "Name": "African Community School",
+            "Description": "Food Parcel Delivery. African/Caribbean cuisine. Delivery once a fortnight ",
+            "Website 1": "office@acschool.org.uk",
+            "Address": "Halkevi Centre, 31 - 33 Dalston Lane, E8 3DF",
+            "Postcode": "E8 3DF",
+            "Tags": [
+            ],
+            "Vulnerability snapshot tags": [
+                "Food", "African", "Caribbean", "Delivery", "Collection"
+            ]
+        },
+        "createdTime": "2020-06-17T11:01:33.000Z"
+    },
+    {
+        "id": "6666HJXBrVw8LBcwer",
+        "fields": {
+            "Name": "North London Food Service",
+            "Description": "Hot food. Leave a message, they will call back. Mixed funding - grant applications and local donations",
+            "Website 1": "",
+            "Address": "N4 2HA",
+            "Postcode": "N4 2HA",
+            "Tags": [
+            ],
+            "Vulnerability snapshot tags": [
+                "Food", "Vegetarian", "Halal", "Hot Food", "Delivery"
+            ]
+        },
+        "createdTime": "2020-06-17T11:01:33.000Z"
+    },
+    {
+        "id": "6666HJXBrVw8LBcwdb",
+        "fields": {
+            "Name": "The Boiler House N16",
+            "Description": "Food Bank - Independent. Weekdays 9-5, Weekends 10-3. Referral Contact: Claire. Email: community@n16boilerhouse.com. Phone number: 020 8806 8013",
+            "Website 1": "",
+            "Address": "George Downing Estate, Cazenove Rd, N16 6BE",
+            "Postcode": "N16 6BE",
+            "Tags": [
+            ],
+            "Vulnerability snapshot tags": [
+                "Food", "Collection", "Delivery"
+            ]
+        },
+        "createdTime": "2020-06-17T11:01:33.000Z"
+    },
+    {
+        "id": "6666FkHGEn9BiiXvW",
+        "fields": {
+            "Name": "Made Up Kitchen / Hackney Marsh Partnership",
+            "Description": "Hot Food/ Food Parcels",
+            "Opening Times": "Thursday and Saturdays ",
+            "Address": "Concorde Youth Club, Kingsmead Way, E9 5PP",
+            "Coordinates": "51.5535,-0.0356",
+            "Postcode": "E9 5PP",
+            "Vulnerability snapshot tags": [
+                "Delivery",
+                "Vegetarian",
+                "Halal",
+                "Hot Food"
+            ],
+            "Wards / postcodes covered for service": "Kings Park",
+            "Current Provision": "100 parcels; 800 hot meals ",
+            "Email": "gburgess@hmp.org.uk or via kiran@madeupcollective.com",
+            "Website 1": "http://thepeopleskitchen.co.uk/covid-19",
+            "Notes": "Would like to start some sort of Service on Milton Gardens estate in Stoke newington where we run Stoke Newington Youth Hub - Limiting factors are around food donation. ",
+            "Office contact only": "gburgess@hmp.org.uk or via kiran@madeupcollective.com"
+        },
+        "createdTime": "2020-08-04T12:45:22.000Z"
+    }, 
+    {
+        "id": "222QfHufKAzfusMH",
+        "fields": {
+            "Name": "Made in Hackney",
+            "Description": "Hot Food",
+            "Opening Times": "Daily Mon-Fri",
+            "Coordinates": "51.5648,-0.0715",
+            "Postcode": "N16 6PA",
+            "Vulnerability snapshot tags": [
+                "Delivery",
+                "Vegan",
+                "Halal",
+                "Self Referral",
+                "Hot Food"
+            ],
+            "Wards / postcodes covered for service": "All",
+            "Current Provision": "250 meals a week",
+            "Phone number": "020 8442 4266",
+            "Email": "info@madeinhackney.org.uk",
+            "Website 1": "https://madeinhackney.org/",
+            "Office contact only": "info@madeinhackney.org.uk"
+        },
+        "createdTime": "2020-08-04T12:45:22.000Z"
+    },
+  ]
+}

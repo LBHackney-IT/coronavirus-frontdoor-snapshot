@@ -35,7 +35,7 @@ server.all(
 );
 
 if (process.env.ENV === 'dev') {
-  server.start(3000).then(s => {});
+  server.start(process.env.PORT || 3000).then(s => {});
 } else {
   module.exports.handler = require('serverless-http')(server);
 }
