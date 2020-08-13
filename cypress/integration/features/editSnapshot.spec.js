@@ -164,10 +164,10 @@ context('Edit snapshot', () => {
   });
 
   describe('Back button', () => {
-    it('Sends the user back to Single View', () => {
+    it('Sends the user back to Support For Hackney Residents', () => {
       cy.visit(`/snapshots/1`);
       cy.get('[data-testid=back-link-test]')
-        .should('contain', 'Back to Single View')
+        .should('contain', 'Back')
         .and(
           'have.attr',
           'href',
