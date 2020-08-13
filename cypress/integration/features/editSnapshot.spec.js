@@ -7,7 +7,7 @@ context('Edit snapshot', () => {
       queryLastName: 'flynn',
       assets: [],
       createdBy: 'Dat',
-      systemIds: ['wub'],
+      systemIds: ['inh-123'],
       created: '2019-06-09T15:46:47.857Z',
       dob: '2000-06-09',
       vulnerabilities: [],
