@@ -171,7 +171,7 @@ context('Edit snapshot', () => {
         .and(
           'have.attr',
           'href',
-          '"http://localhost:5000/help-requests/edit/123'
+          'http://localhost:5000/help-requests/edit/123'
         );
     });
   });
