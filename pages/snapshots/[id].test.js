@@ -127,18 +127,18 @@ describe('SnapshotSummary', () => {
       expect(getByText('some notes')).toBeInTheDocument();
     });
 
-    it('sends back to Singlewview when Back button is clicked', () => {
+    it('sends back to Support For Hackney Residents when Back button is clicked', () => {
       const snapshot = {
         vulnerabilities: [],
         assets: [],
-        systemIds: ['123']
+        systemIds: ['inh-123']
       };
       const { container, getByTestId } = render(
         <SnapshotSummary initialSnapshot={snapshot} resources={resources} />
       );
       expect(getByTestId('back-link-test')).toHaveAttribute(
         'href',
-        'https://staging-singleview.hackney.gov.uk/customers/123/view'
+        'http://localhost:5000/help-requests/edit/123'
       );
     });
   });
