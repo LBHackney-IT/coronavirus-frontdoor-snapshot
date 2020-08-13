@@ -34,10 +34,7 @@ const Index = ({ resources, initialSnapshot, token }) => {
     setPostcode(event)
   }
 
-  const residentCoordinates = Promise.resolve({
-    long: 0,
-    lat: 0
-  })
+  const residentCoordinates = Promise.resolve(null)
   
   return (
     <>
