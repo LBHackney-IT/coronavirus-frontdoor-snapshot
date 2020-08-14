@@ -48,9 +48,9 @@ functions:
       VULNERABILITIES_TABLE_NAME: ${self:provider.environment.VULNERABILITIES_TABLE}
       NEXT_PUBLIC_API_URL: https://${self:custom.aliases.${self:provider.stage}}/api
       NEXT_PUBLIC_URL: https://${self:custom.aliases.${self:provider.stage}}
-      AIRTABLE_API_KEY: ${ssm:/vulnerabilities/airtable-api-key~true}
-      AIRTABLE_BASE_ID: ${ssm:/vulnerabilities/airtable-base-id}
-      AIRTABLE_TABLE_NAMES: ${ssm:/vulnerabilities/airtable-table-names}
+      AIRTABLE_API_KEY: ${ssm:/frontdoor-snapshot/airtable-api-key}
+      AIRTABLE_BASE_ID: ${ssm:/frontdoor-snapshot/airtable-base-id}
+      AIRTABLE_TABLE_NAMES: ${ssm:/frontdoor-snapshot/airtable-table-names}
 
   cf-snapshot-authorizer:
     name: ${self:service}-authorizer-${self:provider.stage}
