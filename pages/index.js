@@ -57,6 +57,14 @@ const Index = ({ resources, initialSnapshot, token }) => {
         genericPostcode={postcode}
         residentCoordinates={residentCoordinates}
       />
+
+      <a
+        href='https://forms.gle/mLq5Ugxtf2uPZQ3aA'
+        className="govuk-button"
+        data-testid="feedback-link-test"
+      >
+        Submit feedback
+        </a>
     </>
   );
 };
