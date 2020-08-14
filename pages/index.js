@@ -59,7 +59,7 @@ const Index = ({ resources, initialSnapshot, token }) => {
       />
 
       <a
-        href='https://forms.gle/mLq5Ugxtf2uPZQ3aA'
+        href='https://forms.gle/mLq5Ugxtf2uPZQ3aA' target="_blank"
         className="govuk-button"
         data-testid="feedback-link-test"
       >
