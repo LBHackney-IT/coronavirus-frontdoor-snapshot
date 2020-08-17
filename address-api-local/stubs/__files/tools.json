@@ -1,0 +1,165 @@
+{
+    "records": [
+        {
+            "id": "rec53v28gVjCZkkT4",
+            "fields": {
+                "Name": "LHA bedroom calculator",
+                "Website 1": "https://lha-direct.voa.gov.uk/bedroomcalculator.aspx",
+                "Tags": [
+                    "housing",
+                    "private rental"
+                ]
+            },
+            "createdTime": "2020-06-17T15:57:37.000Z"
+        },
+        {
+            "id": "rec66pw7XV0cPB3w0",
+            "fields": {
+                "Name": "Where Can I Live - Rightmove",
+                "Description": "A website that can identify areas for you to live in based on your individual circumstances.",
+                "Website 1": "https://where.rightmove.co.uk/",
+                "Tags": [
+                    "private rental"
+                ]
+            },
+            "createdTime": "2020-06-17T16:03:07.000Z"
+        },
+        {
+            "id": "recGzDd79NKfATV6o",
+            "fields": {
+                "Name": "On The Market",
+                "Website 1": "https://www.onthemarket.com/to-rent/",
+                "Tags": [
+                    "private rental"
+                ]
+            },
+            "createdTime": "2020-06-17T16:12:54.000Z"
+        },
+        {
+            "id": "recJnSVoQz7dbVDPN",
+            "fields": {
+                "Name": "Hackney: help to secure a letting",
+                "Description": "Found a property you can afford but need help to secure the letting? Tell us about the private tenancy you are trying to secure. The more detail you can supply the sooner we can consider this.",
+                "Website 1": "https://docs.google.com/forms/d/1LzfG4YqDks0lwBnRJXU3ly7gkwHXIy5KENFgtxU8o98/viewform?ts=5ebaaf4b&edit_requested=true",
+                "Signposting": "020 8356 4411",
+                "Tags": [
+                    "private rental"
+                ]
+            },
+            "createdTime": "2020-06-17T16:14:41.000Z"
+        },
+        {
+            "id": "recMPIMCWHDUMCiz1",
+            "fields": {},
+            "createdTime": "2020-07-10T14:17:21.000Z"
+        },
+        {
+            "id": "recTA4U4dC9YoAPnj",
+            "fields": {
+                "Name": "LHA rate finder",
+                "Website 1": "https://lha-direct.voa.gov.uk/search.aspx",
+                "Tags": [
+                    "housing",
+                    "welfare benefits",
+                    "private rental"
+                ]
+            },
+            "createdTime": "2020-06-17T16:11:39.000Z"
+        },
+        {
+            "id": "recUUtzk3Os1qFAIZ",
+            "fields": {
+                "Name": "Private renting 6-step guide",
+                "Description": "Hackney Council's step-by-step guide to finding your own private rental accommodation.",
+                "Website 1": "https://hackney.gov.uk/private-rented-property"
+            },
+            "createdTime": "2020-07-10T14:16:00.000Z"
+        },
+        {
+            "id": "recYKYQfjaDC6KkJJ",
+            "fields": {
+                "Name": "Right Move",
+                "Website 1": "https://www.rightmove.co.uk/property-to-rent.html",
+                "Tags": [
+                    "private rental"
+                ]
+            },
+            "createdTime": "2020-06-17T16:12:47.000Z"
+        },
+        {
+            "id": "recjxmNc4izQ8USYX",
+            "fields": {
+                "Name": "Zoopla",
+                "Website 1": "https://www.zoopla.co.uk/to-rent/",
+                "Tags": [
+                    "private rental"
+                ]
+            },
+            "createdTime": "2020-06-17T16:13:01.000Z"
+        },
+        {
+            "id": "recmNK7wQfdh2lqvS",
+            "fields": {
+                "Name": "Dssmove",
+                "Description": "If you’re in receipt of benefits then finding a landlord that’s willing to have you as a tenant can be hard. We pride ourselves on helping you find a rental property that says “yes” to DSS. ",
+                "Website 1": "http://www.dssmove.co.uk/",
+                "Tags": [
+                    "private rental"
+                ]
+            },
+            "createdTime": "2020-06-17T15:56:33.000Z"
+        },
+        {
+            "id": "recqGoB471ODRNJGP",
+            "fields": {
+                "Name": "Homefinder",
+                "Tags": [
+                    "social housing"
+                ]
+            },
+            "createdTime": "2020-06-17T15:57:20.000Z"
+        },
+        {
+            "id": "rectLgbBesu7769jL",
+            "fields": {
+                "Name": "Benefit cap amounts",
+                "Description": "The benefit cap is a limit on the total amount you can get from all welfare benefits including help with housing costs (e.g. Local Housing Allowance rate). It applies to most people aged 16-65.",
+                "Website 1": "https://www.gov.uk/benefit-cap/benefit-cap-amounts",
+                "Tags": [
+                    "welfare benefits",
+                    "money",
+                    "private rental",
+                    "housing"
+                ]
+            },
+            "createdTime": "2020-06-17T16:16:30.000Z"
+        },
+        {
+            "id": "recvGv5hDg3ZNqpCE",
+            "fields": {
+                "Name": "Budget Planner",
+                "Website 1": "https://www.moneyadviceservice.org.uk/en/tools/budget-planner",
+                "Tags": [
+                    "money",
+                    "debt"
+                ],
+                "Vulnerability snapshot tags": [
+                    "rent arrears"
+                ]
+            },
+            "createdTime": "2020-06-17T15:01:47.000Z"
+        },
+        {
+            "id": "recyisqNu4h5R5J4G",
+            "fields": {
+                "Name": "How To Rent Guide",
+                "Description": "This guide is for tenants and landlords in the private rented sector to help them understand their rights and responsibilities. It provides a checklist and more detailed information on each stage of the process.",
+                "Website 1": "https://www.gov.uk/government/publications/how-to-rent",
+                "Tags": [
+                    "private rental"
+                ]
+            },
+            "createdTime": "2020-06-17T16:15:43.000Z"
+        }
+    ]
+}

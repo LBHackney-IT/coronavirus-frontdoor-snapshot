@@ -16,3 +16,10 @@ services:
       dockerfile: Dockerfile
     ports:
       - 8085:8080
+
+  address-api-stub:
+    build:
+      context: ./address-api-local
+      dockerfile: Dockerfile
+    ports:
+      - 8086:8080
