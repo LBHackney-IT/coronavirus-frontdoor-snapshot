@@ -30,13 +30,13 @@ const ResourceCard = ({
 
 
   return (
-    <div className={`${css.resource}`} {...others}>
+    <div className={`resource ${css.resource}`} {...others}>
       <div className={css.tags__container}>
         {tagsElement}
       </div>
       <h3>{name}</h3>
         <>
-        <SummaryList key="resourceInfo" name={['resourceInfo']} entries={{ 'Distance': (distance) ? distance + ' miles' : null ,
+        <SummaryList key="resourceInfo" name={['resourceInfo']} entries={{ 'Distance': (distance && distance < 100) ? distance + ' miles' : null ,
       'Availability': currentProvision, 'Days / Times' : openingTimes, 'Distribution' : distributionElement, 'Telephone' : telephone}} customStyle="small" />
 
         </>

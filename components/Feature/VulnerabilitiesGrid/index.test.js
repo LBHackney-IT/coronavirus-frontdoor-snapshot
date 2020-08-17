@@ -17,7 +17,7 @@ describe('VulnerabilitiesGrid', () => {
     }, 0);
 
     const { container } = render(
-      <VulnerabilitiesGrid onUpdate={jest.fn()} resources={resources} residentCoordinates={residentCoordinates}/>
+      <VulnerabilitiesGrid onUpdate={jest.fn()} onError={jest.fn()} resources={resources} residentCoordinates={residentCoordinates}/>
     );
 
     expect(
@@ -36,7 +36,7 @@ describe('VulnerabilitiesGrid', () => {
     });
 
     const { container } = render(
-      <VulnerabilitiesGrid onUpdate={onUpdate} resources={resources} residentCoordinates={residentCoordinates}/>
+      <VulnerabilitiesGrid onUpdate={onUpdate} onError={jest.fn()} resources={resources} residentCoordinates={residentCoordinates}/>
     );
 
     act(() => container.querySelector('.govuk-checkboxes__input').click());
@@ -45,7 +45,7 @@ describe('VulnerabilitiesGrid', () => {
 
   it('creates a textinput when checkbox is checked', () => {
     const { container } = render(
-      <VulnerabilitiesGrid onUpdate={jest.fn()} resources={resources} residentCoordinates={residentCoordinates}/>
+      <VulnerabilitiesGrid onUpdate={jest.fn()} onError={jest.fn()}  resources={resources} residentCoordinates={residentCoordinates}/>
     );
 
     fireEvent(
@@ -68,7 +68,7 @@ describe('VulnerabilitiesGrid', () => {
       vulnerabilities: []
     });
     const { container } = render(
-      <VulnerabilitiesGrid onUpdate={onUpdate} resources={resources} residentCoordinates={residentCoordinates}/>
+      <VulnerabilitiesGrid onUpdate={onUpdate} onError={jest.fn()}  resources={resources} residentCoordinates={residentCoordinates}/>
     );
 
     fireEvent(
@@ -96,7 +96,7 @@ describe('VulnerabilitiesGrid', () => {
       vulnerabilities: [{ data: [], name: 'some text' }]
     });
     const { container } = render(
-      <VulnerabilitiesGrid onUpdate={onUpdate} resources={resources} residentCoordinates={residentCoordinates}/>
+      <VulnerabilitiesGrid onUpdate={onUpdate} onError={jest.fn()}  resources={resources} residentCoordinates={residentCoordinates}/>
     );
 
     fireEvent(
@@ -119,9 +119,10 @@ describe('VulnerabilitiesGrid', () => {
     expect(onUpdate).toHaveBeenCalledWith(expected);
   });
 
+
   it('creates text inputs when active case checkbox is checked', () => {
     const { container } = render(
-      <VulnerabilitiesGrid onUpdate={jest.fn()} resources={resources} residentCoordinates={residentCoordinates}/>
+      <VulnerabilitiesGrid onUpdate={jest.fn()} onError={jest.fn()}  resources={resources} residentCoordinates={residentCoordinates}/>
     );
 
     fireEvent(
@@ -170,7 +171,7 @@ describe('VulnerabilitiesGrid', () => {
       ]
     });
     const { container } = render(
-      <VulnerabilitiesGrid onUpdate={onUpdate} resources={resources} residentCoordinates={residentCoordinates}/>
+      <VulnerabilitiesGrid onUpdate={onUpdate} onError={jest.fn()}  resources={resources} residentCoordinates={residentCoordinates}/>
     );
 
     fireEvent(
@@ -208,7 +209,7 @@ describe('VulnerabilitiesGrid', () => {
       ]
     });
     const { container } = render(
-      <VulnerabilitiesGrid onUpdate={onUpdate} resources={resources} residentCoordinates={residentCoordinates}/>
+      <VulnerabilitiesGrid onUpdate={onUpdate} onError={jest.fn()}  resources={resources} residentCoordinates={residentCoordinates}/>
     );
 
     fireEvent(
@@ -261,7 +262,7 @@ describe('VulnerabilitiesGrid', () => {
       ];
 
       const { getByLabelText, queryByTestId } = render(
-        <VulnerabilitiesGrid onUpdate={jest.fn()} resources={resources} residentCoordinates={residentCoordinates}/>
+        <VulnerabilitiesGrid onUpdate={jest.fn()} onError={jest.fn()}  resources={resources} residentCoordinates={residentCoordinates}/>
       );
 
       expect(queryByTestId('resource-hq')).not.toBeInTheDocument();
@@ -286,7 +287,7 @@ describe('VulnerabilitiesGrid', () => {
     ];
 
     const { getByLabelText, queryByTestId } = render(
-      <VulnerabilitiesGrid onUpdate={jest.fn()} resources={resources} residentCoordinates={residentCoordinates}/>
+      <VulnerabilitiesGrid onUpdate={jest.fn()} onError={jest.fn()}  resources={resources} residentCoordinates={residentCoordinates}/>
     );
 
     expect(queryByTestId('resource-hs')).not.toBeInTheDocument();
@@ -311,7 +312,7 @@ describe('VulnerabilitiesGrid', () => {
     ];
 
     const { getByLabelText, queryByTestId } = render(
-      <VulnerabilitiesGrid onUpdate={jest.fn()} resources={resources} residentCoordinates={residentCoordinates}/>
+      <VulnerabilitiesGrid onUpdate={jest.fn()} onError={jest.fn()}  resources={resources} residentCoordinates={residentCoordinates}/>
     );
 
     expect(queryByTestId('resource-hs')).not.toBeInTheDocument();

@@ -3,11 +3,11 @@ import useSnapshot from 'lib/api/utils/useSnapshot';
 import { requestResources } from 'lib/api';
 import HttpStatusError from 'lib/api/domain/HttpStatusError';
 import { getTokenFromCookieHeader } from 'lib/utils/token';
-import { Button, TextInput } from 'components/Form';
 import VulnerabilitiesGrid from 'components/Feature/VulnerabilitiesGrid';
 
 
 const Index = ({ resources, initialSnapshot, token }) => {
+  const [errorMsg, setErrorMsg] = useState()
   const { snapshot, loading, updateSnapshot } = useSnapshot(
     initialSnapshot.snapshotId,
     {
@@ -20,19 +20,17 @@ const Index = ({ resources, initialSnapshot, token }) => {
     return <p>Loading...</p>;
   }
 
-  const [postcode, setPostcode] = useState();
+  const [typingPostcode, setTypingPostcode] = useState();
+  const [genericPostcode, setGenericPostcode] = useState();
 
-  const printSelected = selected => {
-    console.log("Selected assets: ", selected.assets)
-    console.log("Selected vulnerabilities: ", selected.vulnerabilities)
+  const handleError = errorMsg => {
+      setErrorMsg(errorMsg)
   }
-  // check the external system id for redirecting back to originating system
 
-  // let coordinates = geoCoordinates(postcode);
-  const handleChange = (event) => {
-    console.log("postcode ", event)
-    setPostcode(event)
+  const handleUpdate = () => {
+    setErrorMsg(null)
   }
+
 
   const residentCoordinates = Promise.resolve(null)
   
@@ -44,20 +42,24 @@ const Index = ({ resources, initialSnapshot, token }) => {
       <p>
       Enter a postcode to help filter the results by distance:
       </p>
-        <TextInput 
-          name="Postcode"
-          className="govuk-!-width-one-quarter"
-          onChange={handleChange}
-          value={postcode}
-        />
-
+      <div class="govuk-form-group">
+      <p className="govuk-error-message">{genericPostcode && errorMsg}</p>
+      <input
+        className={'govuk-input govuk-!-width-one-quarter' + ((genericPostcode && errorMsg) ? " govuk-input--error" : "")}
+        id="Postcode"
+        name="Postcode"
+        type="text"
+        value={typingPostcode}
+        onBlur={(e) => setGenericPostcode(e.target.value)}
+      />
+      </div>
       <VulnerabilitiesGrid
-        onUpdate={printSelected}
+        onError={handleError}
+        onUpdate={handleUpdate}
         resources={resources}
-        genericPostcode={postcode}
+        genericPostcode={genericPostcode}
         residentCoordinates={residentCoordinates}
       />
-
       <a
         href='https://forms.gle/mLq5Ugxtf2uPZQ3aA' target="_blank"
         className="govuk-button"
