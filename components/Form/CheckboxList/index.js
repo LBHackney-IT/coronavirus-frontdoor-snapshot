@@ -2,7 +2,7 @@ const CheckboxList = ({ children, className }) => {
   return (
     <div className="govuk-form-group">
       <div
-        className={`govuk-checkboxes ${className ? `${className}-group` : ''}`}
+        className={`govuk-checkboxes`}
       >
         {children}
       </div>
