@@ -50,11 +50,7 @@ const Index = ({ resources, initialSnapshot, token }) => {
           className={'govuk-!-width-one-quarter' + ((genericPostcode && errorMsg) ? " govuk-input--error" : "")}
           onChange={(event) =>  setTypingPostcode(event)}
           value={typingPostcode}
-        />
-        <Button
-          id="filterBtn"
-          text="Filter distance"
-          onClick={(event) =>  setGenericPostcode(typingPostcode)}
+          onBlur={(event) =>  setGenericPostcode(typingPostcode)}
         />
       </div>
       <VulnerabilitiesGrid

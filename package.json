@@ -46,7 +46,6 @@
     "babel-jest": "^25.5.1",
     "cypress": "^4.5.0",
     "cypress-axe": "^0.8.1",
-    "cypress-plugin-retries": "^1.5.2",
     "dynamodb-admin": "^4.0.0",
     "eslint": "^6.6.0",
     "eslint-config-prettier": "^6.5.0",

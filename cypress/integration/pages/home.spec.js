@@ -42,7 +42,6 @@ context('Index page', () => {
 
     it('Ranks resources by postcode', () => {
       cy.get('#Postcode').type('E1 6AW')
-      cy.get('#filterBtn').click()
       cy.get('[data-testid=accordion-item]').eq(0).click();
       cy.get('[data-testid=food-needs-v-halal-checkbox]').click();
       cy.get('[data-testid=food-needs-v-vegetarian-checkbox]').click();
@@ -55,7 +54,6 @@ context('Index page', () => {
 
     it('Displays an error when postcodes coordinates are not found', () => {
       cy.get('#Postcode').type('ABC123')
-      cy.get('#filterBtn').click()
       cy.get('.govuk-error-message').should('contain', 'Could not find coordinates for: ABC123')
     });
 

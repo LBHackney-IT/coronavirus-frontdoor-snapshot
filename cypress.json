@@ -1,7 +1,3 @@
 {
-  "baseUrl": "http://localhost:3000" ,
-  "env":
-  {
-    "RETRIES": 2
-  }
+  "baseUrl": "http://localhost:3000"
 }
