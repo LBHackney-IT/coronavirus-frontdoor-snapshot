@@ -35,17 +35,17 @@ jobs:
           aws-secret-access-key: CYPRESS_AWS_SECRET_ACCESS_KEY
           aws-region: CYPRESS_AWS_REGION
       - run:
-          name: Create local DynamoDB vulnerabilities table
-          command: aws dynamodb create-table --cli-input-json file://./config/tables/vulnerabilities.json --endpoint-url http://localhost:8000 > /dev/null
+          name: Start dependencies for integration tests
+          command: docker-compose up
       - run:
           name: Run integration tests
           command: |
             export NEXT_PUBLIC_API_URL=http://localhost:3000/api
             export VULNERABILITIES_TABLE_NAME=vulnerabilities
             export AIRTABLE_API_KEY=${AIRTABLE_API_KEY_INTEGRATION}
-            export AIRTABLE_BASE_ID=${AIRTABLE_BASE_ID_INTEGRATION}
+            export AIRTABLE_BASE_ID=baseId123
             export AIRTABLE_TABLE_NAMES=${AIRTABLE_TABLE_NAMES_INTEGRATION}
-            export ADDRESSES_API_URL=${ADDRESSES_API_URL}
+            export AIRTABLE_BASE_URL=AIRTABLE_BASE_URL
             export ADDRESSES_API_KEY=${ADDRESSES_API_KEY}
             export HOTJAR_ID=${HOTJAR_ID}
             export ALLOWED_GROUPS=xx
