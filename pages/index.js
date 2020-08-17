@@ -83,6 +83,7 @@ Index.getInitialProps = async ({
       token
     };
   } catch (err) {
+    console.log("Failed to load initial Props:" + err)
     res.writeHead(err instanceof HttpStatusError ? err.statusCode : 500).end();
   }
 };
