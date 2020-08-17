@@ -36,7 +36,7 @@ const ResourceCard = ({
       </div>
       <h3>{name}</h3>
         <>
-        <SummaryList key="resourceInfo" name={['resourceInfo']} entries={{ 'Distance': (distance) ? distance + ' miles' : null ,
+        <SummaryList key="resourceInfo" name={['resourceInfo']} entries={{ 'Distance': (distance && distance < 100) ? distance + ' miles' : null ,
       'Availability': currentProvision, 'Days / Times' : openingTimes, 'Distribution' : distributionElement, 'Telephone' : telephone}} customStyle="small" />
 
         </>

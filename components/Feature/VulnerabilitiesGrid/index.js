@@ -32,7 +32,7 @@ function createLookup() {
   return lookup;
 }
 
-const VulnerabilitiesGrid = ({ resources, onUpdate, residentCoordinates, genericPostcode }) => {
+const VulnerabilitiesGrid = ({ resources, onUpdate, residentCoordinates, genericPostcode, onError }) => {
 
   const [grid, setGrid] = useState({
     assets: {},
@@ -43,15 +43,16 @@ const VulnerabilitiesGrid = ({ resources, onUpdate, residentCoordinates, generic
   const [expandedGroups, setExpandedGroups] = useState({});
   const [residentData, setResidentData] = useState(null);
 
-  if (genericPostcode) {
-    geoCoordinates(genericPostcode).then(result => {
+  const updateResidentData = (result) => {
+    if(result){
       setResidentData(result);
-    });
-  } else {
-    residentCoordinates.then(result => {
-      setResidentData(result);
-    });
+      onError(null)
+    } else {
+      let errorMsg = "Could not find coordinates for: " + genericPostcode
+      onError(errorMsg)
+    }
   }
+
   const updateSelectedCheckboxes = ({ gridType, key, value }) => {
     updateGrid({
       [gridType]: grid[gridType][key]
@@ -59,6 +60,7 @@ const VulnerabilitiesGrid = ({ resources, onUpdate, residentCoordinates, generic
         : helper.addItem({ obj: grid[gridType], key, value })
     });
   };
+
 
   const updateTextData = ({
     gridType,
@@ -98,7 +100,15 @@ const VulnerabilitiesGrid = ({ resources, onUpdate, residentCoordinates, generic
         .filter(v => v.name !== 'Other')
         .map(v => ({ ...v, data: Object.values(v.data) }))
     });
-  }, [grid]);
+
+    // will re-render when the genericPostcode is changed
+    if (genericPostcode) {
+      geoCoordinates(genericPostcode).then(updateResidentData)
+    } else {
+      residentCoordinates.then(updateResidentData)
+    }
+    
+  }, [grid, genericPostcode]);
 
   const updateGrid = patch => setGrid(grid => ({ ...grid, ...patch }));
 

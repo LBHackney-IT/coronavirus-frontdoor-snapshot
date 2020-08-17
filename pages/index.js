@@ -8,6 +8,7 @@ import VulnerabilitiesGrid from 'components/Feature/VulnerabilitiesGrid';
 
 
 const Index = ({ resources, initialSnapshot, token }) => {
+  const [errorMsg, setErrorMsg] = useState()
   const { snapshot, loading, updateSnapshot } = useSnapshot(
     initialSnapshot.snapshotId,
     {
@@ -22,13 +23,14 @@ const Index = ({ resources, initialSnapshot, token }) => {
 
   const [postcode, setPostcode] = useState();
 
-  const printSelected = selected => {
-    console.log("Selected assets: ", selected.assets)
-    console.log("Selected vulnerabilities: ", selected.vulnerabilities)
+  const handleError = errorMsg => {
+      setErrorMsg(errorMsg)
   }
-  // check the external system id for redirecting back to originating system
 
-  // let coordinates = geoCoordinates(postcode);
+  const handleUpdate = () => {
+    setErrorMsg(null)
+  }
+
   const handleChange = (event) => {
     console.log("postcode ", event)
     setPostcode(event)
@@ -46,18 +48,19 @@ const Index = ({ resources, initialSnapshot, token }) => {
       </p>
         <TextInput 
           name="Postcode"
-          className="govuk-!-width-one-quarter"
+          className={'govuk-!-width-one-quarter' + ((postcode && errorMsg) ? " govuk-input--error" : "")}
           onChange={handleChange}
           value={postcode}
         />
-
+      <p className="govuk-error-message">{postcode && errorMsg}</p>
+      
       <VulnerabilitiesGrid
-        onUpdate={printSelected}
+        onError={handleError}
+        onUpdate={handleUpdate}
         resources={resources}
         genericPostcode={postcode}
         residentCoordinates={residentCoordinates}
       />
-
       <a
         href='https://forms.gle/mLq5Ugxtf2uPZQ3aA' target="_blank"
         className="govuk-button"
