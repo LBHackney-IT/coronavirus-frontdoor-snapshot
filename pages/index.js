@@ -21,7 +21,8 @@ const Index = ({ resources, initialSnapshot, token }) => {
     return <p>Loading...</p>;
   }
 
-  const [postcode, setPostcode] = useState();
+  const [typingPostcode, setTypingPostcode] = useState();
+  const [genericPostcode, setGenericPostcode] = useState();
 
   const handleError = errorMsg => {
       setErrorMsg(errorMsg)
@@ -31,9 +32,6 @@ const Index = ({ resources, initialSnapshot, token }) => {
     setErrorMsg(null)
   }
 
-  const handleChange = (event) => {
-    setPostcode(event)
-  }
 
   const residentCoordinates = Promise.resolve(null)
   
@@ -45,19 +43,25 @@ const Index = ({ resources, initialSnapshot, token }) => {
       <p>
       Enter a postcode to help filter the results by distance:
       </p>
+      <div class="govuk-form-group">
+      <p className="govuk-error-message">{genericPostcode && errorMsg}</p>
         <TextInput 
           name="Postcode"
-          className={'govuk-!-width-one-quarter' + ((postcode && errorMsg) ? " govuk-input--error" : "")}
-          onChange={handleChange}
-          value={postcode}
+          className={'govuk-!-width-one-quarter' + ((genericPostcode && errorMsg) ? " govuk-input--error" : "")}
+          onChange={(event) =>  setTypingPostcode(event)}
+          value={typingPostcode}
         />
-      <p className="govuk-error-message">{postcode && errorMsg}</p>
-      
+        <Button
+          id="filterBtn"
+          text="Filter distance"
+          onClick={(event) =>  setGenericPostcode(typingPostcode)}
+        />
+      </div>
       <VulnerabilitiesGrid
         onError={handleError}
         onUpdate={handleUpdate}
         resources={resources}
-        genericPostcode={postcode}
+        genericPostcode={genericPostcode}
         residentCoordinates={residentCoordinates}
       />
       <a
