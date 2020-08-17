@@ -38,6 +38,8 @@ const SnapshotSummary = ({ resources, initialSnapshot, token }) => {
     );
   };
 
+  const handleError = (errorMsg) => console.log(errorMsg)
+  
   const updateNotes = notes => {
     snapshot.notes = notes;
     setHasValue(
@@ -84,6 +86,7 @@ const SnapshotSummary = ({ resources, initialSnapshot, token }) => {
       {editSnapshot && (
         <>
           <VulnerabilitiesGrid
+            onError={handleError}
             onUpdate={updateSelected}
             resources={resources}
             residentCoordinates={residentCoordinates}

@@ -32,7 +32,6 @@ const Index = ({ resources, initialSnapshot, token }) => {
   }
 
   const handleChange = (event) => {
-    console.log("postcode ", event)
     setPostcode(event)
   }
 

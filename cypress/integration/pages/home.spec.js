@@ -46,11 +46,19 @@ context('Index page', () => {
       cy.get('[data-testid=food-needs-v-halal-checkbox]').click();
       cy.get('[data-testid=food-needs-v-vegetarian-checkbox]').click();
 
+      // it calculates the distance, there may be a considerable network delay
+      cy.wait(3000)
       cy.get('[data-testid=resource-recisR36NAVBna3N4] > h3')
         .should('contain', 'Shirdi Sai Baba Temple')
-      cy.wait(3000) // it calculates the distance, there may be a considerable network delay
       cy.get('[data-testid=resource-recisR36NAVBna3N4] > :nth-child(3) > #resourceInfo > :nth-child(1) > .govuk-summary-list__value')
         .should('contain', '1.10 miles')
+    });
+
+
+
+    it('Displays an error when postcodes coordinates are not found', () => {
+      cy.get('#Postcode').type('ABC123')
+      cy.get('.govuk-error-message').should('contain', 'Could not find coordinates for: ABC123')
     });
 
   });
