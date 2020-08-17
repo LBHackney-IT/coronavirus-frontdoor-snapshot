@@ -30,7 +30,7 @@ const ResourceCard = ({
 
 
   return (
-    <div className={`${css.resource}`} {...others}>
+    <div className={`resource ${css.resource}`} {...others}>
       <div className={css.tags__container}>
         {tagsElement}
       </div>
