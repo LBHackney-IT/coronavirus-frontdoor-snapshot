@@ -3,7 +3,6 @@ import useSnapshot from 'lib/api/utils/useSnapshot';
 import { requestResources } from 'lib/api';
 import HttpStatusError from 'lib/api/domain/HttpStatusError';
 import { getTokenFromCookieHeader } from 'lib/utils/token';
-import { Button, TextInput } from 'components/Form';
 import VulnerabilitiesGrid from 'components/Feature/VulnerabilitiesGrid';
 
 
@@ -45,13 +44,14 @@ const Index = ({ resources, initialSnapshot, token }) => {
       </p>
       <div class="govuk-form-group">
       <p className="govuk-error-message">{genericPostcode && errorMsg}</p>
-        <TextInput 
-          name="Postcode"
-          className={'govuk-!-width-one-quarter' + ((genericPostcode && errorMsg) ? " govuk-input--error" : "")}
-          onChange={(event) =>  setTypingPostcode(event)}
-          value={typingPostcode}
-          onBlur={(event) =>  setGenericPostcode(typingPostcode)}
-        />
+      <input
+        className={'govuk-input govuk-!-width-one-quarter' + ((genericPostcode && errorMsg) ? " govuk-input--error" : "")}
+        id="Postcode"
+        name="Postcode"
+        type="text"
+        value={typingPostcode}
+        onBlur={(e) => setGenericPostcode(e.target.value)}
+      />
       </div>
       <VulnerabilitiesGrid
         onError={handleError}

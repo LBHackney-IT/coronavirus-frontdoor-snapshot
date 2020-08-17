@@ -54,6 +54,7 @@ context('Index page', () => {
 
     it('Displays an error when postcodes coordinates are not found', () => {
       cy.get('#Postcode').type('ABC123')
+      cy.get('[data-testid=accordion-item]').eq(0).click();
       cy.get('.govuk-error-message').should('contain', 'Could not find coordinates for: ABC123')
     });
 
