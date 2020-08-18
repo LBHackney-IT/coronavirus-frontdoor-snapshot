@@ -51,10 +51,6 @@ const SnapshotSummary = ({ resources, initialSnapshot, token }) => {
 
   const { dob, firstName, lastName, postcode, assets, vulnerabilities, notes } = snapshot;
   let customerId = snapshot.systemIds?.[0];
-  // we are assuming inh redirect are prefixed, to easily distinguish where the ID is originating, but this could be removed later on
-  if (customerId && customerId.includes("inh-", 0)) {
-    customerId = customerId.substring(4);
-  }
   const residentCoordinates = geoCoordinates(postcode);
   const INH_URL = process.env.INH_URL
   
@@ -156,14 +152,17 @@ const SnapshotSummary = ({ resources, initialSnapshot, token }) => {
             {notes ? notes : 'None captured'}
           </div>
 
-          <div data-testid="notes-summary">
-            <br></br>
-            <a
-              href={`${INH_URL}/help-requests/complete/${customerId}`}
-              className="govuk-button"
-              data-testid="continue-link-to-inh">
-              Continue
-            </a>
+          <div className="govuk-grid-row govuk-!-margin-top-9">
+           { customerId && (
+            <div className="govuk-grid-column-one-half">
+              <a
+                href={`${INH_URL}/help-requests/complete/${customerId}`}
+                className="govuk-button"
+                data-testid="continue-link-to-inh">
+                Continue
+              </a>
+            </div>
+            )}
           </div>
         </>
       )}
