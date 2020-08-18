@@ -75,7 +75,7 @@ context('Snapshot summary', () => {
         .and(
           'have.attr',
           'href',
-          'http://localhost:5000/help-requests/edit/dub'
+          'http://localhost:5000/help-requests/edit/dub?stage=3'
         );
     });
 
