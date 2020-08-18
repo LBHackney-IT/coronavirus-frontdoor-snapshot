@@ -60,7 +60,7 @@ const SnapshotSummary = ({ resources, initialSnapshot, token }) => {
   return (
     <>
       <div>      
-        { customerId && (
+        { editSnapshot && customerId && (
           <a
           href={`${process.env.INH_URL}/help-requests/edit/${customerId}`}
           className="govuk-back-link back-button"
@@ -157,8 +157,12 @@ const SnapshotSummary = ({ resources, initialSnapshot, token }) => {
 
           <div data-testid="notes-summary">
             <br></br>
-            <button className="govuk-button" id="print">Print this page</button><br></br>
-            <button className="govuk-button" id="shared-plan">Continue</button>
+            <a
+              href={`${process.env.INH_URL}/help-requests/edit/${customerId}`}
+              className="govuk-button"
+              data-testid="continue-link-to-inh">
+              Continue
+            </a>
           </div>
         </>
       )}
