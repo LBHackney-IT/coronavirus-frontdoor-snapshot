@@ -158,7 +158,7 @@ const SnapshotSummary = ({ resources, initialSnapshot, token }) => {
           <div data-testid="notes-summary">
             <br></br>
             <a
-              href={`${process.env.INH_URL}/help-requests/edit/${customerId}?stage=3`}
+              href={`${process.env.INH_URL}/help-requests/complete/${customerId}`}
               className="govuk-button"
               data-testid="continue-link-to-inh">
               Continue
