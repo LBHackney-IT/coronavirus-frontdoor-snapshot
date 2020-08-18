@@ -33,7 +33,7 @@ curl -X POST \
 "firstName" : "Sue",
 "lastName" : "Taylor",
 "dob": {},
-"systemIds": ["inh-123"],
+"systemIds": ["123"],
 "createdBy": "",
 "postcode": "E1 6AW"
 }'

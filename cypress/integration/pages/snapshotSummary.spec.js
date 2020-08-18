@@ -68,6 +68,15 @@ context('Snapshot summary', () => {
       cy.get('[data-testid=notes-summary]')
         .should('contain', 'Notes')
         .and('contain', 'Notes notes');
+
+      // And I can continue back to INH
+      cy.get('[data-testid=continue-link-to-inh]')
+        .should('contain', 'Continue')
+        .and(
+          'have.attr',
+          'href',
+          'http://localhost:5000/help-requests/complete/dub'
+        );
     });
 
     it('Displays none captured if there are no vulnerabilities or assets', () => {
