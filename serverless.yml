@@ -51,6 +51,7 @@ functions:
       AIRTABLE_API_KEY: ${ssm:/frontdoor-snapshot/airtable-api-key}
       AIRTABLE_BASE_ID: ${ssm:/frontdoor-snapshot/airtable-base-id}
       AIRTABLE_TABLE_NAMES: ${ssm:/frontdoor-snapshot/airtable-table-names}
+      INH_URL: ${ssm:/frontdoor-snapshot/inh-url}
 
   cf-snapshot-authorizer:
     name: ${self:service}-authorizer-${self:provider.stage}
