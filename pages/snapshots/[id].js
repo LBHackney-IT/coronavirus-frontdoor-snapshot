@@ -56,13 +56,14 @@ const SnapshotSummary = ({ resources, initialSnapshot, token }) => {
     customerId = customerId.substring(4);
   }
   const residentCoordinates = geoCoordinates(postcode);
+  const INH_URL = process.env.INH_URL
   
   return (
     <>
       <div>      
         { editSnapshot && customerId && (
           <a
-          href={`${process.env.INH_URL}/help-requests/edit/${customerId}`}
+          href={`${INH_URL}/help-requests/edit/${customerId}`}
           className="govuk-back-link back-button"
           data-testid="back-link-test"
         >
@@ -158,7 +159,7 @@ const SnapshotSummary = ({ resources, initialSnapshot, token }) => {
           <div data-testid="notes-summary">
             <br></br>
             <a
-              href={`${process.env.INH_URL}/help-requests/complete/${customerId}`}
+              href={`${INH_URL}/help-requests/complete/${customerId}`}
               className="govuk-button"
               data-testid="continue-link-to-inh">
               Continue
