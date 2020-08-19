@@ -61,7 +61,7 @@ const Index = ({ resources, initialSnapshot, token }) => {
         residentCoordinates={residentCoordinates}
       />
       <a
-        href='https://forms.gle/mLq5Ugxtf2uPZQ3aA' target="_blank"
+        href='https://forms.gle/B6vEMgp7sCsjJqNdA' target="_blank"
         className="govuk-button"
         data-testid="feedback-link-test"
       >
