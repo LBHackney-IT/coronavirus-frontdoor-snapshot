@@ -1,3 +1,5 @@
+const { should } = require("chai");
+
 context('Edit snapshot', () => {
   beforeEach(() => {
     cy.task('createSnapshot', {
@@ -113,6 +115,39 @@ context('Edit snapshot', () => {
 
       cy.task('deleteSnapshot', '2');
     });
+
+    it("Adds resources to the summary list", () => {
+      cy.visit(`/snapshots/1`);
+      cy.get('[data-testid=accordion-item]').eq(0).click();
+      cy.get('[data-testid=food-needs-v-halal-checkbox]').click();
+
+      cy.get('[data-testid=resource-rec2FkHGEn9BiiXvW] > h3').eq(0)
+        .should('contain', 'Made Up Kitchen')
+      cy.get('#summary-recisR36NAVBna3N4').click()
+      cy.get('#button-recisR36NAVBna3N4').click()
+      cy.get('[data-testid=finish-and-save-button]').click();
+
+      cy.get('[data-testid=resources-summary]')
+        .should('contain', 'Resources')
+        .and('contain', 'Shirdi Sai Baba Temple');
+    })
+
+    it("Adds and removes resources to the summary list", () => {
+      cy.visit(`/snapshots/1`);
+      cy.get('[data-testid=accordion-item]').eq(0).click();
+      cy.get('[data-testid=food-needs-v-halal-checkbox]').click();
+
+      cy.get('[data-testid=resource-rec2FkHGEn9BiiXvW] > h3').eq(0)
+        .should('contain', 'Made Up Kitchen')
+      cy.get('#summary-recisR36NAVBna3N4').click()
+      cy.get('#button-recisR36NAVBna3N4').click()
+      cy.get('#button-recisR36NAVBna3N4').click()
+      cy.get('[data-testid=finish-and-save-button]').click();
+
+      cy.get('[data-testid=resources-summary]')
+        .should('contain', 'Resources')
+        .and('not.contain', 'Shirdi Sai Baba Temple');
+    })
   });
 
   describe('Text input', () => {

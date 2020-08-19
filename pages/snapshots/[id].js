@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import useSnapshot from 'lib/api/utils/useSnapshot';
 import { requestSnapshot, requestResources } from 'lib/api';
 import HttpStatusError from 'lib/api/domain/HttpStatusError';
@@ -23,8 +23,8 @@ const SnapshotSummary = ({ resources, initialSnapshot, token }) => {
 
   const [editSnapshot, setEditSnapshot] = useState(
     snapshot.assets.length === 0 &&
-    snapshot.vulnerabilities.length === 0 &&
-    !snapshot.notes
+      snapshot.vulnerabilities.length === 0 &&
+      !snapshot.notes
   );
   const [hasValue, setHasValue] = useState(false);
 
@@ -33,42 +33,76 @@ const SnapshotSummary = ({ resources, initialSnapshot, token }) => {
     snapshot.vulnerabilities = selected.vulnerabilities;
     setHasValue(
       snapshot.assets.length > 0 ||
-      snapshot.vulnerabilities.length > 0 ||
-      snapshot.notes
+        snapshot.vulnerabilities.length > 0 ||
+        snapshot.notes
     );
   };
+  const [selectedResources, setResources] = useState([]);
 
-  const handleError = (errorMsg) => console.log(errorMsg)
-  
+  const updateSummaryResource = updatedResource => {
+    let updatedResources = selectedResources
+    if(updatedResources.some(resource => resource.name === updatedResource.name)){
+      let resourcesRemoved = []
+      updatedResources.forEach((resource) =>{
+        if(resource.name != updatedResource.name){
+          resourcesRemoved.push(resource)
+        }
+      })
+      updatedResources = resourcesRemoved
+    }else{
+      Object.keys(updatedResource).forEach(key => {
+        if (updatedResource[key] === undefined || updatedResource[key] === '') {
+          delete updatedResource[key];
+        }
+      })
+      let summary = []
+      Object.keys(updatedResource).forEach(key => {
+        summary.push(updatedResource[key])
+      })
+      updatedResource.summary = summary.join(', ')
+      updatedResources.push(updatedResource)
+    }
+    setResources(updatedResources)
+    console.log(updatedResources)
+  }
+  const handleError = errorMsg => console.log(errorMsg);
+
   const updateNotes = notes => {
     snapshot.notes = notes;
     setHasValue(
       snapshot.assets.length > 0 ||
-      snapshot.vulnerabilities.length > 0 ||
-      snapshot.notes
+        snapshot.vulnerabilities.length > 0 ||
+        snapshot.notes
     );
   };
 
-  const { dob, firstName, lastName, postcode, assets, vulnerabilities, notes } = snapshot;
+  const {
+    dob,
+    firstName,
+    lastName,
+    postcode,
+    assets,
+    vulnerabilities,
+    notes
+  } = snapshot;
   let customerId = snapshot.systemIds?.[0];
   // we are assuming inh redirect are prefixed, to easily distinguish where the ID is originating, but this could be removed later on
-  if (customerId && customerId.includes("inh-", 0)) {
+  if (customerId && customerId.includes('inh-', 0)) {
     customerId = customerId.substring(4);
   }
   const residentCoordinates = geoCoordinates(postcode);
-  
+
   return (
     <>
-      <div>      
-        { customerId && (
+      <div>
+        {customerId && (
           <a
-          href={`${process.env.INH_URL}/help-requests/edit/${customerId}`}
-          className="govuk-back-link back-button"
-          data-testid="back-link-test"
-        >
-          Back
-        </a>
-
+            href={`${process.env.INH_URL}/help-requests/edit/${customerId}`}
+            className="govuk-back-link back-button"
+            data-testid="back-link-test"
+          >
+            Back
+          </a>
         )}
       </div>
       <h1>
@@ -90,6 +124,7 @@ const SnapshotSummary = ({ resources, initialSnapshot, token }) => {
             onUpdate={updateSelected}
             resources={resources}
             residentCoordinates={residentCoordinates}
+            updateSelectedResources={updateSummaryResource}
           />
           <TextArea
             name="notes"
@@ -99,7 +134,7 @@ const SnapshotSummary = ({ resources, initialSnapshot, token }) => {
           <Button
             text="Finish &amp; save"
             onClick={async () => {
-              await updateSnapshot(snapshot);
+              await updateSnapshot(snapshot, selectedResources);
               setEditSnapshot(false);
             }}
             disabled={!hasValue}
@@ -129,8 +164,8 @@ const SnapshotSummary = ({ resources, initialSnapshot, token }) => {
                 ))}
               </ul>
             ) : (
-                'None captured'
-              )}
+              'None captured'
+            )}
           </div>
           <div data-testid="assets-summary">
             <h2>Assets</h2>
@@ -141,13 +176,17 @@ const SnapshotSummary = ({ resources, initialSnapshot, token }) => {
                 ))}
               </ul>
             ) : (
-                'None captured'
-              )}
+              'None captured'
+            )}
           </div>
 
           <div data-testid="resources-summary">
             <h2>Resources</h2>
-
+            {selectedResources.map((r, i) => (
+                  <li key={`resource-${i}`}>{r.summary}</li>
+                )
+              )
+            }
           </div>
 
           <div data-testid="notes-summary">
@@ -157,8 +196,13 @@ const SnapshotSummary = ({ resources, initialSnapshot, token }) => {
 
           <div data-testid="notes-summary">
             <br></br>
-            <button className="govuk-button" id="print">Print this page</button><br></br>
-            <button className="govuk-button" id="shared-plan">Continue</button>
+            <button className="govuk-button" id="print">
+              Print this page
+            </button>
+            <br></br>
+            <button className="govuk-button" id="shared-plan">
+              Continue
+            </button>
           </div>
         </>
       )}
