@@ -75,7 +75,7 @@ context('Snapshot summary', () => {
         .and(
           'have.attr',
           'href',
-          'http://localhost:5000/help-requests/complete/dub'
+          'https://inh-admin-test.hackney.gov.uk/help-requests/complete/dub'
         );
     });
 

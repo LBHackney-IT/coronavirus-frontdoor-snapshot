@@ -171,7 +171,7 @@ context('Edit snapshot', () => {
         .and(
           'have.attr',
           'href',
-          'http://localhost:5000/help-requests/edit/wub'
+          'https://inh-admin-test.hackney.gov.uk/help-requests/edit/wub'
         );
     });
   });
