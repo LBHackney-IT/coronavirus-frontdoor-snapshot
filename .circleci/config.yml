@@ -69,6 +69,8 @@ jobs:
         type: string
       SINGLEVIEW_URL:
         type: string
+      INH_URL:
+        type: string
       aws-access-key-id:
         type: env_var_name
       aws-secret-access-key:
