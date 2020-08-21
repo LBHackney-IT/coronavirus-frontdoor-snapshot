@@ -123,6 +123,7 @@ const SnapshotSummary = ({ resources, initialSnapshot, token }) => {
             resources={resources}
             residentCoordinates={residentCoordinates}
             updateSelectedResources={updateSummaryResource}
+            customerId={customerId}
           />
           <TextArea
             name="notes"
