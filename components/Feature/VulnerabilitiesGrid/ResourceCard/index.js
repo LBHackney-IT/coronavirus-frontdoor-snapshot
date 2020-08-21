@@ -22,6 +22,7 @@ const ResourceCard = ({
   notes,
   distance,
   matches,
+  customerId,
   ...others
 }) => {
   const trimLength = (s, length) => s.length > length ? s.substring(0, length) + "..." : s
@@ -31,7 +32,7 @@ const ResourceCard = ({
   const distributionElement =  tags.filter(t => HIDDEN_TAGS.includes(t)).join(", ")
   const tagsElement = tags.filter(t => !HIDDEN_TAGS.includes(t)).map(item=> (<span key={"tags-"+item} className={css.tags}>{trimLength(item, 20)}</span>))
   let [buttonText, setButtonText] = useState('Add')
-
+  const snapshot = (customerId != undefined) ? true : false
   const updateResource = () =>{
     updateSelectedResources({
       name:name,
@@ -64,12 +65,15 @@ const ResourceCard = ({
 
         <SummaryList key="moreResourceInfo" name={'moreResourceInfo'} entries={{ 'How to contact': selfReferralElement,
       'Address': address, 'Description' : description, 'Website' : websiteElement, 'Additional notes' : notes }} customStyle="small" />
+      { snapshot &&
+      ( 
         <div className="govuk-checkboxes__item">
           <input className="govuk-checkboxes__input" id={`input-${id}`} onClick={() => updateResource()} type="checkbox" value={name}/>
           <label className="govuk-label govuk-checkboxes__label" id={`label-${id}`}>
             Would you like to recommend this resource?
           </label>
-      </div>
+        </div>)
+      }
       </details>
     </div>
   );
