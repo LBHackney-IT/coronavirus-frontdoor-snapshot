@@ -124,7 +124,7 @@ context('Edit snapshot', () => {
       cy.get('[data-testid=resource-rec2FkHGEn9BiiXvW] > h3').eq(0)
         .should('contain', 'Made Up Kitchen')
       cy.get('#summary-recisR36NAVBna3N4').click()
-      cy.get('#button-recisR36NAVBna3N4').click()
+      cy.get('#input-recisR36NAVBna3N4').check()
       cy.get('[data-testid=finish-and-save-button]').click();
 
       cy.get('[data-testid=resources-summary]')
@@ -140,8 +140,8 @@ context('Edit snapshot', () => {
       cy.get('[data-testid=resource-rec2FkHGEn9BiiXvW] > h3').eq(0)
         .should('contain', 'Made Up Kitchen')
       cy.get('#summary-recisR36NAVBna3N4').click()
-      cy.get('#button-recisR36NAVBna3N4').click()
-      cy.get('#button-recisR36NAVBna3N4').click()
+      cy.get('#input-recisR36NAVBna3N4').check()
+      cy.get('#input-recisR36NAVBna3N4').uncheck()
       cy.get('[data-testid=finish-and-save-button]').click();
 
       cy.get('[data-testid=resources-summary]')

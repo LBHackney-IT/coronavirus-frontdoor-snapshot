@@ -30,14 +30,9 @@ const ResourceCard = ({
   const websiteElement = websites && websites.length > 0 &&  websites.map(website => (<a href={websites[0]} target="_blank" rel="noopener noreferrer">{websites[0]}</a>))
   const distributionElement =  tags.filter(t => HIDDEN_TAGS.includes(t)).join(", ")
   const tagsElement = tags.filter(t => !HIDDEN_TAGS.includes(t)).map(item=> (<span key={"tags-"+item} className={css.tags}>{trimLength(item, 20)}</span>))
-  const  [addToResourceSummary, setAdddToResourceSummary] = useState(false)
   let [buttonText, setButtonText] = useState('Add')
 
   const updateResource = () =>{
-    let updatedAddToResourceSummary =!addToResourceSummary
-    setAdddToResourceSummary(updatedAddToResourceSummary)
-    let updatedButtonText = (addToResourceSummary)? 'Add' : 'Remove'
-    setButtonText(updatedButtonText)
     updateSelectedResources({
       name:name,
       description: description,
@@ -69,8 +64,12 @@ const ResourceCard = ({
 
         <SummaryList key="moreResourceInfo" name={'moreResourceInfo'} entries={{ 'How to contact': selfReferralElement,
       'Address': address, 'Description' : description, 'Website' : websiteElement, 'Additional notes' : notes }} customStyle="small" />
-
-      <button onClick={() => updateResource()} id={`button-${id}`} class="govuk-button" data-module="govuk-button">{buttonText}</button>
+        <div className="govuk-checkboxes__item">
+          <input className="govuk-checkboxes__input" id={`input-${id}`} onClick={() => updateResource()} type="checkbox" value={name}/>
+          <label className="govuk-label govuk-checkboxes__label" id={`label-${id}`}>
+            Would you like to recommend this resource?
+          </label>
+      </div>
       </details>
     </div>
   );
