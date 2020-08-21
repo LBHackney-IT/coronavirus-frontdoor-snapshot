@@ -46,12 +46,11 @@ context('Edit snapshot', () => {
       .should('contain', 'Made Up Kitchen')
     cy.get('#summary-recisR36NAVBna3N4').click()
     cy.get('#input-recisR36NAVBna3N4').check()
-    cy.get('#input-recisR36NAVBna3N4').uncheck()
     cy.get('[data-testid=finish-and-save-button]').click();
 
     cy.get('[data-testid=resources-summary]')
       .should('contain', 'Resources')
-      .and('not.contain', 'Shirdi Sai Baba Temple');
+      .and('contain', 'Shirdi Sai Baba Temple');
   })
   
   describe('Edit snapshot', () => {
