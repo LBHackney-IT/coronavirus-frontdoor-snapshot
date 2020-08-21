@@ -1,5 +1,3 @@
-const { should } = require("chai");
-
 context('Edit snapshot', () => {
   beforeEach(() => {
     cy.task('createSnapshot', {
@@ -101,7 +99,7 @@ context('Edit snapshot', () => {
         queryLastName: 'flynn',
         assets: [],
         createdBy: 'Dat',
-        systemIds: ['inh-123'],
+        systemIds: ['123'],
         created: '2019-06-09T15:46:47.857Z',
         dob: '2000-06-09',
         vulnerabilities: [{ name: 'yup', data: [] }],
@@ -115,39 +113,6 @@ context('Edit snapshot', () => {
 
       cy.task('deleteSnapshot', '2');
     });
-
-    it("Adds resources to the summary list", () => {
-      cy.visit(`/snapshots/1`);
-      cy.get('[data-testid=accordion-item]').eq(0).click();
-      cy.get('[data-testid=food-needs-v-halal-checkbox]').click();
-
-      cy.get('[data-testid=resource-rec2FkHGEn9BiiXvW] > h3').eq(0)
-        .should('contain', 'Made Up Kitchen')
-      cy.get('#summary-recisR36NAVBna3N4').click()
-      cy.get('#input-recisR36NAVBna3N4').check()
-      cy.get('[data-testid=finish-and-save-button]').click();
-
-      cy.get('[data-testid=resources-summary]')
-        .should('contain', 'Resources')
-        .and('contain', 'Shirdi Sai Baba Temple');
-    })
-
-    it("Adds and removes resources to the summary list", () => {
-      cy.visit(`/snapshots/1`);
-      cy.get('[data-testid=accordion-item]').eq(0).click();
-      cy.get('[data-testid=food-needs-v-halal-checkbox]').click();
-
-      cy.get('[data-testid=resource-rec2FkHGEn9BiiXvW] > h3').eq(0)
-        .should('contain', 'Made Up Kitchen')
-      cy.get('#summary-recisR36NAVBna3N4').click()
-      cy.get('#input-recisR36NAVBna3N4').check()
-      cy.get('#input-recisR36NAVBna3N4').uncheck()
-      cy.get('[data-testid=finish-and-save-button]').click();
-
-      cy.get('[data-testid=resources-summary]')
-        .should('contain', 'Resources')
-        .and('not.contain', 'Shirdi Sai Baba Temple');
-    })
   });
 
   describe('Text input', () => {
@@ -206,7 +171,7 @@ context('Edit snapshot', () => {
         .and(
           'have.attr',
           'href',
-          'http://localhost:5000/help-requests/edit/wub'
+          'https://inh-admin-test.hackney.gov.uk/help-requests/edit/wub'
         );
     });
   });
