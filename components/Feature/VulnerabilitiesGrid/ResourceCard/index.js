@@ -1,9 +1,12 @@
 import css from './index.module.scss';
 import SummaryList from 'components/Form/SummaryList';
+import { useState } from 'react';
 
 const HIDDEN_TAGS = ['Delivery', 'Collection', 'Food'] 
 
 const ResourceCard = ({
+  id,
+  updateSelectedResources,
   name,
   description,
   websites,
@@ -19,6 +22,7 @@ const ResourceCard = ({
   notes,
   distance,
   matches,
+  customerId,
   ...others
 }) => {
   const trimLength = (s, length) => s.length > length ? s.substring(0, length) + "..." : s
@@ -27,7 +31,21 @@ const ResourceCard = ({
   const websiteElement = websites && websites.length > 0 &&  websites.map(website => (<a href={websites[0]} target="_blank" rel="noopener noreferrer">{websites[0]}</a>))
   const distributionElement =  tags.filter(t => HIDDEN_TAGS.includes(t)).join(", ")
   const tagsElement = tags.filter(t => !HIDDEN_TAGS.includes(t)).map(item=> (<span key={"tags-"+item} className={css.tags}>{trimLength(item, 20)}</span>))
-
+  const snapshot = (customerId != undefined) ? true : false
+  const updateResource = () =>{
+    updateSelectedResources({
+      name:name,
+      description: description,
+      address:address,
+      telephone: telephone,
+      email:email,
+      referralContact: referralContact,
+      selfReferral: selfReferral,
+      openingTimes: openingTimes,
+      websites:websites,
+      notes:notes
+    })
+  }
 
   return (
     <div className={`resource ${css.resource}`} {...others}>
@@ -42,11 +60,19 @@ const ResourceCard = ({
         </>
       
       <details className="govuk-details" data-module="govuk-details">
-        <summary className="">View more information</summary>
+        <summary id ={`summary-${id}`} className="">View more information</summary>
 
         <SummaryList key="moreResourceInfo" name={'moreResourceInfo'} entries={{ 'How to contact': selfReferralElement,
       'Address': address, 'Description' : description, 'Website' : websiteElement, 'Additional notes' : notes }} customStyle="small" />
-
+        { snapshot &&
+      ( 
+        <div className="govuk-checkboxes__item">
+          <input className="govuk-checkboxes__input" id={`input-${id}`} onClick={() => updateResource()} type="checkbox" value={name}/>
+          <label className="govuk-label govuk-checkboxes__label" id={`label-${id}`}>
+            Would you like to recommend this resource?
+          </label>
+        </div>)
+      }
       </details>
     </div>
   );

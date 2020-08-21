@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import useSnapshot from 'lib/api/utils/useSnapshot';
 import { requestSnapshot, requestResources } from 'lib/api';
 import HttpStatusError from 'lib/api/domain/HttpStatusError';
@@ -23,8 +23,8 @@ const SnapshotSummary = ({ resources, initialSnapshot, token }) => {
 
   const [editSnapshot, setEditSnapshot] = useState(
     snapshot.assets.length === 0 &&
-    snapshot.vulnerabilities.length === 0 &&
-    !snapshot.notes
+      snapshot.vulnerabilities.length === 0 &&
+      !snapshot.notes
   );
   const [hasValue, setHasValue] = useState(false);
 
@@ -33,23 +33,58 @@ const SnapshotSummary = ({ resources, initialSnapshot, token }) => {
     snapshot.vulnerabilities = selected.vulnerabilities;
     setHasValue(
       snapshot.assets.length > 0 ||
-      snapshot.vulnerabilities.length > 0 ||
-      snapshot.notes
+        snapshot.vulnerabilities.length > 0 ||
+        snapshot.notes
     );
   };
+  const [selectedResources, setResources] = useState([]);
 
-  const handleError = (errorMsg) => console.log(errorMsg)
-  
+  const updateSummaryResource = updatedResource => {
+    let updatedResources = selectedResources
+    if(updatedResources.some(resource => resource.name === updatedResource.name)){
+      let resourcesRemoved = []
+      updatedResources.forEach((resource) =>{
+        if(resource.name != updatedResource.name){
+          resourcesRemoved.push(resource)
+        }
+      })
+      updatedResources = resourcesRemoved
+    }else{
+      Object.keys(updatedResource).forEach(key => {
+        if (updatedResource[key] === undefined || updatedResource[key] === '') {
+          delete updatedResource[key];
+        }
+      })
+      let summary = []
+      Object.keys(updatedResource).forEach(key => {
+        summary.push(updatedResource[key])
+      })
+      updatedResource.summary = summary.join(', ')
+      updatedResources.push(updatedResource)
+    }
+    setResources(updatedResources)
+    setHasValue(updatedResources.length > 0);
+  }
+  const handleError = errorMsg => console.log(errorMsg);
+
   const updateNotes = notes => {
     snapshot.notes = notes;
     setHasValue(
       snapshot.assets.length > 0 ||
-      snapshot.vulnerabilities.length > 0 ||
-      snapshot.notes
+        snapshot.vulnerabilities.length > 0 ||
+        snapshot.notes
     );
   };
 
-  const { dob, firstName, lastName, postcode, assets, vulnerabilities, notes } = snapshot;
+  const {
+    dob,
+    firstName,
+    lastName,
+    postcode,
+    assets,
+    vulnerabilities,
+    notes
+  } = snapshot;
   let customerId = snapshot.systemIds?.[0];
   const residentCoordinates = geoCoordinates(postcode);
   const INH_URL = process.env.INH_URL
@@ -87,6 +122,8 @@ const SnapshotSummary = ({ resources, initialSnapshot, token }) => {
             onUpdate={updateSelected}
             resources={resources}
             residentCoordinates={residentCoordinates}
+            updateSelectedResources={updateSummaryResource}
+            customerId={customerId}
           />
           <TextArea
             name="notes"
@@ -96,7 +133,7 @@ const SnapshotSummary = ({ resources, initialSnapshot, token }) => {
           <Button
             text="Finish &amp; save"
             onClick={async () => {
-              await updateSnapshot(snapshot);
+              await updateSnapshot(snapshot, selectedResources);
               setEditSnapshot(false);
             }}
             disabled={!hasValue}
@@ -126,8 +163,8 @@ const SnapshotSummary = ({ resources, initialSnapshot, token }) => {
                 ))}
               </ul>
             ) : (
-                'None captured'
-              )}
+              'None captured'
+            )}
           </div>
           <div data-testid="assets-summary">
             <h2>Assets</h2>
@@ -138,13 +175,17 @@ const SnapshotSummary = ({ resources, initialSnapshot, token }) => {
                 ))}
               </ul>
             ) : (
-                'None captured'
-              )}
+              'None captured'
+            )}
           </div>
 
           <div data-testid="resources-summary">
             <h2>Resources</h2>
-
+            {selectedResources.map((r, i) => (
+                  <li key={`resource-${i}`}>{r.summary}</li>
+                )
+              )
+            }
           </div>
 
           <div data-testid="notes-summary">

@@ -32,7 +32,7 @@ function createLookup() {
   return lookup;
 }
 
-const VulnerabilitiesGrid = ({ resources, onUpdate, residentCoordinates, genericPostcode, onError }) => {
+const VulnerabilitiesGrid = ({ resources, onUpdate, residentCoordinates, genericPostcode, onError , updateSelectedResources, customerId}) => {
 
   const [grid, setGrid] = useState({
     assets: {},
@@ -43,6 +43,9 @@ const VulnerabilitiesGrid = ({ resources, onUpdate, residentCoordinates, generic
   const [expandedGroups, setExpandedGroups] = useState({});
   const [residentData, setResidentData] = useState(null);
 
+  const updateSummaryResource = resourceName => {
+    updateSelectedResources(resourceName)
+  }
   const updateResidentData = (result) => {
     if(result){
       setResidentData(result);
@@ -319,6 +322,8 @@ const VulnerabilitiesGrid = ({ resources, onUpdate, residentCoordinates, generic
                               key={resource.id}
                               data-testid={`resource-${resource.id}`}
                               {...resource}
+                              updateSelectedResources = {updateSummaryResource}
+                              customerId={customerId}
                             />
                           );
                         })}
