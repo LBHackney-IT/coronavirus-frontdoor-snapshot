@@ -63,6 +63,7 @@ const SnapshotSummary = ({ resources, initialSnapshot, token }) => {
       updatedResources.push(updatedResource)
     }
     setResources(updatedResources)
+    setHasValue(updatedResources.length > 0);
     console.log(updatedResources)
   }
   const handleError = errorMsg => console.log(errorMsg);
