@@ -16,5 +16,5 @@ process.env = Object.assign(process.env, {
   AIRTABLE_BASE_ID: 'not.a.real.base.id',
   AIRTABLE_TABLE_NAMES: 'not.a.real.table.name',
   NEXT_PUBLIC_SINGLEVIEW_URL: 'https://staging-singleview.hackney.gov.uk',
-  INH_URL: 'http://localhost:5000'
+  INH_URL: 'https://inh-admin-test.hackney.gov.uk'
 });
