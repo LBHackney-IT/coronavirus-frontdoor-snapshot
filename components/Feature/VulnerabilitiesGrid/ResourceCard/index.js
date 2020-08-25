@@ -23,7 +23,6 @@ const ResourceCard = ({
   distance,
   matches,
   customerId,
-  foodNeedsId,
   ...others
 }) => {
   const trimLength = (s, length) => s.length > length ? s.substring(0, length) + "..." : s
@@ -33,7 +32,8 @@ const ResourceCard = ({
   const distributionElement =  tags.filter(t => HIDDEN_TAGS.includes(t)).join(", ")
   const tagsElement = tags.filter(t => !HIDDEN_TAGS.includes(t)).map(item=> (<span key={"tags-"+item} className={css.tags}>{trimLength(item, 20)}</span>))
   const snapshot = (customerId != undefined) ? true : false
-  const foodResource = (foodNeedsId == 'food-needs') ? true : false
+  const summaryDataExists = ( telephone  || distance != 100 || currentProvision || openingTimes)
+  const marginClass = (summaryDataExists) ? "" : "remove-margin-bottom"
   const updateResource = () =>{
     updateSelectedResources({
       name:name,
@@ -54,10 +54,7 @@ const ResourceCard = ({
       <div className={css.tags__container}>
         {tagsElement}
       </div>
-      { foodResource &&
-      (  <h3>{name}</h3> )}
-       { !foodResource &&
-      (  <h3 className="remove-margin-bottom">{name}</h3> )}
+       <h3 className={marginClass}>{name}</h3>
         <>
         <SummaryList key="resourceInfo" name={['resourceInfo']} entries={{ 'Distance': (distance && distance < 100) ? distance + ' miles' : null ,
       'Availability': currentProvision, 'Days / Times' : openingTimes, 'Distribution' : distributionElement, 'Telephone' : telephone}} customStyle="small" />
