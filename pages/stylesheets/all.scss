@@ -10,7 +10,12 @@ html.lbh-template > body.lbh-template__body * {
 a {
   color: $hackney-green;
 }
-
+.remove-margin-bottom {
+margin-bottom: 0px;
+}
+.bold-font {
+  font-weight: bold
+}
 .small {
   font-size: 1em !important;
   line-height: 1.2em !important;
