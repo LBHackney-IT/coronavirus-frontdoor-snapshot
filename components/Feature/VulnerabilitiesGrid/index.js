@@ -324,7 +324,6 @@ const VulnerabilitiesGrid = ({ resources, onUpdate, residentCoordinates, generic
                               {...resource}
                               updateSelectedResources = {updateSummaryResource}
                               customerId={customerId}
-                              foodNeedsId = {id}
                             />
                           );
                         })}
