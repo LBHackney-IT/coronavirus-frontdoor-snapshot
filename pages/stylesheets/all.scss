@@ -20,3 +20,26 @@ margin-bottom: 0px;
   font-size: 1em !important;
   line-height: 1.2em !important;
 }
+.align-horizontally {
+  position: relative;
+  float: left;
+  clear: none;
+  width: 160px;
+  margin-left: 6em;
+}
+.horizontal-label{
+  position: absolute;
+  float: left;
+  width: 70px;
+  margin-left: 1em;
+  height: 100%;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+}
+.align-center{
+  align-items: center;
+}
+.checkbox-list{
+position: relative;
+}
