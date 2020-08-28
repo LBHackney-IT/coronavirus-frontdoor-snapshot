@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import useSnapshot from 'lib/api/utils/useSnapshot';
-import { requestResources } from 'lib/api';
+import { requestResources, requestPrompts} from 'lib/api';
 import HttpStatusError from 'lib/api/domain/HttpStatusError';
 import { getTokenFromCookieHeader } from 'lib/utils/token';
 import VulnerabilitiesGrid from 'components/Feature/VulnerabilitiesGrid';
@@ -79,8 +79,10 @@ Index.getInitialProps = async ({
     const token = getTokenFromCookieHeader(headers);
     const initialSnapshot = { vulnerabilities: [], assets: [], notes: null }
     const resources = await requestResources({ token });
+    const prompts = await requestPrompts({token})
     return {
       resources,
+      prompts,
       initialSnapshot,
       token
     };

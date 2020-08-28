@@ -32,7 +32,7 @@ function createLookup() {
   return lookup;
 }
 
-const VulnerabilitiesGrid = ({ resources, onUpdate, residentCoordinates, genericPostcode, onError , updateSelectedResources, customerId}) => {
+const VulnerabilitiesGrid = ({ resources, onUpdate, residentCoordinates, genericPostcode, onError , updateSelectedResources, customerId, prompts}) => {
 
   const [grid, setGrid] = useState({
     assets: {},
