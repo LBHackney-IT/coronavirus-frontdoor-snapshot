@@ -4,17 +4,30 @@ import TopicExplorer from './index';
 describe('TopicExplorer', () => {
   describe('renders successfully with props', () => {
     var topics = [
-      { prompt: 'topic one', tags: ['one, 1, first'] },
-      { prompt: 'topic two', tags: ['two, 2, second'] },
+      { prompt: 'topic one', tags: ['one'] },
+      { prompt: 'topic two', tags: ['two', 'second'] },
     ]
 
-    render(<TopicExplorer topics={topics}/>);
-
     it('renders successfully', () => {
-      expect(screen.getByText('Conversational prompts')).toBeInTheDocument();
+      render(<TopicExplorer topics={topics}/>);
+      expect(screen.getByText('How can we help?')).toBeInTheDocument();
     });
 
-    describe('with a search for topic one', () => {
+    it('shows no results for a tag that does not exist', () => {
+      render(<TopicExplorer topics={topics}/>);
+
+      fireEvent.change(screen.getByRole('textbox'), {
+        target: { value: 'giraffe' },
+      });
+
+      expect(screen.queryByText('topic one')).toBeNull();
+      expect(screen.queryByText('Conversational prompts')).toBeNull();
+      expect(screen.getByText('No results for "giraffe"')).toBeInTheDocument();
+    });
+
+    it('shows results for the first topic', () => {
+      render(<TopicExplorer topics={topics}/>);
+
       fireEvent.change(screen.getByRole('textbox'), {
         target: { value: 'one' },
       });
@@ -22,9 +35,21 @@ describe('TopicExplorer', () => {
       expect(screen.getByText('topic one')).toBeInTheDocument
     });
 
-    xdescribe('with a search for topic two', () => {
+    it('shows results for the second topic', () => {
+      render(<TopicExplorer topics={topics}/>);
+
       fireEvent.change(screen.getByRole('textbox'), {
         target: { value: 'two' },
+      });
+
+      expect(screen.getByText('topic two')).toBeInTheDocument
+    });
+
+    it('shows results searching for any matching tag', () => {
+      render(<TopicExplorer topics={topics}/>);
+
+      fireEvent.change(screen.getByRole('textbox'), {
+        target: { value: 'second' },
       });
 
       expect(screen.getByText('topic two')).toBeInTheDocument

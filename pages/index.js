@@ -34,9 +34,14 @@ const Index = ({ resources, initialSnapshot, token }) => {
 
   const residentCoordinates = Promise.resolve(null)
 
+  const topics = [
+    { prompt: 'topic one', tags: ['one'] },
+    { prompt: 'topic two', tags: ['two', 'second'] }
+  ]
+
   return (
     <>
-      <TopicExplorer />
+      <TopicExplorer topics={topics}/>
       <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
       <h1>
         Resource Finder
