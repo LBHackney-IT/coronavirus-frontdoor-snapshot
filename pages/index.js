@@ -56,7 +56,7 @@ const Index = ({ resources, initialSnapshot, token }) => {
       <p>
       Enter a postcode to help filter the results by distance:
       </p>
-      <div class="govuk-form-group">
+      <div className="govuk-form-group">
       <p className="govuk-error-message">{genericPostcode && errorMsg}</p>
       <input
         className={'govuk-input govuk-!-width-one-quarter' + ((genericPostcode && errorMsg) ? " govuk-input--error" : "")}
