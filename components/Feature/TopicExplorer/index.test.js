@@ -70,5 +70,21 @@ describe('TopicExplorer', () => {
       expect(screen.getByText('topic one')).toBeInTheDocument
       expect(screen.getByText('topic two')).toBeInTheDocument
     });
+
+    it('shows results for a search ignoring case', () => {
+      var topics = [
+        { prompt: 'topic one', tags: ['one'] },
+        { prompt: 'topic two', tags: ['two'] },
+      ]
+
+      render(<TopicExplorer topics={topics}/>);
+
+      fireEvent.change(screen.getByRole('textbox'), {
+        target: { value: 'ONE' },
+      });
+
+      expect(screen.getByText('topic one')).toBeInTheDocument
+      expect(screen.queryByText('topic two')).toBeNull
+    });
   });
 })
