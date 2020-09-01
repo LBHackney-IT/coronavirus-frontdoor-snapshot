@@ -44,6 +44,7 @@ const VulnerabilitiesGrid = ({ resources, onUpdate, residentCoordinates, generic
   const [residentData, setResidentData] = useState(null);
 
   const updateSummaryResource = resourceName => {
+    console.log(prompts)
     updateSelectedResources(resourceName)
   }
   const updateResidentData = (result) => {
