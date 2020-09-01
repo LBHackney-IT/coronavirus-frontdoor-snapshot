@@ -46,10 +46,16 @@ const Index = ({ resources, initialSnapshot, token }) => {
     { prompt: '(Hackney has no additional local restrictions right now)', tags: ['lockdown'] },
   ]
 
+  const showTopicExplorer = process.env.NEXT_PUBLIC_SHOW_TOPIC_EXPLORER
+
   return (
     <>
-      <TopicExplorer topics={topics}/>
-      <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
+      { showTopicExplorer &&
+        <>
+          <TopicExplorer topics={topics}/>
+          <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
+        </>
+      }
       <h1>
         Resource Finder
       </h1>
