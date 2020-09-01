@@ -35,8 +35,15 @@ const Index = ({ resources, initialSnapshot, token }) => {
   const residentCoordinates = Promise.resolve(null)
 
   const topics = [
-    { prompt: 'topic one', tags: ['one'] },
-    { prompt: 'topic two', tags: ['two', 'second'] }
+    { prompt: 'How are you feeling right now?', tags: ['mental health'] },
+    { prompt: 'Do you have anyone supporting you?', tags: ['mental health', 'lonely', 'loneliness'] },
+    { prompt: 'Do you talk to your family?', tags: ['lonely', 'loneliness'] },
+    { prompt: 'Are you able to shop for food?', tags: ['food'] },
+    { prompt: 'Do you know what food help is available in your area?', tags: ['food'] },
+    { prompt: '(We are unable to provide food directly)', tags: ['food'] },
+    { prompt: 'Have you seen the government guidance on local lockdowns?', tags: ['lockdown'] },
+    { prompt: 'Are you worried about something you need?', tags: ['lockdown'] },
+    { prompt: '(Hackney has no additional local restrictions right now)', tags: ['lockdown'] },
   ]
 
   return (
