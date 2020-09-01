@@ -54,5 +54,21 @@ describe('TopicExplorer', () => {
 
       expect(screen.getByText('topic two')).toBeInTheDocument
     });
+
+    it('shows all results for a matching tag', () => {
+      var topics = [
+        { prompt: 'topic one', tags: ['one', 'all'] },
+        { prompt: 'topic two', tags: ['two', 'all'] },
+      ]
+
+      render(<TopicExplorer topics={topics}/>);
+
+      fireEvent.change(screen.getByRole('textbox'), {
+        target: { value: 'all' },
+      });
+
+      expect(screen.getByText('topic one')).toBeInTheDocument
+      expect(screen.getByText('topic two')).toBeInTheDocument
+    });
   });
 })
