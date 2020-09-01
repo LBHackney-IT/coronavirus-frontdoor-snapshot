@@ -5,9 +5,14 @@ context('Index page', () => {
     cy.injectAxe();
   });
 
-  describe('Loads page', () => {
-    it('has heading', () => {
-      cy.get('h1').should('have.text', 'Resource Finder');
+  describe('Page structure', () => {
+    it('has the right headings', () => {
+      cy.contains('Topics to explore').should('be.visible')
+      cy.contains('How can we help?').should('be.visible')
+      cy.contains('Resource Finder').should('be.visible')
+    });
+
+    it('has no content outside top-level headings', () => {
       cy.checkA11y('#content > h1', null, cy.terminalLog);
     });
   });

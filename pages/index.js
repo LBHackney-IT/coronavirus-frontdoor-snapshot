@@ -4,7 +4,7 @@ import { requestResources } from 'lib/api';
 import HttpStatusError from 'lib/api/domain/HttpStatusError';
 import { getTokenFromCookieHeader } from 'lib/utils/token';
 import VulnerabilitiesGrid from 'components/Feature/VulnerabilitiesGrid';
-
+import TopicExplorer from 'components/Feature/TopicExplorer';
 
 const Index = ({ resources, initialSnapshot, token }) => {
   const [errorMsg, setErrorMsg] = useState()
@@ -33,9 +33,11 @@ const Index = ({ resources, initialSnapshot, token }) => {
 
 
   const residentCoordinates = Promise.resolve(null)
-  
+
   return (
     <>
+      <TopicExplorer />
+      <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
       <h1>
         Resource Finder
       </h1>
