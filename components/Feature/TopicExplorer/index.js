@@ -6,9 +6,10 @@ const TopicExplorer = (props) => {
 
   const onSearchChange = event => {
     var results = []
+    const newSearchTerm = event.target.value.toLowerCase();
 
     for(const topic of props.topics) {
-      if(topic['tags'].includes(event.target.value)) {
+      if(topic['tags'].includes(newSearchTerm)) {
         results.push(topic.prompt);
       }
     }
@@ -35,7 +36,7 @@ const TopicExplorer = (props) => {
         <>
           <h2>Conversational prompts</h2>
           <ul className="govuk-list">
-            { searchResults.map((result) => <li>{ result }</li>) }
+            { searchResults.map(result => <li>{ result }</li>) }
           </ul>
         </>
       }
