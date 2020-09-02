@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import useSnapshot from 'lib/api/utils/useSnapshot';
-import { requestResources} from 'lib/api';
+import { requestResources } from 'lib/api';
 import HttpStatusError from 'lib/api/domain/HttpStatusError';
 import { getTokenFromCookieHeader } from 'lib/utils/token';
 import VulnerabilitiesGrid from 'components/Feature/VulnerabilitiesGrid';
