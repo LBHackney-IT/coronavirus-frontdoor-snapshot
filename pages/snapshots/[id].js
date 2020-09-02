@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import useSnapshot from 'lib/api/utils/useSnapshot';
-import { requestSnapshot, requestResources, requestPrompts } from 'lib/api';
+import { requestSnapshot, requestResources } from 'lib/api';
 import HttpStatusError from 'lib/api/domain/HttpStatusError';
 import { getTokenFromCookieHeader } from 'lib/utils/token';
 import { Button, TextArea } from 'components/Form';
@@ -8,7 +8,7 @@ import VulnerabilitiesGrid from 'components/Feature/VulnerabilitiesGrid';
 import { convertIsoDateToString, convertIsoDateToYears } from 'lib/utils/date';
 import geoCoordinates from 'lib/api/utils/geoCoordinates';
 
-const SnapshotSummary = ({ resources, initialSnapshot, token, prompts }) => {
+const SnapshotSummary = ({ resources, initialSnapshot, token }) => {
   const { snapshot, loading, updateSnapshot } = useSnapshot(
     initialSnapshot.snapshotId,
     {
@@ -124,7 +124,6 @@ const SnapshotSummary = ({ resources, initialSnapshot, token, prompts }) => {
             residentCoordinates={residentCoordinates}
             updateSelectedResources={updateSummaryResource}
             customerId={customerId}
-            prompts={prompts}
           />
           <TextArea
             name="notes"
@@ -224,10 +223,8 @@ SnapshotSummary.getInitialProps = async ({
     const token = getTokenFromCookieHeader(headers);
     const initialSnapshot = await requestSnapshot(id, { token });
     const resources = await requestResources({ token });
-    const prompts = await requestPrompts({token})
     return {
       resources,
-      prompts,
       initialSnapshot,
       token
     };
