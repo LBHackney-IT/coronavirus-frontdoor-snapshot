@@ -36,7 +36,7 @@ const TopicExplorer = (props) => {
         <>
           <h2>Conversational prompts</h2>
           <ul className="govuk-list">
-            { searchResults.map(result => <li>{ result }</li>) }
+            { searchResults.map((result, i) => <li key={i}>{ result }</li>) }
           </ul>
         </>
       }
