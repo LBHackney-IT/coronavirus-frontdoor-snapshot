@@ -6,7 +6,7 @@ import { getTokenFromCookieHeader } from 'lib/utils/token';
 import VulnerabilitiesGrid from 'components/Feature/VulnerabilitiesGrid';
 import TopicExplorer from 'components/Feature/TopicExplorer';
 
-const Index = ({ resources, initialSnapshot, token }) => {
+const Index = ({ resources, initialSnapshot, token, showTopicExplorer }) => {
   const [errorMsg, setErrorMsg] = useState()
   const { snapshot, loading, updateSnapshot } = useSnapshot(
     initialSnapshot.snapshotId,
@@ -45,8 +45,6 @@ const Index = ({ resources, initialSnapshot, token }) => {
     { prompt: 'Are you worried about something you need?', tags: ['lockdown'] },
     { prompt: '(Hackney has no additional local restrictions right now)', tags: ['lockdown'] },
   ]
-
-  const showTopicExplorer = process.env.NEXT_PUBLIC_SHOW_TOPIC_EXPLORER
 
   return (
     <>
@@ -99,11 +97,9 @@ Index.getInitialProps = async ({
     const token = getTokenFromCookieHeader(headers);
     const initialSnapshot = { vulnerabilities: [], assets: [], notes: null }
     const resources = await requestResources({ token });
-    return {
-      resources,
-      initialSnapshot,
-      token
-    };
+    const showTopicExplorer = process.env.SHOW_TOPIC_EXPLORER;
+
+    return { resources, initialSnapshot, token, showTopicExplorer };
   } catch (err) {
     console.log("Failed to load initial Props:" + err)
     res.writeHead(err instanceof HttpStatusError ? err.statusCode : 500).end();
