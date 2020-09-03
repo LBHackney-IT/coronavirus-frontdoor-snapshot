@@ -20,6 +20,7 @@
     "cookie-parser": "^1.4.5",
     "govuk-frontend": "^3.6.0",
     "jsonwebtoken": "^8.5.1",
+    "markdown-to-jsx": "^6.11.4",
     "moment": "^2.26.0",
     "nanoid": "^3.1.10",
     "next": "^9.4.0",

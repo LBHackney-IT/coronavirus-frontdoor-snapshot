@@ -5,6 +5,7 @@ import HttpStatusError from 'lib/api/domain/HttpStatusError';
 import { getTokenFromCookieHeader } from 'lib/utils/token';
 import VulnerabilitiesGrid from 'components/Feature/VulnerabilitiesGrid';
 import TopicExplorer from 'components/Feature/TopicExplorer';
+import topics from 'components/Feature/TopicExplorer/topics'
 
 const Index = ({ resources, initialSnapshot, token, showTopicExplorer }) => {
   const [errorMsg, setErrorMsg] = useState()
@@ -34,23 +35,11 @@ const Index = ({ resources, initialSnapshot, token, showTopicExplorer }) => {
 
   const residentCoordinates = Promise.resolve(null)
 
-  const topics = [
-    { prompt: 'How are you feeling right now?', tags: ['mental health'] },
-    { prompt: 'Do you have anyone supporting you?', tags: ['mental health', 'lonely', 'loneliness'] },
-    { prompt: 'Do you talk to your family?', tags: ['lonely', 'loneliness'] },
-    { prompt: 'Are you able to shop for food?', tags: ['food'] },
-    { prompt: 'Do you know what food help is available in your area?', tags: ['food'] },
-    { prompt: '(We are unable to provide food directly)', tags: ['food'] },
-    { prompt: 'Have you seen the government guidance on local lockdowns?', tags: ['lockdown'] },
-    { prompt: 'Are you worried about something you need?', tags: ['lockdown'] },
-    { prompt: '(Hackney has no additional local restrictions right now)', tags: ['lockdown'] },
-  ]
-
   return (
     <>
       { showTopicExplorer &&
         <>
-          <TopicExplorer topics={topics}/>
+          <TopicExplorer topics={topics()}/>
           <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
         </>
       }
