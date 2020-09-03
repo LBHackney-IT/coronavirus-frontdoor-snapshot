@@ -5,20 +5,31 @@ const TopicExplorer = (props) => {
   const [searchTerm, setSearchTerm] = useState('')
   const [searchResults, setSearchResults] = useState([])
 
-  const onSearchChange = event => {
+  const getSearchResults = (searchTerm) => {
     var results = []
-    const newSearchTerm = event.target.value.toLowerCase();
+    const newSearchTerm = searchTerm.toLowerCase();
 
     for(const topic of props.topics) {
       if(topic.tags.includes(newSearchTerm)) {
         results.push(topic);
       }
     }
+    return results
+  }
 
+  const onSearchChange = event => {
+    const newSearchTerm = event.target.value
+    const results = getSearchResults(newSearchTerm)
     setSearchTerm(event.target.value);
     setSearchResults(results);
   };
 
+  const populateInput = event => {
+    const newSearchTerm = event.target.attributes.getNamedItem('data-search-term').value;
+    const results = getSearchResults(newSearchTerm)
+    setSearchTerm(newSearchTerm);
+    setSearchResults(results);
+  }
   return (
     <>
       <h1>Topics to explore</h1>
@@ -27,10 +38,14 @@ const TopicExplorer = (props) => {
         <input
           type="text"
           className="govuk-input govuk-input--width-20"
-          placeholder="e.g. food, mental health, lockdown"
           value={searchTerm}
           onChange={onSearchChange}
         />
+        <div id='example-search'>Try a search for{' '}
+          <a href="#" className='govuk-link' data-search-term='food' onClick={populateInput} data-testid='food'>food</a>,{' '}
+          <a href="#" className='govuk-link' data-search-term='mental health' onClick={populateInput}>mental health</a>, or{' '}
+          <a href="#" className='govuk-link' data-search-term='debt'onClick={populateInput}>debt</a>
+        </div>
       </div>
 
       { searchResults.length > 0 &&
