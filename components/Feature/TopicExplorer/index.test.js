@@ -63,4 +63,61 @@ describe('TopicExplorer', () => {
       expect(screen.getByText('topic one')).toBeInTheDocument
     });
   });
-})
+
+  describe('with topics with tags and further info', () => {
+    beforeEach(() => {
+      var topics = [
+        {
+          prompt: 'topic one',
+          supportingInformation: 'support info one',
+          tags: ['one']
+        },
+        {
+          prompt: 'topic two',
+          supportingInformation: 'support info two',
+          tags: ['two']
+        },
+      ]
+
+      render(<TopicExplorer topics={topics}/>);
+    });
+
+    it('shows no results initially', () => {
+      expect(screen.queryByText('Conversational prompts')).toBeNull();
+      expect(screen.queryByText('topic one')).toBeNull();
+      expect(screen.queryByText('topic two')).toBeNull();
+    });
+
+    it('searching for a tag shows all the related info', () => {
+      fireEvent.change(screen.getByRole('textbox'), {
+        target: { value: 'one' },
+      });
+
+      expect(screen.getByText('topic one')).toBeInTheDocument
+      expect(screen.getByText('support info one')).toBeInTheDocument
+    });
+  });
+
+  describe('with markdown-formatted further info', () => {
+    beforeEach(() => {
+      var topics = [
+        {
+          prompt: 'topic one',
+          supportingInformation: "[click me](https://example.path/)",
+          tags: ['one']
+        }
+      ]
+
+      render(<TopicExplorer topics={topics}/>);
+    });
+
+    it('shows links', () => {
+      fireEvent.change(screen.getByRole('textbox'), {
+        target: { value: 'one' },
+      });
+
+      expect(screen.getByRole('link')).toHaveTextContent('click me')
+      expect(screen.getByText('click me').href).toBe('https://example.path/')
+    });
+  });
+});

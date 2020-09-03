@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Markdown from 'markdown-to-jsx';
 
 const TopicExplorer = (props) => {
   const [searchTerm, setSearchTerm] = useState('')
@@ -9,8 +10,8 @@ const TopicExplorer = (props) => {
     const newSearchTerm = event.target.value.toLowerCase();
 
     for(const topic of props.topics) {
-      if(topic['tags'].includes(newSearchTerm)) {
-        results.push(topic.prompt);
+      if(topic.tags.includes(newSearchTerm)) {
+        results.push(topic);
       }
     }
 
@@ -35,8 +36,22 @@ const TopicExplorer = (props) => {
       { searchResults.length > 0 &&
         <>
           <h2>Conversational prompts</h2>
-          <ul className="govuk-list">
-            { searchResults.map((result, i) => <li key={i}>{ result }</li>) }
+          <ul className="govuk-list govuk-list--bullet">
+            { searchResults.map((result, i) =>
+              <li key={i}>
+                <p className="govuk-!-margin-bottom-1">
+                  { result.prompt }
+                </p>
+                <Markdown options={{
+                  overrides: { span: { props: {
+                    className: 'govuk-!-font-size-16',
+                    style: { color: '#505a5f' }
+                  }}}
+                }}>
+                  { result.supportingInformation ?? "" }
+                </Markdown>
+              </li>)
+            }
           </ul>
         </>
       }
