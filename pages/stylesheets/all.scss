@@ -24,22 +24,50 @@ margin-bottom: 0px;
   position: relative;
   float: left;
   clear: none;
-  width: 160px;
-  margin-left: 6em;
+  margin-right: 0em;
+  width:100%;
 }
+
+@media (min-width: 40.0625em){
+.align-horizontally {
+  width:20%;
+}
+}
+
 .horizontal-label{
-  position: absolute;
+  position: relative;
   float: left;
-  width: 70px;
+  width: 110px;
   margin-left: 1em;
   height: 100%;
   font-weight: bold;
   display: flex;
   align-items: center;
+  line-height:44px;
 }
 .align-center{
   align-items: center;
 }
 .checkbox-list{
 position: relative;
+}
+
+.govuk-checkboxes__label {
+  padding: 10px 10px 5px;
+  font-size: 1rem;
+}
+
+.govuk-checkboxes {
+  width: 85%;
+    float: left;
+    display: block;
+    padding-left:1em;
+}
+
+.AccordionItem_assets-dot__12nY7, .AccordionItem_vulnerabilities-dot__2imGq {
+display:none;
+}
+
+.govuk-form-group {
+  margin-bottom: 10px;
 }
