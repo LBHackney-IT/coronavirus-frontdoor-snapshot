@@ -62,7 +62,32 @@ const topics = () => [
     prompt: 'Hackney Council helplines',
     supportingInformation: 'Benefits: **020 8356 3399**, Council Tax: **020 8356 3154**',
     tags: ['heat', 'cold', 'fuel', 'heating', 'benefits']
-  }
+  },
+  {
+    prompt: 'How is your health at the moment?',
+    supportingInformation: 'It’s important to look after your health as not seeking support for your health condition could be extremely dangerous.',
+    tags: ['health']
+  },
+  {
+    prompt: 'Have you been worried about going to a GP or A&E in case you catch the coronavirus?',
+    supportingInformation: 'Both your local GP practice and A&E are open with great care taken to prevent the spread of Covid-19.',
+    tags: ['health', 'gp', 'a&e', 'covid-19', 'coronavirus']
+  },
+  {
+    prompt: 'Are you worried about bringing your child/ren to A&E?',
+    supportingInformation: '[Guidance for parents PDF](https://www.homerton.nhs.uk/download/doc/docm93jijm4n6591.pdf).',
+    tags: ['health', 'a&e', 'child', 'children']
+  },
+  {
+    prompt: 'GP services are open and setup to take care of those without Covid-19 symptoms',
+    supportingInformation: 'Support is available via phone, video or physically if required. Contact your GP as usual, to access this.',
+    tags: ['health', 'gp', 'covid-19', 'coronavirus']
+  },
+  {
+    prompt: 'Homerton’s offer advice on feeding infants',
+    supportingInformation: 'Helpline - **0208 510 5955** or visit their website https://www.homerton.nhs.uk/.',
+    tags: ['health', 'child', 'children']
+  },
 ]
 
 export default topics
