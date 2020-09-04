@@ -30,3 +30,11 @@ margin-bottom: 5px;
   margin-bottom: 0px;
   display: inherit;
 }
+.button-as-link{
+  background: none!important;
+  border: none;
+  font: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+  color: #1d70b8;
+}

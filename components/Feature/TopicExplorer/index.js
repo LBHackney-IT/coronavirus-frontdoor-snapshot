@@ -42,9 +42,9 @@ const TopicExplorer = (props) => {
           onChange={onSearchChange}
         />
         <div id='example-search'>Try a search for{' '}
-          <a href="#" className='govuk-link' data-search-term='food' onClick={populateInput} data-testid='food'>food</a>,{' '}
-          <a href="#" className='govuk-link' data-search-term='mental health' onClick={populateInput}>mental health</a>, or{' '}
-          <a href="#" className='govuk-link' data-search-term='debt'onClick={populateInput}>debt</a>
+          <button className='button-as-link govuk-!-padding-0' data-search-term='food' onClick={populateInput} data-testid='food'>food</button>,{' '}
+          <button className='button-as-link govuk-!-padding-0' data-search-term='mental health' onClick={populateInput}>mental health</button>, or{' '}
+          <button className='button-as-link govuk-!-padding-0' data-search-term='debt'onClick={populateInput}>debt</button>
         </div>
       </div>
 
