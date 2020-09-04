@@ -53,7 +53,7 @@ const TopicExplorer = (props) => {
           <h2>Conversational prompts</h2>
           <ul className="govuk-list convPrompt">
             { searchResults.map((result, i) =>
-              <li key={i} className="">
+              <li key={i}>
                 <p className="govuk-!-margin-bottom-0 convPromptText">
                   { result.prompt }
                 </p>
