@@ -64,4 +64,30 @@ context('Index page', () => {
     });
 
   });
+
+  describe("Topic Explorer", () => {
+    it("can show the topic explorer", () => {
+      cy.contains('How can we help?').should('be.visible')
+    })
+
+
+    it("can show food example prompts", () => {
+      cy.get("#example-search").contains('food').click();
+      cy.get('input').should('have.value', 'food')
+    })
+
+
+    it("can show mental health example prompts", () => {
+      cy.get("#example-search").contains('mental health').click();
+      cy.get('input').should('have.value', 'mental health')
+    })
+
+
+    it("can show debt example prompts", () => {
+      cy.get("#example-search").contains('debt').click();
+      cy.get('input').should('have.value', 'debt')
+    })
+
+  })
+  
 });
