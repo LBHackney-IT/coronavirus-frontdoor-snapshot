@@ -51,16 +51,15 @@ const TopicExplorer = (props) => {
       { searchResults.length > 0 &&
         <>
           <h2>Conversational prompts</h2>
-          <ul className="govuk-list govuk-list--bullet">
+          <ul className="govuk-list convPrompt">
             { searchResults.map((result, i) =>
-              <li key={i}>
-                <p className="govuk-!-margin-bottom-1">
+              <li key={i} className="">
+                <p className="govuk-!-margin-bottom-0 convPromptText">
                   { result.prompt }
                 </p>
                 <Markdown options={{
                   overrides: { span: { props: {
-                    className: 'govuk-!-font-size-16',
-                    style: { color: '#505a5f' }
+                    className: 'convSupportText'                    
                   }}}
                 }}>
                   { result.supportingInformation ?? "" }
