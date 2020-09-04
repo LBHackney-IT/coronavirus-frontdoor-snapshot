@@ -59,7 +59,7 @@ const TopicExplorer = (props) => {
                 </p>
                 <Markdown options={{
                   overrides: { span: { props: {
-                    className: 'conv-support-text'                    
+                    className: 'govuk-!-font-size-16 conv-support-text'                    
                   }}}
                 }}>
                   { result.supportingInformation ?? "" }
