@@ -51,15 +51,15 @@ const TopicExplorer = (props) => {
       { searchResults.length > 0 &&
         <>
           <h2>Conversational prompts</h2>
-          <ul className="govuk-list convPrompt">
+          <ul className="govuk-list conv-prompt">
             { searchResults.map((result, i) =>
               <li key={i}>
-                <p className="govuk-!-margin-bottom-0 convPromptText">
+                <p className="govuk-!-margin-bottom-0 conv-prompt-text">
                   { result.prompt }
                 </p>
                 <Markdown options={{
                   overrides: { span: { props: {
-                    className: 'convSupportText'                    
+                    className: 'conv-support-text'                    
                   }}}
                 }}>
                   { result.supportingInformation ?? "" }
