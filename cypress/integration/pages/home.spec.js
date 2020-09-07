@@ -77,17 +77,17 @@ context('Index page', () => {
     })
 
 
-    it("can show mental health example prompts", () => {
-      cy.get("#example-search").contains('mental health').click();
-      cy.get('input').should('have.value', 'mental health')
+    it("can show health example prompts", () => {
+      cy.get("#example-search").contains('health').click();
+      cy.get('input').should('have.value', 'health')
     })
 
 
-    it("can show debt example prompts", () => {
-      cy.get("#example-search").contains('debt').click();
-      cy.get('input').should('have.value', 'debt')
+    it("can show benefits prompts", () => {
+      cy.get("#example-search").contains('benefits').click();
+      cy.get('input').should('have.value', 'benefits')
     })
 
   })
-  
+
 });
