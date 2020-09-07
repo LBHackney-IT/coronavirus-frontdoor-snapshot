@@ -216,9 +216,6 @@ SnapshotSummary.getInitialProps = async ({
   req: { headers },
   res
 }) => {
-  console.log(process.env.NEXT_PUBLIC_API_URL);
-  console.log(process.env.NEXT_PUBLIC_GTM_ID);
-  console.log(process.env.NEXT_PUBLIC_SINGLEVIEW_URL);
   try {
     const token = getTokenFromCookieHeader(headers);
     const initialSnapshot = await requestSnapshot(id, { token });
