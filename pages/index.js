@@ -4,9 +4,10 @@ import { requestResources } from 'lib/api';
 import HttpStatusError from 'lib/api/domain/HttpStatusError';
 import { getTokenFromCookieHeader } from 'lib/utils/token';
 import VulnerabilitiesGrid from 'components/Feature/VulnerabilitiesGrid';
+import TopicExplorer from 'components/Feature/TopicExplorer';
+import topics from 'components/Feature/TopicExplorer/topics'
 
-
-const Index = ({ resources, initialSnapshot, token }) => {
+const Index = ({ resources, initialSnapshot, token, showTopicExplorer }) => {
   const [errorMsg, setErrorMsg] = useState()
   const { snapshot, loading, updateSnapshot } = useSnapshot(
     initialSnapshot.snapshotId,
@@ -33,16 +34,22 @@ const Index = ({ resources, initialSnapshot, token }) => {
 
 
   const residentCoordinates = Promise.resolve(null)
-  
+
   return (
     <>
+      { showTopicExplorer &&
+        <>
+          <TopicExplorer topics={topics()}/>
+          <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
+        </>
+      }
       <h1>
         Resource Finder
       </h1>
       <p>
       Enter a postcode to help filter the results by distance:
       </p>
-      <div class="govuk-form-group">
+      <div className="govuk-form-group">
       <p className="govuk-error-message">{genericPostcode && errorMsg}</p>
       <input
         className={'govuk-input govuk-!-width-one-quarter' + ((genericPostcode && errorMsg) ? " govuk-input--error" : "")}
@@ -79,11 +86,9 @@ Index.getInitialProps = async ({
     const token = getTokenFromCookieHeader(headers);
     const initialSnapshot = { vulnerabilities: [], assets: [], notes: null }
     const resources = await requestResources({ token });
-    return {
-      resources,
-      initialSnapshot,
-      token
-    };
+    const showTopicExplorer = process.env.SHOW_TOPIC_EXPLORER;
+
+    return { resources, initialSnapshot, token, showTopicExplorer };
   } catch (err) {
     console.log("Failed to load initial Props:" + err)
     res.writeHead(err instanceof HttpStatusError ? err.statusCode : 500).end();
