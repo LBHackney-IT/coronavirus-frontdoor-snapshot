@@ -175,9 +175,9 @@ context('Edit snapshot', () => {
 
     it('Adds text input values to the Other vulnerabilities and Other assets', () => {
       const otherVulnerabilityInputSelector =
-        'financial-stability-v-other-other-vulnerabilities-i';
+        'financial-stability-v-other--i';
       const otherAssetInputSelector =
-        'financial-stability-a-other-other-assets-i';
+        'financial-stability-a-other--i';
       cy.visit(`/snapshots/1`);
       cy.get('[data-testid=accordion-item]').eq(1).click();
       cy.get('[data-testid=financial-stability-v-other-checkbox]').click();
