@@ -7,8 +7,10 @@ import { Button, TextArea } from 'components/Form';
 import VulnerabilitiesGrid from 'components/Feature/VulnerabilitiesGrid';
 import { convertIsoDateToString, convertIsoDateToYears } from 'lib/utils/date';
 import geoCoordinates from 'lib/api/utils/geoCoordinates';
+import TopicExplorer from 'components/Feature/TopicExplorer';
+import topics from 'components/Feature/TopicExplorer/topics'
 
-const SnapshotSummary = ({ resources, initialSnapshot, token }) => {
+const SnapshotSummary = ({ resources, initialSnapshot, token, showTopicExplorer }) => {
   const { snapshot, loading, updateSnapshot } = useSnapshot(
     initialSnapshot.snapshotId,
     {
@@ -88,10 +90,10 @@ const SnapshotSummary = ({ resources, initialSnapshot, token }) => {
   let customerId = snapshot.systemIds?.[0];
   const residentCoordinates = geoCoordinates(postcode);
   const INH_URL = process.env.INH_URL
-  
+
   return (
     <>
-      <div>      
+      <div>
         { editSnapshot && customerId && (
           <a
           href={`${INH_URL}/help-requests/edit/${customerId}`}
@@ -115,6 +117,12 @@ const SnapshotSummary = ({ resources, initialSnapshot, token }) => {
           Aged {convertIsoDateToYears(dob)} ({convertIsoDateToString(dob)})
         </span>
       )}
+      { showTopicExplorer &&
+        <>
+          <TopicExplorer topics={topics()}/>
+          <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
+        </>
+      }
       {editSnapshot && (
         <>
           <VulnerabilitiesGrid
@@ -220,10 +228,12 @@ SnapshotSummary.getInitialProps = async ({
     const token = getTokenFromCookieHeader(headers);
     const initialSnapshot = await requestSnapshot(id, { token });
     const resources = await requestResources({ token });
+    const showTopicExplorer = process.env.SHOW_TOPIC_EXPLORER;
     return {
       resources,
       initialSnapshot,
-      token
+      token,
+      showTopicExplorer
     };
   } catch (err) {
     res.writeHead(err instanceof HttpStatusError ? err.statusCode : 500).end();
