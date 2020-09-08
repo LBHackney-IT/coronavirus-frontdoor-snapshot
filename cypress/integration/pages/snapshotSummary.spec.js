@@ -49,7 +49,7 @@ context('Snapshot summary', () => {
     it('Displays a read only view of a snapshot', () => {
       cy.visit(`/snapshots/2`);
 
-      cy.get('h1').should('contain', 'Ferb Flynn');
+      cy.get('h2').should('contain', 'Ferb Flynn');
 
       cy.get('[data-testid=age-and-date-of-birth]').should(
         'contain',
@@ -62,7 +62,7 @@ context('Snapshot summary', () => {
         .and('contain', 'One: the value');
 
       cy.get('[data-testid=assets-summary]')
-        .should('contain', 'Assets')
+        .should('contain', 'Strengths identified')
         .and('contain', 'Asset');
 
       cy.get('[data-testid=notes-summary]')
@@ -82,14 +82,14 @@ context('Snapshot summary', () => {
     it('Displays none captured if there are no vulnerabilities or assets', () => {
       cy.visit(`/snapshots/3`);
 
-      cy.get('h1').should('contain', 'Candace Flynn');
+      cy.get('h2').should('contain', 'Candace Flynn');
 
       cy.get('[data-testid=vulnerabilities-summary]')
         .should('contain', 'Vulnerabilities')
         .and('contain', 'None captured');
 
       cy.get('[data-testid=assets-summary]')
-        .should('contain', 'Assets')
+        .should('contain', 'Strengths identified')
         .and('contain', 'None captured');
     });
   });

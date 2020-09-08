@@ -4,9 +4,11 @@ const TextArea = ({ label, name, onChange, value }) => {
   };
   return (
     <div className="govuk-form-group even-spacing" data-testid={name}>
-      <h3 htmlFor={`${name}`}>
-        {label}
-      </h3>
+      <label htmlFor={`${name}`}>
+        <h3>
+          {label}
+        </h3>
+      </label>
       <textarea
         className="govuk-textarea"
         id={name}

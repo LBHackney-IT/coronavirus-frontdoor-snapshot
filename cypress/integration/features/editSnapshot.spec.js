@@ -56,9 +56,7 @@ context('Edit snapshot', () => {
   describe('Edit snapshot', () => {
     it('Displays editable snapshot if there are no assets, vulnerabilites and notes added', () => {
       cy.visit(`/snapshots/1`);
-      cy.get('h1').should('contain', 'Phineas Flynn');
-
-      cy.get('h2').should('contain', 'Things to explore with the resident');
+      cy.get('h2').should('contain', 'Phineas Flynn');
 
       cy.get('[data-testid=accordion-item]')
         .should('contain', 'Financial stability')
@@ -116,12 +114,11 @@ context('Edit snapshot', () => {
         .and('contain', 'Rent arrears');
 
       cy.get('[data-testid=assets-summary]')
-        .should('contain', 'Assets')
+        .should('contain', 'Strengths identified')
         .and('contain', 'Organised and/or engaged');
 
       cy.get('[data-testid=notes-summary]')
-        .should('contain', 'Notes')
-        .and('contain', 'Note');
+        .should('contain', 'Note');
     });
 
     it('Persists the snapshot', () => {
@@ -191,7 +188,7 @@ context('Edit snapshot', () => {
         .should('contain', 'Vulnerabilities')
         .and('contain', 'new vulnerability');
       cy.get('[data-testid=assets-summary]')
-        .should('contain', 'Assets')
+        .should('contain', 'Strengths identified')
         .and('contain', 'new asset');
     });
   });

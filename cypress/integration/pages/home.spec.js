@@ -19,7 +19,6 @@ context('Index page', () => {
 
   describe('Resources', () => {
     it('shows resources per category', () => {
-      cy.get('h2').should('contain', 'Things to explore with the resident');
 
       cy.get('[data-testid=accordion-item]')
         .should('contain', 'Food')

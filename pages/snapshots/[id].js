@@ -153,8 +153,7 @@ const SnapshotSummary = ({ resources, initialSnapshot, token }) => {
       )}
       {!editSnapshot && (
         <>
-<div class="summary-sections" data-testid="notes-summary">
-            <h3 class="summary-titles">What prompted the Resident to get in touch today?</h3>
+          <div class="summary-sections" data-testid="notes-summary">
             {notes ? notes : 'Nothing captured'}
           </div>
 
