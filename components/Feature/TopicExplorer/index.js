@@ -36,8 +36,8 @@ const TopicExplorer = (props) => {
   return (
     <>
       <h1>Search for a topic</h1>
-      <div className="govuk-form-group conversational-prompt-results-spacing">
-        <div id='example-search'>Try searching for keywords like{' '}
+      <div className="govuk-form-group govuk-!-margin-bottom-7">
+        <div class="govuk-!-padding-bottom-4" id='example-search'>Try searching for keywords like{' '}
           <button className='button-as-link govuk-!-padding-0' data-search-term='food' onClick={populateInput} data-testid='food'>food</button>,{' '}
           <button className='button-as-link govuk-!-padding-0' data-search-term='health' onClick={populateInput}>health</button>, or{' '}
           <button className='button-as-link govuk-!-padding-0' data-search-term='benefits'onClick={populateInput}>benefits</button>
