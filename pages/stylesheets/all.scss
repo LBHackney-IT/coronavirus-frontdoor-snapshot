@@ -62,3 +62,60 @@ a {
   cursor: pointer;
   color: #1d70b8;
 }
+
+.resource-title {
+  color: #1d70b8;
+  font-size:19px;
+  font-weight:700;
+}
+
+.resource-description {
+  padding-bottom: 20px;
+}
+
+.summary-titles {
+  margin-block-start: unset;
+  margin-block-end: 5px;
+}
+
+.summary-sections {
+  padding-bottom:50px;
+  word-break: break-all;
+}
+
+.even-spacing {
+  padding-bottom: 1px;;
+}
+
+.govuk-accordion__open-all {
+  padding:15px 0px !Important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+@media (min-width: 991px){
+  h1 {
+    font-size: 48px;
+    font-size: 3rem;
+    line-height: 58px;
+    line-height: 3.625rem;
+  }
+
+  h2 {
+    font-size: 30px;
+    font-size: 1.875rem;
+    line-height: 36px;
+    line-height: 2.25rem;
+  }
+
+  h3 {
+    font-size: 24px;
+    font-size: 1.5rem;
+    line-height: 29px;
+    line-height: 1.8125rem;
+  }
+
+}

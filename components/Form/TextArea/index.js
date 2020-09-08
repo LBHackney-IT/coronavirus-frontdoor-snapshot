@@ -3,10 +3,10 @@ const TextArea = ({ label, name, onChange, value }) => {
     onChange(e.currentTarget.value);
   };
   return (
-    <div className="govuk-form-group" data-testid={name}>
-      <label className="govuk-label govuk-grid-column-full" htmlFor={`${name}`}>
+    <div className="govuk-form-group even-spacing" data-testid={name}>
+      <h3 htmlFor={`${name}`}>
         {label}
-      </label>
+      </h3>
       <textarea
         className="govuk-textarea"
         id={name}

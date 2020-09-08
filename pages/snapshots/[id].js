@@ -57,7 +57,9 @@ const SnapshotSummary = ({ resources, initialSnapshot, token }) => {
       })
       let summary = []
       Object.keys(updatedResource).forEach(key => {
-        summary.push(updatedResource[key])
+        if(key != 'name'){
+          summary.push(updatedResource[key])
+        }
       })
       updatedResource.summary = summary.join(', ')
       updatedResources.push(updatedResource)
@@ -103,10 +105,15 @@ const SnapshotSummary = ({ resources, initialSnapshot, token }) => {
 
         )}
       </div>
-      <h1>
+      <h1>Recommended resources</h1>
+      <div class="summary-sections">
+      <h2 class="summary-titles">
         {firstName} {lastName}
-      </h1>
-      <p>Postcode: {postcode}</p>
+      </h2>
+      Postcode: {postcode}
+      </div>
+
+    
       {dob && (
         <span
           className="govuk-body govuk-!-font-weight-bold"
@@ -115,8 +122,15 @@ const SnapshotSummary = ({ resources, initialSnapshot, token }) => {
           Aged {convertIsoDateToYears(dob)} ({convertIsoDateToString(dob)})
         </span>
       )}
+
       {editSnapshot && (
         <>
+          <TextArea
+            name="notes"
+            label="What prompted the Resident to get in touch today?"
+            onChange={updateNotes}
+          />
+
           <VulnerabilitiesGrid
             onError={handleError}
             onUpdate={updateSelected}
@@ -125,11 +139,7 @@ const SnapshotSummary = ({ resources, initialSnapshot, token }) => {
             updateSelectedResources={updateSummaryResource}
             customerId={customerId}
           />
-          <TextArea
-            name="notes"
-            label="Any other notes you'd like to add?"
-            onChange={updateNotes}
-          />
+
           <Button
             text="Finish &amp; save"
             onClick={async () => {
@@ -143,12 +153,18 @@ const SnapshotSummary = ({ resources, initialSnapshot, token }) => {
       )}
       {!editSnapshot && (
         <>
-          <div data-testid="vulnerabilities-summary">
-            <h2>Vulnerabilities</h2>
+<div class="summary-sections" data-testid="notes-summary">
+            <h3 class="summary-titles">What prompted the Resident to get in touch today?</h3>
+            {notes ? notes : 'Nothing captured'}
+          </div>
+
+        <div class="govuk-grid-row">
+          <div class="summary-sections govuk-grid-column-one-half" data-testid="vulnerabilities-summary">
+            <h3 class="summary-titles">Vulnerabilities</h3>
             {vulnerabilities.length > 0 ? (
-              <ul>
+              <div>
                 {vulnerabilities.map((v, i) => (
-                  <li key={`vuln-${i}`}>
+                  <span key={`vuln-${i}`}>
                     {v.name}
                     {v.data.length > 0 && (
                       <ul>
@@ -158,42 +174,43 @@ const SnapshotSummary = ({ resources, initialSnapshot, token }) => {
                           </li>
                         ))}
                       </ul>
-                    )}
-                  </li>
+                    )}<br></br>
+                  </span>
                 ))}
-              </ul>
-            ) : (
-              'None captured'
-            )}
-          </div>
-          <div data-testid="assets-summary">
-            <h2>Assets</h2>
-            {assets.length > 0 ? (
-              <ul>
-                {assets.map((a, i) => (
-                  <li key={`asset-${i}`}>{a.name}</li>
-                ))}
-              </ul>
+              </div>
             ) : (
               'None captured'
             )}
           </div>
 
-          <div data-testid="resources-summary">
-            <h2>Resources</h2>
+          <div class="summary-sections govuk-grid-column-one-half" data-testid="assets-summary">
+            <h3 class="summary-titles">Strengths identified</h3>
+            {assets.length > 0 ? (
+              <div>
+                {assets.map((a, i) => (
+                  <span key={`asset-${i}`}>{a.name}<br></br></span>
+                ))}
+              </div>
+            ) : (
+              'None captured'
+            )}
+          </div>
+        </div>
+          <div class="summary-sections" data-testid="resources-summary">
+            <h3 class="summary-titles">Resources</h3>
             {selectedResources.map((r, i) => (
-                  <li key={`resource-${i}`}>{r.summary}</li>
+                  <div>
+                    <div class="resource-title">{r.name}</div>
+                    <div class="resource-description" key={`resource-${i}`}>{r.summary}</div>
+                  </div>
                 )
               )
             }
           </div>
 
-          <div data-testid="notes-summary">
-            <h2>Notes</h2>
-            {notes ? notes : 'None captured'}
-          </div>
 
-          <div className="govuk-grid-row govuk-!-margin-top-9">
+
+          <div className="govuk-grid-row govuk-!-margin-top-5">
            { customerId && (
             <div className="govuk-grid-column-one-half">
               <a

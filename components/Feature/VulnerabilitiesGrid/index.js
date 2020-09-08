@@ -164,7 +164,7 @@ const VulnerabilitiesGrid = ({ resources, onUpdate, residentCoordinates, generic
     <>
       <div className="govuk-grid-column-full-width">
         <Accordion
-          title="Things to explore with the resident"
+          title=""
           handleExpanded={() => {
             setAllExpandedGroups();
           }}
