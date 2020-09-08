@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import useSnapshot from 'lib/api/utils/useSnapshot';
-import { requestSnapshot, requestResources } from 'lib/api';
+import { requestSnapshot, requestResources, requestPrompts } from 'lib/api';
 import HttpStatusError from 'lib/api/domain/HttpStatusError';
 import { getTokenFromCookieHeader } from 'lib/utils/token';
 import { Button, TextArea } from 'components/Form';
@@ -8,9 +8,8 @@ import VulnerabilitiesGrid from 'components/Feature/VulnerabilitiesGrid';
 import { convertIsoDateToString, convertIsoDateToYears } from 'lib/utils/date';
 import geoCoordinates from 'lib/api/utils/geoCoordinates';
 import TopicExplorer from 'components/Feature/TopicExplorer';
-import topics from 'components/Feature/TopicExplorer/topics'
 
-const SnapshotSummary = ({ resources, initialSnapshot, token, showTopicExplorer }) => {
+const SnapshotSummary = ({ resources, initialSnapshot, token, topics, showTopicExplorer }) => {
   const { snapshot, loading, updateSnapshot } = useSnapshot(
     initialSnapshot.snapshotId,
     {
@@ -119,7 +118,7 @@ const SnapshotSummary = ({ resources, initialSnapshot, token, showTopicExplorer 
       )}
       { showTopicExplorer &&
         <>
-          <TopicExplorer topics={topics()}/>
+          <TopicExplorer topics={topics}/>
           <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
         </>
       }
@@ -228,11 +227,14 @@ SnapshotSummary.getInitialProps = async ({
     const token = getTokenFromCookieHeader(headers);
     const initialSnapshot = await requestSnapshot(id, { token });
     const resources = await requestResources({ token });
+    const topics = await requestPrompts({ token });
     const showTopicExplorer = process.env.SHOW_TOPIC_EXPLORER;
+
     return {
       resources,
       initialSnapshot,
       token,
+      topics,
       showTopicExplorer
     };
   } catch (err) {

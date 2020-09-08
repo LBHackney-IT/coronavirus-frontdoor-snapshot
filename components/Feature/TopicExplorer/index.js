@@ -7,12 +7,15 @@ const TopicExplorer = (props) => {
 
   const getSearchResults = (searchTerm) => {
     var results = []
-    const newSearchTerm = searchTerm.toLowerCase();
+    const newSearchTerm = searchTerm.toLocaleLowerCase();
 
     for(const topic of props.topics) {
-      if(topic.tags.includes(newSearchTerm)) {
-        results.push(topic);
-      }
+      const promptTags = topic.promptTags
+      promptTags.forEach(tag => {
+        if(tag.toLocaleLowerCase() == newSearchTerm){
+          results.push(topic);
+        }
+      });
     }
     return results
   }
@@ -58,7 +61,7 @@ const TopicExplorer = (props) => {
                 </p>
                 <Markdown options={{
                   overrides: { span: { props: {
-                    className: 'govuk-!-font-size-16 conv-support-text'                    
+                    className: 'govuk-!-font-size-16 conv-support-text'
                   }}}
                 }}>
                   { result.supportingInformation ?? "" }
