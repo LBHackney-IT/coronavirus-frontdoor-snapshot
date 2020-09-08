@@ -38,6 +38,7 @@ const Index = ({ resources, initialSnapshot, token, showTopicExplorer, topics })
     <>
       { showTopicExplorer &&
         <>
+          <h1>Topics to explore</h1>
           <TopicExplorer topics={topics}/>
           <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
         </>

@@ -35,7 +35,6 @@ const TopicExplorer = (props) => {
   }
   return (
     <>
-      <h1>Topics to explore</h1>
       <div className="govuk-form-group">
         <h2>How can we help?</h2>
         <input
