@@ -4,15 +4,18 @@ import Markdown from 'markdown-to-jsx';
 const TopicExplorer = (props) => {
   const [searchTerm, setSearchTerm] = useState('')
   const [searchResults, setSearchResults] = useState([])
-
+  
   const getSearchResults = (searchTerm) => {
     var results = []
-    const newSearchTerm = searchTerm.toLowerCase();
+    const newSearchTerm = searchTerm.toLocaleLowerCase();
 
     for(const topic of props.topics) {
-      if(topic.tags.includes(newSearchTerm)) {
-        results.push(topic);
-      }
+      const promptTags = topic.promptTags
+      promptTags.forEach(tag => {
+        if(tag.toLocaleLowerCase() == newSearchTerm){
+          results.push(topic);
+        }
+      });
     }
     return results
   }

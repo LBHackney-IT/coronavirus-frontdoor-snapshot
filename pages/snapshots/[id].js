@@ -1,14 +1,16 @@
 import { useState, useEffect } from 'react';
 import useSnapshot from 'lib/api/utils/useSnapshot';
-import { requestSnapshot, requestResources } from 'lib/api';
+import { requestSnapshot, requestResources, requestPrompts } from 'lib/api';
 import HttpStatusError from 'lib/api/domain/HttpStatusError';
 import { getTokenFromCookieHeader } from 'lib/utils/token';
 import { Button, TextArea } from 'components/Form';
 import VulnerabilitiesGrid from 'components/Feature/VulnerabilitiesGrid';
 import { convertIsoDateToString, convertIsoDateToYears } from 'lib/utils/date';
 import geoCoordinates from 'lib/api/utils/geoCoordinates';
+import TopicExplorer from 'components/Feature/TopicExplorer';
 
-const SnapshotSummary = ({ resources, initialSnapshot, token }) => {
+
+const SnapshotSummary = ({ resources, initialSnapshot, token , topics}) => {
   const { snapshot, loading, updateSnapshot } = useSnapshot(
     initialSnapshot.snapshotId,
     {
@@ -91,7 +93,8 @@ const SnapshotSummary = ({ resources, initialSnapshot, token }) => {
   
   return (
     <>
-      <div>      
+      <div>   
+      <TopicExplorer topics={topics}/>   
         { editSnapshot && customerId && (
           <a
           href={`${INH_URL}/help-requests/edit/${customerId}`}
@@ -223,10 +226,12 @@ SnapshotSummary.getInitialProps = async ({
     const token = getTokenFromCookieHeader(headers);
     const initialSnapshot = await requestSnapshot(id, { token });
     const resources = await requestResources({ token });
+    const topics = await requestPrompts({ token });
     return {
       resources,
       initialSnapshot,
-      token
+      token,
+      topics
     };
   } catch (err) {
     res.writeHead(err instanceof HttpStatusError ? err.statusCode : 500).end();
