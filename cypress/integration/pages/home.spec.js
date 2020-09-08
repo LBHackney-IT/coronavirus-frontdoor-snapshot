@@ -7,8 +7,7 @@ context('Index page', () => {
 
   describe('Page structure', () => {
     it('has the right headings', () => {
-      cy.contains('Topics to explore').should('be.visible')
-      cy.contains('How can we help?').should('be.visible')
+      cy.contains('Search for a topic').should('be.visible')
       cy.contains('Resource Finder').should('be.visible')
     });
 
@@ -66,10 +65,6 @@ context('Index page', () => {
   });
 
   describe("Topic Explorer", () => {
-    it("can show the topic explorer", () => {
-      cy.contains('How can we help?').should('be.visible')
-    })
-
 
     it("can show food example prompts", () => {
       cy.get("#example-search").contains('food').click();

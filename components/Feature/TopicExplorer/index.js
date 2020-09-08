@@ -35,19 +35,20 @@ const TopicExplorer = (props) => {
   }
   return (
     <>
-      <div className="govuk-form-group">
-        <h2>How can we help?</h2>
+      <h1>Search for a topic</h1>
+      <div className="govuk-form-group conversational-prompt-results-spacing">
+        <div id='example-search'>Try searching for keywords like{' '}
+          <button className='button-as-link govuk-!-padding-0' data-search-term='food' onClick={populateInput} data-testid='food'>food</button>,{' '}
+          <button className='button-as-link govuk-!-padding-0' data-search-term='health' onClick={populateInput}>health</button>, or{' '}
+          <button className='button-as-link govuk-!-padding-0' data-search-term='benefits'onClick={populateInput}>benefits</button>
+        </div>
+
         <input
           type="text"
           className="govuk-input govuk-input--width-20"
           value={searchTerm}
           onChange={onSearchChange}
         />
-        <div id='example-search'>Try a search for{' '}
-          <button className='button-as-link govuk-!-padding-0' data-search-term='food' onClick={populateInput} data-testid='food'>food</button>,{' '}
-          <button className='button-as-link govuk-!-padding-0' data-search-term='health' onClick={populateInput}>health</button>, or{' '}
-          <button className='button-as-link govuk-!-padding-0' data-search-term='benefits'onClick={populateInput}>benefits</button>
-        </div>
       </div>
 
       { searchResults.length > 0 &&

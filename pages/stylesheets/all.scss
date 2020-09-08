@@ -109,3 +109,20 @@ position: relative;
   cursor: pointer;
   color: #1d70b8;
 }
+
+.button-as-link:focus {
+outline:0;
+}
+
+.hr-additional-spacing {
+margin-top:60px;
+margin-bottom:50px;
+}
+
+.conversational-prompt-results-spacing {
+  margin-bottom: 40px;
+}
+
+#example-search {
+  padding-bottom:20px;
+}
