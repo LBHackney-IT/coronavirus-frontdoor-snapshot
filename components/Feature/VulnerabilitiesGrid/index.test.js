@@ -57,7 +57,7 @@ describe('VulnerabilitiesGrid', () => {
     );
 
     expect(
-      container.querySelector('#financial-stability-a-other-other-assets-i')
+      container.querySelector('#financial-stability-a-other--i')
     ).toBeInTheDocument();
   });
 
@@ -80,7 +80,7 @@ describe('VulnerabilitiesGrid', () => {
     );
 
     fireEvent.change(
-      container.querySelector('#financial-stability-a-other-other-assets-i'),
+      container.querySelector('#financial-stability-a-other--i'),
       {
         target: { value: 'some text' }
       }
@@ -109,7 +109,7 @@ describe('VulnerabilitiesGrid', () => {
 
     fireEvent.change(
       container.querySelector(
-        '#financial-stability-v-other-other-vulnerabilities-i'
+        '#financial-stability-v-other--i'
       ),
       {
         target: { value: 'some text' }
