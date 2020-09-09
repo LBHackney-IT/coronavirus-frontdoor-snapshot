@@ -80,7 +80,7 @@ describe('SnapshotSummary', () => {
         <SnapshotSummary initialSnapshot={snapshot} resources={resources} />
       );
       expect(
-        getByLabelText(`Any other notes you'd like to add?`)
+        getByLabelText(`What prompted the Resident to get in touch today?`)
       ).toBeInTheDocument();
     });
 

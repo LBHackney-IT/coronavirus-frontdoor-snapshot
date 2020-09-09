@@ -3,9 +3,11 @@ const TextArea = ({ label, name, onChange, value }) => {
     onChange(e.currentTarget.value);
   };
   return (
-    <div className="govuk-form-group" data-testid={name}>
-      <label className="govuk-label govuk-grid-column-full" htmlFor={`${name}`}>
-        {label}
+    <div className="govuk-form-group even-spacing" data-testid={name}>
+      <label htmlFor={`${name}`}>
+        <h3>
+          {label}
+        </h3>
       </label>
       <textarea
         className="govuk-textarea"

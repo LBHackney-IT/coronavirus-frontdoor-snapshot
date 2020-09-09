@@ -57,7 +57,7 @@ context('Edit snapshot', () => {
       cy.visit(`/snapshots/1`);
 
       cy.contains('Phineas Flynn').should('be.visible')
-      cy.contains('Things to explore with the resident').should('be.visible')
+
 
       cy.get('[data-testid=accordion-item]')
         .should('contain', 'Financial stability')
@@ -115,12 +115,11 @@ context('Edit snapshot', () => {
         .and('contain', 'Rent arrears');
 
       cy.get('[data-testid=assets-summary]')
-        .should('contain', 'Assets')
+        .should('contain', 'Strengths identified')
         .and('contain', 'Organised and/or engaged');
 
       cy.get('[data-testid=notes-summary]')
-        .should('contain', 'Notes')
-        .and('contain', 'Note');
+        .should('contain', 'Note');
     });
 
     it('Persists the snapshot', () => {
@@ -190,7 +189,7 @@ context('Edit snapshot', () => {
         .should('contain', 'Vulnerabilities')
         .and('contain', 'new vulnerability');
       cy.get('[data-testid=assets-summary]')
-        .should('contain', 'Assets')
+        .should('contain', 'Strengths identified')
         .and('contain', 'new asset');
     });
   });
