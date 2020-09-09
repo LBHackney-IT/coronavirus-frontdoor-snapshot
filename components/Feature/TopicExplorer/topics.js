@@ -16,17 +16,17 @@ const topics = () => [
   {
     prompt: 'Home test or test site?',
     supportingInformation: 'There may be worries about leaving the house. Past day 5 of symptoms, home tests are not suitable.',
-    tags: ['test']
+    tags: ['test', 'testing', 'coronavirus testing']
   },
   {
     prompt: 'How many days have you had symptoms for?',
     supportingInformation: 'You need to get a test done in the first 5 days of having symptoms.',
-    tags: ['test']
+    tags: ['test', 'testing', 'coronavirus testing']
   },
   {
     prompt: 'Useful links',
     supportingInformation: "[The government guidance on testing](https://www.gov.uk/get-coronavirus-test)",
-    tags: ['test']
+    tags: ['test', 'testing', 'coronavirus testing']
   },
   {
     prompt: "Do you have anyone you can talk to if you're worried?",

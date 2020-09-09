@@ -20,7 +20,6 @@ context('Edit snapshot', () => {
     cy.task('deleteSnapshot', '1');
   });
 
-
   it("Adds resources to the summary list", () => {
     cy.visit(`/snapshots/1`);
     cy.get('[data-testid=accordion-item]').eq(0).click();
@@ -52,11 +51,13 @@ context('Edit snapshot', () => {
       .should('contain', 'Resources')
       .and('contain', 'Shirdi Sai Baba Temple');
   })
-  
+
   describe('Edit snapshot', () => {
     it('Displays editable snapshot if there are no assets, vulnerabilites and notes added', () => {
       cy.visit(`/snapshots/1`);
-      cy.get('h2').should('contain', 'Phineas Flynn');
+
+      cy.contains('Phineas Flynn').should('be.visible')
+      cy.contains('How can we help?').should('be.visible')
 
       cy.get('[data-testid=accordion-item]')
         .should('contain', 'Financial stability')
@@ -172,9 +173,9 @@ context('Edit snapshot', () => {
 
     it('Adds text input values to the Other vulnerabilities and Other assets', () => {
       const otherVulnerabilityInputSelector =
-        'financial-stability-v-other-other-vulnerabilities-i';
+        'financial-stability-v-other--i';
       const otherAssetInputSelector =
-        'financial-stability-a-other-other-assets-i';
+        'financial-stability-a-other--i';
       cy.visit(`/snapshots/1`);
       cy.get('[data-testid=accordion-item]').eq(1).click();
       cy.get('[data-testid=financial-stability-v-other-checkbox]').click();

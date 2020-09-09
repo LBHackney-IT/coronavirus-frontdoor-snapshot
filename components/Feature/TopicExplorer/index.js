@@ -7,12 +7,15 @@ const TopicExplorer = (props) => {
 
   const getSearchResults = (searchTerm) => {
     var results = []
-    const newSearchTerm = searchTerm.toLowerCase();
+    const newSearchTerm = searchTerm.toLocaleLowerCase();
 
     for(const topic of props.topics) {
-      if(topic.tags.includes(newSearchTerm)) {
-        results.push(topic);
-      }
+      const promptTags = topic.promptTags
+      promptTags.forEach(tag => {
+        if(tag.toLocaleLowerCase() == newSearchTerm){
+          results.push(topic);
+        }
+      });
     }
     return results
   }
@@ -32,7 +35,6 @@ const TopicExplorer = (props) => {
   }
   return (
     <>
-      <h1>Topics to explore</h1>
       <div className="govuk-form-group">
         <h2>How can we help?</h2>
         <input
@@ -43,8 +45,8 @@ const TopicExplorer = (props) => {
         />
         <div id='example-search'>Try a search for{' '}
           <button className='button-as-link govuk-!-padding-0' data-search-term='food' onClick={populateInput} data-testid='food'>food</button>,{' '}
-          <button className='button-as-link govuk-!-padding-0' data-search-term='mental health' onClick={populateInput}>mental health</button>, or{' '}
-          <button className='button-as-link govuk-!-padding-0' data-search-term='debt'onClick={populateInput}>debt</button>
+          <button className='button-as-link govuk-!-padding-0' data-search-term='health' onClick={populateInput}>health</button>, or{' '}
+          <button className='button-as-link govuk-!-padding-0' data-search-term='benefits'onClick={populateInput}>benefits</button>
         </div>
       </div>
 
@@ -59,7 +61,7 @@ const TopicExplorer = (props) => {
                 </p>
                 <Markdown options={{
                   overrides: { span: { props: {
-                    className: 'govuk-!-font-size-16 conv-support-text'                    
+                    className: 'govuk-!-font-size-16 conv-support-text'
                   }}}
                 }}>
                   { result.supportingInformation ?? "" }

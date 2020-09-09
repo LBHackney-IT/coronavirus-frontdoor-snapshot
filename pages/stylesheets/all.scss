@@ -22,6 +22,53 @@ a {
   font-size: 1em !important;
   line-height: 1.2em !important;
 }
+.align-horizontally {
+  position: relative;
+  float: left;
+  clear: none;
+  margin-right: 0em;
+  width:100%;
+}
+
+@media (min-width: 40.0625em){
+.align-horizontally {
+  width:20%;
+}
+}
+
+.horizontal-label{
+  position: relative;
+  float: left;
+  width: 110px;
+  margin-left: 1em;
+  height: 100%;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  line-height:44px;
+}
+.align-center{
+  align-items: center;
+}
+.checkbox-list{
+position: relative;
+}
+
+.govuk-checkboxes__label {
+  padding: 10px 10px 5px;
+  font-size: 1rem;
+}
+
+.govuk-checkboxes {
+  width: 85%;
+    float: left;
+    display: block;
+    padding-left:1em;
+}
+
+.govuk-form-group {
+  margin-bottom: 10px;
+}
 
 .ResourceCard_tags__1Zgh3 {
   float:left;

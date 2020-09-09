@@ -194,8 +194,10 @@ const VulnerabilitiesGrid = ({ resources, onUpdate, residentCoordinates, generic
                 }
               >
                 <div className="govuk-grid-row">
-                  <div className="govuk-grid-column-one-half">
-                    <CheckboxList className="vulnerability">
+                  <div class="align-center">
+                    <CheckboxList className="vulnerability"
+                     resource={id}
+                     checkboxType='vulnerability'>
                       {vulnerabilities.map(
                         ({ arialabel, label, textinputs }) => {
                           const cbId = `${id}-v-${labelToId(label)}`;
@@ -252,8 +254,10 @@ const VulnerabilitiesGrid = ({ resources, onUpdate, residentCoordinates, generic
                       )}
                     </CheckboxList>
                   </div>
-                  <div className="govuk-grid-column-one-third">
-                    <CheckboxList className="asset">
+                  <div>
+                    <CheckboxList className="asset"
+                     resource={id}
+                     checkboxType={"asset"}>
                       {assets.map(({ arialabel, label, textinputs }) => {
                         const cbId = `${id}-a-${labelToId(label)}`;
 

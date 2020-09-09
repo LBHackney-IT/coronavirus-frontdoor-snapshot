@@ -1,6 +1,6 @@
 const Checkbox = ({ checked, label, name, onClick, ...others }) => {
   return (
-    <div className="govuk-checkboxes__item">
+    <div className="govuk-checkboxes__item align-horizontally">
       <input
         className="govuk-checkboxes__input"
         id={name}
