@@ -39,12 +39,12 @@ const Index = ({ resources, initialSnapshot, token, showTopicExplorer, topics })
       { showTopicExplorer &&
         <>
           <TopicExplorer topics={topics}/>
-          <hr className="govuk-section-break hr-additional-spacing govuk-section-break--visible" />
+          <hr className="govuk-section-break hr-additional-spacing" />
         </>
       }
-      <h1>
-        Resource Finder
-      </h1>
+      <h2>
+      Resources for residents
+      </h2>
       <p>
       Enter a postcode to help filter the results by distance:
       </p>

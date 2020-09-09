@@ -35,7 +35,7 @@ const TopicExplorer = (props) => {
   }
   return (
     <>
-      <h1>Search for a topic</h1>
+      <h2>Discuss a topic</h2>
       <div className="govuk-form-group govuk-!-margin-bottom-7">
        
       <div class="govuk-!-padding-bottom-4" id='example-search'>Try searching for keywords like{' '}
@@ -57,7 +57,6 @@ const TopicExplorer = (props) => {
 
       { searchResults.length > 0 &&
         <>
-          <h2>Conversational prompts</h2>
           <ul className="govuk-list conv-prompt">
             { searchResults.map((result, i) =>
               <li key={i}>

@@ -106,12 +106,18 @@ const SnapshotSummary = ({ resources, initialSnapshot, token, topics, showTopicE
 
         )}
       </div>
-      <h1>Recommended resources</h1>
+      <h1 class="no-bottom-margin">{firstName}'s resources</h1>
       <div class="summary-sections">
-      <h2 class="summary-titles">
-        {firstName} {lastName}
-      </h2>
-      Postcode: {postcode}
+      
+      {editSnapshot && (
+        <>
+          <TextArea
+            name="notes"
+            label="What prompted the Resident to get in touch today?"
+            onChange={updateNotes}
+          />
+</>
+      )}
       </div>
 
     
@@ -123,19 +129,17 @@ const SnapshotSummary = ({ resources, initialSnapshot, token, topics, showTopicE
           Aged {convertIsoDateToYears(dob)} ({convertIsoDateToString(dob)})
         </span>
       )}
-      { showTopicExplorer &&
+      { editSnapshot &&
         <>
           <TopicExplorer topics={topics}/>
-          <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
+          <hr className="govuk-section-break hr-additional-spacing" />
         </>
       }
       {editSnapshot && (
         <>
-          <TextArea
-            name="notes"
-            label="What prompted the Resident to get in touch today?"
-            onChange={updateNotes}
-          />
+
+          <h2>Resources for residents</h2>
+          Resident's postcode: {postcode}
 
           <VulnerabilitiesGrid
             onError={handleError}
@@ -160,6 +164,7 @@ const SnapshotSummary = ({ resources, initialSnapshot, token, topics, showTopicE
       {!editSnapshot && (
         <>
           <div class="summary-sections" data-testid="notes-summary">
+          <h3 class="summary-titles">What prompted the Resident to get in touch today?</h3>
             {notes ? notes : 'Nothing captured'}
           </div>
 
