@@ -59,6 +59,7 @@ context('Edit snapshot', () => {
       cy.contains('Phineas Flynn').should('be.visible')
       cy.contains('How can we help?').should('be.visible')
 
+
       cy.get('[data-testid=accordion-item]')
         .should('contain', 'Financial stability')
         .and('contain', 'Physical health')

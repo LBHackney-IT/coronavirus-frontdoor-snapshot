@@ -8,10 +8,6 @@ describe('TopicExplorer', () => {
       render(<TopicExplorer topics={topics}/>);
     });
 
-    it('renders successfully', () => {
-      expect(screen.getByText('How can we help?')).toBeInTheDocument();
-    });
-
     it('shows no results for a search', () => {
       fireEvent.change(screen.getByRole('textbox'), {
         target: { value: 'giraffe' },
