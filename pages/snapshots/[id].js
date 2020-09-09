@@ -1,14 +1,15 @@
 import { useState, useEffect } from 'react';
 import useSnapshot from 'lib/api/utils/useSnapshot';
-import { requestSnapshot, requestResources } from 'lib/api';
+import { requestSnapshot, requestResources, requestPrompts } from 'lib/api';
 import HttpStatusError from 'lib/api/domain/HttpStatusError';
 import { getTokenFromCookieHeader } from 'lib/utils/token';
 import { Button, TextArea } from 'components/Form';
 import VulnerabilitiesGrid from 'components/Feature/VulnerabilitiesGrid';
 import { convertIsoDateToString, convertIsoDateToYears } from 'lib/utils/date';
 import geoCoordinates from 'lib/api/utils/geoCoordinates';
+import TopicExplorer from 'components/Feature/TopicExplorer';
 
-const SnapshotSummary = ({ resources, initialSnapshot, token }) => {
+const SnapshotSummary = ({ resources, initialSnapshot, token, topics, showTopicExplorer }) => {
   const { snapshot, loading, updateSnapshot } = useSnapshot(
     initialSnapshot.snapshotId,
     {
@@ -88,10 +89,10 @@ const SnapshotSummary = ({ resources, initialSnapshot, token }) => {
   let customerId = snapshot.systemIds?.[0];
   const residentCoordinates = geoCoordinates(postcode);
   const INH_URL = process.env.INH_URL
-  
+
   return (
     <>
-      <div>      
+      <div>
         { editSnapshot && customerId && (
           <a
           href={`${INH_URL}/help-requests/edit/${customerId}`}
@@ -115,6 +116,12 @@ const SnapshotSummary = ({ resources, initialSnapshot, token }) => {
           Aged {convertIsoDateToYears(dob)} ({convertIsoDateToString(dob)})
         </span>
       )}
+      { showTopicExplorer &&
+        <>
+          <TopicExplorer topics={topics}/>
+          <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
+        </>
+      }
       {editSnapshot && (
         <>
           <VulnerabilitiesGrid
@@ -216,17 +223,19 @@ SnapshotSummary.getInitialProps = async ({
   req: { headers },
   res
 }) => {
-  console.log(process.env.NEXT_PUBLIC_API_URL);
-  console.log(process.env.NEXT_PUBLIC_GTM_ID);
-  console.log(process.env.NEXT_PUBLIC_SINGLEVIEW_URL);
   try {
     const token = getTokenFromCookieHeader(headers);
     const initialSnapshot = await requestSnapshot(id, { token });
     const resources = await requestResources({ token });
+    const topics = await requestPrompts({ token });
+    const showTopicExplorer = process.env.SHOW_TOPIC_EXPLORER;
+
     return {
       resources,
       initialSnapshot,
-      token
+      token,
+      topics,
+      showTopicExplorer
     };
   } catch (err) {
     res.writeHead(err instanceof HttpStatusError ? err.statusCode : 500).end();

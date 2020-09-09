@@ -21,8 +21,8 @@ describe('TopicExplorer', () => {
   describe('with tagged topics', () => {
     beforeEach(() => {
       var topics = [
-        { prompt: 'topic one', tags: ['one', 'all'] },
-        { prompt: 'topic two', tags: ['two', 'second', 'all'] },
+        { prompt: 'topic one', promptTags: ['One', 'All'] },
+        { prompt: 'topic two', promptTags: ['Two', 'Second', 'All'] },
       ]
 
       render(<TopicExplorer topics={topics}/>);
@@ -66,12 +66,12 @@ describe('TopicExplorer', () => {
         {
           prompt: 'topic one',
           supportingInformation: 'support info one',
-          tags: ['one']
+          promptTags: ['One']
         },
         {
           prompt: 'topic two',
           supportingInformation: 'support info two',
-          tags: ['two']
+          promptTags: ['Two']
         },
       ]
 
@@ -100,7 +100,7 @@ describe('TopicExplorer', () => {
         {
           prompt: 'topic one',
           supportingInformation: "[click me](https://example.path/)",
-          tags: ['one']
+          promptTags: ['One']
         }
       ]
 
