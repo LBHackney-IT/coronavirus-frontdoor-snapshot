@@ -21,7 +21,9 @@ a {
 .small {
   font-size: 1em !important;
   line-height: 1.2em !important;
+  word-break: break-word;
 }
+
 .align-horizontally {
   position: relative;
   float: left;
