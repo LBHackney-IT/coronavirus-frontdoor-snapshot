@@ -109,3 +109,12 @@ position: relative;
   cursor: pointer;
   color: #1d70b8;
 }
+
+.button-as-link:focus {
+outline:0;
+}
+
+.hr-additional-spacing {
+margin-top:60px;
+margin-bottom:50px;
+}
