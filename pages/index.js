@@ -6,7 +6,7 @@ import { getTokenFromCookieHeader } from 'lib/utils/token';
 import VulnerabilitiesGrid from 'components/Feature/VulnerabilitiesGrid';
 import TopicExplorer from 'components/Feature/TopicExplorer';
 
-const Index = ({ resources, initialSnapshot, token, showTopicExplorer, topics }) => {
+const Index = ({ resources, initialSnapshot, token, showTopicExplorer, topics }) =>{
   const [errorMsg, setErrorMsg] = useState()
   const { snapshot, loading, updateSnapshot } = useSnapshot(
     initialSnapshot.snapshotId,

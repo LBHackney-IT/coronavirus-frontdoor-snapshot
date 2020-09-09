@@ -87,6 +87,27 @@ position: relative;
   margin-bottom: 25px;
 }
 
+.conv-prompt li ul {
+padding-inline-start:0px;
+padding:15px 0px 0px 0px;
+}
+
+.conv-prompt li ul li{
+  background:none;
+  padding: 0px;
+  list-style: none;
+  margin-bottom: 10px;
+  font-size: 16px !important;
+  font-size: 1rem !important;
+  line-height: 1.25 !important;
+  color: #505a5f;
+}
+
+.conv-prompt li ul li a{
+  color: #025ea6;
+  font-weight:600;
+}
+
 .conv-prompt-text {
   font-weight:600;
   margin: 0px;
