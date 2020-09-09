@@ -175,8 +175,9 @@ h1, h2, h3, h4, h5, h6 {
   }
 
   h2 {
-    font-size: 30px;
-    font-size: 1.875rem;
+    font-size: 36px;
+    font-size: 2.3em;
+    margin-block-end: 10px;
     line-height: 36px;
     line-height: 2.25rem;
   }
@@ -190,6 +191,10 @@ h1, h2, h3, h4, h5, h6 {
 
 }
 
+.no-bottom-margin {
+  margin-block-end: 0;
+  }
+
 .button-as-link:focus {
 outline:0;
 }
@@ -197,4 +202,5 @@ outline:0;
 .hr-additional-spacing {
 margin-top:60px;
 margin-bottom:50px;
+border-bottom: 0px solid;
 }
