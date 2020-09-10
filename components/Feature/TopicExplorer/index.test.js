@@ -2,13 +2,23 @@ import { cleanup, render, screen, fireEvent } from '@testing-library/react';
 import TopicExplorer from './index';
 
 describe('TopicExplorer', () => {
-  describe('with no topics', () => {
+  describe('with topics marked as default', () => {
     beforeEach(() => {
-      var topics = []
+      var topics = [
+        { prompt: 'topic one', promptTags: ['One'] },
+        { prompt: 'topic two', promptTags: ['Two', 'default'] },
+        { prompt: 'topic three', promptTags: ['Three'] }
+      ]
+
       render(<TopicExplorer topics={topics}/>);
     });
 
-    it('shows no results for a search', () => {
+    it('shows only default results before searching', () => {
+      expect(screen.queryByText('topic one')).toBeNull();
+      expect(screen.getByText('topic two')).toBeInTheDocument();
+    })
+
+    it('shows no results if no tags match', () => {
       fireEvent.change(screen.getByLabelText('Try searching for keywords like'), {
         target: { value: 'giraffe' },
       });
