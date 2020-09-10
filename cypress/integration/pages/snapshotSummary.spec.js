@@ -49,7 +49,9 @@ context('Snapshot summary', () => {
     it('Displays a read only view of a snapshot', () => {
       cy.visit(`/snapshots/2`);
 
-      cy.get('h2').should('contain', 'Ferb Flynn');
+      cy.get('h1').should('contain', `Ferb's resources`);
+
+      cy.get('#example-search').should('not.exist');
 
       cy.get('[data-testid=age-and-date-of-birth]').should(
         'contain',
@@ -82,7 +84,7 @@ context('Snapshot summary', () => {
     it('Displays none captured if there are no vulnerabilities or assets', () => {
       cy.visit(`/snapshots/3`);
 
-      cy.get('h2').should('contain', 'Candace Flynn');
+      cy.get('h1').should('contain', `Candace's resources`);
 
       cy.get('[data-testid=vulnerabilities-summary]')
         .should('contain', 'Vulnerabilities')

@@ -43,7 +43,7 @@ describe('SnapshotSummary', () => {
         <SnapshotSummary initialSnapshot={snapshot} resources={resources} />
       );
       expect(
-        getByText(`${snapshot.firstName} ${snapshot.lastName}`)
+        getByText(`${snapshot.firstName}'s resources`)
       ).toBeInTheDocument();
     });
 
