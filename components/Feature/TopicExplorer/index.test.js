@@ -9,7 +9,7 @@ describe('TopicExplorer', () => {
     });
 
     it('shows no results for a search', () => {
-      fireEvent.change(screen.getByRole('textbox'), {
+      fireEvent.change(screen.getByLabelText('Try searching for keywords like'), {
         target: { value: 'giraffe' },
       });
 
@@ -21,8 +21,8 @@ describe('TopicExplorer', () => {
   describe('with tagged topics', () => {
     beforeEach(() => {
       var topics = [
-        { prompt: 'topic one', promptTags: ['One', 'All'] },
-        { prompt: 'topic two', promptTags: ['Two', 'Second', 'All'] },
+        { prompt: 'topic one', promptTags: ['One', 'All', "Another Tag", 'fourth tag'] },
+        { prompt: 'topic two', promptTags: ['Two', 'Second', 'All', 'fifth tag'] },
       ]
 
       render(<TopicExplorer topics={topics}/>);
@@ -34,8 +34,17 @@ describe('TopicExplorer', () => {
       expect(screen.queryByText('topic two')).toBeNull();
     });
 
+    it('shows auto-complete for search terms', () =>{
+      fireEvent.change(screen.getByLabelText('Try searching for keywords like'), {
+        target: { value: 'f' },
+      });
+      expect(screen.getByText('fourth tag')).toBeInTheDocument
+      expect(screen.getByText('fifth tag')).toBeInTheDocument
+      expect(screen.queryByText('topic one')).toBeNull
+    })
+
     it('searching for a tag shows a matching topic', () => {
-      fireEvent.change(screen.getByRole('textbox'), {
+      fireEvent.change(screen.getByLabelText('Try searching for keywords like'), {
         target: { value: 'one' },
       });
 
@@ -43,7 +52,7 @@ describe('TopicExplorer', () => {
     });
 
     it('searching for a tag shows all matching results', () => {
-      fireEvent.change(screen.getByRole('textbox'), {
+      fireEvent.change(screen.getByLabelText('Try searching for keywords like'), {
         target: { value: 'all' },
       });
 
@@ -52,7 +61,7 @@ describe('TopicExplorer', () => {
     });
 
     it('ignores case when searching', () => {
-      fireEvent.change(screen.getByRole('textbox'), {
+      fireEvent.change(screen.getByLabelText('Try searching for keywords like'), {
         target: { value: 'ONE' },
       });
 
@@ -85,7 +94,7 @@ describe('TopicExplorer', () => {
     });
 
     it('searching for a tag shows all the related info', () => {
-      fireEvent.change(screen.getByRole('textbox'), {
+      fireEvent.change(screen.getByLabelText('Try searching for keywords like'), {
         target: { value: 'one' },
       });
 
@@ -108,7 +117,7 @@ describe('TopicExplorer', () => {
     });
 
     it('shows links', () => {
-      fireEvent.change(screen.getByRole('textbox'), {
+      fireEvent.change(screen.getByLabelText('Try searching for keywords like'), {
         target: { value: 'one' },
       });
 
