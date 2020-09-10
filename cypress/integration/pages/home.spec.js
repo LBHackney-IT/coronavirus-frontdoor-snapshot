@@ -7,12 +7,12 @@ context('Index page', () => {
 
   describe('Page structure', () => {
     it('has the right headings', () => {
-      cy.contains('Search for a topic').should('be.visible')
-      cy.contains('Resource Finder').should('be.visible')
+      cy.contains('Discuss a topic').should('be.visible')
+      cy.contains('Resources for residents').should('be.visible')
     });
 
     it('has no content outside top-level headings', () => {
-      cy.checkA11y('#content > h1', null, cy.terminalLog);
+      cy.checkA11y('#content > h2', null, cy.terminalLog);
     });
   });
 

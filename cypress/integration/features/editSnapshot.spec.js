@@ -56,7 +56,7 @@ context('Edit snapshot', () => {
     it('Displays editable snapshot if there are no assets, vulnerabilites and notes added', () => {
       cy.visit(`/snapshots/1`);
 
-      cy.contains('Phineas Flynn').should('be.visible')
+      cy.contains(`Phineas's resources`).should('be.visible')
 
 
       cy.get('[data-testid=accordion-item]')
