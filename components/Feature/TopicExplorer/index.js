@@ -22,7 +22,7 @@ const TopicExplorer = (props) => {
 
   useEffect(() => {
     if (!props.topics) { return }
-    
+
     props.topics.forEach(topic => {
       topic.promptTags.forEach(promptTag => {
         if(!tags.includes(promptTag)){
@@ -51,10 +51,8 @@ const TopicExplorer = (props) => {
     <>
       <h2>Discuss a topic</h2>
       <div className="govuk-form-group govuk-!-margin-bottom-7">
-       
-      <div class="govuk-!-padding-bottom-4" id='example-search'>
-        <label for="text-input">Try searching for keywords like{' '}
-        </label>
+        <div className="govuk-!-padding-bottom-4" id='example-search'>
+          <label for="text-input">Try searching for keywords like{' '}</label>
           <button className='button-as-link govuk-!-padding-0' data-search-term='coronavirus' onClick={populateInput} data-testid='coronavirus'>coronavirus</button>,{' '}
           <button className='button-as-link govuk-!-padding-0' data-search-term='food' onClick={populateInput} data-testid='food'>food</button>,{' '}
           <button className='button-as-link govuk-!-padding-0' data-search-term='health' onClick={populateInput}>health</button>, or{' '}
@@ -68,14 +66,13 @@ const TopicExplorer = (props) => {
           value={searchTerm}
           onChange={onSearchChange}
         />
-        <datalist id="input-tags">  
+        <datalist id="input-tags">
         {
             tags.sort().map((t,i) => (
               <option key={i}>{t}</option>
             ))
           }
         </datalist>
-
       </div>
 
       { searchResults.length > 0 &&
