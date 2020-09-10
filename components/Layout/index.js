@@ -13,7 +13,7 @@ const Layout = ({ children }) => (
     <div className="govuk-width-container app-width-container">
       <PhaseBanner
         phase="alpha"
-        feedbackUrl="https://forms.gle/B6vEMgp7sCsjJqNdA"
+        feedbackUrl="https://forms.gle/zAqXMUabo1oMfzDL7"
       />
       <main
         className="govuk-main-wrapper app-main-class"
