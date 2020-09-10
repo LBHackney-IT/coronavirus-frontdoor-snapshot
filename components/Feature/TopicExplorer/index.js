@@ -65,6 +65,7 @@ const TopicExplorer = (props) => {
           className="govuk-input govuk-input--width-20"
           value={searchTerm}
           onChange={onSearchChange}
+          autoComplete="off"
         />
         <datalist id="input-tags">
         {
