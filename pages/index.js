@@ -66,13 +66,7 @@ const Index = ({ resources, initialSnapshot, token, showTopicExplorer, topics })
         genericPostcode={genericPostcode}
         residentCoordinates={residentCoordinates}
       />
-      <a
-        href='https://forms.gle/B6vEMgp7sCsjJqNdA' target="_blank"
-        className="govuk-button"
-        data-testid="feedback-link-test"
-      >
-        Submit feedback
-        </a>
+
     </>
   );
 };
