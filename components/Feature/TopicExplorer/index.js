@@ -26,6 +26,10 @@ const TopicExplorer = (props) => {
   useEffect(() => {
     if (!props.topics) { return }
 
+    if (!searchTerm) {
+      setSearchResults(getSearchResults('default'))
+    }
+
     props.topics.forEach(topic => {
       topic.promptTags.forEach(promptTag => {
         if(!tags.includes(promptTag)){
@@ -35,11 +39,12 @@ const TopicExplorer = (props) => {
         }
       });
     });
-  });
+  }, [searchTerm, tags]);
 
   const onSearchChange = event => {
     const newSearchTerm = event.target.value
     const results = getSearchResults(newSearchTerm)
+
     setSearchTerm(event.target.value);
     setSearchResults(results);
   };
