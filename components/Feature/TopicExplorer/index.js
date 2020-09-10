@@ -9,14 +9,17 @@ const TopicExplorer = (props) => {
   const getSearchResults = (searchTerm) => {
     var results = []
     const newSearchTerm = searchTerm.toLocaleLowerCase();
+
     for(const topic of props.topics) {
       const promptTags = topic.promptTags
+
       promptTags.forEach(tag => {
-          if(tag.toLocaleLowerCase() == newSearchTerm){
-            results.push(topic);
-          }
+        if(tag.toLocaleLowerCase() == newSearchTerm){
+          results.push(topic);
+        }
       });
     }
+
     return results
   }
 
@@ -44,6 +47,7 @@ const TopicExplorer = (props) => {
   const populateInput = event => {
     const newSearchTerm = event.target.attributes.getNamedItem('data-search-term').value;
     const results = getSearchResults(newSearchTerm)
+
     setSearchTerm(newSearchTerm);
     setSearchResults(results);
   }
@@ -52,7 +56,7 @@ const TopicExplorer = (props) => {
       <h2>Discuss a topic</h2>
       <div className="govuk-form-group govuk-!-margin-bottom-7">
         <div className="govuk-!-padding-bottom-4" id='example-search'>
-          <label for="text-input">Try searching for keywords like{' '}</label>
+          <label htmlFor="text-input">Try searching for keywords like{' '}</label>
           <button className='button-as-link govuk-!-padding-0' data-search-term='coronavirus' onClick={populateInput} data-testid='coronavirus'>coronavirus</button>,{' '}
           <button className='button-as-link govuk-!-padding-0' data-search-term='food' onClick={populateInput} data-testid='food'>food</button>,{' '}
           <button className='button-as-link govuk-!-padding-0' data-search-term='health' onClick={populateInput}>health</button>, or{' '}
@@ -68,7 +72,7 @@ const TopicExplorer = (props) => {
           autoComplete="off"
         />
         <datalist id="input-tags">
-        {
+          {
             tags.sort().map((t,i) => (
               <option key={i}>{t}</option>
             ))
