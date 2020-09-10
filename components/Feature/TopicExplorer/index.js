@@ -39,6 +39,7 @@ const TopicExplorer = (props) => {
       <div className="govuk-form-group govuk-!-margin-bottom-7">
        
       <div class="govuk-!-padding-bottom-4" id='example-search'>Try searching for keywords like{' '}
+          <button className='button-as-link govuk-!-padding-0' data-search-term='coronavirus' onClick={populateInput} data-testid='coronavirus'>coronavirus</button>,{' '}
           <button className='button-as-link govuk-!-padding-0' data-search-term='food' onClick={populateInput} data-testid='food'>food</button>,{' '}
           <button className='button-as-link govuk-!-padding-0' data-search-term='health' onClick={populateInput}>health</button>, or{' '}
           <button className='button-as-link govuk-!-padding-0' data-search-term='benefits'onClick={populateInput}>benefits</button>
