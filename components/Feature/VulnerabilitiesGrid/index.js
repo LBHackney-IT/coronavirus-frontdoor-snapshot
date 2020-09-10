@@ -316,7 +316,7 @@ const VulnerabilitiesGrid = ({ resources, onUpdate, residentCoordinates, generic
                   </div>
                 </div>
 
-                <div className="govuk-grid-column-full-width">
+                <div className="govuk-grid-column-full-width govuk-!-padding-top-5">
                   {
                     <div key={`${id}-resources`}>
                       {expandedGroups[id] &&
