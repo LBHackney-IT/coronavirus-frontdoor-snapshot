@@ -77,7 +77,7 @@ const TopicExplorer = (props) => {
           autoComplete="off"
         />
         <datalist id="input-tags">
-          {
+          {searchTerm &&
             tags.sort().map((t,i) => (
               <option key={i}>{t}</option>
             ))

@@ -82,6 +82,16 @@ context('Index page', () => {
       cy.get('input').should('have.value', 'benefits')
     })
 
+
+    it("does not show search options when there is no text in the input", () => {
+      cy.get('#text-input').click()
+      cy.get('option').should('not.exist')
+    })
+
+    it("does show search options when there is text in the input", () => {
+      cy.get('#text-input').type('a')
+      cy.get('option').should('exist')
+    })
   })
 
 });
