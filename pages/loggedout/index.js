@@ -1,5 +1,6 @@
 export default function LoggedOut() {
-  const returnUrl = "https://auth.hackney.gov.uk/auth?redirect_uri=" + process.env.NEXT_PUBLIC_URL
+  const hardCodedPath = "https://frontdoor-snapshot-staging.hackney.gov.uk/"
+  const returnUrl = "https://auth.hackney.gov.uk/auth?redirect_uri=" + hardCodedPath
 
   return (
     <>
