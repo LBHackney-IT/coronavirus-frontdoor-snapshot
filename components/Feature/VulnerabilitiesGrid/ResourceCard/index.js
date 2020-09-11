@@ -30,7 +30,7 @@ const ResourceCard = ({
   const selfReferralElement = (selfReferral == 'No') ? 'Referral required' : 'Self referral'
   const websiteElement = websites && websites.length > 0 &&  websites.map(website => (<a href={websites[0]} target="_blank" rel="noopener noreferrer">{websites[0]}</a>))
   const distributionElement =  tags.filter(t => HIDDEN_TAGS.includes(t)).join(", ")
-  const tagsElement = tags.filter(t => !HIDDEN_TAGS.includes(t)).map(item=> (<span key={"tags-"+item} className={css.tags}>{trimLength(item, 20)}</span>))
+  const tagsElement = tags.filter(t => !HIDDEN_TAGS.includes(t)).map(item=> (<span key={"tags-"+item} className={`${css.tags} tag-element`}>{trimLength(item, 20)}</span>))
   const snapshot = (customerId != undefined) ? true : false
   const summaryDataExists = ( telephone  || distance != 100 || currentProvision || openingTimes)
   const marginClass = (summaryDataExists) ? "" : "remove-margin-bottom"
@@ -51,7 +51,7 @@ const ResourceCard = ({
 
   return (
     <div className={`resource ${css.resource}`} {...others}>
-      <div className={css.tags__container}>
+      <div className={`${css.tags__container} card-header-tag`}>
         {tagsElement}
       </div>
        <h3 className={marginClass}>{name}</h3>
