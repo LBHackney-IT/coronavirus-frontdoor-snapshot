@@ -5,8 +5,8 @@ export default function LoggedOut() {
   return (
     <>
       <h1 className='govuk-heading-l'>You need permission to access this service</h1>
-      <p className='govuk-body'><a href={returnUrl} className='govuk-link'>Log in to your Hackney account.</a></p>
-      <p className='govuk-body'>If you're already logged in, contact Chris Caden to get access (christopher.caden@hackney.gov.uk).</p>
+      <p className='govuk-body'><a href={returnUrl} className='govuk-link'>Sign in to your Hackney account.</a></p>
+      <p className='govuk-body'>If you're already signed in, contact Chris Caden to get access (christopher.caden@hackney.gov.uk).</p>
     </>
   );
 }
