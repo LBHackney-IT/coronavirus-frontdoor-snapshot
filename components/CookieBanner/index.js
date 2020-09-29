@@ -1,7 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import cookie from 'cookie';
 import moment from 'moment';
-import TagManager from 'react-gtm-module';
 import css from './index.module.scss';
 
 const cookieNames = {
@@ -33,16 +32,8 @@ const CookieBanner = () => {
     }
   };
 
-  const initTagManager = () => {
-    console.log('init tag manager');
-    TagManager.initialize({
-      gtmId: process.env.NEXT_PUBLIC_GTM_ID
-    });
-  };
-
   const handleOptIn = useCallback(() => {
     setCookies(true);
-    initTagManager();
   });
 
   const handleOptOut = useCallback(() => {
@@ -56,9 +47,7 @@ const CookieBanner = () => {
     const hasCookieOptIn = cookies[cookieNames.optedIn] === 'true';
 
     if (hasReadMessage) {
-      if (hasCookieOptIn) {
-        initTagManager();
-      } else {
+      if (!hasCookieOptIn) {
         deleteCookies();
       }
     } else {
