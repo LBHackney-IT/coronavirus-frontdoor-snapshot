@@ -10,6 +10,9 @@ executors:
       - image: circleci/node:12.13-browsers
       - image: circleci/dynamodb
         entrypoint: ['java', '-Xmx1G', '-jar', 'DynamoDBLocal.jar', '-sharedDb']
+  python:
+    docker:
+      - image: circleci/python:3.7
 
 references:
   workspace_root: &workspace_root '~'
