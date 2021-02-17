@@ -119,6 +119,7 @@ jobs:
       AWS_CERTIFICATE_ARN:
         type: string
     steps:
+      - *attach_workspace
       - checkout
       - run: sudo yarn global add serverless
       - run:
