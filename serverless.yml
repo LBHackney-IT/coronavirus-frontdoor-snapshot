@@ -43,7 +43,7 @@ functions:
       - http: ANY /{proxy+}
     environment:
       ENV: ${self:provider.stage}
-      ALLOWED_GROUPS: 'inh-users-dev'
+      ALLOWED_GROUPS: ${ssm:/frontdoor-snapshot/${self:provider.stage}/allowed-groups}
       JWT_SECRET: ${ssm:/common/hackney-jwt-secret}
       VULNERABILITIES_TABLE_NAME: ${self:provider.environment.VULNERABILITIES_TABLE}
       NEXT_PUBLIC_API_URL: https://${self:custom.aliases.${self:provider.stage}}/api
