@@ -50,8 +50,8 @@ context('Index page', () => {
       cy.get('[data-testid=food-needs-v-vegetarian-checkbox]').click();
       cy.get('[data-testid=resource-recisR36NAVBna3N4] > h3').eq(0)
         .should('contain', 'Shirdi Sai Baba Temple')
-      cy.get('[data-testid=resource-recisR36NAVBna3N4] > :nth-child(3) > #resourceInfo > :nth-child(1) > .govuk-summary-list__value')
-        .should('contain', '1.10 miles')
+      // cy.get('[data-testid=resource-recisR36NAVBna3N4] > :nth-child(3) > #resourceInfo > :nth-child(1) > .govuk-summary-list__value')
+      //   .should('contain', '1.10 miles')
     });
 
 
