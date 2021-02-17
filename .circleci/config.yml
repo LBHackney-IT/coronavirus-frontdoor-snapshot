@@ -2,6 +2,7 @@ version: 2.1
 
 orbs:
   aws-cli: circleci/aws-cli@1.0.0
+  aws_assume_role: lbh-hackit/aws_assume_role@0.1.0
 
 executors:
   build-and-test:
@@ -9,6 +10,22 @@ executors:
       - image: circleci/node:12.13-browsers
       - image: circleci/dynamodb
         entrypoint: ['java', '-Xmx1G', '-jar', 'DynamoDBLocal.jar', '-sharedDb']
+commands:
+  assume-role-and-persist-workspace:
+    description: 'Assumes deployment role and persists credentials across jobs'
+    parameters:
+      aws-account:
+        type: string
+    steps:
+      - checkout
+      - aws_assume_role/assume_role:
+          account: <<parameters.aws-account>>
+          profile_name: default
+          role: 'LBH_Circle_CI_Deployment_Role'
+      - persist_to_workspace:
+          root: *workspace_root
+          paths:
+            - .aws
 
 jobs:
   build-and-test:
@@ -59,6 +76,18 @@ jobs:
       - store_artifacts:
           path: ~/repo/cypress/videos
 
+  assume-role-staging:
+    executor: python
+    steps:
+      - assume-role-and-persist-workspace:
+          aws-account: $AWS_ACCOUNT_STAGING
+
+  assume-role-production:
+    executor: python
+    steps:
+      - assume-role-and-persist-workspace:
+          aws-account: $AWS_ACCOUNT_PRODUCTION
+
   deploy:
     executor: aws-cli/default
     working_directory: ~/repo
@@ -81,10 +110,6 @@ jobs:
         type: string
     steps:
       - checkout
-      - aws-cli/setup:
-          aws-access-key-id: << parameters.aws-access-key-id >>
-          aws-secret-access-key: << parameters.aws-secret-access-key >>
-          aws-region: AWS_REGION
       - run: sudo yarn global add serverless
       - run:
           name: deploy
@@ -104,6 +129,13 @@ workflows:
   continuous-delivery:
     jobs:
       - build-and-test
+      - assume-role-staging:
+        context: api-assume-role-staging-context
+        requires:
+          - build-and-test
+        filters:
+          branches:
+            only: master
       - deploy:
           name: deploy-staging
           stage_name: staging
@@ -118,11 +150,18 @@ workflows:
             branches:
               only: master
           requires:
-            - build-and-test
+            - assume-role-staging
       - permit-deploy-production:
           type: approval
           requires:
             - deploy-staging
+      - assume-role-production:
+        context: api-assume-role-production-context
+        requires:
+          - permit-deploy-production
+        filters:
+          branches:
+            only: master
       - deploy:
           name: deploy-production
           stage_name: production
@@ -134,4 +173,4 @@ workflows:
           SINGLEVIEW_URL: ${NEXT_PUBLIC_SINGLEVIEW_URL_PRODUCTION}
           INH_URL: ${INH_URL_PRODUCTION}
           requires:
-            - permit-deploy-production
+            - assume-role-production
