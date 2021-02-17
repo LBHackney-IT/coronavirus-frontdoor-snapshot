@@ -137,12 +137,12 @@ workflows:
     jobs:
       - build-and-test
       - assume-role-staging:
-        context: api-assume-role-staging-context
-        requires:
-          - build-and-test
-        filters:
-          branches:
-            only: master
+          context: api-assume-role-staging-context
+          requires:
+            - build-and-test
+          filters:
+            branches:
+              only: master
       - deploy:
           name: deploy-staging
           stage_name: staging
@@ -163,12 +163,12 @@ workflows:
           requires:
             - deploy-staging
       - assume-role-production:
-        context: api-assume-role-production-context
-        requires:
-          - permit-deploy-production
-        filters:
-          branches:
-            only: master
+          context: api-assume-role-production-context
+          requires:
+            - permit-deploy-production
+          filters:
+            branches:
+              only: master
       - deploy:
           name: deploy-production
           stage_name: production
