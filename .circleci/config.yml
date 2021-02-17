@@ -10,6 +10,13 @@ executors:
       - image: circleci/node:12.13-browsers
       - image: circleci/dynamodb
         entrypoint: ['java', '-Xmx1G', '-jar', 'DynamoDBLocal.jar', '-sharedDb']
+
+references:
+  workspace_root: &workspace_root '~'
+  attach_workspace: &attach_workspace
+    attach_workspace:
+      at: *workspace_root
+
 commands:
   assume-role-and-persist-workspace:
     description: 'Assumes deployment role and persists credentials across jobs'
