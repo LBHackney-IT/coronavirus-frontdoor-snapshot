@@ -23,37 +23,37 @@ package:
   exclude:
     - ./**
 
-# functions:
-#   cf-snapshot:
-#     name: ${self:service}-${self:provider.stage}
-#     handler: router/lambda.handler
-#     package:
-#       include:
-#         - build/_next/**
-#         - next.config.js
-#         - node_modules/**
-#         - public/**
-#         - router/**
-#     events:
-#       - http:
-#           path: api/{proxy+}
-#           method: ANY
-#           authorizer: ${self:custom.authorizer.${self:service}-authorizer}
-#       - http: ANY /
-#       - http: ANY /{proxy+}
-#     environment:
-#       ENV: ${self:provider.stage}
-#       ALLOWED_GROUPS: ${ssm:/frontdoor-snapshot/${self:provider.stage}/allowed-groups}
-#       JWT_SECRET: ${ssm:/common/hackney-jwt-secret}
-#       VULNERABILITIES_TABLE_NAME: ${self:provider.environment.VULNERABILITIES_TABLE}
-#       NEXT_PUBLIC_API_URL: https://${self:custom.aliases.${self:provider.stage}}/api
-#       NEXT_PUBLIC_URL: https://${self:custom.aliases.${self:provider.stage}}
-#       AIRTABLE_API_KEY: ${ssm:/frontdoor-snapshot/airtable-api-key}
-#       AIRTABLE_BASE_ID: ${ssm:/frontdoor-snapshot/airtable-base-id}
-#       AIRTABLE_TABLE_NAMES: ${ssm:/frontdoor-snapshot/airtable-table-names}
-#       INH_URL: ${ssm:/frontdoor-snapshot/inh-url}
-#       AIRTABLE_PROMPTS_TABLE_NAME: ${ssm:/frontdoor-snapshot/${self:provider.stage}/airtable-prompts-table-name}
-#       SHOW_TOPIC_EXPLORER: true
+functions:
+  cf-snapshot:
+    name: ${self:service}-${self:provider.stage}
+    handler: router/lambda.handler
+    package:
+      include:
+        - build/_next/**
+        - next.config.js
+        - node_modules/**
+        - public/**
+        - router/**
+    events:
+      - http:
+          path: api/{proxy+}
+          method: ANY
+          authorizer: ${self:custom.authorizer.${self:service}-authorizer}
+      - http: ANY /
+      - http: ANY /{proxy+}
+    environment:
+      ENV: ${self:provider.stage}
+      ALLOWED_GROUPS: ${ssm:/frontdoor-snapshot/${self:provider.stage}/allowed-groups}
+      JWT_SECRET: ${ssm:/common/hackney-jwt-secret}
+      VULNERABILITIES_TABLE_NAME: ${self:provider.environment.VULNERABILITIES_TABLE}
+      NEXT_PUBLIC_API_URL: https://${self:custom.aliases.${self:provider.stage}}/api
+      NEXT_PUBLIC_URL: https://${self:custom.aliases.${self:provider.stage}}
+      AIRTABLE_API_KEY: ${ssm:/frontdoor-snapshot/airtable-api-key}
+      AIRTABLE_BASE_ID: ${ssm:/frontdoor-snapshot/airtable-base-id}
+      AIRTABLE_TABLE_NAMES: ${ssm:/frontdoor-snapshot/airtable-table-names}
+      INH_URL: ${ssm:/frontdoor-snapshot/inh-url}
+      AIRTABLE_PROMPTS_TABLE_NAME: ${ssm:/frontdoor-snapshot/${self:provider.stage}/airtable-prompts-table-name}
+      SHOW_TOPIC_EXPLORER: true
 
   cf-snapshot-authorizer:
     name: ${self:service}-authorizer-${self:provider.stage}
