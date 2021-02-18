@@ -146,7 +146,7 @@ resources:
 
 custom:
   authorizer:
-    hn-vulnerabilities-authorizer:
+    cf-snapshot-authorizer:
       name: ${self:service}-authorizer
       type: request
       identitySource: ''
