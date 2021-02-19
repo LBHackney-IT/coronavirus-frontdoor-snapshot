@@ -4,4 +4,8 @@ const checkAuth = new CheckAuth({
   allowedGroups: process.env.ALLOWED_GROUPS.split(',')
 });
 
-module.exports = { checkAuth };
+const checkBasicAuth = new CheckAuth({
+  allowedGroups: process.env.BASIC_ALLOWED_GROUPS.split(',')
+});
+
+module.exports = { checkBasicAuth, checkAuth };
