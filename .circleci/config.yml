@@ -131,7 +131,6 @@ jobs:
             export NEXT_PUBLIC_SINGLEVIEW_URL=<< parameters.SINGLEVIEW_URL >>
             export INH_URL=<< parameters.INH_URL >>
             export AWS_CERTIFICATE_ARN=<< parameters.AWS_CERTIFICATE_ARN >>
-            export AIRTABLE_PROMPTS_TABLE_NAME=${AIRTABLE_PROMPTS_TABLE_NAME}
             yarn
             yarn build
             yarn --production=true
