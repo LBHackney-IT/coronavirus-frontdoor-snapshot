@@ -14,7 +14,7 @@ server.all('/api/resources', (req, res) => nextRequestHandler(req, res)); // aut
 server.all('/api/prompts', (req, res) => nextRequestHandler(req, res)); // auth is handled by the authorizer
 server.all(
   '/api/*',
-  (req, res, next) => authoriseHandler(req, res, next),
+  (req, res, next) => apiAuthoriseHandler(req, res, next),
   (req, res) => nextRequestHandler(req, res)
 ); // auth is handled by the authorizer
 server.all('/_next/static/*', (req, res) => nextRequestHandler(req, res)); // next generated js and css
@@ -39,6 +39,17 @@ const basicAuthoriseHandler = (req, res, next) => {
   });
   if (!isAuthenticated && req.url !== '/loggedout') {
     res.writeHead(302, { Location: '/loggedout' });
+    return res.end();
+  }
+  next();
+};
+
+const apiAuthoriseHandler = (req, res, next) => {
+  const isAuthenticated = checkAuth.execute({
+    token: req.cookies.hackneyToken
+  });
+  if (!isAuthenticated) {
+    res.writeHead(403);
     return res.end();
   }
   next();
