@@ -1,0 +1,24 @@
+{
+  "taxonomies": [
+    {
+      "id": 1,
+      "name": "First category",
+      "description": "First category description"
+    },
+    {
+      "id": 2,
+      "name": "Second category",
+      "description": "Second category description"
+    },
+    {
+      "id": 3,
+      "name": "Third category",
+      "description": "Third category description"
+    },
+    {
+      "id": 4,
+      "name": "Fourth category",
+      "description": "Fourth category description"
+    }
+  ]
+}

@@ -1,0 +1,96 @@
+{
+  "services": [
+    {
+      "id": 1,
+      "name": "First service",
+      "categories": [
+        {
+          "id": 1,
+          "name": "First category",
+          "description": "Help with first category from the first service"
+        },
+        {
+          "id": 2,
+          "name": "Second category",
+          "description": "Help with second category from the first service"
+        }
+      ],
+      "contact": {
+        "email": "help@gmail.com",
+        "telephone": "07000 0000000",
+        "website": "https://www.sample.org.uk"
+      },
+      "description": "First service description",
+      "locations": [
+        {
+          "latitude": 51.5466359,
+          "longitude": -0.0821704,
+          "uprn": "10093625362",
+          "address1": "404 error",
+          "address2": "not ",
+          "city": "found",
+          "stateProvince": "",
+          "postalCode": "A1 2BC",
+          "country": "United Kingdom",
+          "distance": null
+        }
+      ],
+      "organization": {
+        "id": 1,
+        "name": "Organization Name",
+        "status": "published"
+      },
+      "referral": {
+        "email": "",
+        "website": "referal.form.com"
+      },
+      "status": "active"
+    },
+    {
+      "id": 2,
+      "name": "Second service",
+      "categories": [
+        {
+          "id": 1,
+          "name": "First category",
+          "description": "Help with first category from the second service"
+        },
+        {
+          "id": 3,
+          "name": "Third category",
+          "description": "Help with third category from the second service"
+        }
+      ],
+      "contact": {
+        "email": "help2@gmail.com",
+        "telephone": "07100 0000000",
+        "website": "https://www.sample2.org.uk"
+      },
+      "description": "Second service description",
+      "locations": [
+        {
+          "latitude": 51.5466359,
+          "longitude": -0.0821704,
+          "uprn": "10093625362",
+          "address1": "404 error",
+          "address2": "not ",
+          "city": "found",
+          "stateProvince": "",
+          "postalCode": "A1 2BC",
+          "country": "United Kingdom",
+          "distance": null
+        }
+      ],
+      "organization": {
+        "id": 1,
+        "name": "Organization Name 2",
+        "status": "published"
+      },
+      "referral": {
+        "email": "",
+        "website": "referal.form2.com"
+      },
+      "status": "active"
+    }
+  ]
+}
