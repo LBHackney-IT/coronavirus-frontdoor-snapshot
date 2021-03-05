@@ -11,7 +11,6 @@ const Index = ({
   token,
   showTopicExplorer,
   topics,
-  fssResources,
   fssTaxonomies
 }) => {
   const { snapshot, loading, updateSnapshot } = useSnapshot(
@@ -35,7 +34,7 @@ const Index = ({
         </>
       )}
       <h2>Resources for residents</h2>
-      <Services taxonomies={fssTaxonomies} resources={fssResources} />
+      <Services taxonomies={fssTaxonomies} resources={resources} />
       <a
         href="https://forms.gle/B6vEMgp7sCsjJqNdA"
         target="_blank"
@@ -52,7 +51,7 @@ Index.getInitialProps = async ({ req: { headers }, res }) => {
   try {
     const token = getTokenFromCookieHeader(headers);
     const initialSnapshot = { vulnerabilities: [], assets: [], notes: null };
-    const resources = await requestResources({ token });
+    const otherResources = await requestResources({ token });
     const { fssResources, fssTaxonomies } = await requestFssResources({
       token
     });
@@ -60,12 +59,11 @@ Index.getInitialProps = async ({ req: { headers }, res }) => {
     const showTopicExplorer = process.env.SHOW_TOPIC_EXPLORER;
 
     return {
-      resources,
+      resources: fssResources.concat(otherResources),
       initialSnapshot,
       token,
       showTopicExplorer,
       topics,
-      fssResources,
       fssTaxonomies
     };
   } catch (err) {
