@@ -18,7 +18,7 @@ const Services = ({ resources, taxonomies }) => {
             return (
               <>
                 <AccordionItem
-                  key={taxonomy.id}
+                  key={`taxonomy-${taxonomy.id}`}
                   id={taxonomy.id}
                   heading={taxonomy.name}
                   onClick={expanded =>
@@ -35,7 +35,7 @@ const Services = ({ resources, taxonomies }) => {
                     resource =>
                       taxonomy.name == resource.categoryName && (
                         <ResourceCard
-                          key={resource.id}
+                          key={`resource-card-${resource.id}-${resource.name}`}
                           data-testid={`resource-${resource.id}`}
                           {...resource}
                           updateSelectedResources={() => {}}

@@ -18,11 +18,15 @@ const ResourceCard = ({
   currentProvision,
   email,
   referralContact,
+  referralWebsite,
   selfReferral,
   notes,
   distance,
   matches,
   customerId,
+  categoryName,
+  serviceDescription,
+  categoryId,
   ...others
 }) => {
   const trimLength = (s, length) => s.length > length ? s.substring(0, length) + "..." : s
@@ -56,15 +60,15 @@ const ResourceCard = ({
       </div>
        <h3 className={marginClass}>{name}</h3>
         <>
-        <SummaryList key="resourceInfo" name={['resourceInfo']} entries={{ 'Distance': (distance && distance < 100) ? distance + ' miles' : null ,
-      'Availability': currentProvision, 'Days / Times' : openingTimes, 'Distribution' : distributionElement, 'Telephone' : telephone}} customStyle="small" />
+        <SummaryList key={`resourceInfo-${id}-${categoryId}`} name={['resourceInfo']} entries={{ 'Distance': (distance && distance < 100) ? distance + ' miles' : null ,
+      'Availability': currentProvision, 'Days / Times' : openingTimes, 'Distribution' : distributionElement, 'Telephone' : telephone, 'Service Description': serviceDescription}} customStyle="small" />
 
         </>
       
       <details className="govuk-details" data-module="govuk-details">
         <summary id ={`summary-${id}`} className="">View more information</summary>
 
-        <SummaryList key="moreResourceInfo" name={'moreResourceInfo'} entries={{ 'How to contact': selfReferralElement,
+        <SummaryList key={`moreResourceInfo-${id}-${categoryId}`} name={'moreResourceInfo'} entries={{ 'How to contact': selfReferralElement,
       'Address': address, 'Description' : description, 'Website' : websiteElement, 'Additional notes' : notes }} customStyle="small" />
         { snapshot &&
       ( 
