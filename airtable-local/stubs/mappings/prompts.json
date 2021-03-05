@@ -1,0 +1,12 @@
+{
+    "priority": 1,
+    "request": {
+      "method": "GET",
+      "urlPath": "/v0/baseId123/Conversational%20Prompts"
+    },
+    "response": {
+      "status": 200,
+      "bodyFileName": "prompts.json"
+    }
+  }
+  

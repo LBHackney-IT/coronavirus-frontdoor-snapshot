@@ -1,0 +1,14 @@
+[
+  {
+    "id": "1",
+    "supportingInformation": "prompt 1 information ",
+    "prompt": "the first prompt",
+    "promptTags": ["First"]
+  },
+  {
+    "id": "2",
+    "supportingInformation": "prompt 2 information ",
+    "prompt": "the second prompt",
+    "promptTags": ["Second"]
+  }
+]
