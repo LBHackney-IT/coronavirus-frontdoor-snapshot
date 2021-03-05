@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import useSnapshot from 'lib/api/utils/useSnapshot';
-import { requestResources, requestPrompts } from 'lib/api';
+import { requestResources, requestPrompts, requestFssResources } from 'lib/api';
 import HttpStatusError from 'lib/api/domain/HttpStatusError';
 import { getTokenFromCookieHeader } from 'lib/utils/token';
 import VulnerabilitiesGrid from 'components/Feature/VulnerabilitiesGrid';
+import Services from 'components/Feature/Services';
 import TopicExplorer from 'components/Feature/TopicExplorer';
 
-const Index = ({ resources, initialSnapshot, token, showTopicExplorer, topics }) =>{
+
+const Index = ({ resources, initialSnapshot, token, showTopicExplorer, topics, fssResources, fssTaxonomies }) =>{
   const [errorMsg, setErrorMsg] = useState()
   const { snapshot, loading, updateSnapshot } = useSnapshot(
     initialSnapshot.snapshotId,
@@ -45,7 +47,7 @@ const Index = ({ resources, initialSnapshot, token, showTopicExplorer, topics })
       <h2>
       Resources for residents
       </h2>
-      <p>
+      {/* <p>
       Enter a postcode to help filter the results by distance:
       </p>
       <div className="govuk-form-group">
@@ -58,14 +60,8 @@ const Index = ({ resources, initialSnapshot, token, showTopicExplorer, topics })
         value={typingPostcode}
         onBlur={(e) => setGenericPostcode(e.target.value)}
       />
-      </div>
-      <VulnerabilitiesGrid
-        onError={handleError}
-        onUpdate={handleUpdate}
-        resources={resources}
-        genericPostcode={genericPostcode}
-        residentCoordinates={residentCoordinates}
-      />
+      </div> */}
+      <Services taxonomies={fssTaxonomies} resources={fssResources} postcode={genericPostcode}/>
       <a
         href='https://forms.gle/B6vEMgp7sCsjJqNdA' target="_blank"
         className="govuk-button"
@@ -85,10 +81,11 @@ Index.getInitialProps = async ({
     const token = getTokenFromCookieHeader(headers);
     const initialSnapshot = { vulnerabilities: [], assets: [], notes: null }
     const resources = await requestResources({ token });
+    const {fssResources, fssTaxonomies} = await requestFssResources();
     const topics = await requestPrompts({token})
     const showTopicExplorer = process.env.SHOW_TOPIC_EXPLORER;
 
-    return { resources, initialSnapshot, token, showTopicExplorer, topics };
+    return { resources, initialSnapshot, token, showTopicExplorer, topics, fssResources, fssTaxonomies };
   } catch (err) {
     console.log("Failed to load initial Props:" + err)
     res.writeHead(err instanceof HttpStatusError ? err.statusCode : 500).end();

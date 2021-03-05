@@ -1,15 +1,17 @@
 {
-  "name": "housing-needs-vulnerabilities",
+  "name": "coronavirus-frontdoor-snapshot",
   "version": "0.1.0",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "start:mock": "wiremock --root-dir ./airtable-local/stubs --port 8085",
+    "start-test-servers": "yarn start & yarn start:mock",
     "deploy": "yarn && next build && yarn --production=true && sls deploy --aws-profile hnserverless -s staging && yarn",
     "start-with-routing": "node ./router/lambda.js",
     "cypress-open": "npx cypress open --env AWS_SECRET_ACCESS_KEY=bar,AWS_REGION=localhost,AWS_ACCESS_KEY_ID=foo",
     "cypress-run": "cypress run",
-    "int-test": "start-server-and-test start http://localhost:3000 cypress-run",
+    "int-test": "start-server-and-test start-test-servers http://localhost:3000 cypress-run",
     "unit-test": "jest --runInBand",
     "dynamo-admin": "DYNAMO_ENDPOINT=http://localhost:8000 dynamodb-admin",
     "lint": "eslint --fix --ext js lib/ pages/ && echo 'Lint complete.'"
@@ -24,13 +26,15 @@
     "moment": "^2.26.0",
     "nanoid": "^3.1.10",
     "next": "^9.4.0",
+    "node-fetch": "^2.6.1",
     "node-lambda-authorizer": "https://github.com/LBHackney-IT/node-lambda-authorizer.git#0fe9e75",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "restana": "^4.3.4",
     "serve-static": "^1.14.1",
     "serverless-http": "^2.4.1",
-    "swr": "^0.2.2"
+    "swr": "^0.2.2",
+    "wiremock-standalone": "^3.0.1"
   },
   "devDependencies": {
     "@babel/plugin-transform-runtime": "^7.9.6",
@@ -45,7 +49,7 @@
     "babel-eslint": "^10.1.0",
     "babel-jest": "^25.5.1",
     "chai": "^4.2.0",
-    "cypress": "^4.5.0",
+    "cypress": "4.5.0",
     "cypress-axe": "^0.8.1",
     "dynamodb-admin": "^4.0.0",
     "eslint": "^6.6.0",

@@ -55,6 +55,7 @@ functions:
       INH_URL: ${ssm:/frontdoor-snapshot/inh-url}
       AIRTABLE_PROMPTS_TABLE_NAME: ${ssm:/frontdoor-snapshot/${self:provider.stage}/airtable-prompts-table-name}
       SHOW_TOPIC_EXPLORER: true
+      FSS_PUBLIC_API_URL: ${ssm:/frontdoor-snapshot/${self:provider.stage}/fss-public-api-url}
 
   cf-snapshot-authorizer:
     name: ${self:service}-authorizer-${self:provider.stage}

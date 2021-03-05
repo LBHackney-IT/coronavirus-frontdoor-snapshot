@@ -1,0 +1,11 @@
+{
+  "priority": 1,
+  "request": {
+    "method": "GET",
+    "urlPath": "/taxonomies"
+  },
+  "response": {
+    "status": 200,
+    "bodyFileName": "taxonomies.json"
+  }
+}
