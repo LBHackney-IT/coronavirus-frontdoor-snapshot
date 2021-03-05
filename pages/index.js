@@ -81,7 +81,7 @@ Index.getInitialProps = async ({
     const token = getTokenFromCookieHeader(headers);
     const initialSnapshot = { vulnerabilities: [], assets: [], notes: null }
     const resources = await requestResources({ token });
-    const {fssResources, fssTaxonomies} = await requestFssResources();
+    const {fssResources, fssTaxonomies} = await requestFssResources({token});
     const topics = await requestPrompts({token})
     const showTopicExplorer = process.env.SHOW_TOPIC_EXPLORER;
 
