@@ -22,7 +22,6 @@ context('Index page', () => {
         .should('contain', 'First category')
         .and('contain', 'Second category')
         .and('contain', 'Third category')
-        .and('contain', 'Fourth category');
     });
 
     it('Displays the resources', () => {
