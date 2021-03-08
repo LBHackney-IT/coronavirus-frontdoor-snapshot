@@ -5,22 +5,25 @@ import { Accordion, AccordionItem } from 'components/Form';
 const Services = ({ resources, taxonomies }) => {
   const [expandedGroups, setExpandedGroups] = useState({});
 
-  taxonomies.forEach(
-    taxonomy =>
-      (taxonomy.resources = resources
-        .map(resource => {
-          if (taxonomy.name == resource.categoryName) return resource;
-        })
-        .filter(x => x))
+  const taxonomiesToRender = taxonomies.filter(taxonomy =>
+    resources.some(resource => resource.categoryName === taxonomy.name)
   );
+
+  taxonomiesToRender.forEach(
+    taxonomy =>
+      (taxonomy.resources = resources.filter(
+        resource => taxonomy.name == resource.categoryName
+      ))
+  );
+
   return (
     <>
       <div className="govuk-grid-column-full-width">
         <Accordion title="">
-          {taxonomies.map(taxonomy => {
+          {taxonomiesToRender.map(taxonomy => {
             return (
               <>
-                {taxonomy.resources.length > 0 && (
+                {
                   <AccordionItem
                     key={`taxonomy-${taxonomy.id}`}
                     id={taxonomy.id}
@@ -44,7 +47,7 @@ const Services = ({ resources, taxonomies }) => {
                       />
                     ))}
                   </AccordionItem>
-                )}
+                }
               </>
             );
           })}
