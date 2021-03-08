@@ -72,8 +72,9 @@ jobs:
             export INH_URL=https://inh-admin-test.hackney.gov.uk
             export VULNERABILITIES_TABLE_NAME=vulnerabilities
             export AIRTABLE_API_KEY=${AIRTABLE_API_KEY_INTEGRATION}
-            export AIRTABLE_BASE_ID=${AIRTABLE_BASE_ID_INTEGRATION}
-            export AIRTABLE_TABLE_NAMES=${AIRTABLE_TABLE_NAMES_INTEGRATION}
+            export AIRTABLE_BASE_ID=baseId123
+            export AIRTABLE_BASE_URL=http://localhost:8085
+            export AIRTABLE_TABLE_NAMES="Service directory,Conversational Prompts"
             export ADDRESSES_API_URL=${ADDRESSES_API_URL}
             export ADDRESSES_API_KEY=${ADDRESSES_API_KEY}
             export AIRTABLE_PROMPTS_TABLE_NAME=${AIRTABLE_PROMPTS_TABLE_NAME}

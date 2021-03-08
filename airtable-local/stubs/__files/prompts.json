@@ -1,14 +1,20 @@
-[
-  {
-    "id": "1",
-    "supportingInformation": "prompt 1 information ",
-    "prompt": "the first prompt",
-    "promptTags": ["First"]
-  },
-  {
-    "id": "2",
-    "supportingInformation": "prompt 2 information ",
-    "prompt": "the second prompt",
-    "promptTags": ["Second"]
-  }
-]
+{
+  "records": [
+    {
+      "id": "1",
+      "fields": {
+        "Supporting information": "prompt 1 information ",
+        "Prompt": "the first prompt",
+        "Tags": ["First", "tag", "a"]
+      }
+    },
+    {
+      "id": "2",
+      "fields": {
+        "Supporting information": "prompt 2 information ",
+        "Prompt": "the second prompt",
+        "Tags": ["Second"]
+      }
+    }
+  ]
+}

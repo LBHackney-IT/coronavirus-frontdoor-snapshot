@@ -20,7 +20,7 @@ context('Edit snapshot', () => {
     cy.task('deleteSnapshot', '1');
   });
 
-  it("Adds resources to the summary list", () => {
+  xit("Adds resources to the summary list", () => {
     cy.visit(`/snapshots/1`);
     cy.get('[data-testid=accordion-item]').eq(0).click();
     cy.get('[data-testid=food-needs-v-halal-checkbox]').click();
@@ -36,7 +36,7 @@ context('Edit snapshot', () => {
       .and('contain', 'Shirdi Sai Baba Temple');
   })
 
-  it("Adds and removes resources to the summary list", () => {
+  xit("Adds and removes resources to the summary list", () => {
     cy.visit(`/snapshots/1`);
     cy.get('[data-testid=accordion-item]').eq(0).click();
     cy.get('[data-testid=food-needs-v-halal-checkbox]').click();
@@ -80,7 +80,7 @@ context('Edit snapshot', () => {
       );
     });
 
-    it('Ranks resources by relevance', () => {
+    xit('Ranks resources by relevance', () => {
       cy.visit(`/snapshots/1`);
       cy.get('[data-testid=accordion-item]').eq(0).click();
       cy.get('[data-testid=food-needs-v-halal-checkbox]').click();
