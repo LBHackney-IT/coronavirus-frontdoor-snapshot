@@ -41,6 +41,7 @@ functions:
           authorizer: ${self:custom.authorizer.${self:service}-authorizer}
       - http: ANY /
       - http: ANY /{proxy+}
+    timeout: 120 
     environment:
       ENV: ${self:provider.stage}
       ALLOWED_GROUPS: ${ssm:/frontdoor-snapshot/${self:provider.stage}/allowed-groups}
