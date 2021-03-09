@@ -59,7 +59,7 @@ Index.getInitialProps = async ({ req: { headers }, res }) => {
     const showTopicExplorer = process.env.SHOW_TOPIC_EXPLORER;
 
     return {
-      resources: fssResources, //.concat(otherResources),
+      resources: fssResources.concat(otherResources),
       initialSnapshot,
       token,
       showTopicExplorer,
