@@ -32,7 +32,7 @@ const ResourceCard = ({
   const trimLength = (s, length) => s.length > length ? s.substring(0, length) + "..." : s
 
   const selfReferralElement = (selfReferral == 'No') ? 'Referral required' : 'Self referral'
-  const websiteElement = websites && websites.length > 0 &&  websites.map(website => (<><a href={website} target="_blank" rel="noopener noreferrer">{website}</a><br/></>))
+  const websiteElement = websites && websites.length > 0 &&  websites.map(website => (<div><a href={website} target="_blank" rel="noopener noreferrer">{website}</a></div>))
   const distributionElement =  tags.filter(t => HIDDEN_TAGS.includes(t)).join(", ")
   const tagsElement = tags.filter(t => !HIDDEN_TAGS.includes(t)).map(item=> (<span key={"tags-"+item} className={`${css.tags} tag-element ${css[`${item}-tag`]}`}>{trimLength(item, 20)}</span>))
   const snapshot = (customerId != undefined) ? true : false
