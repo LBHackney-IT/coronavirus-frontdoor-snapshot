@@ -21,8 +21,11 @@ context('Index page', () => {
       cy.get('[data-testid=accordion-item]')
         .should('contain', 'First category')
         .and('contain', 'Second category')
-        .and('contain', 'Third category')
-        .and('contain', 'Fourth category');
+        .and('contain', 'Third category');
+      cy.get('[data-testid=accordion-item]').should(
+        'not.contain',
+        'Fourth category'
+      );
     });
 
     it('Displays the resources', () => {
