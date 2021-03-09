@@ -2,7 +2,7 @@ import { Kafka } from 'aws-sdk';
 import React from 'react';
 import { useState } from 'react';
 
-const GenericReferralForm = ({ gernericRefferalFormCompleteCallback }) => {
+const GenericReferralForm = ({ gernericRefferalFormCompleteCallback, referralClicked }) => {
   const [showAddResidentForm, setShowAddResidentForm] = useState(false);
   const [residentInfo, setResidentInfo] = useState({
     name: null,
@@ -27,6 +27,7 @@ const GenericReferralForm = ({ gernericRefferalFormCompleteCallback }) => {
       <a href="#" onClick={() => setShowAddResidentForm(!showAddResidentForm)}>
         -Add residents details
       </a>
+      <p>here:{referralClicked}</p>
       <h1 className="govuk-heading-l">Who are you helping?</h1>
       {showAddResidentForm && (
         <form>

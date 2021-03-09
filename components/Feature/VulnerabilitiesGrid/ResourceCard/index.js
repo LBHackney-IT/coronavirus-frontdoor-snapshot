@@ -27,9 +27,11 @@ const ResourceCard = ({
   categoryName,
   serviceDescription,
   gernericRefferalFormComplete,
+  referralClickedMiddleCallback,
   categoryId,
   ...others
 }) => {
+  const [referralClicked,setReferralClicked] = useState(false)
   const trimLength = (s, length) => s.length > length ? s.substring(0, length) + "..." : s
 
   const selfReferralElement = (selfReferral == 'No') ? 'Referral required' : 'Self referral'
@@ -53,7 +55,11 @@ const ResourceCard = ({
       notes:notes
     })
   }
-
+  const onClickReferral = () => {
+    let newRefferalClicked = !referralClicked
+    setReferralClicked(newRefferalClicked)
+    referralClickedMiddleCallback(newRefferalClicked)
+  }
   return (
     <div className={`resource ${css.resource}`} {...others}>
       <div className={`${css.tags__container} card-header-tag`}>
@@ -67,7 +73,7 @@ const ResourceCard = ({
         </>
       
         <details className="govuk-details" data-module="govuk-details">
-        <summary id ={`summary-${id}`}>Refer</summary>
+        <summary id ={`summary-${id}`} onClick={() => onClickReferral()}>Refer</summary>
         {
           gernericRefferalFormComplete && 
           <p>something</p>

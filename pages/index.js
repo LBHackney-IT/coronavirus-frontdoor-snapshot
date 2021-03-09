@@ -30,17 +30,21 @@ const Index = ({
   const gernericRefferalFormCompleteCallback = (value) => {
     setGernericRefferalFormComplete(value)
   }
+  const [referralClicked, setReferralClicked]= useState(false)
+  const referralClickedCallback = (value) =>{
+    setReferralClicked(value)
+  }
   return (
     <>
+     <GenericReferralForm gernericRefferalFormCompleteCallback={gernericRefferalFormCompleteCallback} referralClicked={referralClicked} />
       {showTopicExplorer && (
         <>
-        <GenericReferralForm gernericRefferalFormCompleteCallback={gernericRefferalFormCompleteCallback} ></GenericReferralForm>
           <TopicExplorer topics={topics}/>
           <hr className="govuk-section-break hr-additional-spacing" />
         </>
       )}
       <h2>Resources for residents</h2>
-      <Services taxonomies={fssTaxonomies} resources={resources}  gernericRefferalFormComplete={gernericRefferalFormComplete}/>
+      <Services taxonomies={fssTaxonomies} resources={resources}  gernericRefferalFormComplete={gernericRefferalFormComplete} referralClickedCallback={referralClickedCallback}/>
       <a
         href="https://forms.gle/B6vEMgp7sCsjJqNdA"
         target="_blank"
