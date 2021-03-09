@@ -5,7 +5,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "start:mock": "wiremock --root-dir ./airtable-local/stubs --port 8085",
+    "start:mock": "wiremock --root-dir ./mock-server/stubs --port 8085",
     "start-test-servers": "yarn start & yarn start:mock",
     "deploy": "yarn && next build && yarn --production=true && sls deploy --aws-profile hnserverless -s staging && yarn",
     "start-with-routing": "node ./router/lambda.js",

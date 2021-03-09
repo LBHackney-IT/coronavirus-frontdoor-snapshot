@@ -1,0 +1,20 @@
+{
+  "records": [
+    {
+      "id": "1",
+      "fields": {
+        "Supporting information": "prompt 1 information ",
+        "Prompt": "the first prompt",
+        "Tags": ["First", "tag", "a"]
+      }
+    },
+    {
+      "id": "2",
+      "fields": {
+        "Supporting information": "prompt 2 information ",
+        "Prompt": "the second prompt",
+        "Tags": ["Second"]
+      }
+    }
+  ]
+}

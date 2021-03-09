@@ -60,9 +60,36 @@ yarn unit-test
 ### Integration tests
 Integration tests are written with Cypress.
 
+To run integration tests:
+
+1. Set these env variables to the following values:
 ```(bash)
-yarn int-test # starts a local copy and runs all tests
-yarn cypress-open # opens Cypress for local development
+AIRTABLE_BASE_ID=baseId123
+AIRTABLE_TABLE_NAMES=Service directory,Conversational Prompts
+AIRTABLE_PROMPTS_TABLE_NAME=Conversational Prompts
+AIRTABLE_BASE_URL=http://localhost:8085
+FSS_PUBLIC_API_URL=http://localhost:8085/fss
+```
+
+2. Build the application
+```(bash)
+yarn build
+```
+
+3. Run the tests:
+To run in cypress UI:
+
+Start the servers and run cyppress-open to launch cypress UI tool:
+
+```(bash)
+yarn start-test-servers
+yarn cypress-open
+```
+
+To run headlessly (this will launch a local application copy and mock server for you):
+
+```(bash)
+yarn int-test
 ```
 
 ## Deployment

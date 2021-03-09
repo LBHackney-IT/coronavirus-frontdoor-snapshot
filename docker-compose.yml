@@ -12,7 +12,7 @@ services:
  
   airtable-stub:
     build:
-      context: ./airtable-local
+      context: ./mock-server
       dockerfile: Dockerfile
     ports:
       - 8085:8080

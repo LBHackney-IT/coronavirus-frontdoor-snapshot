@@ -2,10 +2,10 @@
   "priority": 1,
   "request": {
     "method": "GET",
-    "urlPath": "/services"
+    "urlPath": "/fss/taxonomies"
   },
   "response": {
     "status": 200,
-    "bodyFileName": "services.json"
+    "bodyFileName": "fss_taxonomies.json"
   }
 }
