@@ -55,7 +55,7 @@ const ResourceCard = ({
 
   return (
     <div className={`resource ${css.resource}`} {...others}>
-      <div className={`${css.tags__container} card-header-tag`}>
+      <div className={`${css.tags__container} card-header-tag`} data-testid='resource-card-tags'>
         {tagsElement}
       </div>
        <h3 className={marginClass}>{name}</h3>
