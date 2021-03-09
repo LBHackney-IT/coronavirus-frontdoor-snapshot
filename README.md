@@ -64,11 +64,16 @@ To run integration tests:
 
 1. Set these env variables to the following values:
 ```(bash)
-AIRTABLE_BASE_ID=baseId123
-AIRTABLE_TABLE_NAMES=Service directory,Conversational Prompts
-AIRTABLE_PROMPTS_TABLE_NAME=Conversational Prompts
-AIRTABLE_BASE_URL=http://localhost:8085
+INH_URL=https://inh-admin-test.hackney.gov.uk
+AIRTABLE_API_KEY=xx
+AIRTABLE_PROMPTS_TABLE_NAME="Conversational Prompts"
 FSS_PUBLIC_API_URL=http://localhost:8085/fss
+AIRTABLE_BASE_ID=baseId123
+AIRTABLE_TABLE_NAMES="Service directory"
+AIRTABLE_BASE_URL=http://localhost:8085
+AIRTABLE_PROMPTS_API_KEY=xx
+AIRTABLE_PROMPTS_BASE_ID=baseId456
+HOTJAR_ID=12345
 ```
 
 2. Build the application
