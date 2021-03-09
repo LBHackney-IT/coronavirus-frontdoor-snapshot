@@ -121,6 +121,8 @@ jobs:
         type: env_var_name
       AWS_CERTIFICATE_ARN:
         type: string
+      HOTJAR_ID:
+        type: string
       URL:
         type: string
     steps:
@@ -136,6 +138,7 @@ jobs:
             export INH_URL=<< parameters.INH_URL >>
             export AWS_CERTIFICATE_ARN=<< parameters.AWS_CERTIFICATE_ARN >>
             export NEXT_PUBLIC_URL=<< parameters.URL >>
+            export HOTJAR_ID=<< parameters.HOTJAR_ID >>
             yarn
             yarn build
             yarn --production=true
@@ -164,6 +167,7 @@ workflows:
           SINGLEVIEW_URL: ${NEXT_PUBLIC_SINGLEVIEW_URL_STAGING}
           INH_URL: ${INH_URL_STAGING}
           URL: ${NEXT_PUBLIC_URL_STAGING}
+          HOTJAR_ID: ${HOTJAR_ID}
           filters:
             branches:
               only: master
@@ -191,5 +195,6 @@ workflows:
           SINGLEVIEW_URL: ${NEXT_PUBLIC_SINGLEVIEW_URL_PRODUCTION}
           INH_URL: ${INH_URL_PRODUCTION}
           URL: ${NEXT_PUBLIC_URL_PRODUCTION}
+          HOTJAR_ID: ${HOTJAR_ID_PRODUCTION}
           requires:
             - assume-role-production
