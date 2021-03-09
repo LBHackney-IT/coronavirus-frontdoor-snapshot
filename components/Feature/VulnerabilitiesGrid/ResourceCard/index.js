@@ -26,6 +26,7 @@ const ResourceCard = ({
   customerId,
   categoryName,
   serviceDescription,
+  gernericRefferalFormComplete,
   categoryId,
   ...others
 }) => {
@@ -65,6 +66,19 @@ const ResourceCard = ({
 
         </>
       
+        <details className="govuk-details" data-module="govuk-details">
+        <summary id ={`summary-${id}`}>Refer</summary>
+        {
+          gernericRefferalFormComplete && 
+          <p>something</p>
+        }
+        {
+          !gernericRefferalFormComplete && 
+          <div id="passport-issued-error" className="govuk-error-message">
+          Enter resident’s details at the top of this page 
+          </div>
+        }
+      </details>
       <details className="govuk-details" data-module="govuk-details">
         <summary id ={`summary-${id}`} className="">View more information</summary>
 

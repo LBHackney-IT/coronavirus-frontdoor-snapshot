@@ -4,6 +4,8 @@ import HttpStatusError from 'lib/api/domain/HttpStatusError';
 import { getTokenFromCookieHeader } from 'lib/utils/token';
 import Services from 'components/Feature/Services';
 import TopicExplorer from 'components/Feature/TopicExplorer';
+import GenericReferralForm from 'components/Feature/GenericReferralForm'
+import { useState } from 'react';
 
 const Index = ({
   resources,
@@ -24,17 +26,21 @@ const Index = ({
   if (loading) {
     return <p>Loading...</p>;
   }
-
+  const [gernericRefferalFormComplete, setGernericRefferalFormComplete] = useState(false)
+  const gernericRefferalFormCompleteCallback = (value) => {
+    setGernericRefferalFormComplete(value)
+  }
   return (
     <>
       {showTopicExplorer && (
         <>
-          <TopicExplorer topics={topics} />
+        <GenericReferralForm gernericRefferalFormCompleteCallback={gernericRefferalFormCompleteCallback} ></GenericReferralForm>
+          <TopicExplorer topics={topics}/>
           <hr className="govuk-section-break hr-additional-spacing" />
         </>
       )}
       <h2>Resources for residents</h2>
-      <Services taxonomies={fssTaxonomies} resources={resources} />
+      <Services taxonomies={fssTaxonomies} resources={resources}  gernericRefferalFormComplete={gernericRefferalFormComplete}/>
       <a
         href="https://forms.gle/B6vEMgp7sCsjJqNdA"
         target="_blank"
