@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 
-const ResidentDetailsForm = ({ gernericRefferalFormCompleteCallback, referralClicked, residentInfoCallback}) => {
+const ResidentDetailsForm = ({residentInfoCallback}) => {
   const [showAddResidentForm, setShowAddResidentForm] = useState(false);
   const [residentInfo, setResidentInfo] = useState({
     name: null,
@@ -11,17 +11,22 @@ const ResidentDetailsForm = ({ gernericRefferalFormCompleteCallback, referralCli
     postcode: null
   });
 
+  const [validationError, setValidationError] = useState({});
+
   const handleOnChange = (id, value) => {
     setResidentInfo({ ...residentInfo, [id]: value });
     let newResidentInfo = { ...residentInfo, [id]: value };
     if (Object.values(newResidentInfo).every(k => k)) {
-      gernericRefferalFormCompleteCallback(true);
       residentInfoCallback(residentInfo)
-    } else {
-      gernericRefferalFormCompleteCallback(false);
     }
   };
 
+  const onInvalidField = (value) => {
+    setValidationError({[value]: true, ...validationError})
+  }
+  const onSubmitForm = (e) => {
+    e.preventDefault();
+  }
   return (
     <div>
        <h1 className="govuk-heading-l">Who are you helping?</h1>
@@ -29,11 +34,11 @@ const ResidentDetailsForm = ({ gernericRefferalFormCompleteCallback, referralCli
         <summary>Residents details</summary>
       </details>
 
-      {(referralClicked || showAddResidentForm) && (
-        <form id='resident-details' onSubmit={()=> console.log("doneee")}>
+      {showAddResidentForm && (
+        <form id='resident-details' onSubmit={onSubmitForm}>
           <div
             className={`govuk-form-group ${
-              !residentInfo.name && referralClicked ? 'govuk-form-group--error' : ''
+              validationError.name  ? 'govuk-form-group--error' : ''
             }`}
           >
             <div className="govuk-!-padding-bottom-2">
@@ -42,7 +47,7 @@ const ResidentDetailsForm = ({ gernericRefferalFormCompleteCallback, referralCli
               </label>
               <span id="name-error" className="govuk-error-message" aria-describedby="input-name-error">
                 <span
-                  hidden={!residentInfo.name && referralClicked ? false : true}
+                  hidden={!validationError.name}
                   data-testid="name-error"
                 >
                   Enter the name
@@ -50,7 +55,7 @@ const ResidentDetailsForm = ({ gernericRefferalFormCompleteCallback, referralCli
               </span>
               <input
                 className={`govuk-input govuk-!-width-two-thirds ${
-                  (!residentInfo.name && referralClicked) ? 'govuk-input--error' : ''
+                  validationError.name  ? 'govuk-input--error' : ''
                 }`}
                 id="name"
                 name="event-name"
@@ -58,12 +63,14 @@ const ResidentDetailsForm = ({ gernericRefferalFormCompleteCallback, referralCli
                 aria-describedby="event-name-hint"
                 onChange={e => handleOnChange(e.target.id, e.target.value)}
                 aria-describedby="name"
+                onInvalid={(e) => onInvalidField(e.target.id)}
+                required
               />
             </div>
           </div>
           <div
             className={`govuk-form-group ${
-              !residentInfo.phone && referralClicked ? 'govuk-form-group--error' : ''
+              validationError.phone ? 'govuk-form-group--error' : ''
             }`}
           >
             <div className="govuk-!-padding-bottom-2">
@@ -72,7 +79,7 @@ const ResidentDetailsForm = ({ gernericRefferalFormCompleteCallback, referralCli
               </label>
               <span id="phone-error" className="govuk-error-message" aria-describedby="input-phone-error">
                 <span
-                  hidden={!residentInfo.phone && referralClicked ? false : true}
+                  hidden={!validationError.phone}
                   data-testid="phone-error"
                 >
                   Enter the phone number
@@ -80,20 +87,21 @@ const ResidentDetailsForm = ({ gernericRefferalFormCompleteCallback, referralCli
               </span>
               <input
                 className={`govuk-input govuk-!-width-two-thirds ${
-                  !residentInfo.phone && referralClicked ? 'govuk-input--error' : ''
+                  validationError.phone ? 'govuk-input--error' : ''
                 }`}
                 id="phone"
-                name="event-name"
+                name="phone"
                 type="number"
                 aria-describedby="telephone-number-error"
                 onChange={e => handleOnChange(e.target.id, e.target.value)}
                 required
+                onInvalid={(e) => onInvalidField(e.target.id)}
               />
             </div>
           </div>
           <div
             className={`govuk-form-group ${
-              !residentInfo.email && referralClicked ? 'govuk-form-group--error' : ''
+              validationError.email ? 'govuk-form-group--error' : ''
             }`}
           >
             <div className="govuk-!-padding-bottom-2">
@@ -102,7 +110,7 @@ const ResidentDetailsForm = ({ gernericRefferalFormCompleteCallback, referralCli
               </label>
               <span id="email-error" className="govuk-error-message" aria-describedby="input-email-error">
                 <span
-                  hidden={!residentInfo.email && referralClicked ? false : true}
+                  hidden={!validationError.email}
                   data-testid="email-error"
                 >
                   Enter the email address
@@ -110,7 +118,7 @@ const ResidentDetailsForm = ({ gernericRefferalFormCompleteCallback, referralCli
               </span>
               <input
                 className={`govuk-input govuk-!-width-two-thirds ${
-                  !residentInfo.email && referralClicked ? 'govuk-input--error' : ''
+                  validationError.email ? 'govuk-input--error' : ''
                 }`}
                 id="email"
                 name="email"
@@ -118,12 +126,14 @@ const ResidentDetailsForm = ({ gernericRefferalFormCompleteCallback, referralCli
                 spellCheck="false"
                 aria-describedby="email-hint email error"
                 onChange={e => handleOnChange(e.target.id, e.target.value)}
+                required
+                onInvalid={(e) => onInvalidField(e.target.id)}
               />
             </div>
           </div>
           <div
             className={`govuk-form-group ${
-              !residentInfo.address && referralClicked ? 'govuk-form-group--error' : ''
+              validationError.address  ? 'govuk-form-group--error' : ''
             }`}
           >
             <div className="govuk-!-padding-bottom-2">
@@ -132,7 +142,7 @@ const ResidentDetailsForm = ({ gernericRefferalFormCompleteCallback, referralCli
               </label>
               <span id="address-error" className="govuk-error-message" aria-describedby="input-address-error">
                 <span
-                  hidden={!residentInfo.address && referralClicked? false : true}
+                  hidden={!validationError.address}
                   data-testid="address-error"
                 >
                   Enter the address
@@ -140,19 +150,21 @@ const ResidentDetailsForm = ({ gernericRefferalFormCompleteCallback, referralCli
               </span>
               <input
                 className={`govuk-input govuk-!-width-two-thirds ${
-                  !residentInfo.address && referralClicked? 'govuk-input--error' : ''
+                  validationError.address ? 'govuk-input--error' : ''
                 }`}
                 id="address"
                 name="event-name"
                 type="text"
                 aria-describedby="event-name-hint"
                 onChange={e => handleOnChange(e.target.id, e.target.value)}
+                required
+                onInvalid={(e) => onInvalidField(e.target.id)}
               />
             </div>
           </div>
           <div
             className={`govuk-form-group ${
-              !residentInfo.postcode && referralClicked ? 'govuk-form-group--error' : ''
+              validationError.postcode ? 'govuk-form-group--error' : ''
             }`}
           >
             <div className="govuk-!-padding-bottom-2">
@@ -161,7 +173,7 @@ const ResidentDetailsForm = ({ gernericRefferalFormCompleteCallback, referralCli
               </label>
               <span id="postcode-error" className="govuk-error-message" aria-describedby="input-postcode-error">
                 <span
-                  hidden={!residentInfo.postcode  && referralClicked? false : true}
+                  hidden={!validationError.postcode}
                   data-testid="postcode-error"
                 >
                   Enter the postcode
@@ -169,13 +181,15 @@ const ResidentDetailsForm = ({ gernericRefferalFormCompleteCallback, referralCli
               </span>
               <input
                 className={`govuk-input govuk-!-width-two-thirds ${
-                  !residentInfo.postcode  && referralClicked ? 'govuk-input--error' : ''
+                  validationError.postcode  ? 'govuk-input--error' : ''
                 }`}
                 id="postcode"
                 name="event-name"
                 type="text"
                 aria-describedby="event-name-hint"
                 onChange={e => handleOnChange(e.target.id, e.target.value)}
+                required
+                onInvalid={(e) => onInvalidField(e.target.id)}
               />
             </div>
           </div>

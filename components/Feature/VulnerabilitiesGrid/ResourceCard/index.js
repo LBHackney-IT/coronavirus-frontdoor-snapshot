@@ -26,17 +26,14 @@ const ResourceCard = ({
   customerId,
   categoryName,
   serviceDescription,
-  gernericRefferalFormComplete,
-  referralClickedMiddleCallback,
   residentInfo,
   categoryId,
   ...others
 }) => {
-  const [referralClicked, setReferralClicked] = useState(false)
   const [referralDetail, setReferralDetail] = useState(null)
   const [widerConversationDetail, setWiderConversationDetail] = useState(null)
   const [consentGiven, setConsentGiven] = useState(null)
-
+  const [renderForm, setRenderForm] = useState(false)
 
   const trimLength = (s, length) => s.length > length ? s.substring(0, length) + "..." : s
 
@@ -61,10 +58,8 @@ const ResourceCard = ({
       notes:notes
     })
   }
-  const onClickReferral = () => {
-    let newRefferalClicked = !referralClicked
-    setReferralClicked(newRefferalClicked)
-    referralClickedMiddleCallback(newRefferalClicked)
+  const renderFormFunction = () => {
+    setRenderForm(!renderForm)
   }
   return (
     <div className={`resource ${css.resource}`} {...others}>
@@ -77,11 +72,10 @@ const ResourceCard = ({
       'Availability': currentProvision, 'Days / Times' : openingTimes, 'Distribution' : distributionElement, 'Telephone' : telephone, 'Service Description': serviceDescription}} customStyle="small" />
 
         </>
-      
         <details className="govuk-details" data-module="govuk-details">
-        <summary id ={`summary-${id}`} onClick={() => onClickReferral()} type="submit" form="resident-details" >Refer</summary>
+        <summary id ={`summary-${id}`} type="submit" form="resident-details" onClick={renderFormFunction} >Refer</summary>
         {
-          gernericRefferalFormComplete && 
+          renderForm && 
           <div>
             <div className={`govuk-form-group  ${!referralDetail ? 'govuk-form-group--error' : ''}`}>
               <div id="more-detail-hint" className="govuk-hint">Reason for referral, please give as much detail as possible</div>
@@ -90,7 +84,7 @@ const ResourceCard = ({
                   <span className="govuk-visually-hidden">Error:</span> Enter more detail
                 </span>
               }
-              <textarea form="resident-details" className={`govuk-textarea ${!referralDetail ? 'govuk-form-group--error' : ''}`} id="more-detail" name="more-detail" rows="5" aria-describedby="more-detail-hint more-detail-error" onChange={(e)=>setReferralDetail(e.target.value)}></textarea>
+              <textarea form="resident-details" className={`govuk-textarea ${!referralDetail ? 'govuk-form-group--error' : ''}`} id="more-details-referral" name="resident-details-referral" rows="5" aria-describedby="more-detail-hint more-detail-error" onChange={(e)=>setReferralDetail(e.target.value)}></textarea>
           </div>
           <div className={`govuk-form-group  ${!widerConversationDetail ? 'govuk-form-group--error' : ''}`}>
               <div id="more-detail-hint" className="govuk-hint">Notes on wider conversation(other needs, living situation, key information</div>
@@ -99,7 +93,7 @@ const ResourceCard = ({
                   <span className="govuk-visually-hidden">Error:</span> Enter more detail
                 </span>
               }
-              <textarea form="resident-details" className={`govuk-textarea ${!widerConversationDetail ? 'govuk-form-group--error' : ''}`} id="more-detail" name="more-detail" rows="5" aria-describedby="more-detail-hint more-detail-error" onChange={(e)=>setWiderConversationDetail(e.target.value)}></textarea>
+              <textarea form="resident-details" className={`govuk-textarea ${!widerConversationDetail ? 'govuk-form-group--error' : ''}`} id="more-details-conversation" name="more-details-conversation" rows="5" aria-describedby="more-detail-hint more-detail-error" onChange={(e)=>setWiderConversationDetail(e.target.value)}></textarea>
           </div>
           <div class="govuk-form-group">
             <fieldset class="govuk-fieldset" aria-describedby="changed-name-hint">
@@ -138,16 +132,10 @@ const ResourceCard = ({
                   </label>
                 </div>
               </div>
-              <input type="submit" text="go g/o go !" form="resident-details"/> 
+              <input type="submit" className="govuk-button" name="Submit" form="resident-details"/> 
             </fieldset>
           </div>
         </div>
-        }
-        {
-          !gernericRefferalFormComplete && 
-          <div id="passport-issued-error" className="govuk-error-message">
-          Enter resident’s details at the top of this page 
-          </div>
         }
       </details>
       <details className="govuk-details" data-module="govuk-details">

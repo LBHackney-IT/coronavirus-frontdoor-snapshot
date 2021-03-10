@@ -29,19 +29,12 @@ const Index = ({
   const [gernericRefferalFormComplete, setGernericRefferalFormComplete] = useState(false)
   const [residentInfo, setResidentInfo] = useState(false)
 
-  const gernericRefferalFormCompleteCallback = (value) => {
-    setGernericRefferalFormComplete(value)
-  }
-  const [referralClicked, setReferralClicked]= useState(false)
-  const referralClickedCallback = (value) =>{
-    setReferralClicked(value)
-  }
   const residentInfoCallback = (value) => {
     setResidentInfo(value)
   }
   return (
     <>
-     <ResidentDetailsForm gernericRefferalFormCompleteCallback={gernericRefferalFormCompleteCallback} referralClicked={referralClicked} residentInfoCallback={residentInfoCallback}/>
+     <ResidentDetailsForm residentInfoCallback={residentInfoCallback}/>
       {showTopicExplorer && (
         <>
           <TopicExplorer topics={topics}/>
@@ -49,7 +42,7 @@ const Index = ({
         </>
       )}
       <h2>Resources for residents</h2>
-      <Services taxonomies={fssTaxonomies} resources={resources}  gernericRefferalFormComplete={gernericRefferalFormComplete} referralClickedCallback={referralClickedCallback} residentInfo={residentInfo}/>
+      <Services taxonomies={fssTaxonomies} resources={resources}  gernericRefferalFormComplete={gernericRefferalFormComplete} residentInfo={residentInfo}/>
       <a
         href="https://forms.gle/B6vEMgp7sCsjJqNdA"
         target="_blank"

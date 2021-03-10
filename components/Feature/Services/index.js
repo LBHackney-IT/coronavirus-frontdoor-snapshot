@@ -2,7 +2,7 @@ import { useState } from 'react';
 import ResourceCard from 'components/Feature/VulnerabilitiesGrid/ResourceCard';
 import { Accordion, AccordionItem } from 'components/Form';
 
-const Services = ({ resources, taxonomies, gernericRefferalFormComplete, referralClickedCallback, residentInfo}) => {
+const Services = ({ resources, taxonomies, residentInfo}) => {
   const [expandedGroups, setExpandedGroups] = useState({});
 
   const taxonomiesToRender = taxonomies.filter(taxonomy =>
@@ -15,9 +15,7 @@ const Services = ({ resources, taxonomies, gernericRefferalFormComplete, referra
         resource => taxonomy.name == resource.categoryName
       ))
   );
-  const referralClickedMiddleCallback = (value) =>{
-    referralClickedCallback(value)
-  }
+
   return (
     <>
       <div className="govuk-grid-column-full-width">
@@ -46,8 +44,6 @@ const Services = ({ resources, taxonomies, gernericRefferalFormComplete, referra
                         data-testid={`resource-${resource.id}`}
                         {...resource}
                         updateSelectedResources={() => {}}
-                        gernericRefferalFormComplete={gernericRefferalFormComplete}
-                        referralClickedMiddleCallback={referralClickedMiddleCallback}
                         residentInfo={residentInfo}
                       />
                     ))}
