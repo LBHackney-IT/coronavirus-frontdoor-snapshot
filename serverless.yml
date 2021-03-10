@@ -53,8 +53,10 @@ functions:
       AIRTABLE_API_KEY: ${ssm:/frontdoor-snapshot/airtable-api-key}
       AIRTABLE_BASE_ID: ${ssm:/frontdoor-snapshot/airtable-base-id}
       AIRTABLE_TABLE_NAMES: ${ssm:/frontdoor-snapshot/airtable-table-names}
-      INH_URL: ${ssm:/frontdoor-snapshot/inh-url}
+      AIRTABLE_PROMPTS_API_KEY: ${ssm:/frontdoor-snapshot/airtable-prompts-api-key}
+      AIRTABLE_PROMPTS_BASE_ID: ${ssm:/frontdoor-snapshot/airtable-prompts-base-id}
       AIRTABLE_PROMPTS_TABLE_NAME: ${ssm:/frontdoor-snapshot/${self:provider.stage}/airtable-prompts-table-name}
+      INH_URL: ${ssm:/frontdoor-snapshot/inh-url}
       SHOW_TOPIC_EXPLORER: true
       FSS_PUBLIC_API_URL: ${ssm:/frontdoor-snapshot/${self:provider.stage}/fss-public-api-url}
 
