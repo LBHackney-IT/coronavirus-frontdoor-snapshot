@@ -28,10 +28,16 @@ const ResourceCard = ({
   serviceDescription,
   gernericRefferalFormComplete,
   referralClickedMiddleCallback,
+  residentInfo,
   categoryId,
   ...others
 }) => {
-  const [referralClicked,setReferralClicked] = useState(false)
+  const [referralClicked, setReferralClicked] = useState(false)
+  const [referralDetail, setReferralDetail] = useState(null)
+  const [widerConversationDetail, setWiderConversationDetail] = useState(null)
+  const [consentGiven, setConsentGiven] = useState(null)
+
+
   const trimLength = (s, length) => s.length > length ? s.substring(0, length) + "..." : s
 
   const selfReferralElement = (selfReferral == 'No') ? 'Referral required' : 'Self referral'
@@ -73,10 +79,69 @@ const ResourceCard = ({
         </>
       
         <details className="govuk-details" data-module="govuk-details">
-        <summary id ={`summary-${id}`} onClick={() => onClickReferral()}>Refer</summary>
+        <summary id ={`summary-${id}`} onClick={() => onClickReferral()} type="submit" form="resident-details" >Refer</summary>
         {
           gernericRefferalFormComplete && 
-          <p>something</p>
+          <div>
+            <div className={`govuk-form-group  ${!referralDetail ? 'govuk-form-group--error' : ''}`}>
+              <div id="more-detail-hint" className="govuk-hint">Reason for referral, please give as much detail as possible</div>
+              { !referralDetail &&
+                <span id="more-detail-error"  className={` ${!referralDetail ? 'govuk-error-message' : ''}`}>
+                  <span className="govuk-visually-hidden">Error:</span> Enter more detail
+                </span>
+              }
+              <textarea form="resident-details" className={`govuk-textarea ${!referralDetail ? 'govuk-form-group--error' : ''}`} id="more-detail" name="more-detail" rows="5" aria-describedby="more-detail-hint more-detail-error" onChange={(e)=>setReferralDetail(e.target.value)}></textarea>
+          </div>
+          <div className={`govuk-form-group  ${!widerConversationDetail ? 'govuk-form-group--error' : ''}`}>
+              <div id="more-detail-hint" className="govuk-hint">Notes on wider conversation(other needs, living situation, key information</div>
+              { !widerConversationDetail &&
+                <span id="more-detail-error"  className={` ${!widerConversationDetail ? 'govuk-error-message' : ''}`}>
+                  <span className="govuk-visually-hidden">Error:</span> Enter more detail
+                </span>
+              }
+              <textarea form="resident-details" className={`govuk-textarea ${!widerConversationDetail ? 'govuk-form-group--error' : ''}`} id="more-detail" name="more-detail" rows="5" aria-describedby="more-detail-hint more-detail-error" onChange={(e)=>setWiderConversationDetail(e.target.value)}></textarea>
+          </div>
+          <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" aria-describedby="changed-name-hint">
+              <legend class="govuk-fieldset__legend">
+              Does the resident consent to sharing third party information?
+              </legend>
+              <div class="govuk-radios govuk-radios--inline">
+                <div class="govuk-radios__item">
+                  <input class="govuk-radios__input" id="changed-name" name="changed-name" type="radio" value="true" onClick={(e)=>{setConsentGiven(e.target.value)}}/>
+                  <label class="govuk-label govuk-radios__label" for="changed-name">
+                    Yes
+                  </label>
+                </div>
+              </div>
+            </fieldset>
+          </div>
+          <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" aria-describedby="waste-hint">
+              <legend class="govuk-fieldset__legend">
+                  How would you like to be recieve the information?
+              </legend>
+              <div id="waste-hint" class="govuk-hint">
+                Select all that apply.
+              </div>
+              <div class="govuk-checkboxes">
+                <div class="govuk-checkboxes__item">
+                  <input class="govuk-checkboxes__input" id="waste" name="waste" type="checkbox" value="carcasses"/>
+                  <label class="govuk-label govuk-checkboxes__label" for="waste">
+                  Email details of the service to Joni Mitchell
+                  </label>
+                </div>
+                <div class="govuk-checkboxes__item">
+                  <input class="govuk-checkboxes__input" id="waste-2" name="waste" type="checkbox" value="mines"/>
+                  <label class="govuk-label govuk-checkboxes__label" for="waste-2">
+                  Text details of the service to Joni Mitchell
+                  </label>
+                </div>
+              </div>
+              <input type="submit" text="go g/o go !" form="resident-details"/> 
+            </fieldset>
+          </div>
+        </div>
         }
         {
           !gernericRefferalFormComplete && 

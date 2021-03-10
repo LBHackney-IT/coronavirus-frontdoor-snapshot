@@ -4,7 +4,7 @@ import HttpStatusError from 'lib/api/domain/HttpStatusError';
 import { getTokenFromCookieHeader } from 'lib/utils/token';
 import Services from 'components/Feature/Services';
 import TopicExplorer from 'components/Feature/TopicExplorer';
-import GenericReferralForm from 'components/Feature/GenericReferralForm'
+import ResidentDetailsForm from 'components/Feature/ResidentDetailsForm'
 import { useState } from 'react';
 
 const Index = ({
@@ -27,6 +27,8 @@ const Index = ({
     return <p>Loading...</p>;
   }
   const [gernericRefferalFormComplete, setGernericRefferalFormComplete] = useState(false)
+  const [residentInfo, setResidentInfo] = useState(false)
+
   const gernericRefferalFormCompleteCallback = (value) => {
     setGernericRefferalFormComplete(value)
   }
@@ -34,9 +36,12 @@ const Index = ({
   const referralClickedCallback = (value) =>{
     setReferralClicked(value)
   }
+  const residentInfoCallback = (value) => {
+    setResidentInfo(value)
+  }
   return (
     <>
-     <GenericReferralForm gernericRefferalFormCompleteCallback={gernericRefferalFormCompleteCallback} referralClicked={referralClicked} />
+     <ResidentDetailsForm gernericRefferalFormCompleteCallback={gernericRefferalFormCompleteCallback} referralClicked={referralClicked} residentInfoCallback={residentInfoCallback}/>
       {showTopicExplorer && (
         <>
           <TopicExplorer topics={topics}/>
@@ -44,7 +49,7 @@ const Index = ({
         </>
       )}
       <h2>Resources for residents</h2>
-      <Services taxonomies={fssTaxonomies} resources={resources}  gernericRefferalFormComplete={gernericRefferalFormComplete} referralClickedCallback={referralClickedCallback}/>
+      <Services taxonomies={fssTaxonomies} resources={resources}  gernericRefferalFormComplete={gernericRefferalFormComplete} referralClickedCallback={referralClickedCallback} residentInfo={residentInfo}/>
       <a
         href="https://forms.gle/B6vEMgp7sCsjJqNdA"
         target="_blank"
