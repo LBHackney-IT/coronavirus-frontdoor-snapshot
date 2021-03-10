@@ -1,7 +1,10 @@
 import React from 'react';
 import { useState } from 'react';
+import useSnapshot from 'lib/api/utils/useSnapshot';
 
-const ResidentDetailsForm = ({residentInfoCallback}) => {
+
+const ResidentDetailsForm = ({residentInfoCallback, token}) => {
+  const { createSnapshot } = useSnapshot({token});
   const [showAddResidentForm, setShowAddResidentForm] = useState(false);
   const [residentInfo, setResidentInfo] = useState({
     name: null,
@@ -26,6 +29,18 @@ const ResidentDetailsForm = ({residentInfoCallback}) => {
   }
   const onSubmitForm = (e) => {
     e.preventDefault();
+
+    const snapshot = {    
+      firstName: e.target.name.value,
+      lastName: e.target.name.value,
+      phone: e.target.phone.value,
+      email: e.target.email.value,
+      address: e.target.address.value,
+      postcode: e.target.postcode.value,
+      referralReason: e.target['referral-reason'].value,
+      conversationNotes: e.target['conversation-notes'].value
+    }
+    createSnapshot(snapshot)
   }
   return (
     <div>

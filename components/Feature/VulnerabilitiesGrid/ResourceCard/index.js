@@ -84,7 +84,7 @@ const ResourceCard = ({
                   <span className="govuk-visually-hidden">Error:</span> Enter more detail
                 </span>
               }
-              <textarea form="resident-details" className={`govuk-textarea ${!referralDetail ? 'govuk-form-group--error' : ''}`} id="more-details-referral" name="resident-details-referral" rows="5" aria-describedby="more-detail-hint more-detail-error" onChange={(e)=>setReferralDetail(e.target.value)}></textarea>
+              <textarea form="resident-details" className={`govuk-textarea ${!referralDetail ? 'govuk-form-group--error' : ''}`} id={`referral-reason-${name}`} name="referral-reason" rows="5" aria-describedby="more-detail-hint more-detail-error" onChange={(e)=>setReferralDetail(e.target.value)}></textarea>
           </div>
           <div className={`govuk-form-group  ${!widerConversationDetail ? 'govuk-form-group--error' : ''}`}>
               <div id="more-detail-hint" className="govuk-hint">Notes on wider conversation(other needs, living situation, key information</div>
@@ -93,7 +93,7 @@ const ResourceCard = ({
                   <span className="govuk-visually-hidden">Error:</span> Enter more detail
                 </span>
               }
-              <textarea form="resident-details" className={`govuk-textarea ${!widerConversationDetail ? 'govuk-form-group--error' : ''}`} id="more-details-conversation" name="more-details-conversation" rows="5" aria-describedby="more-detail-hint more-detail-error" onChange={(e)=>setWiderConversationDetail(e.target.value)}></textarea>
+              <textarea form="resident-details" className={`govuk-textarea ${!widerConversationDetail ? 'govuk-form-group--error' : ''}`} id={`conversation-notes-${name}`} name="conversation-notes" rows="5" aria-describedby="more-detail-hint more-detail-error" onChange={(e)=>setWiderConversationDetail(e.target.value)}></textarea>
           </div>
           <div class="govuk-form-group">
             <fieldset class="govuk-fieldset" aria-describedby="changed-name-hint">
@@ -122,13 +122,13 @@ const ResourceCard = ({
                 <div class="govuk-checkboxes__item">
                   <input class="govuk-checkboxes__input" id="waste" name="waste" type="checkbox" value="carcasses"/>
                   <label class="govuk-label govuk-checkboxes__label" for="waste">
-                  Email details of the service to Joni Mitchell
+                  Email details of the service to the resident
                   </label>
                 </div>
                 <div class="govuk-checkboxes__item">
                   <input class="govuk-checkboxes__input" id="waste-2" name="waste" type="checkbox" value="mines"/>
                   <label class="govuk-label govuk-checkboxes__label" for="waste-2">
-                  Text details of the service to Joni Mitchell
+                  Text details of the service to the resident
                   </label>
                 </div>
               </div>

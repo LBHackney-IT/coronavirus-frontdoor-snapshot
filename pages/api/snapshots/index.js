@@ -17,24 +17,35 @@ export const endpoint = ({ createSnapshot }) =>
           name: 'lastName',
           failureMessage: 'last name is required',
           validate: ({ body }) => body.lastName?.length > 0
-        },
-        {
-          name: 'systemIds',
-          failureMessage: 'at least one system id is required',
-          validate: ({ body }) =>
-            Array.isArray(body.systemIds) && body.systemIds?.length > 0
         }
       ]
     },
-    async ({ body: { dob, firstName, lastName, systemIds, postcode }, headers }) => {
-      const createdBy = getUsername(getTokenFromAuthHeader(headers));
-      const snapshot = await createSnapshot.execute({
+    async ({
+      body: {
         dob,
-        createdBy,
         firstName,
         lastName,
-        systemIds,
-        postcode
+        phone,
+        email,
+        address,
+        postcode,
+        referralReason,
+        conversationNotes
+      },
+      headers
+    }) => {
+      const createdBy = getUsername(getTokenFromAuthHeader(headers));
+      const snapshot = await createSnapshot.execute({
+        createdBy,
+        dob,
+        firstName,
+        lastName,
+        phone,
+        email,
+        address,
+        postcode,
+        referralReason,
+        conversationNotes
       });
       return Response.created(snapshot);
     }

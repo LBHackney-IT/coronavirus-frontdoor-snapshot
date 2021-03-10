@@ -34,7 +34,7 @@ const Index = ({
   }
   return (
     <>
-     <ResidentDetailsForm residentInfoCallback={residentInfoCallback}/>
+     <ResidentDetailsForm residentInfoCallback={residentInfoCallback} token={token}/>
       {showTopicExplorer && (
         <>
           <TopicExplorer topics={topics}/>
