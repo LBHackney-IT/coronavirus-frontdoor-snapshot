@@ -23,8 +23,27 @@ describe('Create Referral Api', () => {
     const firstName = 'sue';
     const lastName = 'taylor';
     const systemIds = ['xyz'];
+    const email = 'Some@one.com';
+    const address = '123 some road';
+    const conversationNotes = 'nice chat';
+
+    const phone = '0712345678';
+    const postcode = 'SP1 2RM';
+    const referralReason = 'needed tests';
+
     const response = await call({
-      body: { dob, firstName, lastName, systemIds },
+      body: {
+        dob,
+        firstName,
+        lastName,
+        // systemIds,
+        email,
+        address,
+        conversationNotes,
+        phone,
+        postcode,
+        referralReason
+      },
       headers: {}
     });
     expect(createReferral.execute).toHaveBeenCalledWith({
@@ -32,7 +51,13 @@ describe('Create Referral Api', () => {
       createdBy: '',
       firstName,
       lastName,
-      systemIds
+      // systemIds,
+      email,
+      address,
+      conversationNotes,
+      phone,
+      postcode,
+      referralReason
     });
     expect(response.statusCode).toBe(201);
   });
@@ -70,7 +95,7 @@ describe('Create Referral Api', () => {
         body: {
           firstName: 'sue',
           lastName: 'taylor',
-          systemIds: []
+          // systemIds: []
         }
       });
       expect(response.statusCode).toBe(400);
