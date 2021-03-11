@@ -57,9 +57,12 @@ Index.getInitialProps = async ({ req: { headers }, res }) => {
     });
     const topics = await requestPrompts({ token });
     const showTopicExplorer = process.env.SHOW_TOPIC_EXPLORER;
+    const resources = (fssResources.concat(otherResources)).sort((a, b)=> {
+      return (a.name < b.name) ? -1 : (a.name > b.name) ? 1 : 0;
+    })
 
     return {
-      resources: fssResources.concat(otherResources),
+      resources,
       initialSnapshot,
       token,
       showTopicExplorer,
