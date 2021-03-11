@@ -59,7 +59,7 @@ context('Index page', () => {
       cy.get('[data-testid=resource-card-tags]')
       .eq(0)
       .should('contain', 'First category')
-      .and('contain', 'Second category')
+      .and('contain', 'Council')
       .children()
       .should('have.length', 2);
 
@@ -68,9 +68,8 @@ context('Index page', () => {
       .eq(2)
       .should('contain', 'First category')
       .and('contain', 'Second category')
-      .and('contain', 'Council')
       .children()
-      .should('have.length', 3); 
+      .should('have.length', 2); 
     });
   });
 
