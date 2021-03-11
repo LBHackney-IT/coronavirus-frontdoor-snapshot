@@ -40,7 +40,7 @@ const ResourceCard = ({
   const websiteElement = websites && websites.length > 0 &&  websites.map(website => (<a href={websites[0]} target="_blank" rel="noopener noreferrer">{websites[0]}</a>))
   const distributionElement =  tags.filter(t => HIDDEN_TAGS.includes(t)).join(", ")
   const tagsElement = tags.filter(t => !HIDDEN_TAGS.includes(t)).map(item=> (<span key={"tags-"+item} className={`${css.tags} tag-element`}>{trimLength(item, 20)}</span>))
-  const referral = (customerId != undefined) ? true : false
+  const snapshot = (customerId != undefined) ? true : false
   const summaryDataExists = ( telephone  || distance != 100 || currentProvision || openingTimes)
   const marginClass = (summaryDataExists) ? "" : "remove-margin-bottom"
   const updateResource = () =>{
@@ -73,7 +73,7 @@ const ResourceCard = ({
         </>
         <details className="govuk-details" data-module="govuk-details">
         <summary id ={`summary-${id}`} type="submit" form="resident-details" onClick={() => {setHideForm(!hideForm)} } >Refer</summary>
-        {
+          {hideForm ? '' :
           <div hidden={hideForm}>
             <div
               className={`govuk-form-group govuk-!-padding-bottom-2 ${
@@ -223,7 +223,7 @@ const ResourceCard = ({
 
         <SummaryList key={`moreResourceInfo-${id}-${categoryId}`} name={'moreResourceInfo'} entries={{ 'How to contact': selfReferralElement,
       'Address': address, 'Description' : description, 'Website' : websiteElement, 'Additional notes' : notes }} customStyle="small" />
-        { referral &&
+        { snapshot &&
       (
         <div className="govuk-checkboxes__item">
           <input className="govuk-checkboxes__input" id={`input-${id}`} onClick={() => updateResource()} type="checkbox" value={name}/>
