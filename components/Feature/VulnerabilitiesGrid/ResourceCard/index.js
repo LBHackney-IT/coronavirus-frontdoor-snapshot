@@ -69,7 +69,8 @@ const ResourceCard = ({
         <summary id ={`summary-${id}`} className="">View more information</summary>
 
         <SummaryList key={`moreResourceInfo-${id}-${categoryId}`} name={'moreResourceInfo'} entries={{ 'How to contact': selfReferralElement,
-      'Address': address, 'Description' : description, 'Website' : websiteElement, 'Additional notes' : notes }} customStyle="small" />
+      'Address': address, 'Description' : description, 'Website' : websiteElement, 'Additional notes' : notes, 
+      'Referral email': referralContact, 'Referral Website': referralWebsite }} customStyle="small" />
         { snapshot &&
       ( 
         <div className="govuk-checkboxes__item">
