@@ -25,11 +25,15 @@ const ResidentDetailsForm = ({residentInfoCallback, token}) => {
   };
 
   const onInvalidField = (value) => {
+    Object.values(validationError).every(k => {
+      if(value != k){
+        validationError[k] = false
+      }
+    })
     setValidationError({[value]: true, ...validationError})
   }
   const onSubmitForm = (e) => {
     e.preventDefault();
-
     const snapshot = {    
       firstName: e.target.name.value,
       lastName: e.target.name.value,
@@ -49,8 +53,8 @@ const ResidentDetailsForm = ({residentInfoCallback, token}) => {
         <summary>Residents details</summary>
       </details>
 
-      {showAddResidentForm && (
-        <form id='resident-details' onSubmit={onSubmitForm}>
+      {(
+        <form id='resident-details' onSubmit={onSubmitForm} hidden={showAddResidentForm}>
           <div
             className={`govuk-form-group ${
               validationError.name  ? 'govuk-form-group--error' : ''
