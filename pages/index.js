@@ -11,7 +11,8 @@ const Index = ({
   token,
   showTopicExplorer,
   topics,
-  fssTaxonomies
+  fssTaxonomies,
+  errors
 }) => {
   const { snapshot, loading, updateSnapshot } = useSnapshot(
     initialSnapshot.snapshotId,
@@ -27,6 +28,7 @@ const Index = ({
 
   return (
     <>
+    <div>{errors.map(err=> <p className="govuk-error-message">{err}</p>)}</div>
       {showTopicExplorer && (
         <>
           <TopicExplorer topics={topics} />
@@ -52,22 +54,29 @@ Index.getInitialProps = async ({ req: { headers }, res }) => {
     const token = getTokenFromCookieHeader(headers);
     const initialSnapshot = { vulnerabilities: [], assets: [], notes: null };
     const otherResources = await requestResources({ token });
-    const { fssResources, fssTaxonomies } = await requestFssResources({
+    const fss = await requestFssResources({
       token
     });
+    const fssResources = fss.data.fssResources;
+    const fssTaxonomies = fss.data.fssTaxonomies;
+    const fssErrors = fss.error;
+    
     const topics = await requestPrompts({ token });
     const showTopicExplorer = process.env.SHOW_TOPIC_EXPLORER;
-    const resources = (fssResources.concat(otherResources)).sort((a, b)=> {
+    const resources = (fssResources.concat(otherResources.data)).sort((a, b)=> {
       return (a.name < b.name) ? -1 : (a.name > b.name) ? 1 : 0;
     })
+
+    const errors = [otherResources.error].concat(fssErrors).concat(topics.error);
 
     return {
       resources,
       initialSnapshot,
       token,
       showTopicExplorer,
-      topics,
-      fssTaxonomies
+      topics: topics.data,
+      fssTaxonomies,
+      errors
     };
   } catch (err) {
     console.log('Failed to load initial Props:' + err);

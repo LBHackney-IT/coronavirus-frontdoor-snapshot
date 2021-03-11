@@ -251,10 +251,10 @@ SnapshotSummary.getInitialProps = async ({
     const showTopicExplorer = process.env.SHOW_TOPIC_EXPLORER;
 
     return {
-      resources,
+      resources: resources.data,
       initialSnapshot,
       token,
-      topics,
+      topics:topics.data,
       showTopicExplorer
     };
   } catch (err) {
