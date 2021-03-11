@@ -1,9 +1,9 @@
 import createEndpoint from 'lib/api/utils/createEndpoint';
 import Response from 'lib/api/domain/Response';
-import { createSnapshot } from 'lib/dependencies';
+import { createReferral } from 'lib/dependencies';
 import { getUsername, getTokenFromAuthHeader } from 'lib/utils/token';
 
-export const endpoint = ({ createSnapshot }) =>
+export const endpoint = ({ createReferral }) =>
   createEndpoint(
     {
       allowedMethods: ['POST'],
@@ -35,7 +35,7 @@ export const endpoint = ({ createSnapshot }) =>
       headers
     }) => {
       const createdBy = getUsername(getTokenFromAuthHeader(headers));
-      const snapshot = await createSnapshot.execute({
+      const referral = await createReferral.execute({
         createdBy,
         dob,
         firstName,
@@ -47,8 +47,8 @@ export const endpoint = ({ createSnapshot }) =>
         referralReason,
         conversationNotes
       });
-      return Response.created(snapshot);
+      return Response.created(referral);
     }
   );
 
-export default endpoint({ createSnapshot });
+export default endpoint({ createReferral });

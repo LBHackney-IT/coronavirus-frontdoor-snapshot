@@ -1,13 +1,13 @@
 import { endpoint } from './index';
 import createMockResponse from 'lib/api/utils/createMockResponse';
 
-describe('Get/Update Snapshot Api', () => {
+describe('Get/Update Referral Api', () => {
   const id = '1';
-  const getSnapshot = { execute: jest.fn(() => ({ id })) };
-  const updateSnapshot = { execute: jest.fn(() => ({ id })) };
+  const getReferral = { execute: jest.fn(() => ({ id })) };
+  const updateReferral = { execute: jest.fn(() => ({ id })) };
   const call = async ({ body, method, params }) => {
     const response = createMockResponse();
-    await endpoint({ getSnapshot, updateSnapshot })(
+    await endpoint({ getReferral, updateReferral })(
       {
         body,
         query: params,
@@ -19,9 +19,9 @@ describe('Get/Update Snapshot Api', () => {
   };
 
   describe('Get', () => {
-    it('can get a snapshot', async () => {
+    it('can get a referral', async () => {
       const response = await call({ method: 'GET', params: { id } });
-      expect(getSnapshot.execute).toHaveBeenCalledWith({ id });
+      expect(getReferral.execute).toHaveBeenCalledWith({ id });
       expect(response.statusCode).toBe(200);
       expect(response.body).toEqual(JSON.stringify({ id }));
     });
@@ -37,7 +37,7 @@ describe('Get/Update Snapshot Api', () => {
     });
 
     it('returns a 500 for other errors', async () => {
-      getSnapshot.execute = jest.fn(() => {
+      getReferral.execute = jest.fn(() => {
         throw new Error();
       });
       const response = await call({
@@ -49,14 +49,14 @@ describe('Get/Update Snapshot Api', () => {
   });
 
   describe('Update', () => {
-    it('can update a snapshot', async () => {
-      const snapshot = { id: 1 };
+    it('can update a referral', async () => {
+      const referral = { id: 1 };
       const response = await call({
         method: 'PATCH',
-        body: snapshot,
+        body: referral,
         params: { id }
       });
-      expect(updateSnapshot.execute).toHaveBeenCalledWith({ snapshot });
+      expect(updateReferral.execute).toHaveBeenCalledWith({ referral });
       expect(response.statusCode).toBe(204);
       expect(response.body).toBeUndefined();
     });
@@ -72,7 +72,7 @@ describe('Get/Update Snapshot Api', () => {
     });
 
     it('returns a 500 for other errors', async () => {
-      updateSnapshot.execute = jest.fn(() => {
+      updateReferral.execute = jest.fn(() => {
         throw new Error();
       });
       const response = await call({

@@ -1,10 +1,10 @@
 import React from 'react';
 import { useState } from 'react';
-import useSnapshot from 'lib/api/utils/useSnapshot';
+import useReferral from 'lib/api/utils/useReferral';
 
 
 const ResidentDetailsForm = ({residentInfoCallback, token}) => {
-  const { createSnapshot } = useSnapshot({token});
+  const { createReferral } = useReferral({token});
   const [showAddResidentForm, setShowAddResidentForm] = useState(false);
   const [residentInfo, setResidentInfo] = useState({
     name: null,
@@ -34,7 +34,7 @@ const ResidentDetailsForm = ({residentInfoCallback, token}) => {
   }
   const onSubmitForm = (e) => {
     e.preventDefault();
-    const snapshot = {    
+    const snapshot = {
       firstName: e.target.name.value,
       lastName: e.target.name.value,
       phone: e.target.phone.value,
@@ -44,7 +44,7 @@ const ResidentDetailsForm = ({residentInfoCallback, token}) => {
       referralReason: e.target['referral-reason'].value,
       conversationNotes: e.target['conversation-notes'].value
     }
-    createSnapshot(snapshot)
+    createReferral(snapshot)
   }
   return (
     <div>

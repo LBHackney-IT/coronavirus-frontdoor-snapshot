@@ -1,10 +1,10 @@
-context('Snapshot summary', () => {
+context('Referral summary', () => {
   var dob = new Date();
 
   beforeEach(() => {
     dob.setYear(dob.getFullYear() - 20);
 
-    cy.task('createSnapshot', {
+    cy.task('createReferral', {
       firstName: 'Ferb',
       lastName: 'Flynn',
       assets: [{ name: 'Asset' }],
@@ -24,7 +24,7 @@ context('Snapshot summary', () => {
       id: '2'
     });
 
-    cy.task('createSnapshot', {
+    cy.task('createReferral', {
       firstName: 'Candace',
       lastName: 'Flynn',
       assets: [],
@@ -42,12 +42,12 @@ context('Snapshot summary', () => {
   });
 
   afterEach(() => {
-    cy.task('deleteSnapshot', '2');
-    cy.task('deleteSnapshot', '3');
+    cy.task('deleteReferral', '2');
+    cy.task('deleteReferral', '3');
   });
-  describe('View snapshot', () => {
-    it('Displays a read only view of a snapshot', () => {
-      cy.visit(`/snapshots/2`);
+  describe('View referral', () => {
+    it('Displays a read only view of a referral', () => {
+      cy.visit(`/referrals/2`);
 
       cy.get('h1').should('contain', `Ferb's resources`);
 
@@ -82,7 +82,7 @@ context('Snapshot summary', () => {
     });
 
     it('Displays none captured if there are no vulnerabilities or assets', () => {
-      cy.visit(`/snapshots/3`);
+      cy.visit(`/referrals/3`);
 
       cy.get('h1').should('contain', `Candace's resources`);
 

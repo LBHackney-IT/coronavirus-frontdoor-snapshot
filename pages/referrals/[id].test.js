@@ -1,8 +1,8 @@
 import { enableFetchMocks } from 'jest-fetch-mock';
 import { render } from '@testing-library/react';
-import SnapshotSummary from 'pages/snapshots/[id]';
+import ReferralSummary from 'pages/referrals/[id]';
 
-describe('SnapshotSummary', () => {
+describe('ReferralSummary', () => {
   const resources = [];
 
   const expectedResponse = {
@@ -19,65 +19,65 @@ describe('SnapshotSummary', () => {
     fetch.mockResponse(JSON.stringify(expectedResponse));
   });
 
-  it('fetches snapshot from the correct url and sets props', async () => {
-    const props = await SnapshotSummary.getInitialProps({
+  it('fetches referral from the correct url and sets props', async () => {
+    const props = await ReferralSummary.getInitialProps({
       query: { id: '1' },
       req: { headers: {} }
     });
     expect(fetch).toHaveBeenCalledWith(
-      expect.stringContaining('/snapshots/1'),
+      expect.stringContaining('/referrals/1'),
       expect.any(Object)
     );
-    expect(props.initialSnapshot).toStrictEqual(expectedResponse);
+    expect(props.initialReferral).toStrictEqual(expectedResponse);
   });
 
-  describe('adding a snapshot', () => {
+  describe('adding a referral', () => {
     it('shows the name', () => {
-      const snapshot = {
+      const referral = {
         firstName: 'John',
         lastName: 'Wick',
         vulnerabilities: [],
         assets: []
       };
       const { getByText } = render(
-        <SnapshotSummary initialSnapshot={snapshot} resources={resources} />
+        <ReferralSummary initialReferral={referral} resources={resources} />
       );
       expect(
-        getByText(`${snapshot.firstName}'s resources`)
+        getByText(`${referral.firstName}'s resources`)
       ).toBeInTheDocument();
     });
 
     it('shows the dob', () => {
       const d = new Date();
-      const snapshot = {
+      const referral = {
         dob: d.setFullYear(d.getFullYear() - 45),
         vulnerabilities: [],
         assets: []
       };
       const { getByText } = render(
-        <SnapshotSummary initialSnapshot={snapshot} resources={resources} />
+        <ReferralSummary initialReferral={referral} resources={resources} />
       );
       expect(getByText(/Aged 45/)).toBeInTheDocument();
     });
 
     it('shows the vulnerabilities grid', () => {
-      const snapshot = {
+      const referral = {
         vulnerabilities: [],
         assets: []
       };
       const { container } = render(
-        <SnapshotSummary initialSnapshot={snapshot} resources={resources} />
+        <ReferralSummary initialReferral={referral} resources={resources} />
       );
       expect(container.querySelector('.govuk-accordion')).toBeInTheDocument();
     });
 
     it('shows the notes', () => {
-      const snapshot = {
+      const referral = {
         vulnerabilities: [],
         assets: []
       };
       const { getByLabelText } = render(
-        <SnapshotSummary initialSnapshot={snapshot} resources={resources} />
+        <ReferralSummary initialReferral={referral} resources={resources} />
       );
       expect(
         getByLabelText(`What prompted the Resident to get in touch today?`)
@@ -85,12 +85,12 @@ describe('SnapshotSummary', () => {
     });
 
     it('hides the edit view if a vulnerability exists', () => {
-      const snapshot = {
+      const referral = {
         vulnerabilities: [{ name: 'v1', data: [] }],
         assets: []
       };
       const { container, getByText } = render(
-        <SnapshotSummary initialSnapshot={snapshot} resources={resources} />
+        <ReferralSummary initialReferral={referral} resources={resources} />
       );
       expect(
         container.querySelector('.govuk-accordion')
@@ -99,12 +99,12 @@ describe('SnapshotSummary', () => {
     });
 
     it('hides the edit view if a asset exists', () => {
-      const snapshot = {
+      const referral = {
         vulnerabilities: [],
         assets: [{ name: 'a1', data: [] }]
       };
       const { container, getByText } = render(
-        <SnapshotSummary initialSnapshot={snapshot} resources={resources} />
+        <ReferralSummary initialReferral={referral} resources={resources} />
       );
       expect(
         container.querySelector('.govuk-accordion')
@@ -113,13 +113,13 @@ describe('SnapshotSummary', () => {
     });
 
     it('hides the edit view if notes exist', () => {
-      const snapshot = {
+      const referral = {
         vulnerabilities: [],
         assets: [],
         notes: 'some notes'
       };
       const { container, getByText } = render(
-        <SnapshotSummary initialSnapshot={snapshot} resources={resources} />
+        <ReferralSummary initialReferral={referral} resources={resources} />
       );
       expect(
         container.querySelector('.govuk-accordion')
@@ -128,13 +128,13 @@ describe('SnapshotSummary', () => {
     });
 
     it('sends back to Support For Hackney Residents when Back button is clicked', () => {
-      const snapshot = {
+      const referral = {
         vulnerabilities: [],
         assets: [],
         systemIds: ['wub']
       };
       const { container, getByTestId } = render(
-        <SnapshotSummary initialSnapshot={snapshot} resources={resources} />
+        <ReferralSummary initialReferral={referral} resources={resources} />
       );
       expect(getByTestId('back-link-test')).toHaveAttribute(
         'href',

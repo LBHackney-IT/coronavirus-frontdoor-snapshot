@@ -1,8 +1,8 @@
 import createEndpoint from 'lib/api/utils/createEndpoint';
 import Response from 'lib/api/domain/Response';
-import { findSnapshots } from 'lib/dependencies';
+import { findReferrals } from 'lib/dependencies';
 
-export const endpoint = ({ findSnapshots }) =>
+export const endpoint = ({ findReferrals }) =>
   createEndpoint(
     {
       allowedMethods: ['POST'],
@@ -20,7 +20,7 @@ export const endpoint = ({ findSnapshots }) =>
       ]
     },
     async ({ body: { firstName, lastName, systemIds } }) => {
-      const result = await findSnapshots.execute({
+      const result = await findReferrals.execute({
         firstName,
         lastName,
         systemIds
@@ -29,4 +29,4 @@ export const endpoint = ({ findSnapshots }) =>
     }
   );
 
-export default endpoint({ findSnapshots });
+export default endpoint({ findReferrals });

@@ -1,4 +1,4 @@
-import useSnapshot from 'lib/api/utils/useSnapshot';
+import useReferral from 'lib/api/utils/useReferral';
 import { requestResources, requestPrompts, requestFssResources } from 'lib/api';
 import HttpStatusError from 'lib/api/domain/HttpStatusError';
 import { getTokenFromCookieHeader } from 'lib/utils/token';
@@ -9,16 +9,16 @@ import { useState } from 'react';
 
 const Index = ({
   resources,
-  initialSnapshot,
+  initialReferral,
   token,
   showTopicExplorer,
   topics,
   fssTaxonomies
 }) => {
-  const { snapshot, loading, updateSnapshot } = useSnapshot(
-    initialSnapshot.snapshotId,
+  const { referral, loading, updateReferral } = useReferral(
+    initialReferral.referralId,
     {
-      initialSnapshot,
+      initialReferral,
       token
     }
   );
@@ -58,7 +58,7 @@ const Index = ({
 Index.getInitialProps = async ({ req: { headers }, res }) => {
   try {
     const token = getTokenFromCookieHeader(headers);
-    const initialSnapshot = { vulnerabilities: [], assets: [], notes: null };
+    const initialReferral = { vulnerabilities: [], assets: [], notes: null };
     const otherResources = await requestResources({ token });
     const { fssResources, fssTaxonomies } = await requestFssResources({
       token
@@ -68,7 +68,7 @@ Index.getInitialProps = async ({ req: { headers }, res }) => {
 
     return {
       resources: fssResources, //.concat(otherResources),
-      initialSnapshot,
+      initialReferral,
       token,
       showTopicExplorer,
       topics,

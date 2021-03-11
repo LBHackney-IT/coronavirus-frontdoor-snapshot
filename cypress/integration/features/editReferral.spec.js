@@ -1,6 +1,6 @@
-context('Edit snapshot', () => {
+context('Edit referral', () => {
   beforeEach(() => {
-    cy.task('createSnapshot', {
+    cy.task('createReferral', {
       firstName: 'Phineas',
       lastName: 'Flynn',
       queryFirstName: 'phineas',
@@ -17,11 +17,11 @@ context('Edit snapshot', () => {
   });
 
   afterEach(() => {
-    cy.task('deleteSnapshot', '1');
+    cy.task('deleteReferral', '1');
   });
 
   xit("Adds resources to the summary list", () => {
-    cy.visit(`/snapshots/1`);
+    cy.visit(`/referrals/1`);
     cy.get('[data-testid=accordion-item]').eq(0).click();
     cy.get('[data-testid=food-needs-v-halal-checkbox]').click();
 
@@ -37,7 +37,7 @@ context('Edit snapshot', () => {
   })
 
   xit("Adds and removes resources to the summary list", () => {
-    cy.visit(`/snapshots/1`);
+    cy.visit(`/referrals/1`);
     cy.get('[data-testid=accordion-item]').eq(0).click();
     cy.get('[data-testid=food-needs-v-halal-checkbox]').click();
 
@@ -52,9 +52,9 @@ context('Edit snapshot', () => {
       .and('contain', 'Shirdi Sai Baba Temple');
   })
 
-  describe('Edit snapshot', () => {
-    it('Displays editable snapshot if there are no assets, vulnerabilites and notes added', () => {
-      cy.visit(`/snapshots/1`);
+  describe('Edit referral', () => {
+    it('Displays editable referral if there are no assets, vulnerabilites and notes added', () => {
+      cy.visit(`/referrals/1`);
 
       cy.contains(`Phineas's resources`).should('be.visible')
 
@@ -81,7 +81,7 @@ context('Edit snapshot', () => {
     });
 
     xit('Ranks resources by relevance', () => {
-      cy.visit(`/snapshots/1`);
+      cy.visit(`/referrals/1`);
       cy.get('[data-testid=accordion-item]').eq(0).click();
       cy.get('[data-testid=food-needs-v-halal-checkbox]').click();
 
@@ -95,7 +95,7 @@ context('Edit snapshot', () => {
     });
 
     it('Adds vulnerabilities, assets and notes', () => {
-      cy.visit(`/snapshots/1`);
+      cy.visit(`/referrals/1`);
       cy.get('[data-testid=accordion-item]').eq(1).click();
       cy.get(
         '[data-testid=financial-stability-v-rent-arrears-checkbox]'
@@ -122,8 +122,8 @@ context('Edit snapshot', () => {
         .should('contain', 'Note');
     });
 
-    it('Persists the snapshot', () => {
-      cy.task('createSnapshot', {
+    it('Persists the referral', () => {
+      cy.task('createReferral', {
         firstName: 'Phineas',
         lastName: 'Flynn',
         queryFirstName: 'phineas',
@@ -136,13 +136,13 @@ context('Edit snapshot', () => {
         vulnerabilities: [{ name: 'yup', data: [] }],
         id: '2'
       });
-      cy.visit(`/snapshots/2`);
+      cy.visit(`/referrals/2`);
 
       cy.get('[data-testid=vulnerabilities-summary]')
         .should('contain', 'Vulnerabilities')
         .and('contain', 'yup');
 
-      cy.task('deleteSnapshot', '2');
+      cy.task('deleteReferral', '2');
     });
   });
 
@@ -150,7 +150,7 @@ context('Edit snapshot', () => {
     it('Adds text input values to the active case vulnerability', () => {
       const baseServicesSelector =
         'support-needs-v-active-case-with-other-services-\\(e\\.g\\.-adult-social-care\\,-childrens\\)';
-      cy.visit(`/snapshots/1`);
+      cy.visit(`/referrals/1`);
       cy.get('[data-testid=accordion-item]').eq(4).click();
       cy.get(`#${baseServicesSelector}`).click();
 
@@ -176,7 +176,7 @@ context('Edit snapshot', () => {
         'financial-stability-v-other--i';
       const otherAssetInputSelector =
         'financial-stability-a-other--i';
-      cy.visit(`/snapshots/1`);
+      cy.visit(`/referrals/1`);
       cy.get('[data-testid=accordion-item]').eq(1).click();
       cy.get('[data-testid=financial-stability-v-other-checkbox]').click();
       cy.get(`#${otherVulnerabilityInputSelector}`).type('new vulnerability');
@@ -196,7 +196,7 @@ context('Edit snapshot', () => {
 
   describe('Back button', () => {
     it('Sends the user back to Support For Hackney Residents', () => {
-      cy.visit(`/snapshots/1`);
+      cy.visit(`/referrals/1`);
       cy.get('[data-testid=back-link-test]')
         .should('contain', 'Back')
         .and(

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import useSnapshot from 'lib/api/utils/useSnapshot';
-import { requestSnapshot, requestResources, requestPrompts } from 'lib/api';
+import useReferral from 'lib/api/utils/useReferral';
+import { requestReferral, requestResources, requestPrompts } from 'lib/api';
 import HttpStatusError from 'lib/api/domain/HttpStatusError';
 import { getTokenFromCookieHeader } from 'lib/utils/token';
 import { Button, TextArea } from 'components/Form';
@@ -9,11 +9,11 @@ import { convertIsoDateToString, convertIsoDateToYears } from 'lib/utils/date';
 import geoCoordinates from 'lib/api/utils/geoCoordinates';
 import TopicExplorer from 'components/Feature/TopicExplorer';
 
-const SnapshotSummary = ({ resources, initialSnapshot, token, topics, showTopicExplorer }) => {
-  const { snapshot, loading, updateSnapshot } = useSnapshot(
-    initialSnapshot.snapshotId,
+const ReferralSummary = ({ resources, initialReferral, token, topics, showTopicExplorer }) => {
+  const { referral, loading, updateReferral } = useReferral(
+    initialReferral.referralId,
     {
-      initialSnapshot,
+      initialReferral,
       token
     }
   );
@@ -22,20 +22,20 @@ const SnapshotSummary = ({ resources, initialSnapshot, token, topics, showTopicE
     return <p>Loading...</p>;
   }
 
-  const [editSnapshot, setEditSnapshot] = useState(
-    snapshot.assets.length === 0 &&
-      snapshot.vulnerabilities.length === 0 &&
-      !snapshot.notes
+  const [editReferral, setEditReferral] = useState(
+    referral.assets.length === 0 &&
+      referral.vulnerabilities.length === 0 &&
+      !referral.notes
   );
   const [hasValue, setHasValue] = useState(false);
 
   const updateSelected = selected => {
-    snapshot.assets = selected.assets;
-    snapshot.vulnerabilities = selected.vulnerabilities;
+    referral.assets = selected.assets;
+    referral.vulnerabilities = selected.vulnerabilities;
     setHasValue(
-      snapshot.assets.length > 0 ||
-        snapshot.vulnerabilities.length > 0 ||
-        snapshot.notes
+      referral.assets.length > 0 ||
+        referral.vulnerabilities.length > 0 ||
+        referral.notes
     );
   };
   const [selectedResources, setResources] = useState([]);
@@ -71,11 +71,11 @@ const SnapshotSummary = ({ resources, initialSnapshot, token, topics, showTopicE
   const handleError = errorMsg => console.log(errorMsg);
 
   const updateNotes = notes => {
-    snapshot.notes = notes;
+    referral.notes = notes;
     setHasValue(
-      snapshot.assets.length > 0 ||
-        snapshot.vulnerabilities.length > 0 ||
-        snapshot.notes
+      referral.assets.length > 0 ||
+        referral.vulnerabilities.length > 0 ||
+        referral.notes
     );
   };
 
@@ -87,15 +87,15 @@ const SnapshotSummary = ({ resources, initialSnapshot, token, topics, showTopicE
     assets,
     vulnerabilities,
     notes
-  } = snapshot;
-  let customerId = snapshot.systemIds?.[0];
+  } = referral;
+  let customerId = referral.systemIds?.[0];
   const residentCoordinates = geoCoordinates(postcode);
   const INH_URL = process.env.INH_URL
 
   return (
     <>
       <div>
-        { editSnapshot && customerId && (
+        { editReferral && customerId && (
           <a
           href={`${INH_URL}/help-requests/edit/${customerId}`}
           className="govuk-back-link back-button"
@@ -108,8 +108,8 @@ const SnapshotSummary = ({ resources, initialSnapshot, token, topics, showTopicE
       </div>
       <h1 class="no-bottom-margin">{firstName}'s resources</h1>
       <div class="summary-sections">
-      
-      {editSnapshot && (
+
+      {editReferral && (
         <>
           <TextArea
             name="notes"
@@ -120,7 +120,7 @@ const SnapshotSummary = ({ resources, initialSnapshot, token, topics, showTopicE
       )}
       </div>
 
-    
+
       {dob && (
         <span
           className="govuk-body govuk-!-font-weight-bold"
@@ -129,13 +129,13 @@ const SnapshotSummary = ({ resources, initialSnapshot, token, topics, showTopicE
           Aged {convertIsoDateToYears(dob)} ({convertIsoDateToString(dob)})
         </span>
       )}
-      { editSnapshot &&
+      { editReferral &&
         <>
           <TopicExplorer topics={topics}/>
           <hr className="govuk-section-break hr-additional-spacing" />
         </>
       }
-      {editSnapshot && (
+      {editReferral && (
         <>
 
           <h2>Resources for residents</h2>
@@ -153,15 +153,15 @@ const SnapshotSummary = ({ resources, initialSnapshot, token, topics, showTopicE
           <Button
             text="Finish &amp; save"
             onClick={async () => {
-              await updateSnapshot(snapshot, selectedResources);
-              setEditSnapshot(false);
+              await updateReferral(referral, selectedResources);
+              setEditReferral(false);
             }}
             disabled={!hasValue}
             data-testid="finish-and-save-button"
           />
         </>
       )}
-      {!editSnapshot && (
+      {!editReferral && (
         <>
           <div class="summary-sections" data-testid="notes-summary">
           <h3 class="summary-titles">What prompted the Resident to get in touch today?</h3>
@@ -238,21 +238,21 @@ const SnapshotSummary = ({ resources, initialSnapshot, token, topics, showTopicE
   );
 };
 
-SnapshotSummary.getInitialProps = async ({
+ReferralSummary.getInitialProps = async ({
   query: { id },
   req: { headers },
   res
 }) => {
   try {
     const token = getTokenFromCookieHeader(headers);
-    const initialSnapshot = await requestSnapshot(id, { token });
+    const initialReferral = await requestReferral(id, { token });
     const resources = await requestResources({ token });
     const topics = await requestPrompts({ token });
     const showTopicExplorer = process.env.SHOW_TOPIC_EXPLORER;
 
     return {
       resources,
-      initialSnapshot,
+      initialReferral,
       token,
       topics,
       showTopicExplorer
@@ -262,4 +262,4 @@ SnapshotSummary.getInitialProps = async ({
   }
 };
 
-export default SnapshotSummary;
+export default ReferralSummary;
