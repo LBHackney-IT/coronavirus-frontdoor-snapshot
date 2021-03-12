@@ -14,7 +14,6 @@ describe('Create SendEmail Api endpoint', () => {
             },
             response
         );
-
         return response;
     };
 
