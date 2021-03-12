@@ -4,8 +4,9 @@ import HttpStatusError from 'lib/api/domain/HttpStatusError';
 import { getTokenFromCookieHeader } from 'lib/utils/token';
 import Services from 'components/Feature/Services';
 import TopicExplorer from 'components/Feature/TopicExplorer';
-import ResidentDetailsForm from 'components/Feature/ResidentDetailsForm'
+import ResidentDetailsForm from 'components/Feature/ResidentDetailsForm';
 import { useState } from 'react';
+import jsonwebtoken from 'jsonwebtoken';
 
 const Index = ({
   resources,
@@ -14,7 +15,8 @@ const Index = ({
   showTopicExplorer,
   topics,
   fssTaxonomies,
-  errors
+  errors,
+  refererInfo
 }) => {
   const { referral, loading, updateReferral } = useReferral(
     initialReferral.referralId,
@@ -27,24 +29,40 @@ const Index = ({
   if (loading) {
     return <p>Loading...</p>;
   }
-  const [gernericRefferalFormComplete, setGernericRefferalFormComplete] = useState(false)
-  const [residentInfo, setResidentInfo] = useState(false)
+  const [
+    gernericRefferalFormComplete,
+    setGernericRefferalFormComplete
+  ] = useState(false);
+  const [residentInfo, setResidentInfo] = useState(false);
 
-  const residentInfoCallback = (value) => {
-    setResidentInfo(value)
-  }
+  const residentInfoCallback = value => {
+    setResidentInfo(value);
+  };
   return (
     <>
-     <ResidentDetailsForm residentInfoCallback={residentInfoCallback} token={token}/>
-    <div>{errors.map(err=> <p className="govuk-error-message">{err}</p>)}</div>
+      <ResidentDetailsForm
+        residentInfoCallback={residentInfoCallback}
+        token={token}
+      />
+      <div>
+        {errors.map(err => (
+          <p className="govuk-error-message">{err}</p>
+        ))}
+      </div>
       {showTopicExplorer && (
         <>
-          <TopicExplorer topics={topics}/>
+          <TopicExplorer topics={topics} />
           <hr className="govuk-section-break hr-additional-spacing" />
         </>
       )}
       <h2>Resources for residents</h2>
-      <Services taxonomies={fssTaxonomies} resources={resources}  gernericRefferalFormComplete={gernericRefferalFormComplete} residentInfo={residentInfo}/>
+      <Services
+        taxonomies={fssTaxonomies}
+        resources={resources}
+        gernericRefferalFormComplete={gernericRefferalFormComplete}
+        residentInfo={residentInfo}
+        refererInfo={refererInfo}
+      />
       <a
         href="https://forms.gle/B6vEMgp7sCsjJqNdA"
         target="_blank"
@@ -60,6 +78,10 @@ const Index = ({
 Index.getInitialProps = async ({ req: { headers }, res }) => {
   try {
     const token = getTokenFromCookieHeader(headers);
+    const retrieveRefererInfo = token => {
+      return jsonwebtoken.decode(token);
+    };
+    const refererInfo = retrieveRefererInfo(token);
     const initialReferral = { vulnerabilities: [], assets: [], notes: null };
     const otherResources = await requestResources({ token });
     const fss = await requestFssResources({
@@ -68,19 +90,22 @@ Index.getInitialProps = async ({ req: { headers }, res }) => {
     const fssResources = fss.data.fssResources;
     const fssTaxonomies = fss.data.fssTaxonomies;
     const fssErrors = fss.error;
-    
+
     const topics = await requestPrompts({ token });
     const showTopicExplorer = process.env.SHOW_TOPIC_EXPLORER;
-    const errors = [otherResources.error].concat(fssErrors).concat(topics.error);
+    const errors = [otherResources.error]
+      .concat(fssErrors)
+      .concat(topics.error);
 
     return {
-      resources: (fssResources).concat(otherResources.data),
+      resources: fssResources.concat(otherResources.data),
       initialReferral,
       token,
       showTopicExplorer,
       topics: topics.data,
       fssTaxonomies,
-      errors
+      errors,
+      refererInfo
     };
   } catch (err) {
     console.log('Failed to load initial Props:' + err);
