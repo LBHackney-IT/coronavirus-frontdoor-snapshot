@@ -26,7 +26,7 @@ const AccordionItem = ({
           </span>
         </h3>
       </div>
-      <div className="govuk-accordion__section-content" aria-labelledby={id}>
+      <div className="govuk-accordion__section-content" aria-labelledby={id} data-testid="accordion-content">
         {children}
       </div>
     </div>

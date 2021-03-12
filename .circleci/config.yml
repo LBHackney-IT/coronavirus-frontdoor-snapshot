@@ -71,18 +71,20 @@ jobs:
             export SHOW_TOPIC_EXPLORER=true
             export INH_URL=https://inh-admin-test.hackney.gov.uk
             export VULNERABILITIES_TABLE_NAME=vulnerabilities
-            export AIRTABLE_API_KEY=${AIRTABLE_API_KEY_INTEGRATION}
-            export AIRTABLE_BASE_ID=baseId123
-            export AIRTABLE_BASE_URL=http://localhost:8085
-            export AIRTABLE_TABLE_NAMES="Service directory,Conversational Prompts"
             export ADDRESSES_API_URL=${ADDRESSES_API_URL}
             export ADDRESSES_API_KEY=${ADDRESSES_API_KEY}
-            export AIRTABLE_PROMPTS_TABLE_NAME=${AIRTABLE_PROMPTS_TABLE_NAME}
-            export HOTJAR_ID=${HOTJAR_ID}
+            export AIRTABLE_API_KEY=xx
+            export AIRTABLE_PROMPTS_TABLE_NAME="Conversational Prompts"
+            export FSS_PUBLIC_API_URL=http://localhost:8085/fss
+            export AIRTABLE_BASE_ID=baseId123
+            export AIRTABLE_TABLE_NAMES="Service directory"
+            export AIRTABLE_BASE_URL=http://localhost:8085
+            export AIRTABLE_PROMPTS_API_KEY=xx
+            export AIRTABLE_PROMPTS_BASE_ID=baseId456
+            export HOTJAR_ID=12345
             export ALLOWED_GROUPS=xx
             export BASIC_ALLOWED_GROUPS=xx
             export NEXT_PUBLIC_SINGLEVIEW_URL=https://staging-singleview.hackney.gov.uk
-            export FSS_PUBLIC_API_URL=http://localhost:8085/fss
             CYPRESS_CACHE_FOLDER=~/repo/cypress_cache yarn run int-test
       - store_artifacts:
           path: ~/repo/cypress/screenshots
@@ -121,6 +123,8 @@ jobs:
         type: env_var_name
       AWS_CERTIFICATE_ARN:
         type: string
+      HOTJAR_ID:
+        type: string
       URL:
         type: string
     steps:
@@ -136,6 +140,7 @@ jobs:
             export INH_URL=<< parameters.INH_URL >>
             export AWS_CERTIFICATE_ARN=<< parameters.AWS_CERTIFICATE_ARN >>
             export NEXT_PUBLIC_URL=<< parameters.URL >>
+            export HOTJAR_ID=<< parameters.HOTJAR_ID >>
             yarn
             yarn build
             yarn --production=true
@@ -164,6 +169,7 @@ workflows:
           SINGLEVIEW_URL: ${NEXT_PUBLIC_SINGLEVIEW_URL_STAGING}
           INH_URL: ${INH_URL_STAGING}
           URL: ${NEXT_PUBLIC_URL_STAGING}
+          HOTJAR_ID: ${HOTJAR_ID}
           filters:
             branches:
               only: master
@@ -191,5 +197,6 @@ workflows:
           SINGLEVIEW_URL: ${NEXT_PUBLIC_SINGLEVIEW_URL_PRODUCTION}
           INH_URL: ${INH_URL_PRODUCTION}
           URL: ${NEXT_PUBLIC_URL_PRODUCTION}
+          HOTJAR_ID: ${HOTJAR_ID_PRODUCTION}
           requires:
             - assume-role-production

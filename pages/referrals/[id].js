@@ -251,12 +251,12 @@ ReferralSummary.getInitialProps = async ({
     const showTopicExplorer = process.env.SHOW_TOPIC_EXPLORER;
 
     return {
-      resources,
+      resources: resources.data,
       initialReferral,
       token,
-      topics,
+      topics:topics.data,
       showTopicExplorer
-    };
+    }; 
   } catch (err) {
     res.writeHead(err instanceof HttpStatusError ? err.statusCode : 500).end();
   }

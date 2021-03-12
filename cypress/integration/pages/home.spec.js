@@ -17,11 +17,15 @@ context('Index page', () => {
   });
 
   describe('Resources', () => {
-    it('shows resources per category', () => {
+    it('shows category headers containing resources', () => {
+      cy.get('[data-testid=accordion-item]').should('have.length', 3)
       cy.get('[data-testid=accordion-item]')
         .should('contain', 'First category')
         .and('contain', 'Second category')
         .and('contain', 'Third category');
+    });
+
+    it('does not show category headers without resources', () => {
       cy.get('[data-testid=accordion-item]').should(
         'not.contain',
         'Fourth category'
@@ -33,38 +37,40 @@ context('Index page', () => {
         .eq(0)
         .click();
 
-      cy.get('[data-testid=resource-1] > h3')
+      cy.get('[data-testid=accordion-content]')
+      .eq(0)
+      .children()
+      .should('have.length', 5)
+
+      cy.get('[data-testid=resource-1]')
         .eq(0)
         .should('contain', 'First service');
 
-      cy.get('[data-testid=resource-2] > h3')
+      cy.get('[data-testid=resource-2]')
         .eq(0)
         .should('contain', 'Second service');
     });
 
-    xit('Ranks resources by postcode', () => {
-      cy.get('#Postcode').type('E1 6AW');
+    it('Displays the correct tags', () => {
       cy.get('[data-testid=accordion-item]')
         .eq(0)
         .click();
-      cy.get('[data-testid=food-needs-v-halal-checkbox]').click();
-      cy.get('[data-testid=food-needs-v-vegetarian-checkbox]').click();
-      cy.get('[data-testid=resource-recisR36NAVBna3N4] > h3')
-        .eq(0)
-        .should('contain', 'Shirdi Sai Baba Temple');
-      // cy.get('[data-testid=resource-recisR36NAVBna3N4] > :nth-child(3) > #resourceInfo > :nth-child(1) > .govuk-summary-list__value')
-      //   .should('contain', '1.10 miles')
-    });
 
-    xit('Displays an error when postcodes coordinates are not found', () => {
-      cy.get('#Postcode').type('ABC123');
-      cy.get('[data-testid=accordion-item]')
-        .eq(0)
-        .click();
-      cy.get('.govuk-error-message').should(
-        'contain',
-        'Could not find coordinates for: ABC123'
-      );
+      cy.get('[data-testid=resource-card-tags]')
+      .eq(0)
+      .should('contain', 'First category')
+      .and('contain', 'Second category')
+      .children()
+      .should('have.length', 2);
+
+
+      cy.get('[data-testid=resource-card-tags]')
+      .eq(2)
+      .should('contain', 'First category')
+      .and('contain', 'Second category')
+      .and('contain', 'Council')
+      .children()
+      .should('have.length', 3); 
     });
   });
 
