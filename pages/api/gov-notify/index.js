@@ -15,7 +15,7 @@ export const endpoint = ({ sendEmail }) =>
                 {
                     name: 'personalisation',
                     failureMessage: 'personalisation is required',
-                    validate: ({ body }) => body.personalisation?.length > 0
+                    validate: ({ body }) => body.personalisation
                 },
                 {
                     name: 'emailAddress',
