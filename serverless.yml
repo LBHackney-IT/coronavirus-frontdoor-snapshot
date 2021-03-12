@@ -59,7 +59,10 @@ functions:
       INH_URL: ${ssm:/frontdoor-snapshot/inh-url}
       SHOW_TOPIC_EXPLORER: true
       FSS_PUBLIC_API_URL: ${ssm:/frontdoor-snapshot/${self:provider.stage}/fss-public-api-url}
-
+      REFERRAL_EMAIL_TEMPLATE_ID: ${ssm:/frontdoor-snapshot/referral-email-template-id}
+      REFERRAL_EMAIL_RECEIPT_TEMPLATE_ID: ${ssm:/frontdoor-snapshot/referral-email-receipt-template-id}
+      GOV_NOTIFY_API_KEY: ${ssm:/frontdoor-snapshot/gov-notify-api-key}
+  
   cf-snapshot-authorizer:
     name: ${self:service}-authorizer-${self:provider.stage}
     handler: authorizer.handler
