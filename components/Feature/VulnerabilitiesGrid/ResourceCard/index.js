@@ -33,6 +33,12 @@ const ResourceCard = ({
 }) => {
   const [validationError, setValidationError] = useState({});
   const [hideForm, setHideForm] = useState(true);
+  const [referrerData, setReferrerData] = useState(
+    {
+      name: refererInfo?.name,
+      email: refererInfo?.email,
+      organisation: refererInfo?.iss
+    });
 
   const trimLength = (s, length) =>
     s.length > length ? s.substring(0, length) + '...' : s;
@@ -267,8 +273,12 @@ const ResourceCard = ({
                   }`}
                   id={`referer-name-${name}`}
                   name="referer-name"
-                  value={refererInfo?.name}
+                  value={referrerData?.name}
                   type="text"
+                  onChange={e => {
+                    const newFullNameVal = e.target.value;
+                    setReferrerData({...referrerData, name: newFullNameVal})
+                  }}
                   aria-describedby="refererName-hint"
                   aria-describedby="refererName"
                   onInvalid={e => onInvalidField(e.target.id)}
@@ -307,10 +317,14 @@ const ResourceCard = ({
                   id={`referer-organistion-${name}`}
                   name="referer-organisation"
                   type="text"
+                  onChange={e => {
+                    const newOrganisationVal = e.target.value;
+                    setReferrerData({...referrerData, organisation: newOrganisationVal})
+                  }}
                   aria-describedby="refererOrganistion-hint"
                   aria-describedby="refererOrganistion"
                   onInvalid={e => onInvalidField(e.target.id)}
-                  value={refererInfo?.iss} //we probably dont want this, im not sure if exrternal users will have iss set for them as their own org
+                  value={referrerData?.organisation} //we probably dont want this, im not sure if exrternal users will have iss set for them as their own org
                   required
                 />
               </div>
@@ -346,7 +360,11 @@ const ResourceCard = ({
                   id={`referer-email-${name}`}
                   name="referer-email"
                   type="email"
-                  value={refererInfo?.email}
+                  onChange={e => {
+                    const newEmailVal = e.target.value;
+                    setReferrerData({...referrerData, email: newEmailVal})
+                  }}
+                  value={referrerData?.email}
                   aria-describedby="refererOrganistion-hint"
                   aria-describedby="refererOrganistion"
                   onInvalid={e => onInvalidField(e.target.id)}
