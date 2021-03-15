@@ -79,7 +79,7 @@ const ResidentDetailsForm = ({ residentInfoCallback, token }) => {
                 className="govuk-error-message"
                 aria-describedby="input-name-error"
               >
-                <span hidden={!validationError.name} data-testid="name-error">
+                <span hidden={!validationError.firstName} data-testid="name-error">
                   Enter the first name
                 </span>
               </span>
