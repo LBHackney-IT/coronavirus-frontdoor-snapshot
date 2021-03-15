@@ -30,7 +30,11 @@ export const endpoint = ({ createReferral }) =>
         address,
         postcode,
         referralReason,
-        conversationNotes
+        conversationNotes,
+        referrerName,
+        referrerOrganisation,
+        referrerEmail,
+        dateOfBirth
       },
       headers
     }) => {
@@ -45,7 +49,11 @@ export const endpoint = ({ createReferral }) =>
         address,
         postcode,
         referralReason,
-        conversationNotes
+        conversationNotes,
+        referrerName,
+        referrerOrganisation,
+        referrerEmail,
+        dateOfBirth
       });
       return Response.created(referral);
     }

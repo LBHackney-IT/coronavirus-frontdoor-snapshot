@@ -42,8 +42,9 @@ const ResidentDetailsForm = ({ residentInfoCallback, token }) => {
       postcode: e.target.postcode.value,
       referralReason: e.target['referral-reason'].value,
       conversationNotes: e.target['conversation-notes'].value,
-      refererName: e.target['referer-name'].value,
-      refererOrganisation: e.target['referer-organisation'].value,
+      referrerName: e.target['referer-name'].value,
+      referrerEmail: e.target['referer-email'].value,
+      referrerOrganisation: e.target['referer-organisation'].value,
       dateOfBirth: `${e.target['date-of-birth-day'].value}/${e.target['date-of-birth-month'].value}/${e.target['date-of-birth-year'].value}`
     };
     console.log(referral);
