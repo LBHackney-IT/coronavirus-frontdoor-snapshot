@@ -31,6 +31,7 @@ const ResidentDetailsForm = ({ residentInfoCallback, token }) => {
     });
     setValidationError({ [value]: true, ...validationError });
   };
+  
   const onSubmitForm = e => {
     e.preventDefault();
     const referral = {
@@ -45,9 +46,13 @@ const ResidentDetailsForm = ({ residentInfoCallback, token }) => {
       referrerName: e.target['referer-name'].value,
       referrerEmail: e.target['referer-email'].value,
       referrerOrganisation: e.target['referer-organisation'].value,
-      dateOfBirth: `${e.target['date-of-birth-day'].value}/${e.target['date-of-birth-month'].value}/${e.target['date-of-birth-year'].value}`
+      dateOfBirth: {
+        year: e.target['date-of-birth-year'].value,
+        month: e.target['date-of-birth-month'].value,
+        day: e.target['date-of-birth-day'].value
+      }
     };
-    console.log(referral);
+
     createReferral(referral);
   };
   return (
