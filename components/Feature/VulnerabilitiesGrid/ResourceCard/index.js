@@ -65,24 +65,20 @@ const ResourceCard = ({
     // copyText.type = 'hidden';
   }
   
-  const clipboardServiceDetails = `Service Name: ${name}\n 
-                                   Telephone: ${telephone}\n 
-                                   Service Description: ${serviceDescription}\n
-                                   Address: ${address}\n
-                                   Description: ${description}\n
-                                   Website: ${websiteElement}` 
+  const clipboardServiceDetails = 
+  "Service Name: " + name + 
+      "\nTelephone: " + telephone + 
+      "\nService Description: " + serviceDescription + 
+      "\nAddress: " + address + 
+      "\nDescription: " + description + 
+      "\nWebsites: " + JSON.stringify(websites).replace("[", "").replace("]", "") 
 
   return (
     <div className={`resource ${css.resource}`} {...others}>
       <div className={`${css.tags__container} card-header-tag`} data-testid='resource-card-tags'>
         {tagsElement}
       </div>
-      <input id={`resource-${name}`} type="text" value={`Service Name: ${name}\n
-      Telephone: ${telephone}\n
-      Service Description: ${serviceDescription}\n
-      Address: ${address}\n
-      Description: ${description}\n
-      Website: ${websiteElement}`}/>
+      <textarea id={`resource-${name}`} type="text" value={clipboardServiceDetails}/>
       <div>
       <a onClick={() => copyToClipboard()}>{!copiedToClipboard && <span> Copy service details</span>} {copiedToClipboard && <span> Copied to clipboard</span>}
         <svg xmlns="http://www.w3.org/2000/svg" height="16" viewBox="0 0 24 24" width="24">
