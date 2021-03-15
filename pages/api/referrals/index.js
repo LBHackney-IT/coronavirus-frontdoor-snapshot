@@ -11,12 +11,12 @@ export const endpoint = ({ createReferral }) =>
         {
           name: 'firstName',
           failureMessage: 'first name is required',
-          validate: ({ body }) => body.firstName?.length > 0
+          validate: ({ body }) => body.firstName && body.firstName.length > 0
         },
         {
           name: 'lastName',
           failureMessage: 'last name is required',
-          validate: ({ body }) => body.lastName?.length > 0
+          validate: ({ body }) => body.lastName && body.lastName.length > 0
         }
       ]
     },

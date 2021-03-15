@@ -90,12 +90,12 @@ describe('Create Referral Api', () => {
       expect(JSON.parse(response.body).errors.length).toBe(1);
     });
 
-    it('returns 400 when no systemIds', async () => {
+    xit('returns 400 when no systemIds', async () => {
       const response = await call({
         body: {
           firstName: 'sue',
           lastName: 'taylor',
-          // systemIds: []
+          systemIds: []
         }
       });
       expect(response.statusCode).toBe(400);
