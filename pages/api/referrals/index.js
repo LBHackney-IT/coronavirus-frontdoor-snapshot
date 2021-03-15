@@ -22,6 +22,7 @@ export const endpoint = ({ createReferral }) =>
     },
     async ({
       body: {
+        createdBy,
         firstName,
         lastName,
         phone,
@@ -30,14 +31,12 @@ export const endpoint = ({ createReferral }) =>
         postcode,
         referralReason,
         conversationNotes,
-        referrerName,
         referrerOrganisation,
         referrerEmail,
         dateOfBirth
       },
       headers
     }) => {
-      const createdBy = getUsername(getTokenFromAuthHeader(headers));
       const referral = await createReferral.execute({
         createdBy,
         firstName,
@@ -48,7 +47,6 @@ export const endpoint = ({ createReferral }) =>
         postcode,
         referralReason,
         conversationNotes,
-        referrerName,
         referrerOrganisation,
         referrerEmail,
         dateOfBirth

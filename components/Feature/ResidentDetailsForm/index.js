@@ -31,7 +31,7 @@ const ResidentDetailsForm = ({ residentInfoCallback, token }) => {
     });
     setValidationError({ [value]: true, ...validationError });
   };
-  
+
   const onSubmitForm = e => {
     e.preventDefault();
     const referral = {
@@ -43,7 +43,7 @@ const ResidentDetailsForm = ({ residentInfoCallback, token }) => {
       postcode: e.target.postcode.value,
       referralReason: e.target['referral-reason'].value,
       conversationNotes: e.target['conversation-notes'].value,
-      referrerName: e.target['referer-name'].value,
+      createdBy: e.target['referer-name'].value,
       referrerEmail: e.target['referer-email'].value,
       referrerOrganisation: e.target['referer-organisation'].value,
       dateOfBirth: {
