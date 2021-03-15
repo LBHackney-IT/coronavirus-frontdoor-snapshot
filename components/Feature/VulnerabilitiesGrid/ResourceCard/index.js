@@ -52,13 +52,45 @@ const ResourceCard = ({
       notes:notes
     })
   }
+  
+  const [copiedToClipboard, setCopiedToClipboard] = useState(false);
+  
+  const copyToClipboard = () => {
+    var copyText = document.getElementById(`resource-${name}`);
+    // copyText.type = 'text';
+    copyText.select();
+    copyText.setSelectionRange(0, 99999);
+    document.execCommand("copy");
+    setCopiedToClipboard(true)
+    // copyText.type = 'hidden';
+  }
+  
+  const clipboardServiceDetails = `Service Name: ${name}\n 
+                                   Telephone: ${telephone}\n 
+                                   Service Description: ${serviceDescription}\n
+                                   Address: ${address}\n
+                                   Description: ${description}\n
+                                   Website: ${websiteElement}` 
 
   return (
     <div className={`resource ${css.resource}`} {...others}>
       <div className={`${css.tags__container} card-header-tag`} data-testid='resource-card-tags'>
         {tagsElement}
       </div>
-       <h3 className={marginClass}>{name}</h3>
+      <input id={`resource-${name}`} type="text" value={`Service Name: ${name}\n
+      Telephone: ${telephone}\n
+      Service Description: ${serviceDescription}\n
+      Address: ${address}\n
+      Description: ${description}\n
+      Website: ${websiteElement}`}/>
+      <div>
+      <a onClick={() => copyToClipboard()}>{!copiedToClipboard && <span> Copy service details</span>} {copiedToClipboard && <span> Copied to clipboard</span>}
+        <svg xmlns="http://www.w3.org/2000/svg" height="16" viewBox="0 0 24 24" width="24">
+          <path d="M0 0h24v24H0z" fill="none"/>
+          <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
+        </svg></a>
+    </div>
+      <h3 className={marginClass}>{name}</h3>
         <>
         <SummaryList key={`resourceInfo-${id}-${categoryId}`} name={['resourceInfo']} entries={{ 'Distance': (distance && distance < 100) ? distance + ' miles' : null ,
       'Availability': currentProvision, 'Days / Times' : openingTimes, 'Distribution' : distributionElement, 'Telephone' : telephone, 'Service Description': serviceDescription}} customStyle="small" />
