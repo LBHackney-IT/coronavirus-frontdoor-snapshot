@@ -2,7 +2,7 @@ import { useState } from 'react';
 import ResourceCard from 'components/Feature/VulnerabilitiesGrid/ResourceCard';
 import { Accordion, AccordionItem } from 'components/Form';
 
-const Services = ({ resources, taxonomies }) => {
+const Services = ({ resources, taxonomies, refererInfo, residentFormCallback }) => {
   const [expandedGroups, setExpandedGroups] = useState({});
 
   const taxonomiesToRender = taxonomies.filter(taxonomy =>
@@ -44,6 +44,8 @@ const Services = ({ resources, taxonomies }) => {
                         data-testid={`resource-${resource.id}`}
                         {...resource}
                         updateSelectedResources={() => {}}
+                        refererInfo={refererInfo}
+                        residentFormCallback={residentFormCallback}
                       />
                     ))}
                   </AccordionItem>

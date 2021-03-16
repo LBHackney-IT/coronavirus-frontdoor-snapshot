@@ -38,15 +38,15 @@ module.exports = (on, config) => {
 
       return null;
     },
-    createSnapshot(snapshot) {
+    createReferral(referral) {
       return client
         .put({
           TableName: 'vulnerabilities',
-          Item: snapshot
+          Item: referral
         })
         .promise();
     },
-    deleteSnapshot(id) {
+    deleteReferral(id) {
       return client
         .delete({
           TableName: 'vulnerabilities',

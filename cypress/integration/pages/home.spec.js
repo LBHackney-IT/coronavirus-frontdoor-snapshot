@@ -69,39 +69,39 @@ context('Index page', () => {
       .should('contain', 'First category')
       .and('contain', 'Second category')
       .children()
-      .should('have.length', 2); 
+      .should('have.length', 2);
     });
   });
 
   describe('Topic Explorer', () => {
     it('can show food example prompts', () => {
-      cy.get('#example-search')
+      cy.get('#keyword-search')
         .contains('food')
         .click();
-      cy.get('input').should('have.value', 'food');
+      cy.get('#topic-search').should('have.value', 'food');
     });
 
     it('can show health example prompts', () => {
-      cy.get('#example-search')
+      cy.get('#keyword-search')
         .contains('health')
         .click();
-      cy.get('input').should('have.value', 'health');
+      cy.get('#topic-search').should('have.value', 'health');
     });
 
     it('can show benefits prompts', () => {
-      cy.get('#example-search')
+      cy.get('#keyword-search')
         .contains('benefits')
         .click();
-      cy.get('input').should('have.value', 'benefits');
+      cy.get('#topic-search').should('have.value', 'benefits');
     });
 
     it('does not show search options when there is no text in the input', () => {
-      cy.get('#text-input').click();
+      cy.get('#topic-search').click();
       cy.get('option').should('not.exist');
     });
 
     it('does show search options when there is text in the input', () => {
-      cy.get('#text-input').type('a');
+      cy.get('#topic-search').type('a');
       cy.get('option').should('exist');
     });
   });
