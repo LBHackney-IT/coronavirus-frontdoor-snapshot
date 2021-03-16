@@ -50,6 +50,7 @@
     "babel-eslint": "^10.1.0",
     "babel-jest": "^25.5.1",
     "chai": "^4.2.0",
+    "clipboardy": "^2.3.0",
     "cypress": "4.5.0",
     "cypress-axe": "^0.8.1",
     "dynamodb-admin": "^4.0.0",

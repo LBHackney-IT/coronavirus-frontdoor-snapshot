@@ -54,7 +54,7 @@ context('Index page', () => {
     it('Displays the correct tags', () => {
       cy.get('[data-testid=accordion-item]')
         .eq(0)
-        .click();
+        .click({force: true});
 
       cy.get('[data-testid=resource-card-tags]')
       .eq(0)
@@ -77,7 +77,7 @@ context('Index page', () => {
     it('can show food example prompts', () => {
       cy.get('#example-search')
         .contains('food')
-        .click();
+        .click({ force: true } );
       cy.get('input').should('have.value', 'food');
     });
 
@@ -103,6 +103,19 @@ context('Index page', () => {
     it('does show search options when there is text in the input', () => {
       cy.get('#text-input').type('a');
       cy.get('option').should('exist');
+    });
+  });
+
+  describe('When the copy icon next to a referral service is clicked', () => {
+    it('it copies the referral information to the clipboard', () => {
+      cy.document().then( doc => {
+        doc.body.innerHTML = '<textarea data-testid="service-details">';
+      });
+      cy.get('[data-testid=service-details]').type('test{selectall}');
+      cy.document().then( doc => {
+        doc.execCommand('copy');
+      });
+      cy.task('getClipboard').should('contain', 'test');
     });
   });
 });

@@ -68,7 +68,7 @@ const ResourceCard = ({
       <div className={`${css.tags__container} card-header-tag`} data-testid='resource-card-tags'>
         {tagsElement}
       </div>
-      <textarea id={`resource-${name}`} type="hidden" value={clipboardServiceDetails} hidden/>
+      <textarea datatest-id="service-details" id={`resource-${name}`} type="hidden" value={clipboardServiceDetails} hidden/>
       <div>
     </div>
       <h3>{name} <a title="copy" href="javascript:void(0)" onClick={() => copyToClipboard()}>
