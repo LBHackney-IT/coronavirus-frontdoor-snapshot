@@ -107,9 +107,6 @@ resources:
               NonKeyAttributes:
                 - id
                 - systemIds
-        TimeToLiveSpecification:
-          AttributeName: expires
-          Enabled: true
 
     CloudFrontDistribution:
       Type: AWS::CloudFront::Distribution
