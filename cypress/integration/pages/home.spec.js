@@ -54,7 +54,7 @@ context('Index page', () => {
     it('Displays the correct tags', () => {
       cy.get('[data-testid=accordion-item]')
         .eq(0)
-        .click({force: true});
+        .click();
 
       cy.get('[data-testid=resource-card-tags]')
       .eq(0)
@@ -69,53 +69,40 @@ context('Index page', () => {
       .should('contain', 'First category')
       .and('contain', 'Second category')
       .children()
-      .should('have.length', 2); 
+      .should('have.length', 2);
     });
   });
 
   describe('Topic Explorer', () => {
     it('can show food example prompts', () => {
-      cy.get('#example-search')
+      cy.get('#keyword-search')
         .contains('food')
-        .click({ force: true } );
-      cy.get('input').should('have.value', 'food');
+        .click();
+      cy.get('#topic-search').should('have.value', 'food');
     });
 
     it('can show health example prompts', () => {
-      cy.get('#example-search')
+      cy.get('#keyword-search')
         .contains('health')
         .click();
-      cy.get('input').should('have.value', 'health');
+      cy.get('#topic-search').should('have.value', 'health');
     });
 
     it('can show benefits prompts', () => {
-      cy.get('#example-search')
+      cy.get('#keyword-search')
         .contains('benefits')
         .click();
-      cy.get('input').should('have.value', 'benefits');
+      cy.get('#topic-search').should('have.value', 'benefits');
     });
 
     it('does not show search options when there is no text in the input', () => {
-      cy.get('#text-input').click();
+      cy.get('#topic-search').click();
       cy.get('option').should('not.exist');
     });
 
     it('does show search options when there is text in the input', () => {
-      cy.get('#text-input').type('a');
+      cy.get('#topic-search').type('a');
       cy.get('option').should('exist');
-    });
-  });
-
-  describe('When the copy icon next to a referral service is clicked', () => {
-    it('it copies the referral information to the clipboard', () => {
-      cy.document().then( doc => {
-        doc.body.innerHTML = '<textarea data-testid="service-details">';
-      });
-      cy.get('[data-testid=service-details]').type('test{selectall}');
-      cy.document().then( doc => {
-        doc.execCommand('copy');
-      });
-      cy.task('getClipboard').should('contain', 'test');
     });
   });
 });

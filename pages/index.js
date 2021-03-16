@@ -1,23 +1,27 @@
-import useSnapshot from 'lib/api/utils/useSnapshot';
+import useReferral from 'lib/api/utils/useReferral';
 import { requestResources, requestPrompts, requestFssResources } from 'lib/api';
 import HttpStatusError from 'lib/api/domain/HttpStatusError';
 import { getTokenFromCookieHeader } from 'lib/utils/token';
 import Services from 'components/Feature/Services';
 import TopicExplorer from 'components/Feature/TopicExplorer';
+import ResidentDetailsForm from 'components/Feature/ResidentDetailsForm';
+import { useState } from 'react';
+import jsonwebtoken from 'jsonwebtoken';
 
 const Index = ({
   resources,
-  initialSnapshot,
+  initialReferral,
   token,
   showTopicExplorer,
   topics,
   fssTaxonomies,
-  errors
+  errors,
+  refererInfo
 }) => {
-  const { snapshot, loading, updateSnapshot } = useSnapshot(
-    initialSnapshot.snapshotId,
+  const { referral, loading, updateReferral } = useReferral(
+    initialReferral.referralId,
     {
-      initialSnapshot,
+      initialReferral,
       token
     }
   );
@@ -25,10 +29,32 @@ const Index = ({
   if (loading) {
     return <p>Loading...</p>;
   }
+  const [
+    gernericRefferalFormComplete,
+    setGernericRefferalFormComplete
+  ] = useState(false);
+  const [residentInfo, setResidentInfo] = useState(false);
+  const [showResidentForm, setShowResidentForm] = useState(false);
 
+  const residentFormCallback = val => {
+    setShowResidentForm(val);
+  };
+  const residentInfoCallback = value => {
+    setResidentInfo(value);
+  };
   return (
     <>
-    <div>{errors.map(err=> <p className="govuk-error-message">{err}</p>)}</div>
+      <ResidentDetailsForm
+        residentInfoCallback={residentInfoCallback}
+        showResidentForm={showResidentForm}
+        setShowResidentForm={setShowResidentForm}
+        token={token}
+      />
+      <div>
+        {errors.map(err => (
+          <p className="govuk-error-message">{err}</p>
+        ))}
+      </div>
       {showTopicExplorer && (
         <>
           <TopicExplorer topics={topics} />
@@ -36,7 +62,14 @@ const Index = ({
         </>
       )}
       <h2>Resources for residents</h2>
-      <Services taxonomies={fssTaxonomies} resources={resources} />
+      <Services
+        taxonomies={fssTaxonomies}
+        resources={resources}
+        gernericRefferalFormComplete={gernericRefferalFormComplete}
+        residentInfo={residentInfo}
+        refererInfo={refererInfo}
+        residentFormCallback={residentFormCallback}
+      />
       <a
         href="https://forms.gle/B6vEMgp7sCsjJqNdA"
         target="_blank"
@@ -52,7 +85,11 @@ const Index = ({
 Index.getInitialProps = async ({ req: { headers }, res }) => {
   try {
     const token = getTokenFromCookieHeader(headers);
-    const initialSnapshot = { vulnerabilities: [], assets: [], notes: null };
+    const retrieveRefererInfo = token => {
+      return jsonwebtoken.decode(token);
+    };
+    const refererInfo = retrieveRefererInfo(token);
+    const initialReferral = { vulnerabilities: [], assets: [], notes: null };
     const otherResources = await requestResources({ token });
     const fss = await requestFssResources({
       token
@@ -60,7 +97,8 @@ Index.getInitialProps = async ({ req: { headers }, res }) => {
     const fssResources = fss.data.fssResources;
     const fssTaxonomies = fss.data.fssTaxonomies;
     const fssErrors = fss.error;
-    
+
+
     const topics = await requestPrompts({ token });
     const showTopicExplorer = process.env.SHOW_TOPIC_EXPLORER;
     const resources = (fssResources.concat(otherResources.data)).sort((a, b)=> {
@@ -71,12 +109,13 @@ Index.getInitialProps = async ({ req: { headers }, res }) => {
 
     return {
       resources,
-      initialSnapshot,
+      initialReferral,
       token,
       showTopicExplorer,
       topics: topics.data,
       fssTaxonomies,
-      errors
+      errors,
+      refererInfo
     };
   } catch (err) {
     console.log('Failed to load initial Props:' + err);
