@@ -11,8 +11,7 @@ import groups from './grid.json';
 import helper from './vulnerabilityGridHelper';
 import geoCoordinates from 'lib/api/utils/geoCoordinates';
 
-const MAX_RESOURCES = 12
-
+const MAX_RESOURCES = 12;
 
 function createLookup() {
   const lookup = new Map();
@@ -32,8 +31,15 @@ function createLookup() {
   return lookup;
 }
 
-const VulnerabilitiesGrid = ({ resources, onUpdate, residentCoordinates, genericPostcode, onError , updateSelectedResources, customerId}) => {
-
+const VulnerabilitiesGrid = ({
+  resources,
+  onUpdate,
+  residentCoordinates,
+  genericPostcode,
+  onError,
+  updateSelectedResources,
+  customerId
+}) => {
   const [grid, setGrid] = useState({
     assets: {},
     vulnerabilities: {},
@@ -44,17 +50,17 @@ const VulnerabilitiesGrid = ({ resources, onUpdate, residentCoordinates, generic
   const [residentData, setResidentData] = useState(null);
 
   const updateSummaryResource = resourceName => {
-    updateSelectedResources(resourceName)
-  }
-  const updateResidentData = (result) => {
-    if(result){
+    updateSelectedResources(resourceName);
+  };
+  const updateResidentData = result => {
+    if (result) {
       setResidentData(result);
-      onError(null)
+      onError(null);
     } else {
-      let errorMsg = "Could not find coordinates for: " + genericPostcode
-      onError(errorMsg)
+      let errorMsg = 'Could not find coordinates for: ' + genericPostcode;
+      onError(errorMsg);
     }
-  }
+  };
 
   const updateSelectedCheckboxes = ({ gridType, key, value }) => {
     updateGrid({
@@ -63,7 +69,6 @@ const VulnerabilitiesGrid = ({ resources, onUpdate, residentCoordinates, generic
         : helper.addItem({ obj: grid[gridType], key, value })
     });
   };
-
 
   const updateTextData = ({
     gridType,
@@ -106,11 +111,10 @@ const VulnerabilitiesGrid = ({ resources, onUpdate, residentCoordinates, generic
 
     // will re-render when the genericPostcode is changed
     if (genericPostcode) {
-      geoCoordinates(genericPostcode).then(updateResidentData)
+      geoCoordinates(genericPostcode).then(updateResidentData);
     } else {
-      residentCoordinates.then(updateResidentData)
+      residentCoordinates.then(updateResidentData);
     }
-    
   }, [grid, genericPostcode]);
 
   const updateGrid = patch => setGrid(grid => ({ ...grid, ...patch }));
@@ -144,7 +148,6 @@ const VulnerabilitiesGrid = ({ resources, onUpdate, residentCoordinates, generic
     });
     let sortedArray = helper.sortArrayByMatches(rankedArray);
     return sortedArray ? sortedArray.slice(0, MAX_RESOURCES) : [];
-
   };
 
   const setAllExpandedGroups = () => {
@@ -194,10 +197,12 @@ const VulnerabilitiesGrid = ({ resources, onUpdate, residentCoordinates, generic
                 }
               >
                 <div className="govuk-grid-row">
-                  <div class="align-center">
-                    <CheckboxList className="vulnerability"
-                     resource={id}
-                     checkboxType='vulnerability'>
+                  <div className="align-center">
+                    <CheckboxList
+                      className="vulnerability"
+                      resource={id}
+                      checkboxType="vulnerability"
+                    >
                       {vulnerabilities.map(
                         ({ arialabel, label, textinputs }) => {
                           const cbId = `${id}-v-${labelToId(label)}`;
@@ -255,9 +260,11 @@ const VulnerabilitiesGrid = ({ resources, onUpdate, residentCoordinates, generic
                     </CheckboxList>
                   </div>
                   <div>
-                    <CheckboxList className="asset"
-                     resource={id}
-                     checkboxType={"asset"}>
+                    <CheckboxList
+                      className="asset"
+                      resource={id}
+                      checkboxType={'asset'}
+                    >
                       {assets.map(({ arialabel, label, textinputs }) => {
                         const cbId = `${id}-a-${labelToId(label)}`;
 
@@ -326,7 +333,7 @@ const VulnerabilitiesGrid = ({ resources, onUpdate, residentCoordinates, generic
                               key={resource.id}
                               data-testid={`resource-${resource.id}`}
                               {...resource}
-                              updateSelectedResources = {updateSummaryResource}
+                              updateSelectedResources={updateSummaryResource}
                               customerId={customerId}
                             />
                           );

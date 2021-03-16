@@ -33,13 +33,12 @@ const ResourceCard = ({
 }) => {
   const [validationError, setValidationError] = useState({});
   const [hideForm, setHideForm] = useState(true);
-  const [referrerData, setReferrerData] = useState(
-    {
-      name: refererInfo?.name,
-      email: refererInfo?.email,
-      organisation: refererInfo?.iss
-    });
-
+  const [referrerData, setReferrerData] = useState({
+    name: refererInfo?.name,
+    email: refererInfo?.email,
+    organisation: refererInfo?.iss
+  });
+  const [referralMade, setReferralMade] = useState({});
   const trimLength = (s, length) =>
     s.length > length ? s.substring(0, length) + '...' : s;
 
@@ -277,7 +276,7 @@ const ResourceCard = ({
                   type="text"
                   onChange={e => {
                     const newFullNameVal = e.target.value;
-                    setReferrerData({...referrerData, name: newFullNameVal})
+                    setReferrerData({ ...referrerData, name: newFullNameVal });
                   }}
                   aria-describedby="refererName-hint"
                   aria-describedby="refererName"
@@ -319,7 +318,10 @@ const ResourceCard = ({
                   type="text"
                   onChange={e => {
                     const newOrganisationVal = e.target.value;
-                    setReferrerData({...referrerData, organisation: newOrganisationVal})
+                    setReferrerData({
+                      ...referrerData,
+                      organisation: newOrganisationVal
+                    });
                   }}
                   aria-describedby="refererOrganistion-hint"
                   aria-describedby="refererOrganistion"
@@ -362,7 +364,7 @@ const ResourceCard = ({
                   type="email"
                   onChange={e => {
                     const newEmailVal = e.target.value;
-                    setReferrerData({...referrerData, email: newEmailVal})
+                    setReferrerData({ ...referrerData, email: newEmailVal });
                   }}
                   value={referrerData?.email}
                   aria-describedby="refererOrganistion-hint"

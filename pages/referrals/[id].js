@@ -9,7 +9,13 @@ import { convertIsoDateToString, convertIsoDateToYears } from 'lib/utils/date';
 import geoCoordinates from 'lib/api/utils/geoCoordinates';
 import TopicExplorer from 'components/Feature/TopicExplorer';
 
-const ReferralSummary = ({ resources, initialReferral, token, topics, showTopicExplorer }) => {
+const ReferralSummary = ({
+  resources,
+  initialReferral,
+  token,
+  topics,
+  showTopicExplorer
+}) => {
   const { referral, loading, updateReferral } = useReferral(
     initialReferral.referralId,
     {
@@ -41,33 +47,35 @@ const ReferralSummary = ({ resources, initialReferral, token, topics, showTopicE
   const [selectedResources, setResources] = useState([]);
 
   const updateSummaryResource = updatedResource => {
-    let updatedResources = selectedResources
-    if(updatedResources.some(resource => resource.name === updatedResource.name)){
-      let resourcesRemoved = []
-      updatedResources.forEach((resource) =>{
-        if(resource.name != updatedResource.name){
-          resourcesRemoved.push(resource)
+    let updatedResources = selectedResources;
+    if (
+      updatedResources.some(resource => resource.name === updatedResource.name)
+    ) {
+      let resourcesRemoved = [];
+      updatedResources.forEach(resource => {
+        if (resource.name != updatedResource.name) {
+          resourcesRemoved.push(resource);
         }
-      })
-      updatedResources = resourcesRemoved
-    }else{
+      });
+      updatedResources = resourcesRemoved;
+    } else {
       Object.keys(updatedResource).forEach(key => {
         if (updatedResource[key] === undefined || updatedResource[key] === '') {
           delete updatedResource[key];
         }
-      })
-      let summary = []
+      });
+      let summary = [];
       Object.keys(updatedResource).forEach(key => {
-        if(key != 'name'){
-          summary.push(updatedResource[key])
+        if (key != 'name') {
+          summary.push(updatedResource[key]);
         }
-      })
-      updatedResource.summary = summary.join(', ')
-      updatedResources.push(updatedResource)
+      });
+      updatedResource.summary = summary.join(', ');
+      updatedResources.push(updatedResource);
     }
-    setResources(updatedResources)
+    setResources(updatedResources);
     setHasValue(updatedResources.length > 0);
-  }
+  };
   const handleError = errorMsg => console.log(errorMsg);
 
   const updateNotes = notes => {
@@ -90,36 +98,33 @@ const ReferralSummary = ({ resources, initialReferral, token, topics, showTopicE
   } = referral;
   let customerId = referral.systemIds?.[0];
   const residentCoordinates = geoCoordinates(postcode);
-  const INH_URL = process.env.INH_URL
+  const INH_URL = process.env.INH_URL;
 
   return (
     <>
       <div>
-        { editReferral && customerId && (
+        {editReferral && customerId && (
           <a
-          href={`${INH_URL}/help-requests/edit/${customerId}`}
-          className="govuk-back-link back-button"
-          data-testid="back-link-test"
-        >
-          Back
-        </a>
-
+            href={`${INH_URL}/help-requests/edit/${customerId}`}
+            className="govuk-back-link back-button"
+            data-testid="back-link-test"
+          >
+            Back
+          </a>
         )}
       </div>
-      <h1 class="no-bottom-margin">{firstName}'s resources</h1>
-      <div class="summary-sections">
-
-      {editReferral && (
-        <>
-          <TextArea
-            name="notes"
-            label="What prompted the Resident to get in touch today?"
-            onChange={updateNotes}
-          />
-</>
-      )}
+      <h1 className="no-bottom-margin">{firstName}'s resources</h1>
+      <div className="summary-sections">
+        {editReferral && (
+          <>
+            <TextArea
+              name="notes"
+              label="What prompted the Resident to get in touch today?"
+              onChange={updateNotes}
+            />
+          </>
+        )}
       </div>
-
 
       {dob && (
         <span
@@ -129,18 +134,16 @@ const ReferralSummary = ({ resources, initialReferral, token, topics, showTopicE
           Aged {convertIsoDateToYears(dob)} ({convertIsoDateToString(dob)})
         </span>
       )}
-      { editReferral &&
-        <>
-          <TopicExplorer topics={topics}/>
-          <hr className="govuk-section-break hr-additional-spacing" />
-        </>
-      }
       {editReferral && (
         <>
-
+          <TopicExplorer topics={topics} />
+          <hr className="govuk-section-break hr-additional-spacing" />
+        </>
+      )}
+      {editReferral && (
+        <>
           <h2>Resources for residents</h2>
           Resident's postcode: {postcode}
-
           <VulnerabilitiesGrid
             onError={handleError}
             onUpdate={updateSelected}
@@ -149,7 +152,6 @@ const ReferralSummary = ({ resources, initialReferral, token, topics, showTopicE
             updateSelectedResources={updateSummaryResource}
             customerId={customerId}
           />
-
           <Button
             text="Finish &amp; save"
             onClick={async () => {
@@ -163,73 +165,84 @@ const ReferralSummary = ({ resources, initialReferral, token, topics, showTopicE
       )}
       {!editReferral && (
         <>
-          <div class="summary-sections" data-testid="notes-summary">
-          <h3 class="summary-titles">What prompted the Resident to get in touch today?</h3>
+          <div className="summary-sections" data-testid="notes-summary">
+            <h3 className="summary-titles">
+              What prompted the Resident to get in touch today?
+            </h3>
             {notes ? notes : 'Nothing captured'}
           </div>
 
-        <div class="govuk-grid-row">
-          <div class="summary-sections govuk-grid-column-one-half" data-testid="vulnerabilities-summary">
-            <h3 class="summary-titles">Vulnerabilities</h3>
-            {vulnerabilities.length > 0 ? (
-              <div>
-                {vulnerabilities.map((v, i) => (
-                  <span key={`vuln-${i}`}>
-                    {v.name}
-                    {v.data.length > 0 && (
-                      <ul>
-                        {v.data.map((data, n) => (
-                          <li key={`vuln-${i}-data-${n}`}>
-                            {data.label}: {data.value}
-                          </li>
-                        ))}
-                      </ul>
-                    )}<br></br>
-                  </span>
-                ))}
-              </div>
-            ) : (
-              'None captured'
-            )}
-          </div>
+          <div className="govuk-grid-row">
+            <div
+              className="summary-sections govuk-grid-column-one-half"
+              data-testid="vulnerabilities-summary"
+            >
+              <h3 className="summary-titles">Vulnerabilities</h3>
+              {vulnerabilities.length > 0 ? (
+                <div>
+                  {vulnerabilities.map((v, i) => (
+                    <span key={`vuln-${i}`}>
+                      {v.name}
+                      {v.data.length > 0 && (
+                        <ul>
+                          {v.data.map((data, n) => (
+                            <li key={`vuln-${i}-data-${n}`}>
+                              {data.label}: {data.value}
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                      <br></br>
+                    </span>
+                  ))}
+                </div>
+              ) : (
+                'None captured'
+              )}
+            </div>
 
-          <div class="summary-sections govuk-grid-column-one-half" data-testid="assets-summary">
-            <h3 class="summary-titles">Strengths identified</h3>
-            {assets.length > 0 ? (
-              <div>
-                {assets.map((a, i) => (
-                  <span key={`asset-${i}`}>{a.name}<br></br></span>
-                ))}
-              </div>
-            ) : (
-              'None captured'
-            )}
+            <div
+              className="summary-sections govuk-grid-column-one-half"
+              data-testid="assets-summary"
+            >
+              <h3 className="summary-titles">Strengths identified</h3>
+              {assets.length > 0 ? (
+                <div>
+                  {assets.map((a, i) => (
+                    <span key={`asset-${i}`}>
+                      {a.name}
+                      <br></br>
+                    </span>
+                  ))}
+                </div>
+              ) : (
+                'None captured'
+              )}
+            </div>
           </div>
-        </div>
-          <div class="summary-sections" data-testid="resources-summary">
-            <h3 class="summary-titles">Resources</h3>
+          <div className="summary-sections" data-testid="resources-summary">
+            <h3 className="summary-titles">Resources</h3>
             {selectedResources.map((r, i) => (
-                  <div>
-                    <div class="resource-title">{r.name}</div>
-                    <div class="resource-description" key={`resource-${i}`}>{r.summary}</div>
-                  </div>
-                )
-              )
-            }
+              <div>
+                <div className="resource-title">{r.name}</div>
+                <div className="resource-description" key={`resource-${i}`}>
+                  {r.summary}
+                </div>
+              </div>
+            ))}
           </div>
-
-
 
           <div className="govuk-grid-row govuk-!-margin-top-5">
-           { customerId && (
-            <div className="govuk-grid-column-one-half">
-              <a
-                href={`${INH_URL}/help-requests/complete/${customerId}`}
-                className="govuk-button"
-                data-testid="continue-link-to-inh">
-                Continue
-              </a>
-            </div>
+            {customerId && (
+              <div className="govuk-grid-column-one-half">
+                <a
+                  href={`${INH_URL}/help-requests/complete/${customerId}`}
+                  className="govuk-button"
+                  data-testid="continue-link-to-inh"
+                >
+                  Continue
+                </a>
+              </div>
             )}
           </div>
         </>
@@ -254,9 +267,9 @@ ReferralSummary.getInitialProps = async ({
       resources: resources.data,
       initialReferral,
       token,
-      topics:topics.data,
+      topics: topics.data,
       showTopicExplorer
-    }; 
+    };
   } catch (err) {
     res.writeHead(err instanceof HttpStatusError ? err.statusCode : 500).end();
   }

@@ -85,7 +85,10 @@ const ResidentDetailsForm = ({ residentInfoCallback, token }) => {
                 className="govuk-error-message"
                 aria-describedby="input-name-error"
               >
-                <span hidden={!validationError.firstName} data-testid="name-error">
+                <span
+                  hidden={!validationError.firstName}
+                  data-testid="name-error"
+                >
                   Enter the first name
                 </span>
               </span>
@@ -273,24 +276,24 @@ const ResidentDetailsForm = ({ residentInfoCallback, token }) => {
               />
             </div>
           </div>
-          <div class="govuk-form-group">
+          <div className="govuk-form-group">
             <fieldset
-              class="govuk-fieldset"
+              className="govuk-fieldset"
               role="group"
               aria-describedby="date-of-birth-section"
             >
-              <legend class="govuk-fieldset__legend">Date of birth</legend>
-              <div class="govuk-date-input" id="date-of-birth">
-                <div class="govuk-date-input__item">
-                  <div class="govuk-form-group">
+              <legend className="govuk-fieldset__legend">Date of birth</legend>
+              <div className="govuk-date-input" id="date-of-birth">
+                <div className="govuk-date-input__item">
+                  <div className="govuk-form-group">
                     <label
-                      class="govuk-label govuk-date-input__label"
+                      className="govuk-label govuk-date-input__label"
                       for="date-of-birth-day"
                     >
                       Day
                     </label>
                     <input
-                      class="govuk-input govuk-date-input__input govuk-input--width-2"
+                      className="govuk-input govuk-date-input__input govuk-input--width-2"
                       id="date-of-birth-day"
                       name="date-of-birth-day"
                       type="text"
@@ -299,16 +302,16 @@ const ResidentDetailsForm = ({ residentInfoCallback, token }) => {
                     />
                   </div>
                 </div>
-                <div class="govuk-date-input__item">
-                  <div class="govuk-form-group">
+                <div className="govuk-date-input__item">
+                  <div className="govuk-form-group">
                     <label
-                      class="govuk-label govuk-date-input__label"
+                      className="govuk-label govuk-date-input__label"
                       for="date-of-birth-month"
                     >
                       Month
                     </label>
                     <input
-                      class="govuk-input govuk-date-input__input govuk-input--width-2"
+                      className="govuk-input govuk-date-input__input govuk-input--width-2"
                       id="date-of-birth-month"
                       name="date-of-birth-month"
                       type="text"
@@ -317,16 +320,16 @@ const ResidentDetailsForm = ({ residentInfoCallback, token }) => {
                     />
                   </div>
                 </div>
-                <div class="govuk-date-input__item">
-                  <div class="govuk-form-group">
+                <div className="govuk-date-input__item">
+                  <div className="govuk-form-group">
                     <label
-                      class="govuk-label govuk-date-input__label"
+                      className="govuk-label govuk-date-input__label"
                       for="date-of-birth-year"
                     >
                       Year
                     </label>
                     <input
-                      class="govuk-input govuk-date-input__input govuk-input--width-4"
+                      className="govuk-input govuk-date-input__input govuk-input--width-4"
                       id="date-of-birth-year"
                       name="date-of-birth-year"
                       type="text"
