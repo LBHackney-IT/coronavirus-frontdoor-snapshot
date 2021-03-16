@@ -57,12 +57,12 @@ const ResourceCard = ({
   
   const copyToClipboard = () => {
     var copyText = document.getElementById(`resource-${name}`);
-    // copyText.type = 'text';
+    copyText.hidden = false;
     copyText.select();
     copyText.setSelectionRange(0, 99999);
     document.execCommand("copy");
     setCopiedToClipboard(true)
-    // copyText.type = 'hidden';
+    copyText.hidden = true;
   }
   
   const clipboardServiceDetails = 
@@ -71,14 +71,16 @@ const ResourceCard = ({
       "\nService Description: " + serviceDescription + 
       "\nAddress: " + address + 
       "\nDescription: " + description + 
-      "\nWebsites: " + JSON.stringify(websites).replace("[", "").replace("]", "") 
+      "\nWebsites: " + JSON.stringify(websites).replace("[", "").replace("]", "") +
+      "\nReferral website: " + referralWebsite +
+      "\nReferral email: " + referralContact 
 
   return (
     <div className={`resource ${css.resource}`} {...others}>
       <div className={`${css.tags__container} card-header-tag`} data-testid='resource-card-tags'>
         {tagsElement}
       </div>
-      <textarea id={`resource-${name}`} type="text" value={clipboardServiceDetails}/>
+      <textarea id={`resource-${name}`} type="hidden" value={clipboardServiceDetails} hidden/>
       <div>
       <a onClick={() => copyToClipboard()}>{!copiedToClipboard && <span> Copy service details</span>} {copiedToClipboard && <span> Copied to clipboard</span>}
         <svg xmlns="http://www.w3.org/2000/svg" height="16" viewBox="0 0 24 24" width="24">
