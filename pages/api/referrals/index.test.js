@@ -19,21 +19,24 @@ describe('Create Referral Api', () => {
   };
 
   it('can create a referral', async () => {
-    const dob = {};
+    const dateOfBirth = {};
     const firstName = 'sue';
     const lastName = 'taylor';
     const systemIds = ['xyz'];
     const email = 'Some@one.com';
     const address = '123 some road';
     const conversationNotes = 'nice chat';
-
+    const referrerEmail = 'email@email.com';
+    const referrerOrganisation = 'Hackney';
+    const createdBy = 'Me';
     const phone = '0712345678';
     const postcode = 'SP1 2RM';
     const referralReason = 'needed tests';
 
     const response = await call({
       body: {
-        dob,
+        createdBy,
+        dateOfBirth,
         firstName,
         lastName,
         // systemIds,
@@ -42,13 +45,15 @@ describe('Create Referral Api', () => {
         conversationNotes,
         phone,
         postcode,
-        referralReason
+        referralReason,
+        referrerEmail,
+        referrerOrganisation
       },
       headers: {}
     });
     expect(createReferral.execute).toHaveBeenCalledWith({
-      dob,
-      createdBy: '',
+      dateOfBirth,
+      createdBy,
       firstName,
       lastName,
       // systemIds,
@@ -57,7 +62,9 @@ describe('Create Referral Api', () => {
       conversationNotes,
       phone,
       postcode,
-      referralReason
+      referralReason,
+      referrerEmail,
+      referrerOrganisation
     });
     expect(response.statusCode).toBe(201);
   });
