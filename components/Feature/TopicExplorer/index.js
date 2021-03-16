@@ -60,15 +60,15 @@ const TopicExplorer = (props) => {
     <>
       <h2>Discuss a topic</h2>
       <div className="govuk-form-group govuk-!-margin-bottom-7">
-        <div className="govuk-!-padding-bottom-4" id='example-search'>
-          <label htmlFor="text-input">Try searching for keywords like{' '}</label>
+        <div className="govuk-!-padding-bottom-4" id='keyword-search'>
+          <label htmlFor="topic-search">Try searching for keywords like{' '}</label>
           <button className='button-as-link govuk-!-padding-0' data-search-term='coronavirus' onClick={populateInput} data-testid='coronavirus'>coronavirus</button>,{' '}
           <button className='button-as-link govuk-!-padding-0' data-search-term='food' onClick={populateInput} data-testid='food'>food</button>,{' '}
           <button className='button-as-link govuk-!-padding-0' data-search-term='health' onClick={populateInput}>health</button>, or{' '}
           <button className='button-as-link govuk-!-padding-0' data-search-term='benefits'onClick={populateInput}>benefits</button>
         </div>
         <input
-          id="text-input"
+          id="topic-search"
           list='input-tags'
           type="text"
           className="govuk-input govuk-input--width-20"
