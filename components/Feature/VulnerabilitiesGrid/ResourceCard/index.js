@@ -1,5 +1,6 @@
 import css from './index.module.scss';
 import SummaryList from 'components/Form/SummaryList';
+import { useState } from 'react';
 
 const HIDDEN_TAGS = ['Delivery', 'Collection', 'Food'];
 
@@ -39,8 +40,6 @@ const ResourceCard = ({
   const trimLength = (s, length) =>
     s.length > length ? s.substring(0, length) + '...' : s;
 
-  const selfReferralElement =
-    selfReferral == 'No' ? 'Referral required' : 'Self referral';
   const websiteElement =
     websites &&
     websites.length > 0 &&
@@ -65,9 +64,6 @@ const ResourceCard = ({
       </span>
     ));
   const snapshot = customerId != undefined ? true : false;
-  const summaryDataExists =
-    telephone || distance != 100 || currentProvision || openingTimes;
-  const marginClass = summaryDataExists ? '' : 'remove-margin-bottom';
   const updateResource = () => {
     updateSelectedResources({
       name: name,
@@ -76,8 +72,6 @@ const ResourceCard = ({
       telephone: telephone,
       email: email,
       referralContact: referralContact,
-      selfReferral: selfReferral,
-      openingTimes: openingTimes,
       websites: websites,
       notes: notes
     });
@@ -100,15 +94,13 @@ const ResourceCard = ({
       >
         {tagsElement}
       </div>
-      <h3 className={marginClass}>{name}</h3>
+      <h3>{name}</h3>
       <>
         <SummaryList
           key={`resourceInfo-${id}-${categoryId}`}
           name={['resourceInfo']}
           entries={{
             Distance: distance && distance < 100 ? distance + ' miles' : null,
-            Availability: currentProvision,
-            'Days / Times': openingTimes,
             Distribution: distributionElement,
             Telephone: telephone,
             'Service Description': serviceDescription
@@ -226,7 +218,7 @@ const ResourceCard = ({
                 </legend>
                 <div className="govuk-checkboxes govuk-checkboxes--inline">
                   {validationError[`consent-${id}`] && (
-                    <span id="nationality-error" class="govuk-error-message">
+                    <span id={`consent-${id}-error`} class="govuk-error-message">
                       <span class="govuk-visually-hidden">Error:</span> Please
                       indicate that the resident is happy for their information
                       to be shared with third parties
@@ -410,7 +402,6 @@ const ResourceCard = ({
           key={`moreResourceInfo-${id}-${categoryId}`}
           name={'moreResourceInfo'}
           entries={{
-            'How to contact': selfReferralElement,
             Address: address,
             Description: description,
             Website: websiteElement,

@@ -78,7 +78,9 @@ context('Create referral', () => {
         'have.class',
         'govuk-input--error'
       );
-      cy.get('#consent-1').should('have.class', 'govuk-input--error');
+
+      cy.get('#consent-1-error').should('exist');
+
       cy.get('#referer-name-1').should('have.class', 'govuk-input--error');
       cy.get('#referer-organisation-1').should(
         'have.class',
