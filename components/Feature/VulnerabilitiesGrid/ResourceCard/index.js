@@ -67,13 +67,13 @@ const ResourceCard = ({
   
   const clipboardServiceDetails = 
   "Service Name: " + name + 
-      "\nTelephone: " + telephone + 
-      "\nService Description: " + serviceDescription + 
-      "\nAddress: " + address + 
-      "\nDescription: " + description + 
-      "\nWebsites: " + JSON.stringify(websites).replace("[", "").replace("]", "") +
-      "\nReferral website: " + referralWebsite +
-      "\nReferral email: " + referralContact 
+      (telephone ? "\nTelephone: " + telephone: "") + 
+      (serviceDescription ? "\nService Description: " + serviceDescription : "") + 
+      (address ? "\nAddress: " + address: "") + 
+      (description ? "\nDescription: " + description : "") + 
+      (websites.length > 0 ? "\nWebsites: " + JSON.stringify(websites).replace("[", "").replace("]", "") : "") +
+      (referralWebsite ? "\nReferral website: " + referralWebsite : "") +
+      (referralContact ? "\nReferral email: " + referralContact : "") 
 
   return (
     <div className={`resource ${css.resource}`} {...others}>
