@@ -46,7 +46,7 @@ context('Referral summary', () => {
     cy.task('deleteReferral', '3');
   });
   describe('View referral', () => {
-    it('Displays a read only view of a referral', () => {
+    xit('Displays a read only view of a referral', () => {
       cy.visit(`/referrals/2`);
 
       cy.get('h1').should('contain', `Ferb's resources`);
@@ -81,7 +81,7 @@ context('Referral summary', () => {
         );
     });
 
-    it('Displays none captured if there are no vulnerabilities or assets', () => {
+    xit('Displays none captured if there are no vulnerabilities or assets', () => {
       cy.visit(`/referrals/3`);
 
       cy.get('h1').should('contain', `Candace's resources`);
