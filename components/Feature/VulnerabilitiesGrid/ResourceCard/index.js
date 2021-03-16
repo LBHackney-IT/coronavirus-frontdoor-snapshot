@@ -39,7 +39,7 @@ const ResourceCard = ({
     email: refererInfo?.email,
     organisation: refererInfo?.iss
   });
-  const [referralMade, setReferralMade] = useState({});
+
   const trimLength = (s, length) =>
     s.length > length ? s.substring(0, length) + '...' : s;
 
@@ -214,15 +214,30 @@ const ResourceCard = ({
                 onInvalid={e => onInvalidField(e.target.id)}
               ></textarea>
             </div>
-            <div className="govuk-form-group govuk-!-padding-bottom-2">
+            <div
+              className={`govuk-form-group govuk-!-padding-bottom-2 ${
+                validationError[`consent-${id}`]
+                  ? 'govuk-form-group--error'
+                  : ''
+              }`}
+            >
               <fieldset
                 className="govuk-fieldset"
                 aria-describedby="consent-hint"
               >
                 <legend className="govuk-fieldset__legend">
-                  The resident is happy for their information to be shared with third parties
+                  The resident is happy for their information to be shared with
+                  third parties
                 </legend>
                 <div className="govuk-checkboxes govuk-checkboxes--inline">
+                  {validationError[`consent-${id}`] && (
+                    <span id="nationality-error" class="govuk-error-message">
+                      <span class="govuk-visually-hidden">Error:</span> Please
+                      indicate that the resident is happy for their information
+                      to be shared with third parties
+                    </span>
+                  )}
+
                   <div className="govuk-checkboxes__item">
                     <input
                       form="resident-details"
@@ -231,6 +246,7 @@ const ResourceCard = ({
                       name="consent"
                       type="checkbox"
                       value="true"
+                      onInvalid={e => onInvalidField(e.target.id)}
                       required
                     />
                     <label
