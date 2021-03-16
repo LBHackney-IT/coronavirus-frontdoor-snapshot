@@ -1,6 +1,5 @@
 import css from './index.module.scss';
 import SummaryList from 'components/Form/SummaryList';
-import { useState } from 'react';
 
 const HIDDEN_TAGS = ['Delivery', 'Collection', 'Food'] 
 
@@ -53,15 +52,12 @@ const ResourceCard = ({
     })
   }
   
-  const [copiedToClipboard, setCopiedToClipboard] = useState(false);
-  
   const copyToClipboard = () => {
     var copyText = document.getElementById(`resource-${name}`);
     copyText.hidden = false;
     copyText.select();
     copyText.setSelectionRange(0, 99999);
     document.execCommand("copy");
-    setCopiedToClipboard(true)
     copyText.hidden = true;
   }
   
@@ -82,13 +78,12 @@ const ResourceCard = ({
       </div>
       <textarea id={`resource-${name}`} type="hidden" value={clipboardServiceDetails} hidden/>
       <div>
-      <a href="javascript:void(0)" onClick={() => copyToClipboard()}>{!copiedToClipboard && <span> Copy service details</span>} {copiedToClipboard && <span> Copied to clipboard</span>}
-        <svg xmlns="http://www.w3.org/2000/svg" height="16" viewBox="0 0 24 24" width="24">
+    </div>
+      <h3 className={marginClass}>{name} <a title="copy" href="javascript:void(0)" onClick={() => copyToClipboard()}>
+        <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 0 24 24" width="24">
           <path d="M0 0h24v24H0z" fill="none"/>
           <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
-        </svg></a>
-    </div>
-      <h3 className={marginClass}>{name}</h3>
+        </svg></a></h3>
         <>
         <SummaryList key={`resourceInfo-${id}-${categoryId}`} name={['resourceInfo']} entries={{ 'Distance': (distance && distance < 100) ? distance + ' miles' : null ,
       'Availability': currentProvision, 'Days / Times' : openingTimes, 'Distribution' : distributionElement, 'Telephone' : telephone, 'Service Description': serviceDescription}} customStyle="small" />
