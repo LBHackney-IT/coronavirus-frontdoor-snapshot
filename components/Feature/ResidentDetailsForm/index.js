@@ -2,9 +2,13 @@ import React from 'react';
 import { useState } from 'react';
 import useReferral from 'lib/api/utils/useReferral';
 
-const ResidentDetailsForm = ({ residentInfoCallback, token }) => {
+const ResidentDetailsForm = ({
+  residentInfoCallback,
+  token,
+  showResidentForm,
+  setShowResidentForm
+}) => {
   const { createReferral } = useReferral({ token });
-  const [showAddResidentForm, setShowAddResidentForm] = useState(false);
   const [residentInfo, setResidentInfo] = useState({
     name: null,
     email: null,
@@ -60,7 +64,7 @@ const ResidentDetailsForm = ({ residentInfoCallback, token }) => {
       <h1 className="govuk-heading-l">Who are you helping?</h1>
       <details
         className="govuk-details"
-        onClick={() => setShowAddResidentForm(!showAddResidentForm)}
+        onClick={() => setShowResidentForm(!showResidentForm)}
       >
         <summary>Residents details</summary>
       </details>
@@ -69,7 +73,7 @@ const ResidentDetailsForm = ({ residentInfoCallback, token }) => {
         <form
           id="resident-details"
           onSubmit={onSubmitForm}
-          hidden={showAddResidentForm}
+          hidden={!showResidentForm}
         >
           <div
             className={`govuk-form-group ${

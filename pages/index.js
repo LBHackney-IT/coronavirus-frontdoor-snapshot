@@ -34,7 +34,13 @@ const Index = ({
     setGernericRefferalFormComplete
   ] = useState(false);
   const [residentInfo, setResidentInfo] = useState(false);
+  const [showResidentForm, setShowResidentForm] = useState(false);
 
+  const residentFormCallback = val => {
+    console.log('- - - - - - - -- - -');
+    console.log(val);
+    setShowResidentForm(val);
+  };
   const residentInfoCallback = value => {
     setResidentInfo(value);
   };
@@ -42,6 +48,8 @@ const Index = ({
     <>
       <ResidentDetailsForm
         residentInfoCallback={residentInfoCallback}
+        showResidentForm={showResidentForm}
+        setShowResidentForm={setShowResidentForm}
         token={token}
       />
       <div>
@@ -62,6 +70,7 @@ const Index = ({
         gernericRefferalFormComplete={gernericRefferalFormComplete}
         residentInfo={residentInfo}
         refererInfo={refererInfo}
+        residentFormCallback={residentFormCallback}
       />
       <a
         href="https://forms.gle/B6vEMgp7sCsjJqNdA"

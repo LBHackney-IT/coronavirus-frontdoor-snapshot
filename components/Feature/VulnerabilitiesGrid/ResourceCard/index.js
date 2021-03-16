@@ -29,6 +29,7 @@ const ResourceCard = ({
   residentInfo,
   categoryId,
   refererInfo,
+  residentFormCallback,
   ...others
 }) => {
   const [validationError, setValidationError] = useState({});
@@ -121,10 +122,11 @@ const ResourceCard = ({
       </>
       <details className="govuk-details" data-module="govuk-details">
         <summary
-          id={`summary-${id}`}
+          id={`referral-${id}`}
           type="submit"
           form="resident-details"
           onClick={() => {
+            residentFormCallback(hideForm);
             setHideForm(!hideForm);
           }}
         >
@@ -133,10 +135,10 @@ const ResourceCard = ({
         {hideForm ? (
           ''
         ) : (
-          <div hidden={hideForm}>
+          <div hidden={hideForm} id={`referral-${id}-form`}>
             <div
               className={`govuk-form-group govuk-!-padding-bottom-2 ${
-                validationError[`referral-reason-${name}`]
+                validationError[`referral-reason-${id}`]
                   ? 'govuk-form-group--error'
                   : ''
               }`}
@@ -145,11 +147,11 @@ const ResourceCard = ({
                 Reason for referral, please give as much detail as possible
               </legend>
 
-              {validationError[`referral-reason-${name}`] && (
+              {validationError[`referral-reason-${id}`] && (
                 <span
                   id="more-detail-error"
                   className={` ${
-                    validationError[`referral-reason-${name}`]
+                    validationError[`referral-reason-${id}`]
                       ? 'govuk-error-message'
                       : ''
                   }`}
@@ -161,11 +163,11 @@ const ResourceCard = ({
               <textarea
                 form="resident-details"
                 className={`govuk-textarea ${
-                  validationError[`referral-reason-${name}`]
+                  validationError[`referral-reason-${id}`]
                     ? 'govuk-input--error'
                     : ''
                 }`}
-                id={`referral-reason-${name}`}
+                id={`referral-reason-${id}`}
                 name="referral-reason"
                 rows="5"
                 aria-describedby="more-detail-hint more-detail-error"
@@ -175,7 +177,7 @@ const ResourceCard = ({
             </div>
             <div
               className={`govuk-form-group govuk-!-padding-bottom-2 ${
-                validationError[`conversation-notes-${name}`]
+                validationError[`conversation-notes-${id}`]
                   ? 'govuk-form-group--error'
                   : ''
               }`}
@@ -184,11 +186,11 @@ const ResourceCard = ({
                 Notes on wider conversation(other needs, living situation, key
                 information
               </legend>
-              {validationError[`conversation-notes-${name}`] && (
+              {validationError[`conversation-notes-${id}`] && (
                 <span
                   id="more-detail-error"
                   className={` ${
-                    validationError[`conversation-notes-${name}`]
+                    validationError[`conversation-notes-${id}`]
                       ? 'govuk-error-message'
                       : ''
                   }`}
@@ -200,11 +202,11 @@ const ResourceCard = ({
               <textarea
                 form="resident-details"
                 className={`govuk-textarea ${
-                  validationError[`conversation-notes-${name}`]
+                  validationError[`conversation-notes-${id}`]
                     ? 'govuk-input--error'
                     : ''
                 }`}
-                id={`conversation-notes-${name}`}
+                id={`conversation-notes-${id}`}
                 name="conversation-notes"
                 rows="5"
                 aria-describedby="more-detail-hint more-detail-error"
@@ -215,24 +217,25 @@ const ResourceCard = ({
             <div className="govuk-form-group govuk-!-padding-bottom-2">
               <fieldset
                 className="govuk-fieldset"
-                aria-describedby="changed-name-hint"
+                aria-describedby="consent-hint"
               >
                 <legend className="govuk-fieldset__legend">
-                  Does the resident consent to sharing third party information?
+                  The resident is happy for their information to be shared with third parties
                 </legend>
                 <div className="govuk-checkboxes govuk-checkboxes--inline">
                   <div className="govuk-checkboxes__item">
                     <input
                       form="resident-details"
                       className="govuk-checkboxes__input"
-                      id="changed-name"
-                      name="changed-name"
+                      id={`consent-${id}`}
+                      name="consent"
                       type="checkbox"
                       value="true"
+                      required
                     />
                     <label
                       className="govuk-label govuk-checkboxes__label"
-                      for="changed-name"
+                      for={`consent-${id}`}
                     >
                       Yes
                     </label>
@@ -243,7 +246,7 @@ const ResourceCard = ({
             <div>
               <div
                 className={`govuk-form-group govuk-!-padding-bottom-2 ${
-                  validationError[`referer-name-${name}`]
+                  validationError[`referer-name-${id}`]
                     ? 'govuk-form-group--error'
                     : ''
                 }`}
@@ -257,7 +260,7 @@ const ResourceCard = ({
                   aria-describedby="input-name-error"
                 >
                   <span
-                    hidden={!validationError[`referer-name-${name}`]}
+                    hidden={!validationError[`referer-name-${id}`]}
                     data-testid="name-error"
                   >
                     Enter your name
@@ -266,11 +269,11 @@ const ResourceCard = ({
                 <input
                   form="resident-details"
                   className={`govuk-input govuk-!-width-two-thirds ${
-                    validationError[`referer-name-${name}`]
+                    validationError[`referer-name-${id}`]
                       ? 'govuk-input--error'
                       : ''
                   }`}
-                  id={`referer-name-${name}`}
+                  id={`referer-name-${id}`}
                   name="referer-name"
                   value={referrerData?.name}
                   type="text"
@@ -286,7 +289,7 @@ const ResourceCard = ({
               </div>
               <div
                 className={`govuk-form-group govuk-!-padding-bottom-2 ${
-                  validationError[`referer-organistion-${name}`]
+                  validationError[`referer-organisation-${id}`]
                     ? 'govuk-form-group--error'
                     : ''
                 }`}
@@ -300,7 +303,7 @@ const ResourceCard = ({
                   aria-describedby="input-name-error"
                 >
                   <span
-                    hidden={!validationError[`referer-organistion-${name}`]}
+                    hidden={!validationError[`referer-organisation-${id}`]}
                     data-testid="name-error"
                   >
                     Enter your organisation
@@ -309,11 +312,11 @@ const ResourceCard = ({
                 <input
                   form="resident-details"
                   className={`govuk-input govuk-!-width-two-thirds ${
-                    validationError[`referer-organistion-${name}`]
+                    validationError[`referer-organisation-${id}`]
                       ? 'govuk-input--error'
                       : ''
                   }`}
-                  id={`referer-organistion-${name}`}
+                  id={`referer-organisation-${id}`}
                   name="referer-organisation"
                   type="text"
                   onChange={e => {
@@ -323,8 +326,8 @@ const ResourceCard = ({
                       organisation: newOrganisationVal
                     });
                   }}
-                  aria-describedby="refererOrganistion-hint"
-                  aria-describedby="refererOrganistion"
+                  aria-describedby="refererorganisation-hint"
+                  aria-describedby="refererorganisation"
                   onInvalid={e => onInvalidField(e.target.id)}
                   value={referrerData?.organisation} //we probably dont want this, im not sure if exrternal users will have iss set for them as their own org
                   required
@@ -332,7 +335,7 @@ const ResourceCard = ({
               </div>
               <div
                 className={`govuk-form-group govuk-!-padding-bottom-2 ${
-                  validationError[`referer-email-${name}`]
+                  validationError[`referer-email-${id}`]
                     ? 'govuk-form-group--error'
                     : ''
                 }`}
@@ -346,7 +349,7 @@ const ResourceCard = ({
                   aria-describedby="input-name-error"
                 >
                   <span
-                    hidden={!validationError[`referer-email-${name}`]}
+                    hidden={!validationError[`referer-email-${id}`]}
                     data-testid="name-error"
                   >
                     Enter your email
@@ -355,11 +358,11 @@ const ResourceCard = ({
                 <input
                   form="resident-details"
                   className={`govuk-input govuk-!-width-two-thirds ${
-                    validationError[`referer-email-${name}`]
+                    validationError[`referer-email-${id}`]
                       ? 'govuk-input--error'
                       : ''
                   }`}
-                  id={`referer-email-${name}`}
+                  id={`referer-email-${id}`}
                   name="referer-email"
                   type="email"
                   onChange={e => {
@@ -367,8 +370,8 @@ const ResourceCard = ({
                     setReferrerData({ ...referrerData, email: newEmailVal });
                   }}
                   value={referrerData?.email}
-                  aria-describedby="refererOrganistion-hint"
-                  aria-describedby="refererOrganistion"
+                  aria-describedby="refererorganisation-hint"
+                  aria-describedby="refererorganisation"
                   onInvalid={e => onInvalidField(e.target.id)}
                   required
                 />
@@ -378,6 +381,7 @@ const ResourceCard = ({
               <div className="govuk-!-margin-top-4">
                 <input
                   type="submit"
+                  id={`submit-${id}`}
                   className="govuk-button"
                   name="Submit"
                   form="resident-details"
