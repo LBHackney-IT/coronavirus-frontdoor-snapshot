@@ -6,7 +6,7 @@ provider:
   region: eu-west-2
   stage: ${opt:stage}
   environment:
-    VULNERABILITIES_TABLE: '${self:service}-${self:provider.stage}-vulnerabilities'
+    TABLE_NAME: '${self:service}-${self:provider.stage}-referrals'
   iamRoleStatements:
     - Effect: Allow
       Action:
@@ -41,13 +41,13 @@ functions:
           authorizer: ${self:custom.authorizer.${self:service}-authorizer}
       - http: ANY /
       - http: ANY /{proxy+}
-    timeout: 120 
+    timeout: 120
     environment:
       ENV: ${self:provider.stage}
       ALLOWED_GROUPS: ${ssm:/frontdoor-snapshot/${self:provider.stage}/allowed-groups}
       BASIC_ALLOWED_GROUPS: ${ssm:/frontdoor-snapshot/${self:provider.stage}/basic-allowed-groups}
       JWT_SECRET: ${ssm:/common/hackney-jwt-secret}
-      VULNERABILITIES_TABLE_NAME: ${self:provider.environment.VULNERABILITIES_TABLE}
+      TABLE_NAME_NAME: ${self:provider.environment.TABLE_NAME}
       NEXT_PUBLIC_API_URL: https://${self:custom.aliases.${self:provider.stage}}/api
       NEXT_PUBLIC_URL: https://${self:custom.aliases.${self:provider.stage}}
       AIRTABLE_API_KEY: ${ssm:/frontdoor-snapshot/airtable-api-key}
@@ -62,7 +62,7 @@ functions:
       REFERRAL_EMAIL_TEMPLATE_ID: ${ssm:/frontdoor-snapshot/referral-email-template-id}
       REFERRAL_EMAIL_RECEIPT_TEMPLATE_ID: ${ssm:/frontdoor-snapshot/referral-email-receipt-template-id}
       GOV_NOTIFY_API_KEY: ${ssm:/frontdoor-snapshot/gov-notify-api-key}
-  
+
   cf-snapshot-authorizer:
     name: ${self:service}-authorizer-${self:provider.stage}
     handler: authorizer.handler
@@ -79,7 +79,7 @@ resources:
     VulnerabilitiesTable:
       Type: AWS::DynamoDB::Table
       Properties:
-        TableName: ${self:provider.environment.VULNERABILITIES_TABLE}
+        TableName: ${self:provider.environment.TABLE_NAME}
         BillingMode: PAY_PER_REQUEST
         SSESpecification:
           SSEEnabled: true

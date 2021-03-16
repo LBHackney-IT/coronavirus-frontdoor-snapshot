@@ -37,8 +37,6 @@ const Index = ({
   const [showResidentForm, setShowResidentForm] = useState(false);
 
   const residentFormCallback = val => {
-    console.log('- - - - - - - -- - -');
-    console.log(val);
     setShowResidentForm(val);
   };
   const residentInfoCallback = value => {

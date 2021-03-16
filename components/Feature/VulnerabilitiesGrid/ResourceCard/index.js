@@ -162,9 +162,7 @@ const ResourceCard = ({
         >
           Refer
         </summary>
-        {hideForm ? (
-          ''
-        ) : (
+        {!hideForm && (
           <div hidden={hideForm} id={`referral-${id}-form`}>
             <div
               className={`govuk-form-group govuk-!-padding-bottom-2 ${
@@ -261,9 +259,8 @@ const ResourceCard = ({
                 <div className="govuk-checkboxes govuk-checkboxes--inline">
                   {validationError[`consent-${id}`] && (
                     <span id={`consent-${id}-error`} class="govuk-error-message">
-                      <span class="govuk-visually-hidden">Error:</span> Please
-                      indicate that the resident is happy for their information
-                      to be shared with third parties
+                      <span class="govuk-visually-hidden">Error:</span>
+                      This is required in order to make the referral.
                     </span>
                   )}
 
