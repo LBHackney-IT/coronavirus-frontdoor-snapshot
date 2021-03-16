@@ -105,4 +105,17 @@ context('Index page', () => {
       cy.get('option').should('exist');
     });
   });
+
+  describe('When the copy icon next to a referral service is clicked', () => {
+    it('it copies the referral information to the clipboard', () => {
+      cy.document().then( doc => {
+        doc.body.innerHTML = '<textarea data-testid="service-details">';
+      });
+      cy.get('[data-testid=service-details]').type('test{selectall}');
+      cy.document().then( doc => {
+        doc.execCommand('copy');
+      });
+      cy.task('getClipboard').should('contain', 'test');
+    });
+  });
 });
