@@ -100,14 +100,17 @@ Index.getInitialProps = async ({ req: { headers }, res }) => {
     const fssTaxonomies = fss.data.fssTaxonomies;
     const fssErrors = fss.error;
 
+
     const topics = await requestPrompts({ token });
     const showTopicExplorer = process.env.SHOW_TOPIC_EXPLORER;
-    const errors = [otherResources.error]
-      .concat(fssErrors)
-      .concat(topics.error);
+    const resources = (fssResources.concat(otherResources.data)).sort((a, b)=> {
+      return (a.name < b.name) ? -1 : (a.name > b.name) ? 1 : 0;
+    })
+
+    const errors = [otherResources.error].concat(fssErrors).concat(topics.error);
 
     return {
-      resources: fssResources.concat(otherResources.data),
+      resources,
       initialReferral,
       token,
       showTopicExplorer,

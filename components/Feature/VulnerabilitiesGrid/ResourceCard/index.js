@@ -1,6 +1,5 @@
 import css from './index.module.scss';
 import SummaryList from 'components/Form/SummaryList';
-import { useState } from 'react';
 
 const HIDDEN_TAGS = ['Delivery', 'Collection', 'Food'];
 
@@ -14,12 +13,9 @@ const ResourceCard = ({
   postcode,
   tags,
   telephone,
-  openingTimes,
-  currentProvision,
   email,
   referralContact,
   referralWebsite,
-  selfReferral,
   notes,
   distance,
   matches,
@@ -146,7 +142,6 @@ const ResourceCard = ({
               <legend className="govuk-fieldset__legend">
                 Reason for referral, please give as much detail as possible
               </legend>
-
               {validationError[`referral-reason-${id}`] && (
                 <span
                   id="more-detail-error"
@@ -395,7 +390,6 @@ const ResourceCard = ({
         <summary id={`summary-${id}`} className="">
           View more information
         </summary>
-
         <SummaryList
           key={`moreResourceInfo-${id}-${categoryId}`}
           name={'moreResourceInfo'}
