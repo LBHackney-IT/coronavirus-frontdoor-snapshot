@@ -13,12 +13,9 @@ const ResourceCard = ({
   postcode,
   tags,
   telephone,
-  openingTimes,
-  currentProvision,
   email,
   referralContact,
   referralWebsite,
-  selfReferral,
   notes,
   distance,
   matches,
@@ -30,13 +27,10 @@ const ResourceCard = ({
 }) => {
   const trimLength = (s, length) => s.length > length ? s.substring(0, length) + "..." : s
 
-  const selfReferralElement = (selfReferral == 'No') ? 'Referral required' : 'Self referral'
   const websiteElement = websites && websites.length > 0 &&  websites.map(website => (<div><a href={website} target="_blank" rel="noopener noreferrer">{website}</a></div>))
   const distributionElement =  tags.filter(t => HIDDEN_TAGS.includes(t)).join(", ")
   const tagsElement = tags.filter(t => !HIDDEN_TAGS.includes(t)).map(item=> (<span key={"tags-"+item} className={`${css.tags} tag-element ${css[`${item}-tag`]}`}>{trimLength(item, 20)}</span>))
   const snapshot = (customerId != undefined) ? true : false
-  const summaryDataExists = ( telephone  || distance != 100 || currentProvision || openingTimes)
-  const marginClass = (summaryDataExists) ? "" : "remove-margin-bottom"
   const updateResource = () =>{
     updateSelectedResources({
       name:name,
@@ -45,8 +39,6 @@ const ResourceCard = ({
       telephone: telephone,
       email:email,
       referralContact: referralContact,
-      selfReferral: selfReferral,
-      openingTimes: openingTimes,
       websites:websites,
       notes:notes
     })
@@ -79,22 +71,21 @@ const ResourceCard = ({
       <textarea id={`resource-${name}`} type="hidden" value={clipboardServiceDetails} hidden/>
       <div>
     </div>
-      <h3 className={marginClass}>{name} <a title="copy" href="javascript:void(0)" onClick={() => copyToClipboard()}>
+      <h3>{name} <a title="copy" href="javascript:void(0)" onClick={() => copyToClipboard()}>
         <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 0 24 24" width="24">
           <path d="M0 0h24v24H0z" fill="none"/>
           <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
         </svg></a></h3>
         <>
         <SummaryList key={`resourceInfo-${id}-${categoryId}`} name={['resourceInfo']} entries={{ 'Distance': (distance && distance < 100) ? distance + ' miles' : null ,
-      'Availability': currentProvision, 'Days / Times' : openingTimes, 'Distribution' : distributionElement, 'Telephone' : telephone, 'Service Description': serviceDescription}} customStyle="small" />
+      'Distribution' : distributionElement, 'Telephone' : telephone, 'Service Description': serviceDescription}} customStyle="small" />
 
         </>
       
       <details className="govuk-details" data-module="govuk-details">
         <summary id ={`summary-${id}`} className="">View more information</summary>
 
-        <SummaryList key={`moreResourceInfo-${id}-${categoryId}`} name={'moreResourceInfo'} entries={{ 'How to contact': selfReferralElement,
-      'Address': address, 'Description' : description, 'Website' : websiteElement, 'Additional notes' : notes, 
+        <SummaryList key={`moreResourceInfo-${id}-${categoryId}`} name={'moreResourceInfo'} entries={{'Address': address, 'Description' : description, 'Website' : websiteElement, 'Additional notes' : notes, 
       'Referral email': referralContact, 'Referral Website': referralWebsite }} customStyle="small" />
         { snapshot &&
       ( 
