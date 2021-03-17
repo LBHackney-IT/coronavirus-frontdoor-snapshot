@@ -108,8 +108,7 @@ context('Index page', () => {
           .eq(0)
           .click();
       cy.get('[data-testid=resource-1]')
-          .eq(0)
-      cy.get('#copy-clipboard-icon-1').click({ force: true });
+          .eq(0).find('#copy-clipboard-icon-1').click({ force: true });
       cy.task('getClipboard').should('contain', 'Service Name: First service' + 
           '\nTelephone: 07000 0000000' + 
           '\nService Description: First service description' +
