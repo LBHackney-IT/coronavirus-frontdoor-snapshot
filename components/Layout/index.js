@@ -11,15 +11,8 @@ const Layout = ({ children }) => (
     <Header serviceName="Support for Hackney residents" />
 
     <div className="govuk-width-container app-width-container">
-      <PhaseBanner
-        phase="alpha"
-        feedbackUrl="https://forms.gle/zAqXMUabo1oMfzDL7"
-      />
-      <main
-        className="govuk-main-wrapper app-main-class"
-        id="content"
-        role="main"
-      >
+      <PhaseBanner phase="alpha" feedbackUrl="https://forms.gle/zAqXMUabo1oMfzDL7" />
+      <main className="govuk-main-wrapper app-main-class" id="content" role="main">
         {children}
       </main>
     </div>

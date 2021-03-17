@@ -5,9 +5,7 @@ describe('TextInput', () => {
   it('renders a text input', () => {
     const inputName = 'my-text-input';
     const inputLabel = 'My Input';
-    const { getByLabelText } = render(
-      <TextInput name={inputName} label={inputLabel} />
-    );
+    const { getByLabelText } = render(<TextInput name={inputName} label={inputLabel} />);
 
     const labelRegex = new RegExp(`\s*${inputLabel}\s*`);
     const input = getByLabelText(labelRegex);
@@ -55,20 +53,13 @@ describe('TextInput', () => {
       />
     );
 
-    expect(
-      container.querySelector('.govuk-error-message')
-    ).not.toBeInTheDocument();
+    expect(container.querySelector('.govuk-error-message')).not.toBeInTheDocument();
   });
 
   it('sets the input value', () => {
     const inputLabel = 'My Input';
     const { getByLabelText } = render(
-      <TextInput
-        name="my-text-input"
-        label={inputLabel}
-        onChange={() => {}}
-        value={'hello'}
-      />
+      <TextInput name="my-text-input" label={inputLabel} onChange={() => {}} value={'hello'} />
     );
     expect(getByLabelText(inputLabel).value).toEqual('hello');
   });

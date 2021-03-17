@@ -33,18 +33,14 @@ describe('DateInput', () => {
 
   it('renders a title', () => {
     const inputTitle = 'My Date';
-    const { getByText } = render(
-      <DateInput name={inputName} title={inputTitle} />
-    );
+    const { getByText } = render(<DateInput name={inputName} title={inputTitle} />);
     const title = getByText(inputTitle);
 
     expect(title).toBeInTheDocument();
   });
 
   it('renders a hint if showHint is true', () => {
-    const { container } = render(
-      <DateInput name={inputName} showHint={true} />
-    );
+    const { container } = render(<DateInput name={inputName} showHint={true} />);
     const hint = container.querySelector(`#${inputName}-hint`);
 
     expect(hint).toBeInTheDocument();
@@ -66,9 +62,7 @@ describe('DateInput', () => {
       if (e.target.name.includes('month')) month = e.target.value;
       if (e.target.name.includes('year')) year = e.target.value;
     });
-    const { getByLabelText } = render(
-      <DateInput name={inputName} onChange={myAction} />
-    );
+    const { getByLabelText } = render(<DateInput name={inputName} onChange={myAction} />);
 
     fireEvent.change(getByLabelText(/\s*Day\s*/), {
       target: { value: 12 }
@@ -86,9 +80,7 @@ describe('DateInput', () => {
   });
 
   it('shows an error message if validation is required and day is empty', () => {
-    const { container, getByLabelText } = render(
-      <DateInput name={inputName} validate={true} />
-    );
+    const { container, getByLabelText } = render(<DateInput name={inputName} validate={true} />);
     fireEvent.change(getByLabelText(/\s*Day\s*/), {
       target: { value: '' }
     });
@@ -96,9 +88,7 @@ describe('DateInput', () => {
   });
 
   it('shows an error message if validation is required and month is empty', () => {
-    const { container, getByLabelText } = render(
-      <DateInput name={inputName} validate={true} />
-    );
+    const { container, getByLabelText } = render(<DateInput name={inputName} validate={true} />);
     fireEvent.change(getByLabelText(/\s*Month\s*/), {
       target: { value: '' }
     });
@@ -106,9 +96,7 @@ describe('DateInput', () => {
   });
 
   it('shows an error message if validation is required and year is empty', () => {
-    const { container, getByLabelText } = render(
-      <DateInput name={inputName} validate={true} />
-    );
+    const { container, getByLabelText } = render(<DateInput name={inputName} validate={true} />);
     fireEvent.change(getByLabelText(/\s*Year\s*/), {
       target: { value: '' }
     });
@@ -155,9 +143,7 @@ describe('DateInput', () => {
       />
     );
 
-    expect(
-      container.querySelector('.govuk-error-message')
-    ).not.toBeInTheDocument();
+    expect(container.querySelector('.govuk-error-message')).not.toBeInTheDocument();
   });
 
   it('sets the day input value', () => {

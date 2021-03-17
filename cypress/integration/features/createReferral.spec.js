@@ -24,9 +24,7 @@ context('Create referral', () => {
       cy.get('#referral-reason-1').type(
         'Sunt in culpa qui officia deserunt mollit anim id est laborum.'
       );
-      cy.get('#conversation-notes-1').type(
-        'Excepteur sint occaecat cupidatat non proident'
-      );
+      cy.get('#conversation-notes-1').type('Excepteur sint occaecat cupidatat non proident');
       cy.get('#consent-1').click();
       cy.get('#referer-name-1').type('Tina Belcher');
       cy.get('#referer-organisation-1').type("Bob's Burgers");
@@ -74,18 +72,12 @@ context('Create referral', () => {
       cy.get('#submit-1').click();
 
       cy.get('#referral-reason-1').should('have.class', 'govuk-input--error');
-      cy.get('#conversation-notes-1').should(
-        'have.class',
-        'govuk-input--error'
-      );
+      cy.get('#conversation-notes-1').should('have.class', 'govuk-input--error');
 
       cy.get('#consent-1-error').should('exist');
 
       cy.get('#referer-name-1').should('have.class', 'govuk-input--error');
-      cy.get('#referer-organisation-1').should(
-        'have.class',
-        'govuk-input--error'
-      );
+      cy.get('#referer-organisation-1').should('have.class', 'govuk-input--error');
       cy.get('#referer-email-1').should('have.class', 'govuk-input--error');
     });
   });

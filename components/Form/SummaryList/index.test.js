@@ -8,9 +8,7 @@ describe('SummaryList', () => {
       Name: 'Jake Jones',
       'Target review date': '12/12/2020'
     };
-    const { container, getByText } = render(
-      <SummaryList name={listName} entries={entries} />
-    );
+    const { container, getByText } = render(<SummaryList name={listName} entries={entries} />);
 
     const list = container.querySelector(`#${listName}`);
 

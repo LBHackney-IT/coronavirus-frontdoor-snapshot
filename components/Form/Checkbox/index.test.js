@@ -5,9 +5,7 @@ describe('Checkbox', () => {
   it('renders a checkbox', () => {
     const checkboxName = 'my-checkbox';
     const checkboxLabel = 'My Checkbox';
-    const { getByLabelText } = render(
-      <Checkbox name={checkboxName} label={checkboxLabel} />
-    );
+    const { getByLabelText } = render(<Checkbox name={checkboxName} label={checkboxLabel} />);
 
     const checkbox = getByLabelText(checkboxLabel);
 

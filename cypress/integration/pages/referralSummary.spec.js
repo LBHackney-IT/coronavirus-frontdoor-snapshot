@@ -53,10 +53,7 @@ context('Referral summary', () => {
 
       cy.get('#example-search').should('not.exist');
 
-      cy.get('[data-testid=age-and-date-of-birth]').should(
-        'contain',
-        `Aged 20`
-      );
+      cy.get('[data-testid=age-and-date-of-birth]').should('contain', `Aged 20`);
 
       cy.get('[data-testid=vulnerabilities-summary]')
         .should('contain', 'Vulnerabilities')

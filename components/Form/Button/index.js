@@ -1,13 +1,10 @@
 const Button = ({ onClick, text, isSecondary, ...others }) => (
   <div className="govuk-form-group">
     <button
-      className={`govuk-button${
-        isSecondary === true ? ' govuk-button--secondary' : ''
-      }`}
+      className={`govuk-button${isSecondary === true ? ' govuk-button--secondary' : ''}`}
       data-module="govuk-button"
       onClick={onClick}
-      {...others}
-    >
+      {...others}>
       {text}
     </button>
   </div>

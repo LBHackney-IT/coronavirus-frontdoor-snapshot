@@ -18,21 +18,15 @@ const Index = ({
   errors,
   refererInfo
 }) => {
-  const { referral, loading, updateReferral } = useReferral(
-    initialReferral.referralId,
-    {
-      initialReferral,
-      token
-    }
-  );
+  const { referral, loading, updateReferral } = useReferral(initialReferral.referralId, {
+    initialReferral,
+    token
+  });
 
   if (loading) {
     return <p>Loading...</p>;
   }
-  const [
-    gernericRefferalFormComplete,
-    setGernericRefferalFormComplete
-  ] = useState(false);
+  const [gernericRefferalFormComplete, setGernericRefferalFormComplete] = useState(false);
   const [residentInfo, setResidentInfo] = useState(false);
   const [showResidentForm, setShowResidentForm] = useState(false);
 
@@ -74,8 +68,7 @@ const Index = ({
         href="https://forms.gle/B6vEMgp7sCsjJqNdA"
         target="_blank"
         className="govuk-button"
-        data-testid="feedback-link-test"
-      >
+        data-testid="feedback-link-test">
         Submit feedback
       </a>
     </>
@@ -98,12 +91,11 @@ Index.getInitialProps = async ({ req: { headers }, res }) => {
     const fssTaxonomies = fss.data.fssTaxonomies;
     const fssErrors = fss.error;
 
-
     const topics = await requestPrompts({ token });
     const showTopicExplorer = process.env.SHOW_TOPIC_EXPLORER;
-    const resources = (fssResources.concat(otherResources.data)).sort((a, b)=> {
-      return (a.name < b.name) ? -1 : (a.name > b.name) ? 1 : 0;
-    })
+    const resources = fssResources.concat(otherResources.data).sort((a, b) => {
+      return a.name < b.name ? -1 : a.name > b.name ? 1 : 0;
+    });
 
     const errors = [otherResources.error].concat(fssErrors).concat(topics.error);
 

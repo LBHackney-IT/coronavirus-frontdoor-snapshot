@@ -17,15 +17,18 @@ describe('VulnerabilitiesGrid', () => {
     }, 0);
 
     const { container } = render(
-      <VulnerabilitiesGrid onUpdate={jest.fn()} onError={jest.fn()} resources={resources} residentCoordinates={residentCoordinates}/>
+      <VulnerabilitiesGrid
+        onUpdate={jest.fn()}
+        onError={jest.fn()}
+        resources={resources}
+        residentCoordinates={residentCoordinates}
+      />
     );
 
-    expect(
-      container.querySelectorAll('.govuk-accordion__section').length
-    ).toEqual(numberOfGroups);
-    expect(
-      container.querySelectorAll('.govuk-checkboxes__item').length
-    ).toEqual(totalAssets + totalVulnerabilities);
+    expect(container.querySelectorAll('.govuk-accordion__section').length).toEqual(numberOfGroups);
+    expect(container.querySelectorAll('.govuk-checkboxes__item').length).toEqual(
+      totalAssets + totalVulnerabilities
+    );
   });
 
   it('updates the grid state when a vulnerability is checked', async () => {
@@ -36,7 +39,12 @@ describe('VulnerabilitiesGrid', () => {
     });
 
     const { container } = render(
-      <VulnerabilitiesGrid onUpdate={onUpdate} onError={jest.fn()} resources={resources} residentCoordinates={residentCoordinates}/>
+      <VulnerabilitiesGrid
+        onUpdate={onUpdate}
+        onError={jest.fn()}
+        resources={resources}
+        residentCoordinates={residentCoordinates}
+      />
     );
 
     act(() => container.querySelector('.govuk-checkboxes__input').click());
@@ -45,7 +53,12 @@ describe('VulnerabilitiesGrid', () => {
 
   it('creates a textinput when checkbox is checked', () => {
     const { container } = render(
-      <VulnerabilitiesGrid onUpdate={jest.fn()} onError={jest.fn()}  resources={resources} residentCoordinates={residentCoordinates}/>
+      <VulnerabilitiesGrid
+        onUpdate={jest.fn()}
+        onError={jest.fn()}
+        resources={resources}
+        residentCoordinates={residentCoordinates}
+      />
     );
 
     fireEvent(
@@ -56,9 +69,7 @@ describe('VulnerabilitiesGrid', () => {
       })
     );
 
-    expect(
-      container.querySelector('#financial-stability-a-other--i')
-    ).toBeInTheDocument();
+    expect(container.querySelector('#financial-stability-a-other--i')).toBeInTheDocument();
   });
 
   it('saves "Other" assets', () => {
@@ -68,7 +79,12 @@ describe('VulnerabilitiesGrid', () => {
       vulnerabilities: []
     });
     const { container } = render(
-      <VulnerabilitiesGrid onUpdate={onUpdate} onError={jest.fn()}  resources={resources} residentCoordinates={residentCoordinates}/>
+      <VulnerabilitiesGrid
+        onUpdate={onUpdate}
+        onError={jest.fn()}
+        resources={resources}
+        residentCoordinates={residentCoordinates}
+      />
     );
 
     fireEvent(
@@ -79,12 +95,9 @@ describe('VulnerabilitiesGrid', () => {
       })
     );
 
-    fireEvent.change(
-      container.querySelector('#financial-stability-a-other--i'),
-      {
-        target: { value: 'some text' }
-      }
-    );
+    fireEvent.change(container.querySelector('#financial-stability-a-other--i'), {
+      target: { value: 'some text' }
+    });
 
     expect(onUpdate).toHaveBeenCalledWith(expected);
   });
@@ -96,7 +109,12 @@ describe('VulnerabilitiesGrid', () => {
       vulnerabilities: [{ data: [], name: 'some text' }]
     });
     const { container } = render(
-      <VulnerabilitiesGrid onUpdate={onUpdate} onError={jest.fn()}  resources={resources} residentCoordinates={residentCoordinates}/>
+      <VulnerabilitiesGrid
+        onUpdate={onUpdate}
+        onError={jest.fn()}
+        resources={resources}
+        residentCoordinates={residentCoordinates}
+      />
     );
 
     fireEvent(
@@ -107,22 +125,21 @@ describe('VulnerabilitiesGrid', () => {
       })
     );
 
-    fireEvent.change(
-      container.querySelector(
-        '#financial-stability-v-other--i'
-      ),
-      {
-        target: { value: 'some text' }
-      }
-    );
+    fireEvent.change(container.querySelector('#financial-stability-v-other--i'), {
+      target: { value: 'some text' }
+    });
 
     expect(onUpdate).toHaveBeenCalledWith(expected);
   });
 
-
   it('creates text inputs when active case checkbox is checked', () => {
     const { container } = render(
-      <VulnerabilitiesGrid onUpdate={jest.fn()} onError={jest.fn()}  resources={resources} residentCoordinates={residentCoordinates}/>
+      <VulnerabilitiesGrid
+        onUpdate={jest.fn()}
+        onError={jest.fn()}
+        resources={resources}
+        residentCoordinates={residentCoordinates}
+      />
     );
 
     fireEvent(
@@ -165,13 +182,17 @@ describe('VulnerabilitiesGrid', () => {
               value: 'test'
             }
           ],
-          name:
-            'Active case with other services (e.g. Adult Social Care, Childrens)'
+          name: 'Active case with other services (e.g. Adult Social Care, Childrens)'
         }
       ]
     });
     const { container } = render(
-      <VulnerabilitiesGrid onUpdate={onUpdate} onError={jest.fn()}  resources={resources} residentCoordinates={residentCoordinates}/>
+      <VulnerabilitiesGrid
+        onUpdate={onUpdate}
+        onError={jest.fn()}
+        resources={resources}
+        residentCoordinates={residentCoordinates}
+      />
     );
 
     fireEvent(
@@ -203,13 +224,17 @@ describe('VulnerabilitiesGrid', () => {
       vulnerabilities: [
         {
           data: [],
-          name:
-            'Active case with other services (e.g. Adult Social Care, Childrens)'
+          name: 'Active case with other services (e.g. Adult Social Care, Childrens)'
         }
       ]
     });
     const { container } = render(
-      <VulnerabilitiesGrid onUpdate={onUpdate} onError={jest.fn()}  resources={resources} residentCoordinates={residentCoordinates}/>
+      <VulnerabilitiesGrid
+        onUpdate={onUpdate}
+        onError={jest.fn()}
+        resources={resources}
+        residentCoordinates={residentCoordinates}
+      />
     );
 
     fireEvent(
@@ -251,9 +276,7 @@ describe('VulnerabilitiesGrid', () => {
           name: 'Hackney Quest',
           description:
             'We provide mentoring for young people and families over the phone or by video call.',
-          websites: [
-            'https://twitter.com/HackneyQuest'
-          ],
+          websites: ['https://twitter.com/HackneyQuest'],
           address: '1 Poole Rd, London E9 7AE',
           postcode: 'E9 7AE',
           tags: ['Social isolation'],
@@ -262,7 +285,12 @@ describe('VulnerabilitiesGrid', () => {
       ];
 
       const { getByLabelText, queryByTestId } = render(
-        <VulnerabilitiesGrid onUpdate={jest.fn()} onError={jest.fn()}  resources={resources} residentCoordinates={residentCoordinates}/>
+        <VulnerabilitiesGrid
+          onUpdate={jest.fn()}
+          onError={jest.fn()}
+          resources={resources}
+          residentCoordinates={residentCoordinates}
+        />
       );
 
       expect(queryByTestId('resource-hq')).not.toBeInTheDocument();
@@ -279,15 +307,19 @@ describe('VulnerabilitiesGrid', () => {
       {
         id: 'hs',
         name: 'Hackney Shine',
-        description:
-          'We offer free online and over the phone advice service to ...',
+        description: 'We offer free online and over the phone advice service to ...',
         websites: ['https://hackney.gov.uk/shine'],
         tags: ['Financial stability']
       }
     ];
 
     const { getByLabelText, queryByTestId } = render(
-      <VulnerabilitiesGrid onUpdate={jest.fn()} onError={jest.fn()}  resources={resources} residentCoordinates={residentCoordinates}/>
+      <VulnerabilitiesGrid
+        onUpdate={jest.fn()}
+        onError={jest.fn()}
+        resources={resources}
+        residentCoordinates={residentCoordinates}
+      />
     );
 
     expect(queryByTestId('resource-hs')).not.toBeInTheDocument();
@@ -304,15 +336,19 @@ describe('VulnerabilitiesGrid', () => {
       {
         id: 'hs',
         name: 'Hackney Shine',
-        description:
-          'We offer free online and over the phone advice service to ...',
+        description: 'We offer free online and over the phone advice service to ...',
         websites: ['https://hackney.gov.uk/shine'],
         tags: ['Financial stability']
       }
     ];
 
     const { getByLabelText, queryByTestId } = render(
-      <VulnerabilitiesGrid onUpdate={jest.fn()} onError={jest.fn()}  resources={resources} residentCoordinates={residentCoordinates}/>
+      <VulnerabilitiesGrid
+        onUpdate={jest.fn()}
+        onError={jest.fn()}
+        resources={resources}
+        residentCoordinates={residentCoordinates}
+      />
     );
 
     expect(queryByTestId('resource-hs')).not.toBeInTheDocument();
