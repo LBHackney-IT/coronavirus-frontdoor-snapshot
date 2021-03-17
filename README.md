@@ -17,7 +17,7 @@ or start a local dynamodb container with Docker like so: `docker-compose up`
 4. Configure AWS cli with `aws configure`
 5. Create local DynamoDB plans table
    ```bash
-   aws dynamodb create-table --cli-input-json file://./config/tables/vulnerabilities.json --endpoint-url http://localhost:8000
+   aws dynamodb create-table --cli-input-json file://./config/tables/referrals.json --endpoint-url http://localhost:8000
    ```
 6. Start running your local copy of understanding vulnerability.
    ```
