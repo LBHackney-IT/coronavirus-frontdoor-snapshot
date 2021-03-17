@@ -17,12 +17,20 @@
  */
 //axe console printing
 module.exports = (on, config) => {
+  const clipboardy = require('clipboardy');
   const { DynamoDB } = require('aws-sdk');
   const client = new DynamoDB.DocumentClient({
     region: 'localhost',
     endpoint: 'http://localhost:8000',
     accessKeyId: 'foo',
     secretAccessKey: 'bar'
+  });
+
+  
+  on('task', {
+    getClipboard () {
+      return clipboardy.readSync();
+    }
   });
 
   // `on` is used to hook into various events Cypress emits
