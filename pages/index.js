@@ -18,7 +18,7 @@ const Index = ({
   errors,
   refererInfo
 }) => {
-  const { referral, loading, updateReferral } = useReferral(initialReferral.referralId, {
+  const { loading } = useReferral(initialReferral.referralId, {
     initialReferral,
     token
   });
@@ -26,23 +26,19 @@ const Index = ({
   if (loading) {
     return <p>Loading...</p>;
   }
-  const [gernericRefferalFormComplete, setGernericRefferalFormComplete] = useState(false);
-  const [residentInfo, setResidentInfo] = useState(false);
   const [showResidentForm, setShowResidentForm] = useState(false);
+  const [referralCompletion, setReferralCompletion] = useState({ tis: null });
 
   const residentFormCallback = val => {
     setShowResidentForm(val);
   };
-  const residentInfoCallback = value => {
-    setResidentInfo(value);
-  };
   return (
     <>
       <ResidentDetailsForm
-        residentInfoCallback={residentInfoCallback}
         showResidentForm={showResidentForm}
         setShowResidentForm={setShowResidentForm}
         token={token}
+        setReferralCompletion={setReferralCompletion}
       />
       <div>
         {errors.map(err => (
@@ -59,10 +55,10 @@ const Index = ({
       <Services
         taxonomies={fssTaxonomies}
         resources={resources}
-        gernericRefferalFormComplete={gernericRefferalFormComplete}
-        residentInfo={residentInfo}
         refererInfo={refererInfo}
         residentFormCallback={residentFormCallback}
+        referralCompletion={referralCompletion}
+        setReferralCompletion={setReferralCompletion}
       />
       <a
         href="https://forms.gle/B6vEMgp7sCsjJqNdA"

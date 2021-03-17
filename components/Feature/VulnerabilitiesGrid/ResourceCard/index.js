@@ -27,6 +27,8 @@ const ResourceCard = ({
   categoryId,
   refererInfo,
   residentFormCallback,
+  referralCompletion,
+  setReferralCompletion,
   ...others
 }) => {
   const [validationError, setValidationError] = useState({});
@@ -133,7 +135,10 @@ const ResourceCard = ({
           customStyle="small"
         />
       </>
-      <details className="govuk-details" data-module="govuk-details">
+      <details
+        className="govuk-details"
+        data-module="govuk-details"
+        onClick={() => setReferralCompletion({})}>
         <summary
           id={`referral-${id}`}
           type="submit"
@@ -144,7 +149,7 @@ const ResourceCard = ({
           }}>
           Refer
         </summary>
-        {!hideForm && (
+        {!hideForm && referralCompletion.success != id && (
           <div hidden={hideForm} id={`referral-${id}-form`}>
             <div
               className={`govuk-form-group govuk-!-padding-bottom-2 ${
@@ -343,6 +348,7 @@ const ResourceCard = ({
                   onInvalid={e => onInvalidField(e.target.id)}
                   required
                 />
+                <input form="resident-details" value={id} name="service-id" hidden />
               </div>
             </div>
             <div className="govuk-form-group govuk-!-padding-bottom-2">
