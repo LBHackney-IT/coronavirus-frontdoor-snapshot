@@ -109,14 +109,14 @@ context('Index page', () => {
           .click();
       cy.get('[data-testid=resource-1]')
           .eq(0)
-      cy.get('#copy-clipboard-icon-abc').eq(0).click({ force: true });
-      cy.task('getClipboard').should('contain', 'Service Name: ABC  mental health Test' + 
-          '\nTelephone: 123456421' + 
-          '\nService Description: Description for ABC  mental health Test services' + 
-          '\nAddress: 101 Test Ln, Hackney' + 
-          '\nWebsites: "https://sample.com/test_mental_health","https://sample.com/test_mental_health_too"' + 
-          '\nReferral website: https://www.test.abc.com' + 
-          '\nReferral email: abc@refer.testy.com');
+      cy.get('#copy-clipboard-icon-1').click({ force: true });
+      cy.task('getClipboard').should('contain', 'Service Name: First service' + 
+          '\nTelephone: 07000 0000000' + 
+          '\nService Description: First service description' +
+          '\nAddress: 404 error' +
+          '\nDescription: Help with first category from the first service' +
+          '\nWebsites: "https://www.sample.org.uk"' +
+          '\nReferral website: referal.form.com');
     });
   });
 });
