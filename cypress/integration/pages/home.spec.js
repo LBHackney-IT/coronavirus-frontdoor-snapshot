@@ -104,14 +104,20 @@ context('Index page', () => {
 
   describe('When the copy icon next to a referral service is clicked', () => {
     it('it copies the referral information to the clipboard', () => {
-      cy.document().then( doc => {
-        doc.body.innerHTML = '<textarea data-testid="service-details">';
-      });
-      cy.get('[data-testid=service-details]').type('test{selectall}');
-      cy.document().then( doc => {
-        doc.execCommand('copy');
-      });
-      cy.task('getClipboard').should('contain', 'test');
+      cy.get('[data-testid=accordion-item]')
+          .eq(0)
+          .click();
+      cy.get('[data-testid=resource-1]')
+          .eq(0)
+      cy.get('[data-testid=copy-clipboard-icon]').eq(0).click({ force: true });
+      cy.task('getClipboard').should('contain', 'Service Name: ABC  mental health Test' + 
+          '\nTelephone: 123456421' + 
+          '\nService Description: Description for ABC  mental health Test services' + 
+          '\nAddress: 101 Test Ln, Hackney' + 
+          '\nWebsites: "https://sample.com/test_mental_health","https://sample.com/test_mental_health_too"' + 
+          '\nReferral website: https://www.test.abc.com' + 
+          '\nReferral email: abc@refer.testy.com');
     });
   });
 });
+
