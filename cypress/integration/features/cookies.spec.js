@@ -24,22 +24,14 @@ context('Cookie consent banner', () => {
       cy.get(selectors.declineButton).click();
       cy.get(selectors.banner).should('not.exist');
       cy.getCookie('cookie_opt_in').should('not.exist');
-      cy.getCookie('seen_cookie_message').should(
-        'have.property',
-        'value',
-        'true'
-      );
+      cy.getCookie('seen_cookie_message').should('have.property', 'value', 'true');
     });
 
     it('accepts cookies when accept is clicked', () => {
       cy.get(selectors.acceptButton).click();
       cy.get(selectors.banner).should('not.exist');
       cy.getCookie('cookie_opt_in').should('have.property', 'value', 'true');
-      cy.getCookie('seen_cookie_message').should(
-        'have.property',
-        'value',
-        'true'
-      );
+      cy.getCookie('seen_cookie_message').should('have.property', 'value', 'true');
     });
   });
 

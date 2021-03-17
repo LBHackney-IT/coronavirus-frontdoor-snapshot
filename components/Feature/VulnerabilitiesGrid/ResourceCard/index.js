@@ -37,8 +37,7 @@ const ResourceCard = ({
     organisation: refererInfo?.iss
   });
 
-  const trimLength = (s, length) =>
-    s.length > length ? s.substring(0, length) + '...' : s;
+  const trimLength = (s, length) => (s.length > length ? s.substring(0, length) + '...' : s);
 
   const websiteElement =
     websites &&
@@ -50,16 +49,11 @@ const ResourceCard = ({
         </a>
       </div>
     ));
-  const distributionElement = tags
-    .filter(t => HIDDEN_TAGS.includes(t))
-    .join(', ');
+  const distributionElement = tags.filter(t => HIDDEN_TAGS.includes(t)).join(', ');
   const tagsElement = tags
     .filter(t => !HIDDEN_TAGS.includes(t))
     .map(item => (
-      <span
-        key={'tags-' + item}
-        className={`${css.tags} tag-element ${css[`${item}-tag`]}`}
-      >
+      <span key={'tags-' + item} className={`${css.tags} tag-element ${css[`${item}-tag`]}`}>
         {trimLength(item, 20)}
       </span>
     ));
@@ -91,47 +85,36 @@ const ResourceCard = ({
     copyText.hidden = false;
     copyText.select();
     copyText.setSelectionRange(0, 99999);
-    document.execCommand("copy");
+    document.execCommand('copy');
     copyText.hidden = true;
-  }
+  };
 
   const clipboardServiceDetails =
-  "Service Name: " + name +
-      (telephone ? "\nTelephone: " + telephone: "") +
-      (serviceDescription ? "\nService Description: " + serviceDescription : "") +
-      (address ? "\nAddress: " + address: "") +
-      (description ? "\nDescription: " + description : "") +
-      (websites.length > 0 ? "\nWebsites: " + JSON.stringify(websites).replace("[", "").replace("]", "") : "") +
-      (referralWebsite ? "\nReferral website: " + referralWebsite : "") +
-      (referralContact ? "\nReferral email: " + referralContact : "")
+    'Service Name: ' +
+    name +
+    (telephone ? '\nTelephone: ' + telephone : '') +
+    (serviceDescription ? '\nService Description: ' + serviceDescription : '') +
+    (address ? '\nAddress: ' + address : '') +
+    (description ? '\nDescription: ' + description : '') +
+    (websites.length > 0
+      ? '\nWebsites: ' +
+        JSON.stringify(websites)
+          .replace('[', '')
+          .replace(']', '')
+      : '') +
+    (referralWebsite ? '\nReferral website: ' + referralWebsite : '') +
+    (referralContact ? '\nReferral email: ' + referralContact : '');
 
   return (
     <div className={`resource ${css.resource}`} {...others}>
-      <div
-        className={`${css.tags__container} card-header-tag`}
-        data-testid="resource-card-tags"
-      >
+      <div className={`${css.tags__container} card-header-tag`} data-testid="resource-card-tags">
         {tagsElement}
       </div>
-      <textarea
-        id={`resource-${name}`}
-        type="hidden"
-        value={clipboardServiceDetails}
-        hidden
-      />
+      <textarea id={`resource-${name}`} type="hidden" value={clipboardServiceDetails} hidden />
       <h3>
         {name}{' '}
-        <a
-          title="copy"
-          href="javascript:void(0)"
-          onClick={() => copyToClipboard()}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            height="20"
-            viewBox="0 0 24 24"
-            width="24"
-          >
+        <a title="copy" href="javascript:void(0)" onClick={() => copyToClipboard()}>
+          <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 0 24 24" width="24">
             <path d="M0 0h24v24H0z" fill="none" />
             <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z" />
           </svg>
@@ -158,19 +141,15 @@ const ResourceCard = ({
           onClick={() => {
             residentFormCallback(hideForm);
             setHideForm(!hideForm);
-          }}
-        >
+          }}>
           Refer
         </summary>
         {!hideForm && (
           <div hidden={hideForm} id={`referral-${id}-form`}>
             <div
               className={`govuk-form-group govuk-!-padding-bottom-2 ${
-                validationError[`referral-reason-${id}`]
-                  ? 'govuk-form-group--error'
-                  : ''
-              }`}
-            >
+                validationError[`referral-reason-${id}`] ? 'govuk-form-group--error' : ''
+              }`}>
               <legend className="govuk-fieldset__legend">
                 Reason for referral, please give as much detail as possible
               </legend>
@@ -178,83 +157,58 @@ const ResourceCard = ({
                 <span
                   id="more-detail-error"
                   className={` ${
-                    validationError[`referral-reason-${id}`]
-                      ? 'govuk-error-message'
-                      : ''
-                  }`}
-                >
-                  <span className="govuk-visually-hidden">Error:</span> Enter
-                  more detail
+                    validationError[`referral-reason-${id}`] ? 'govuk-error-message' : ''
+                  }`}>
+                  <span className="govuk-visually-hidden">Error:</span> Enter more detail
                 </span>
               )}
               <textarea
                 form="resident-details"
                 className={`govuk-textarea ${
-                  validationError[`referral-reason-${id}`]
-                    ? 'govuk-input--error'
-                    : ''
+                  validationError[`referral-reason-${id}`] ? 'govuk-input--error' : ''
                 }`}
                 id={`referral-reason-${id}`}
                 name="referral-reason"
                 rows="5"
                 aria-describedby="more-detail-hint more-detail-error"
                 required
-                onInvalid={e => onInvalidField(e.target.id)}
-              ></textarea>
+                onInvalid={e => onInvalidField(e.target.id)}></textarea>
             </div>
             <div
               className={`govuk-form-group govuk-!-padding-bottom-2 ${
-                validationError[`conversation-notes-${id}`]
-                  ? 'govuk-form-group--error'
-                  : ''
-              }`}
-            >
+                validationError[`conversation-notes-${id}`] ? 'govuk-form-group--error' : ''
+              }`}>
               <legend className="govuk-fieldset__legend">
-                Notes on wider conversation(other needs, living situation, key
-                information
+                Notes on wider conversation(other needs, living situation, key information
               </legend>
               {validationError[`conversation-notes-${id}`] && (
                 <span
                   id="more-detail-error"
                   className={` ${
-                    validationError[`conversation-notes-${id}`]
-                      ? 'govuk-error-message'
-                      : ''
-                  }`}
-                >
-                  <span className="govuk-visually-hidden">Error:</span> Enter
-                  more detail
+                    validationError[`conversation-notes-${id}`] ? 'govuk-error-message' : ''
+                  }`}>
+                  <span className="govuk-visually-hidden">Error:</span> Enter more detail
                 </span>
               )}
               <textarea
                 form="resident-details"
                 className={`govuk-textarea ${
-                  validationError[`conversation-notes-${id}`]
-                    ? 'govuk-input--error'
-                    : ''
+                  validationError[`conversation-notes-${id}`] ? 'govuk-input--error' : ''
                 }`}
                 id={`conversation-notes-${id}`}
                 name="conversation-notes"
                 rows="5"
                 aria-describedby="more-detail-hint more-detail-error"
                 required
-                onInvalid={e => onInvalidField(e.target.id)}
-              ></textarea>
+                onInvalid={e => onInvalidField(e.target.id)}></textarea>
             </div>
             <div
               className={`govuk-form-group govuk-!-padding-bottom-2 ${
-                validationError[`consent-${id}`]
-                  ? 'govuk-form-group--error'
-                  : ''
-              }`}
-            >
-              <fieldset
-                className="govuk-fieldset"
-                aria-describedby="consent-hint"
-              >
+                validationError[`consent-${id}`] ? 'govuk-form-group--error' : ''
+              }`}>
+              <fieldset className="govuk-fieldset" aria-describedby="consent-hint">
                 <legend className="govuk-fieldset__legend">
-                  The resident is happy for their information to be shared with
-                  third parties
+                  The resident is happy for their information to be shared with third parties
                 </legend>
                 <div className="govuk-checkboxes govuk-checkboxes--inline">
                   {validationError[`consent-${id}`] && (
@@ -275,10 +229,7 @@ const ResourceCard = ({
                       onInvalid={e => onInvalidField(e.target.id)}
                       required
                     />
-                    <label
-                      className="govuk-label govuk-checkboxes__label"
-                      for={`consent-${id}`}
-                    >
+                    <label className="govuk-label govuk-checkboxes__label" for={`consent-${id}`}>
                       Yes
                     </label>
                   </div>
@@ -288,32 +239,23 @@ const ResourceCard = ({
             <div>
               <div
                 className={`govuk-form-group govuk-!-padding-bottom-2 ${
-                  validationError[`referer-name-${id}`]
-                    ? 'govuk-form-group--error'
-                    : ''
-                }`}
-              >
+                  validationError[`referer-name-${id}`] ? 'govuk-form-group--error' : ''
+                }`}>
                 <label className="govuk-label inline" htmlFor="name">
                   Your name
                 </label>
                 <span
                   id="name-error"
                   className="govuk-error-message"
-                  aria-describedby="input-name-error"
-                >
-                  <span
-                    hidden={!validationError[`referer-name-${id}`]}
-                    data-testid="name-error"
-                  >
+                  aria-describedby="input-name-error">
+                  <span hidden={!validationError[`referer-name-${id}`]} data-testid="name-error">
                     Enter your name
                   </span>
                 </span>
                 <input
                   form="resident-details"
                   className={`govuk-input govuk-!-width-two-thirds ${
-                    validationError[`referer-name-${id}`]
-                      ? 'govuk-input--error'
-                      : ''
+                    validationError[`referer-name-${id}`] ? 'govuk-input--error' : ''
                   }`}
                   id={`referer-name-${id}`}
                   name="referer-name"
@@ -331,32 +273,25 @@ const ResourceCard = ({
               </div>
               <div
                 className={`govuk-form-group govuk-!-padding-bottom-2 ${
-                  validationError[`referer-organisation-${id}`]
-                    ? 'govuk-form-group--error'
-                    : ''
-                }`}
-              >
+                  validationError[`referer-organisation-${id}`] ? 'govuk-form-group--error' : ''
+                }`}>
                 <label className="govuk-label inline" htmlFor="name">
                   Your organisation
                 </label>
                 <span
                   id="name-error"
                   className="govuk-error-message"
-                  aria-describedby="input-name-error"
-                >
+                  aria-describedby="input-name-error">
                   <span
                     hidden={!validationError[`referer-organisation-${id}`]}
-                    data-testid="name-error"
-                  >
+                    data-testid="name-error">
                     Enter your organisation
                   </span>
                 </span>
                 <input
                   form="resident-details"
                   className={`govuk-input govuk-!-width-two-thirds ${
-                    validationError[`referer-organisation-${id}`]
-                      ? 'govuk-input--error'
-                      : ''
+                    validationError[`referer-organisation-${id}`] ? 'govuk-input--error' : ''
                   }`}
                   id={`referer-organisation-${id}`}
                   name="referer-organisation"
@@ -377,32 +312,23 @@ const ResourceCard = ({
               </div>
               <div
                 className={`govuk-form-group govuk-!-padding-bottom-2 ${
-                  validationError[`referer-email-${id}`]
-                    ? 'govuk-form-group--error'
-                    : ''
-                }`}
-              >
+                  validationError[`referer-email-${id}`] ? 'govuk-form-group--error' : ''
+                }`}>
                 <label className="govuk-label inline" htmlFor="name">
                   Your email
                 </label>
                 <span
                   id="name-error"
                   className="govuk-error-message"
-                  aria-describedby="input-name-error"
-                >
-                  <span
-                    hidden={!validationError[`referer-email-${id}`]}
-                    data-testid="name-error"
-                  >
+                  aria-describedby="input-name-error">
+                  <span hidden={!validationError[`referer-email-${id}`]} data-testid="name-error">
                     Enter your email
                   </span>
                 </span>
                 <input
                   form="resident-details"
                   className={`govuk-input govuk-!-width-two-thirds ${
-                    validationError[`referer-email-${id}`]
-                      ? 'govuk-input--error'
-                      : ''
+                    validationError[`referer-email-${id}`] ? 'govuk-input--error' : ''
                   }`}
                   id={`referer-email-${id}`}
                   name="referer-email"
@@ -457,10 +383,7 @@ const ResourceCard = ({
               type="checkbox"
               value={name}
             />
-            <label
-              className="govuk-label govuk-checkboxes__label"
-              id={`label-${id}`}
-            >
+            <label className="govuk-label govuk-checkboxes__label" id={`label-${id}`}>
               Would you like to recommend this resource?
             </label>
           </div>

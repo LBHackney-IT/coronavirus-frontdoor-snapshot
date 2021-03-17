@@ -12,9 +12,7 @@ describe('Button', () => {
   it('performs an action onClick', () => {
     const buttonText = 'My Button';
     const myAction = jest.fn();
-    const { getByText } = render(
-      <Button text={buttonText} onClick={myAction} />
-    );
+    const { getByText } = render(<Button text={buttonText} onClick={myAction} />);
     fireEvent(
       getByText(buttonText),
       new MouseEvent('click', {
@@ -31,8 +29,6 @@ describe('Button', () => {
     const { getByText } = render(
       <Button text={buttonText} onClick={myAction} isSecondary={true} />
     );
-    expect(getByText(buttonText).className).toContain(
-      'govuk-button--secondary'
-    );
+    expect(getByText(buttonText).className).toContain('govuk-button--secondary');
   });
 });

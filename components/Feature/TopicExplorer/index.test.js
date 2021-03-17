@@ -8,19 +8,19 @@ describe('TopicExplorer', () => {
         { prompt: 'topic one', promptTags: ['One'] },
         { prompt: 'topic two', promptTags: ['Two', 'default'] },
         { prompt: 'topic three', promptTags: ['Three'] }
-      ]
+      ];
 
-      render(<TopicExplorer topics={topics}/>);
+      render(<TopicExplorer topics={topics} />);
     });
 
     it('shows only default results before searching', () => {
       expect(screen.queryByText('topic one')).toBeNull();
       expect(screen.getByText('topic two')).toBeInTheDocument();
-    })
+    });
 
     it('shows no results if no tags match', () => {
       fireEvent.change(screen.getByLabelText('Try searching for keywords like'), {
-        target: { value: 'giraffe' },
+        target: { value: 'giraffe' }
       });
 
       expect(screen.queryByText('Conversational prompts')).toBeNull();
@@ -31,11 +31,11 @@ describe('TopicExplorer', () => {
   describe('with tagged topics', () => {
     beforeEach(() => {
       var topics = [
-        { prompt: 'topic one', promptTags: ['One', 'All', "Another Tag", 'fourth tag'] },
-        { prompt: 'topic two', promptTags: ['Two', 'Second', 'All', 'fifth tag'] },
-      ]
+        { prompt: 'topic one', promptTags: ['One', 'All', 'Another Tag', 'fourth tag'] },
+        { prompt: 'topic two', promptTags: ['Two', 'Second', 'All', 'fifth tag'] }
+      ];
 
-      render(<TopicExplorer topics={topics}/>);
+      render(<TopicExplorer topics={topics} />);
     });
 
     it('shows no results initially', () => {
@@ -44,38 +44,38 @@ describe('TopicExplorer', () => {
       expect(screen.queryByText('topic two')).toBeNull();
     });
 
-    it('shows auto-complete for search terms', () =>{
+    it('shows auto-complete for search terms', () => {
       fireEvent.change(screen.getByLabelText('Try searching for keywords like'), {
-        target: { value: 'f' },
+        target: { value: 'f' }
       });
-      expect(screen.getByText('fourth tag')).toBeInTheDocument
-      expect(screen.getByText('fifth tag')).toBeInTheDocument
-      expect(screen.queryByText('topic one')).toBeNull
-    })
+      expect(screen.getByText('fourth tag')).toBeInTheDocument;
+      expect(screen.getByText('fifth tag')).toBeInTheDocument;
+      expect(screen.queryByText('topic one')).toBeNull;
+    });
 
     it('searching for a tag shows a matching topic', () => {
       fireEvent.change(screen.getByLabelText('Try searching for keywords like'), {
-        target: { value: 'one' },
+        target: { value: 'one' }
       });
 
-      expect(screen.getByText('topic one')).toBeInTheDocument
+      expect(screen.getByText('topic one')).toBeInTheDocument;
     });
 
     it('searching for a tag shows all matching results', () => {
       fireEvent.change(screen.getByLabelText('Try searching for keywords like'), {
-        target: { value: 'all' },
+        target: { value: 'all' }
       });
 
-      expect(screen.getByText('topic one')).toBeInTheDocument
-      expect(screen.getByText('topic two')).toBeInTheDocument
+      expect(screen.getByText('topic one')).toBeInTheDocument;
+      expect(screen.getByText('topic two')).toBeInTheDocument;
     });
 
     it('ignores case when searching', () => {
       fireEvent.change(screen.getByLabelText('Try searching for keywords like'), {
-        target: { value: 'ONE' },
+        target: { value: 'ONE' }
       });
 
-      expect(screen.getByText('topic one')).toBeInTheDocument
+      expect(screen.getByText('topic one')).toBeInTheDocument;
     });
   });
 
@@ -91,10 +91,10 @@ describe('TopicExplorer', () => {
           prompt: 'topic two',
           supportingInformation: 'support info two',
           promptTags: ['Two']
-        },
-      ]
+        }
+      ];
 
-      render(<TopicExplorer topics={topics}/>);
+      render(<TopicExplorer topics={topics} />);
     });
 
     it('shows no results initially', () => {
@@ -105,11 +105,11 @@ describe('TopicExplorer', () => {
 
     it('searching for a tag shows all the related info', () => {
       fireEvent.change(screen.getByLabelText('Try searching for keywords like'), {
-        target: { value: 'one' },
+        target: { value: 'one' }
       });
 
-      expect(screen.getByText('topic one')).toBeInTheDocument
-      expect(screen.getByText('support info one')).toBeInTheDocument
+      expect(screen.getByText('topic one')).toBeInTheDocument;
+      expect(screen.getByText('support info one')).toBeInTheDocument;
     });
   });
 
@@ -118,21 +118,21 @@ describe('TopicExplorer', () => {
       var topics = [
         {
           prompt: 'topic one',
-          supportingInformation: "[click me](https://example.path/)",
+          supportingInformation: '[click me](https://example.path/)',
           promptTags: ['One']
         }
-      ]
+      ];
 
-      render(<TopicExplorer topics={topics}/>);
+      render(<TopicExplorer topics={topics} />);
     });
 
     it('shows links', () => {
       fireEvent.change(screen.getByLabelText('Try searching for keywords like'), {
-        target: { value: 'one' },
+        target: { value: 'one' }
       });
 
-      expect(screen.getByRole('link')).toHaveTextContent('click me')
-      expect(screen.getByText('click me').href).toBe('https://example.path/')
+      expect(screen.getByRole('link')).toHaveTextContent('click me');
+      expect(screen.getByText('click me').href).toBe('https://example.path/');
     });
   });
 });

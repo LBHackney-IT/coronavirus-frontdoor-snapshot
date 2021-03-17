@@ -1,16 +1,7 @@
 import { useEffect, useState } from 'react';
 import moment from 'moment';
 
-const DateInput = ({
-  day,
-  month,
-  name,
-  onChange,
-  showHint,
-  title,
-  validate,
-  year
-}) => {
+const DateInput = ({ day, month, name, onChange, showHint, title, validate, year }) => {
   const [dayValue, setDayValue] = useState(day);
   const [monthValue, setMonthValue] = useState(month);
   const [yearValue, setYearValue] = useState(year);
@@ -18,29 +9,18 @@ const DateInput = ({
 
   useEffect(() => {
     if (validate) {
-      const date = moment(
-        `${dayValue}-${monthValue}-${yearValue}`,
-        'DD-MM-YYYY'
-      );
-      const isValid =
-        dayValue && monthValue && yearValue && date.isValid() && date.isAfter();
+      const date = moment(`${dayValue}-${monthValue}-${yearValue}`, 'DD-MM-YYYY');
+      const isValid = dayValue && monthValue && yearValue && date.isValid() && date.isAfter();
       setHasError(!isValid);
     }
   });
 
   return (
-    <div
-      className={`govuk-form-group${
-        hasError ? ' govuk-form-group--error' : ''
-      }`}
-    >
+    <div className={`govuk-form-group${hasError ? ' govuk-form-group--error' : ''}`}>
       <fieldset
         className="govuk-fieldset"
         role="group"
-        aria-describedby={`${showHint ? `${name}-hint` : ''}${
-          hasError ? ` ${name}-error` : ''
-        }`}
-      >
+        aria-describedby={`${showHint ? `${name}-hint` : ''}${hasError ? ` ${name}-error` : ''}`}>
         <legend>
           <h3 className="govuk-label">{title}</h3>
         </legend>
@@ -53,18 +33,15 @@ const DateInput = ({
 
         {hasError && (
           <span id={`${name}-error`} className="govuk-error-message">
-            <span className="govuk-visually-hidden">Error:</span> The {title}{' '}
-            must be valid and in the future
+            <span className="govuk-visually-hidden">Error:</span> The {title} must be valid and in
+            the future
           </span>
         )}
 
         <div className="govuk-date-input" id={name}>
           <div className="govuk-date-input__item">
             <div className="govuk-form-group">
-              <label
-                className="govuk-label govuk-date-input__label"
-                htmlFor={`${name}-day`}
-              >
+              <label className="govuk-label govuk-date-input__label" htmlFor={`${name}-day`}>
                 Day
               </label>
               <input
@@ -86,10 +63,7 @@ const DateInput = ({
           </div>
           <div className="govuk-date-input__item">
             <div className="govuk-form-group">
-              <label
-                className="govuk-label govuk-date-input__label"
-                htmlFor={`${name}-month`}
-              >
+              <label className="govuk-label govuk-date-input__label" htmlFor={`${name}-month`}>
                 Month
               </label>
               <input
@@ -111,10 +85,7 @@ const DateInput = ({
           </div>
           <div className="govuk-date-input__item">
             <div className="govuk-form-group">
-              <label
-                className="govuk-label govuk-date-input__label"
-                htmlFor={`${name}-year`}
-              >
+              <label className="govuk-label govuk-date-input__label" htmlFor={`${name}-year`}>
                 Year
               </label>
               <input

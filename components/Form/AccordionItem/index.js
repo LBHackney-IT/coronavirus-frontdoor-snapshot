@@ -18,15 +18,17 @@ const AccordionItem = ({
           onClick(!expanded);
           setExpanded(!expanded);
         }}
-        data-testid={id}
-      >
+        data-testid={id}>
         <h3 className="govuk-accordion__section-heading">
           <span className="govuk-accordion__section-button" id={id}>
             {heading}
           </span>
         </h3>
       </div>
-      <div className="govuk-accordion__section-content" aria-labelledby={id} data-testid="accordion-content">
+      <div
+        className="govuk-accordion__section-content"
+        aria-labelledby={id}
+        data-testid="accordion-content">
         {children}
       </div>
     </div>

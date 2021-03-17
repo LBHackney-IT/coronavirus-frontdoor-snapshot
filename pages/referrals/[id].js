@@ -9,29 +9,18 @@ import { convertIsoDateToString, convertIsoDateToYears } from 'lib/utils/date';
 import geoCoordinates from 'lib/api/utils/geoCoordinates';
 import TopicExplorer from 'components/Feature/TopicExplorer';
 
-const ReferralSummary = ({
-  resources,
-  initialReferral,
-  token,
-  topics,
-  showTopicExplorer
-}) => {
-  const { referral, loading, updateReferral } = useReferral(
-    initialReferral.referralId,
-    {
-      initialReferral,
-      token
-    }
-  );
+const ReferralSummary = ({ resources, initialReferral, token, topics, showTopicExplorer }) => {
+  const { referral, loading, updateReferral } = useReferral(initialReferral.referralId, {
+    initialReferral,
+    token
+  });
 
   if (loading) {
     return <p>Loading...</p>;
   }
 
   const [editReferral, setEditReferral] = useState(
-    referral.assets.length === 0 &&
-      referral.vulnerabilities.length === 0 &&
-      !referral.notes
+    referral.assets.length === 0 && referral.vulnerabilities.length === 0 && !referral.notes
   );
   const [hasValue, setHasValue] = useState(false);
 
@@ -39,18 +28,14 @@ const ReferralSummary = ({
     referral.assets = selected.assets;
     referral.vulnerabilities = selected.vulnerabilities;
     setHasValue(
-      referral.assets.length > 0 ||
-        referral.vulnerabilities.length > 0 ||
-        referral.notes
+      referral.assets.length > 0 || referral.vulnerabilities.length > 0 || referral.notes
     );
   };
   const [selectedResources, setResources] = useState([]);
 
   const updateSummaryResource = updatedResource => {
     let updatedResources = selectedResources;
-    if (
-      updatedResources.some(resource => resource.name === updatedResource.name)
-    ) {
+    if (updatedResources.some(resource => resource.name === updatedResource.name)) {
       let resourcesRemoved = [];
       updatedResources.forEach(resource => {
         if (resource.name != updatedResource.name) {
@@ -81,21 +66,11 @@ const ReferralSummary = ({
   const updateNotes = notes => {
     referral.notes = notes;
     setHasValue(
-      referral.assets.length > 0 ||
-        referral.vulnerabilities.length > 0 ||
-        referral.notes
+      referral.assets.length > 0 || referral.vulnerabilities.length > 0 || referral.notes
     );
   };
 
-  const {
-    dob,
-    firstName,
-    lastName,
-    postcode,
-    assets,
-    vulnerabilities,
-    notes
-  } = referral;
+  const { dob, firstName, lastName, postcode, assets, vulnerabilities, notes } = referral;
   let customerId = referral.systemIds?.[0];
   const residentCoordinates = geoCoordinates(postcode);
   const INH_URL = process.env.INH_URL;
@@ -107,8 +82,7 @@ const ReferralSummary = ({
           <a
             href={`${INH_URL}/help-requests/edit/${customerId}`}
             className="govuk-back-link back-button"
-            data-testid="back-link-test"
-          >
+            data-testid="back-link-test">
             Back
           </a>
         )}
@@ -127,10 +101,7 @@ const ReferralSummary = ({
       </div>
 
       {dob && (
-        <span
-          className="govuk-body govuk-!-font-weight-bold"
-          data-testid="age-and-date-of-birth"
-        >
+        <span className="govuk-body govuk-!-font-weight-bold" data-testid="age-and-date-of-birth">
           Aged {convertIsoDateToYears(dob)} ({convertIsoDateToString(dob)})
         </span>
       )}
@@ -166,17 +137,14 @@ const ReferralSummary = ({
       {!editReferral && (
         <>
           <div className="summary-sections" data-testid="notes-summary">
-            <h3 className="summary-titles">
-              What prompted the Resident to get in touch today?
-            </h3>
+            <h3 className="summary-titles">What prompted the Resident to get in touch today?</h3>
             {notes ? notes : 'Nothing captured'}
           </div>
 
           <div className="govuk-grid-row">
             <div
               className="summary-sections govuk-grid-column-one-half"
-              data-testid="vulnerabilities-summary"
-            >
+              data-testid="vulnerabilities-summary">
               <h3 className="summary-titles">Vulnerabilities</h3>
               {vulnerabilities.length > 0 ? (
                 <div>
@@ -203,8 +171,7 @@ const ReferralSummary = ({
 
             <div
               className="summary-sections govuk-grid-column-one-half"
-              data-testid="assets-summary"
-            >
+              data-testid="assets-summary">
               <h3 className="summary-titles">Strengths identified</h3>
               {assets.length > 0 ? (
                 <div>
@@ -238,8 +205,7 @@ const ReferralSummary = ({
                 <a
                   href={`${INH_URL}/help-requests/complete/${customerId}`}
                   className="govuk-button"
-                  data-testid="continue-link-to-inh"
-                >
+                  data-testid="continue-link-to-inh">
                   Continue
                 </a>
               </div>
@@ -251,11 +217,7 @@ const ReferralSummary = ({
   );
 };
 
-ReferralSummary.getInitialProps = async ({
-  query: { id },
-  req: { headers },
-  res
-}) => {
+ReferralSummary.getInitialProps = async ({ query: { id }, req: { headers }, res }) => {
   try {
     const token = getTokenFromCookieHeader(headers);
     const initialReferral = await requestReferral(id, { token });

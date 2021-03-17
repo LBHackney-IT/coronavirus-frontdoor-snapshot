@@ -24,10 +24,7 @@ describe('ReferralSummary', () => {
       query: { id: '1' },
       req: { headers: {} }
     });
-    expect(fetch).toHaveBeenCalledWith(
-      expect.stringContaining('/referrals/1'),
-      expect.any(Object)
-    );
+    expect(fetch).toHaveBeenCalledWith(expect.stringContaining('/referrals/1'), expect.any(Object));
     expect(props.initialReferral).toStrictEqual(expectedResponse);
   });
 
@@ -42,9 +39,7 @@ describe('ReferralSummary', () => {
       const { getByText } = render(
         <ReferralSummary initialReferral={referral} resources={resources} />
       );
-      expect(
-        getByText(`${referral.firstName}'s resources`)
-      ).toBeInTheDocument();
+      expect(getByText(`${referral.firstName}'s resources`)).toBeInTheDocument();
     });
 
     it('shows the dob', () => {
@@ -92,9 +87,7 @@ describe('ReferralSummary', () => {
       const { container, getByText } = render(
         <ReferralSummary initialReferral={referral} resources={resources} />
       );
-      expect(
-        container.querySelector('.govuk-accordion')
-      ).not.toBeInTheDocument();
+      expect(container.querySelector('.govuk-accordion')).not.toBeInTheDocument();
       expect(getByText('v1')).toBeInTheDocument();
     });
 
@@ -106,9 +99,7 @@ describe('ReferralSummary', () => {
       const { container, getByText } = render(
         <ReferralSummary initialReferral={referral} resources={resources} />
       );
-      expect(
-        container.querySelector('.govuk-accordion')
-      ).not.toBeInTheDocument();
+      expect(container.querySelector('.govuk-accordion')).not.toBeInTheDocument();
       expect(getByText('a1')).toBeInTheDocument();
     });
 
@@ -121,9 +112,7 @@ describe('ReferralSummary', () => {
       const { container, getByText } = render(
         <ReferralSummary initialReferral={referral} resources={resources} />
       );
-      expect(
-        container.querySelector('.govuk-accordion')
-      ).not.toBeInTheDocument();
+      expect(container.querySelector('.govuk-accordion')).not.toBeInTheDocument();
       expect(getByText('some notes')).toBeInTheDocument();
     });
 

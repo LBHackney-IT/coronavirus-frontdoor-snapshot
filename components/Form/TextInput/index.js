@@ -1,14 +1,6 @@
 import { useEffect, useState } from 'react';
 
-const TextInput = ({
-  autoComplete,
-  label,
-  name,
-  onChange,
-  validate,
-  value,
-  className
-}) => {
+const TextInput = ({ autoComplete, label, name, onChange, validate, value, className }) => {
   const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
@@ -20,18 +12,13 @@ const TextInput = ({
   };
 
   return (
-    <div
-      className={`govuk-form-group${
-        hasError ? ' govuk-form-group--error' : ''
-      }`}
-    >
+    <div className={`govuk-form-group${hasError ? ' govuk-form-group--error' : ''}`}>
       <label className="govuk-label" htmlFor={name}>
         {label}
       </label>
       {hasError && (
         <span id={`${name}-error`} className="govuk-error-message">
-          <span className="govuk-visually-hidden">Error:</span> The {label} is
-          required
+          <span className="govuk-visually-hidden">Error:</span> The {label} is required
         </span>
       )}
       <input

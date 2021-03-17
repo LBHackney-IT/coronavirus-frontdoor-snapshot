@@ -62,24 +62,16 @@ const ResidentDetailsForm = ({
   return (
     <div>
       <h1 className="govuk-heading-l">Who are you helping?</h1>
-      <details
-        className="govuk-details"
-        onClick={() => setShowResidentForm(!showResidentForm)}
-      >
+      <details className="govuk-details" onClick={() => setShowResidentForm(!showResidentForm)}>
         <summary>Residents details</summary>
       </details>
 
       {
-        <form
-          id="resident-details"
-          onSubmit={onSubmitForm}
-          hidden={!showResidentForm}
-        >
+        <form id="resident-details" onSubmit={onSubmitForm} hidden={!showResidentForm}>
           <div
             className={`govuk-form-group ${
               validationError.firstName ? 'govuk-form-group--error' : ''
-            }`}
-          >
+            }`}>
             <div className="govuk-!-padding-bottom-2">
               <label className="govuk-label inline" htmlFor="name">
                 First name
@@ -87,12 +79,8 @@ const ResidentDetailsForm = ({
               <span
                 id="name-error"
                 className="govuk-error-message"
-                aria-describedby="input-name-error"
-              >
-                <span
-                  hidden={!validationError.firstName}
-                  data-testid="name-error"
-                >
+                aria-describedby="input-name-error">
+                <span hidden={!validationError.firstName} data-testid="name-error">
                   Enter the first name
                 </span>
               </span>
@@ -113,8 +101,7 @@ const ResidentDetailsForm = ({
           <div
             className={`govuk-form-group ${
               validationError.lastName ? 'govuk-form-group--error' : ''
-            }`}
-          >
+            }`}>
             <div className="govuk-!-padding-bottom-2">
               <label className="govuk-label inline" htmlFor="name">
                 Last name
@@ -122,12 +109,8 @@ const ResidentDetailsForm = ({
               <span
                 id="name-error"
                 className="govuk-error-message"
-                aria-describedby="input-name-error"
-              >
-                <span
-                  hidden={!validationError.lastName}
-                  data-testid="name-error"
-                >
+                aria-describedby="input-name-error">
+                <span hidden={!validationError.lastName} data-testid="name-error">
                   Enter the last name
                 </span>
               </span>
@@ -148,8 +131,7 @@ const ResidentDetailsForm = ({
           <div
             className={`govuk-form-group ${
               validationError.phone ? 'govuk-form-group--error' : ''
-            }`}
-          >
+            }`}>
             <div className="govuk-!-padding-bottom-2">
               <label className="govuk-label inline" htmlFor="phone">
                 Phone
@@ -157,8 +139,7 @@ const ResidentDetailsForm = ({
               <span
                 id="phone-error"
                 className="govuk-error-message"
-                aria-describedby="input-phone-error"
-              >
+                aria-describedby="input-phone-error">
                 <span hidden={!validationError.phone} data-testid="phone-error">
                   Enter the phone number
                 </span>
@@ -180,8 +161,7 @@ const ResidentDetailsForm = ({
           <div
             className={`govuk-form-group ${
               validationError.email ? 'govuk-form-group--error' : ''
-            }`}
-          >
+            }`}>
             <div className="govuk-!-padding-bottom-2">
               <label className="govuk-label inline" htmlFor="email">
                 Email
@@ -189,8 +169,7 @@ const ResidentDetailsForm = ({
               <span
                 id="email-error"
                 className="govuk-error-message"
-                aria-describedby="input-email-error"
-              >
+                aria-describedby="input-email-error">
                 <span hidden={!validationError.email} data-testid="email-error">
                   Enter the email address
                 </span>
@@ -213,8 +192,7 @@ const ResidentDetailsForm = ({
           <div
             className={`govuk-form-group ${
               validationError.address ? 'govuk-form-group--error' : ''
-            }`}
-          >
+            }`}>
             <div className="govuk-!-padding-bottom-2">
               <label className="govuk-label inline" htmlFor="address">
                 Address
@@ -222,12 +200,8 @@ const ResidentDetailsForm = ({
               <span
                 id="address-error"
                 className="govuk-error-message"
-                aria-describedby="input-address-error"
-              >
-                <span
-                  hidden={!validationError.address}
-                  data-testid="address-error"
-                >
+                aria-describedby="input-address-error">
+                <span hidden={!validationError.address} data-testid="address-error">
                   Enter the address
                 </span>
               </span>
@@ -248,8 +222,7 @@ const ResidentDetailsForm = ({
           <div
             className={`govuk-form-group ${
               validationError.postcode ? 'govuk-form-group--error' : ''
-            }`}
-          >
+            }`}>
             <div className="govuk-!-padding-bottom-2">
               <label className="govuk-label inline" htmlFor="postcode">
                 Postcode
@@ -257,12 +230,8 @@ const ResidentDetailsForm = ({
               <span
                 id="postcode-error"
                 className="govuk-error-message"
-                aria-describedby="input-postcode-error"
-              >
-                <span
-                  hidden={!validationError.postcode}
-                  data-testid="postcode-error"
-                >
+                aria-describedby="input-postcode-error">
+                <span hidden={!validationError.postcode} data-testid="postcode-error">
                   Enter the postcode
                 </span>
               </span>
@@ -284,16 +253,12 @@ const ResidentDetailsForm = ({
             <fieldset
               className="govuk-fieldset"
               role="group"
-              aria-describedby="date-of-birth-section"
-            >
+              aria-describedby="date-of-birth-section">
               <legend className="govuk-fieldset__legend">Date of birth</legend>
               <div className="govuk-date-input" id="date-of-birth">
                 <div className="govuk-date-input__item">
                   <div className="govuk-form-group">
-                    <label
-                      className="govuk-label govuk-date-input__label"
-                      for="date-of-birth-day"
-                    >
+                    <label className="govuk-label govuk-date-input__label" for="date-of-birth-day">
                       Day
                     </label>
                     <input
@@ -310,8 +275,7 @@ const ResidentDetailsForm = ({
                   <div className="govuk-form-group">
                     <label
                       className="govuk-label govuk-date-input__label"
-                      for="date-of-birth-month"
-                    >
+                      for="date-of-birth-month">
                       Month
                     </label>
                     <input
@@ -326,10 +290,7 @@ const ResidentDetailsForm = ({
                 </div>
                 <div className="govuk-date-input__item">
                   <div className="govuk-form-group">
-                    <label
-                      className="govuk-label govuk-date-input__label"
-                      for="date-of-birth-year"
-                    >
+                    <label className="govuk-label govuk-date-input__label" for="date-of-birth-year">
                       Year
                     </label>
                     <input

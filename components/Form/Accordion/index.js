@@ -6,8 +6,7 @@ const Accordion = ({ children, title, handleExpanded }) => (
       <div>{title && <h2>{title}</h2>}</div>
       <div
         className={`govuk-accordion__controls ${styles['lbh-accordion__controls']}`}
-        onClick={handleExpanded}
-      ></div>
+        onClick={handleExpanded}></div>
     </div>
 
     {children}

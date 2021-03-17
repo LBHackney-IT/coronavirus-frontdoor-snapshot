@@ -11,9 +11,7 @@ const Services = ({ resources, taxonomies, refererInfo, residentFormCallback }) 
 
   taxonomiesToRender.forEach(
     taxonomy =>
-      (taxonomy.resources = resources.filter(
-        resource => taxonomy.name == resource.categoryName
-      ))
+      (taxonomy.resources = resources.filter(resource => taxonomy.name == resource.categoryName))
   );
 
   return (
@@ -36,8 +34,7 @@ const Services = ({ resources, taxonomies, refererInfo, residentFormCallback }) 
                             ? !expandedGroups[taxonomy.id]
                             : expanded
                       })
-                    }
-                  >
+                    }>
                     {taxonomy.resources.map(resource => (
                       <ResourceCard
                         key={`resource-card-${resource.id}-${resource.name}`}

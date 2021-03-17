@@ -2,17 +2,11 @@ const classNames = (className, extraClassNames = '') => {
   return [className, extraClassNames].join(' ');
 };
 
-const TableTitle = ({ title }) => (
-  <caption className="govuk-table__caption">{title}</caption>
-);
+const TableTitle = ({ title }) => <caption className="govuk-table__caption">{title}</caption>;
 
-const TableHead = ({ children }) => (
-  <thead className="govuk-table__head">{children}</thead>
-);
+const TableHead = ({ children }) => <thead className="govuk-table__head">{children}</thead>;
 
-const TableBody = ({ children }) => (
-  <tbody className="govuk-table__body">{children}</tbody>
-);
+const TableBody = ({ children }) => <tbody className="govuk-table__body">{children}</tbody>;
 
 const TableRow = ({ children, className }) => (
   <tr className={classNames('govuk-table__row', className)}>{children}</tr>
