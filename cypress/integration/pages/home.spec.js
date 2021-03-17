@@ -109,7 +109,7 @@ context('Index page', () => {
           .click();
       cy.get('[data-testid=resource-1]')
           .eq(0)
-      cy.get('[data-testid=copy-clipboard-icon]').eq(0).click({ force: true });
+      cy.get('#copy-clipboard-icon-abc').eq(0).click({ force: true });
       cy.task('getClipboard').should('contain', 'Service Name: ABC  mental health Test' + 
           '\nTelephone: 123456421' + 
           '\nService Description: Description for ABC  mental health Test services' + 
