@@ -8,21 +8,20 @@ export const endpoint = ({ createReferral }) =>
     {
       allowedMethods: ['POST'],
       validators: [
-        {
-          name: 'firstName',
-          failureMessage: 'first name is required',
-          validate: ({ body }) => body.firstName && body.firstName.length > 0
-        },
-        {
-          name: 'lastName',
-          failureMessage: 'last name is required',
-          validate: ({ body }) => body.lastName && body.lastName.length > 0
-        }
+        // {
+        //   name: 'firstName',
+        //   failureMessage: 'first name is required',
+        //   validate: ({ body }) => body.firstName && body.firstName.length > 0
+        // },
+        // {
+        //   name: 'lastName',
+        //   failureMessage: 'last name is required',
+        //   validate: ({ body }) => body.lastName && body.lastName.length > 0
+        // }
       ]
     },
     async ({
       body: {
-        createdBy,
         firstName,
         lastName,
         phone,
@@ -32,24 +31,39 @@ export const endpoint = ({ createReferral }) =>
         referralReason,
         conversationNotes,
         referrerOrganisation,
+        referrerName,
         referrerEmail,
-        dateOfBirth
+        dateOfBirth,
+        serviceId,
+        serviceName,
+        serviceContactEmail,
+        serviceReferralEmail
       },
       headers
     }) => {
       const referral = await createReferral.execute({
-        createdBy,
-        firstName,
-        lastName,
-        phone,
-        email,
-        address,
-        postcode,
+        resident: {
+          firstName,
+          lastName,
+          phone,
+          email,
+          address,
+          postcode,
+          dateOfBirth,
+        },
+        referrer: {
+          name: referrerName,
+          organisation: referrerOrganisation,
+          email: referrerEmail
+        },
         referralReason,
         conversationNotes,
-        referrerOrganisation,
-        referrerEmail,
-        dateOfBirth
+        service: {
+          id: serviceId,
+          name: serviceName,
+          contactEmail: serviceContactEmail,
+          referralEmail: serviceReferralEmail
+        }
       });
       return Response.created(referral);
     }
