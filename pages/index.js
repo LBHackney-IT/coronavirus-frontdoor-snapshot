@@ -26,10 +26,10 @@ const Index = ({
   if (loading) {
     return <p>Loading...</p>;
   }
-  const [gernericRefferalFormComplete, setGernericRefferalFormComplete] = useState(false);
   const [residentInfo, setResidentInfo] = useState(false);
   const [showResidentForm, setShowResidentForm] = useState(false);
   const [referralCompletion, setReferralCompletion] = useState({ tis: null });
+  const [referralSummary, setReferralSummary] = useState([]);
 
   const residentFormCallback = val => {
     setShowResidentForm(val);
@@ -39,6 +39,9 @@ const Index = ({
   };
   return (
     <>
+      {referralSummary.map(referral => (
+        <p>{referral.serviceName}</p>
+      ))}
       {process.env.REFERRALS_ENABLED == 'true' && (
         <ResidentDetailsForm
           residentInfoCallback={residentInfoCallback}
@@ -47,6 +50,8 @@ const Index = ({
           token={token}
           setReferralCompletion={setReferralCompletion}
           referralCompletion={referralCompletion}
+          referralSummary={referralSummary}
+          setReferralSummary={setReferralSummary}
         />
       )}
       <div>
@@ -64,7 +69,6 @@ const Index = ({
       <Services
         taxonomies={fssTaxonomies}
         resources={resources}
-        gernericRefferalFormComplete={gernericRefferalFormComplete}
         residentInfo={residentInfo}
         refererInfo={refererInfo}
         residentFormCallback={residentFormCallback}

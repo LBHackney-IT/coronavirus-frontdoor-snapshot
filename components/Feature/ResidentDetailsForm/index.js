@@ -8,7 +8,9 @@ const ResidentDetailsForm = ({
   showResidentForm,
   setShowResidentForm,
   setReferralCompletion,
-  referralCompletion
+  referralCompletion,
+  referralSummary,
+  setReferralSummary
 }) => {
   const { createReferral } = useReferral({ token });
   const [residentInfo, setResidentInfo] = useState({
@@ -50,7 +52,6 @@ const ResidentDetailsForm = ({
       postcode: e.target.postcode.value,
       referralReason: e.target['referral-reason'].value,
       conversationNotes: e.target['conversation-notes'].value,
-      createdBy: e.target['referer-name'].value,
       referrerEmail: e.target['referer-email'].value,
       referrerOrganisation: e.target['referer-organisation'].value,
       dateOfBirth: {
@@ -62,6 +63,14 @@ const ResidentDetailsForm = ({
     const result = await createReferral(referral);
     if (result?.id) {
       setReferralCompletion({ ...referralCompletion, [serviceId]: true });
+      const newReferralSummary = referralSummary.concat([
+        {
+          serviceName: e.target['service-name'],
+          serviceId,
+          serviceContactEmail: e.target['service-email']
+        }
+      ]);
+      setReferralSummary(newReferralSummary);
     }
   };
   return (
