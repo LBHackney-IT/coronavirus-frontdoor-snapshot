@@ -50,6 +50,7 @@ jobs:
           name: Build the application
           command: |
             export NEXT_PUBLIC_API_URL=http://localhost:3000/api
+            export NEXT_REFERRALS_ENABLED=true
             yarn build
       - run:
           name: Run unit tests
