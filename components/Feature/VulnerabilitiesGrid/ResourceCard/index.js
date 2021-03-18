@@ -368,6 +368,9 @@ const ResourceCard = ({
             </div>
           </div>
         )}
+        {referralCompletion.success == id && (
+          <div className={`${css['success-message']}`}>Successfully submitted referral!</div>
+        )}
       </details>
       {snapshot && (
         <div className="govuk-checkboxes__item">
