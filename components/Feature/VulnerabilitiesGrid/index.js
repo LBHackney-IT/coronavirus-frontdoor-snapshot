@@ -296,6 +296,8 @@ const VulnerabilitiesGrid = ({
                               {...resource}
                               updateSelectedResources={updateSummaryResource}
                               customerId={customerId}
+                              setReferralCompletion={() => {}}
+                              referralCompletion={null}
                             />
                           );
                         })}

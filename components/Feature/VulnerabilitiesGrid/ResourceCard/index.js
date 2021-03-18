@@ -153,7 +153,7 @@ const ResourceCard = ({
           }}>
           Refer
         </summary>
-        {!hideForm && referralCompletion.success != id && (
+        {!hideForm && referralCompletion?.success != id && (
           <div hidden={hideForm} id={`referral-${id}-form`}>
             <div
               className={`govuk-form-group govuk-!-padding-bottom-2 ${
@@ -368,7 +368,7 @@ const ResourceCard = ({
             </div>
           </div>
         )}
-        {referralCompletion.success == id && (
+        {referralCompletion?.success == id && (
           <div className={`${css['success-message']}`}>Successfully submitted referral!</div>
         )}
       </details>
