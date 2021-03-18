@@ -65,8 +65,7 @@ const ResidentDetailsForm = ({
     };
     const result = await createReferral(referral);
     if (result.id) {
-      console.log(result);
-      setReferralCompletion({ ...referralCompletion, [serviceId]: true });
+      setReferralCompletion({ ...referralCompletion, [serviceId]: result });
     }
   };
   return (
