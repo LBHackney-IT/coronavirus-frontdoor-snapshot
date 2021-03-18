@@ -22,16 +22,16 @@ const Services = ({
       (taxonomy.resources = resources.filter(resource => taxonomy.name == resource.categoryName))
   );
 
-  const detailsClicked = (e, id, serviceId) => {
+  const detailsClicked = (e, id, serviceId, categoryName) => {
     e.preventDefault();
     const isOpen = document.getElementById(id).getAttribute('open');
     document.getElementsByName('refer-details').forEach(x => x.removeAttribute('open'));
     if (!isOpen) {
       document.getElementById(id).setAttribute('open', true);
-      setOpenId(serviceId);
+      setOpenId({ id: serviceId, categoryName });
       residentFormCallback(true);
     } else {
-      setOpenId(null);
+      setOpenId({});
       residentFormCallback(false);
     }
   };

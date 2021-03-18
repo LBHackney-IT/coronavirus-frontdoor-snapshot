@@ -154,12 +154,12 @@ const ResourceCard = ({
             type="submit"
             form="resident-details"
             onClick={e => {
-              detailsClicked(e, `referral-${id}-details`, id);
+              detailsClicked(e, `referral-${id}-details`, id, categoryName);
             }}>
             Refer
           </summary>
         )}
-        {openId == id && !referralCompletion[id] && (
+        {openId.id == id && openId.categoryName == categoryName && !referralCompletion[id] && (
           <div id={`referral-${id}-form`}>
             <div
               className={`govuk-form-group govuk-!-padding-bottom-2 ${
