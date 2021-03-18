@@ -144,7 +144,7 @@ const ResourceCard = ({
         />
       </>
       <details className="govuk-details" data-module="govuk-details">
-        {process.env.REFERRALS_ENABLED == 'true' && (
+        {(process.env.REFERRALS_ENABLED == 'true' &&  referralContact.length > 0) && (
           <summary
             id={`referral-${id}`}
             type="submit"
@@ -158,6 +158,30 @@ const ResourceCard = ({
         )}
         {!hideForm && !referralCompletion[id] && (
           <div hidden={hideForm} id={`referral-${id}-form`}>
+            <input
+              form="resident-details"
+              id={`service-name-${id}`}
+              name="service-name"
+              value={name}
+              type="text"
+              hidden
+            />
+            <input
+              form="resident-details"
+              id={`service-contact-email-${id}`}
+              name="service-contact-email"
+              value={email}
+              type="text"
+              hidden
+            />
+            <input
+              form="resident-details"
+              id={`service-referral-email-${id}`}
+              name="service-referral-email"
+              value={referralContact}
+              type="text"
+              hidden
+            />
             <div
               className={`govuk-form-group govuk-!-padding-bottom-2 ${
                 validationError[`referral-reason-${id}`] ? 'govuk-form-group--error' : ''

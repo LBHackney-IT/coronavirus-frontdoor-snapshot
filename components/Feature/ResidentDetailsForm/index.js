@@ -50,17 +50,22 @@ const ResidentDetailsForm = ({
       postcode: e.target.postcode.value,
       referralReason: e.target['referral-reason'].value,
       conversationNotes: e.target['conversation-notes'].value,
-      createdBy: e.target['referer-name'].value,
+      referrerName: e.target['referer-name'].value,
       referrerEmail: e.target['referer-email'].value,
       referrerOrganisation: e.target['referer-organisation'].value,
       dateOfBirth: {
         year: e.target['date-of-birth-year'].value,
         month: e.target['date-of-birth-month'].value,
         day: e.target['date-of-birth-day'].value
-      }
+      },
+      serviceId: serviceId,
+      serviceName: e.target['service-name'].value,
+      serviceContactEmail: e.target['service-contact-email'].value,
+      serviceReferralEmail: e.target['service-referral-email'].value
     };
     const result = await createReferral(referral);
     if (result.id) {
+      console.log(result);
       setReferralCompletion({ ...referralCompletion, [serviceId]: true });
     }
   };
