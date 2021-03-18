@@ -1,6 +1,5 @@
 @import '../../../../pages/stylesheets/vars.scss';
 
-
 .resource {
   margin-bottom: 0.5em;
   width: 45%;
@@ -19,7 +18,7 @@
   .tags__container {
     margin-bottom: 10px;
   }
-  .label{
+  .label {
     font-weight: bold;
   }
   .tags {
@@ -31,7 +30,7 @@
     font-weight: 600;
     white-space: nowrap;
   }
-  
+
   .Council-tag {
     background-color: #00703c;
   }
@@ -69,4 +68,8 @@
       color: $hackney-green;
     }
   }
+}
+.success-message {
+  background-color: #ddffdd !important;
+  padding: 16px 16px 16px 16px;
 }

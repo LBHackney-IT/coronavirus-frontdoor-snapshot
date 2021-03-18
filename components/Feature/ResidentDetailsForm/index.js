@@ -6,7 +6,9 @@ const ResidentDetailsForm = ({
   residentInfoCallback,
   token,
   showResidentForm,
-  setShowResidentForm
+  setShowResidentForm,
+  setReferralCompletion,
+  referralCompletion
 }) => {
   const { createReferral } = useReferral({ token });
   const [residentInfo, setResidentInfo] = useState({
@@ -36,8 +38,9 @@ const ResidentDetailsForm = ({
     setValidationError({ [value]: true, ...validationError });
   };
 
-  const onSubmitForm = e => {
+  const onSubmitForm = async e => {
     e.preventDefault();
+    const serviceId = e.target['service-id'].value;
     const referral = {
       firstName: e.target.firstName.value,
       lastName: e.target.lastName.value,
@@ -56,8 +59,10 @@ const ResidentDetailsForm = ({
         day: e.target['date-of-birth-day'].value
       }
     };
-
-    createReferral(referral);
+    const result = await createReferral(referral);
+    if (result.id) {
+      setReferralCompletion({ ...referralCompletion, [serviceId]: true });
+    }
   };
   return (
     <div>
