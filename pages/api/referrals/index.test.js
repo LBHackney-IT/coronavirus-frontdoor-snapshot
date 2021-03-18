@@ -28,43 +28,59 @@ describe('Create Referral Api', () => {
     const conversationNotes = 'nice chat';
     const referrerEmail = 'email@email.com';
     const referrerOrganisation = 'Hackney';
-    const createdBy = 'Me';
+    const referrerName = 'Me';
     const phone = '0712345678';
     const postcode = 'SP1 2RM';
     const referralReason = 'needed tests';
+    const serviceId = 2;
+    const serviceName = 'ABC service';
+    const serviceContactEmail = 'abc@email.com';
+    const serviceReferralEmail = 'referralservice@email.com'
 
     const response = await call({
       body: {
-        createdBy,
-        dateOfBirth,
         firstName,
         lastName,
-        // systemIds,
+        phone,
         email,
         address,
-        conversationNotes,
-        phone,
         postcode,
         referralReason,
+        conversationNotes,
+        referrerOrganisation,
+        referrerName,
         referrerEmail,
-        referrerOrganisation
+        dateOfBirth,
+        serviceId,
+        serviceName,
+        serviceContactEmail,
+        serviceReferralEmail
       },
       headers: {}
     });
     expect(createReferral.execute).toHaveBeenCalledWith({
-      dateOfBirth,
-      createdBy,
-      firstName,
-      lastName,
-      // systemIds,
-      email,
-      address,
-      conversationNotes,
-      phone,
-      postcode,
+      resident: {
+        firstName,
+        lastName,
+        phone,
+        email,
+        address,
+        postcode,
+        dateOfBirth,
+      },
+      referrer: {
+        name: referrerName,
+        organisation: referrerOrganisation,
+        email: referrerEmail
+      },
       referralReason,
-      referrerEmail,
-      referrerOrganisation
+      conversationNotes,
+      service: {
+        id: serviceId,
+        name: serviceName,
+        contactEmail: serviceContactEmail,
+        referralEmail: serviceReferralEmail
+      },
     });
     expect(response.statusCode).toBe(201);
   });
@@ -75,41 +91,23 @@ describe('Create Referral Api', () => {
   });
 
   describe('validation', () => {
-    it('returns 400 when no firstName', async () => {
+    it('returns 400 when no required fields are provided', async () =>{
       const response = await call({
         body: {
-          lastName: 'taylor',
-          systemIds: ['xyz']
-        }
-      });
-      expect(response.statusCode).toBe(400);
-      expect(JSON.parse(response.body).errors.length).toBe(1);
-    });
 
-    it('returns 400 when no lastName', async () => {
-      const response = await call({
-        body: {
-          firstName: 'sue',
-          systemIds: ['xyz']
-        }
-      });
+        }});
       expect(response.statusCode).toBe(400);
-      expect(JSON.parse(response.body).errors.length).toBe(1);
-    });
-
-    xit('returns 400 when no systemIds', async () => {
-      const response = await call({
-        body: {
-          firstName: 'sue',
-          lastName: 'taylor',
-          systemIds: []
-        }
-      });
-      expect(response.statusCode).toBe(400);
-      expect(JSON.parse(response.body).errors.length).toBe(1);
+      const errors = JSON.parse(response.body).errors;
+      expect(errors.length).toBe(6);
+      expect(errors[0]).toBe("first name is required");
+      expect(errors[1]).toBe("last name is required");
+      expect(errors[2]).toBe("service referral email is required");
+      expect(errors[3]).toBe("resident email is required");
+      expect(errors[4]).toBe("service id is required");
+      expect(errors[5]).toBe("referrer email is required");
     });
   });
-
+  
   it('returns a 500 for other errors', async () => {
     createReferral.execute = jest.fn(() => {
       throw new Error();
@@ -118,7 +116,10 @@ describe('Create Referral Api', () => {
       body: {
         firstName: 'sue',
         lastName: 'taylor',
-        systemIds: ['xyz']
+        referrerEmail: 'referrer@email.com',
+        serviceId: 2,
+        serviceReferralEmail: 'service_referrer@email.com',
+        email: 'resident@email.com'
       }
     });
     expect(response.statusCode).toBe(500);

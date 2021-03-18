@@ -8,16 +8,36 @@ export const endpoint = ({ createReferral }) =>
     {
       allowedMethods: ['POST'],
       validators: [
-        // {
-        //   name: 'firstName',
-        //   failureMessage: 'first name is required',
-        //   validate: ({ body }) => body.firstName && body.firstName.length > 0
-        // },
-        // {
-        //   name: 'lastName',
-        //   failureMessage: 'last name is required',
-        //   validate: ({ body }) => body.lastName && body.lastName.length > 0
-        // }
+        {
+          name: 'firstName',
+          failureMessage: 'first name is required',
+          validate: ({ body }) => body.firstName && body.firstName.length > 0
+        },
+        {
+          name: 'lastName',
+          failureMessage: 'last name is required',
+          validate: ({ body }) => body.lastName && body.lastName.length > 0
+        },
+        {
+          name: 'serviceReferralEmail',
+          failureMessage: 'service referral email is required',
+          validate: ({ body }) => body.serviceReferralEmail && body.serviceReferralEmail.length > 0
+        },
+        {
+          name: 'email',
+          failureMessage: 'resident email is required',
+          validate: ({ body }) => body.serviceReferralEmail && body.serviceReferralEmail.length > 0
+        },
+        {
+          name: 'serviceId',
+          failureMessage: 'service id is required',
+          validate: ({ body }) => body.serviceReferralEmail && body.serviceReferralEmail.length > 0
+        },
+        {
+          name: 'referrerEmail',
+          failureMessage: 'referrer email is required',
+          validate: ({ body }) => body.serviceReferralEmail && body.serviceReferralEmail.length > 0
+        }
       ]
     },
     async ({
