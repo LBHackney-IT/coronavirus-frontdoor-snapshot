@@ -35,7 +35,7 @@ describe('Create Referral Api', () => {
     const serviceId = 2;
     const serviceName = 'ABC service';
     const serviceContactEmail = 'abc@email.com';
-    const serviceReferralEmail = 'referralservice@email.com'
+    const serviceReferralEmail = 'referralservice@email.com';
 
     const response = await call({
       body: {
@@ -66,7 +66,7 @@ describe('Create Referral Api', () => {
         email,
         address,
         postcode,
-        dateOfBirth,
+        dateOfBirth
       },
       referrer: {
         name: referrerName,
@@ -81,6 +81,9 @@ describe('Create Referral Api', () => {
         contactEmail: serviceContactEmail,
         referralEmail: serviceReferralEmail
       },
+      id: undefined,
+      systemIds: undefined,
+      created: expect.any(String)
     });
     expect(response.statusCode).toBe(201);
   });
@@ -91,23 +94,20 @@ describe('Create Referral Api', () => {
   });
 
   describe('validation', () => {
-    it('returns 400 when no required fields are provided', async () =>{
-      const response = await call({
-        body: {
-
-        }});
+    it('returns 400 when no required fields are provided', async () => {
+      const response = await call({ body: {} });
       expect(response.statusCode).toBe(400);
       const errors = JSON.parse(response.body).errors;
       expect(errors.length).toBe(6);
-      expect(errors[0]).toBe("first name is required");
-      expect(errors[1]).toBe("last name is required");
-      expect(errors[2]).toBe("service referral email is required");
-      expect(errors[3]).toBe("resident email is required");
-      expect(errors[4]).toBe("service id is required");
-      expect(errors[5]).toBe("referrer email is required");
+      expect(errors[0]).toBe('first name is required');
+      expect(errors[1]).toBe('last name is required');
+      expect(errors[2]).toBe('service referral email is required');
+      expect(errors[3]).toBe('resident email is required');
+      expect(errors[4]).toBe('service id is required');
+      expect(errors[5]).toBe('referrer email is required');
     });
   });
-  
+
   it('returns a 500 for other errors', async () => {
     createReferral.execute = jest.fn(() => {
       throw new Error();
