@@ -38,12 +38,14 @@ const Index = ({
   };
   return (
     <>
-      <ResidentDetailsForm
-        residentInfoCallback={residentInfoCallback}
-        showResidentForm={showResidentForm}
-        setShowResidentForm={setShowResidentForm}
-        token={token}
-      />
+      {process.env.REFERRALS_ENABLED && (
+        <ResidentDetailsForm
+          residentInfoCallback={residentInfoCallback}
+          showResidentForm={showResidentForm}
+          setShowResidentForm={setShowResidentForm}
+          token={token}
+        />
+      )}
       <div>
         {errors.map(err => (
           <p className="govuk-error-message">{err}</p>
