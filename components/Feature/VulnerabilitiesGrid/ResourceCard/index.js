@@ -144,7 +144,7 @@ const ResourceCard = ({
         />
       </>
       <details className="govuk-details" data-module="govuk-details">
-        {process.env.REFERRALS_ENABLED == 'true' && referralContact?.length > 0 && (
+        {(process.env.NEXT_PUBLIC_REFERRALS_ENABLED == 'true' &&  referralContact?.length > 0) && (
           <summary
             id={`referral-${id}`}
             type="submit"
@@ -401,6 +401,7 @@ const ResourceCard = ({
         <div>
           {referralCompletion[id].errors?.length > 0 ? (
             <div className={`${css['error-message']}`}>{referralCompletion[id].errors}</div>
+            <div className={`${css['error-message']}`}>{referralCompletion[id].errors.join("\n")}</div>
           ) : (
             <div className={`${css['success-message']}`}>Successfully submitted referral</div>
           )}
