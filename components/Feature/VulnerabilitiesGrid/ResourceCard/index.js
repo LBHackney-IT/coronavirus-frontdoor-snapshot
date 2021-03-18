@@ -26,13 +26,13 @@ const ResourceCard = ({
   residentInfo,
   categoryId,
   refererInfo,
-  residentFormCallback,
   referralCompletion,
   setReferralCompletion,
+  detailsClicked,
+  openId,
   ...others
 }) => {
   const [validationError, setValidationError] = useState({});
-  const [hideForm, setHideForm] = useState(true);
   const [referrerData, setReferrerData] = useState({
     name: refererInfo?.name,
     email: refererInfo?.email,
@@ -143,21 +143,24 @@ const ResourceCard = ({
           customStyle="small"
         />
       </>
-      <details className="govuk-details" data-module="govuk-details">
+      <details
+        className="govuk-details"
+        name="refer-details"
+        id={`referral-${id}-details`}
+        data-module="govuk-details">
         {process.env.REFERRALS_ENABLED == 'true' && (
           <summary
             id={`referral-${id}`}
             type="submit"
             form="resident-details"
-            onClick={() => {
-              residentFormCallback(hideForm);
-              setHideForm(!hideForm);
+            onClick={e => {
+              detailsClicked(e, `referral-${id}-details`, id);
             }}>
             Refer
           </summary>
         )}
-        {!hideForm && !referralCompletion[id] && (
-          <div hidden={hideForm} id={`referral-${id}-form`}>
+        {openId == id && !referralCompletion[id] && (
+          <div id={`referral-${id}-form`}>
             <div
               className={`govuk-form-group govuk-!-padding-bottom-2 ${
                 validationError[`referral-reason-${id}`] ? 'govuk-form-group--error' : ''

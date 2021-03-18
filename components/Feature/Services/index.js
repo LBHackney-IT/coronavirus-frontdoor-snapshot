@@ -11,6 +11,7 @@ const Services = ({
   setReferralCompletion
 }) => {
   const [expandedGroups, setExpandedGroups] = useState({});
+  const [openId, setOpenId] = useState({});
 
   const taxonomiesToRender = taxonomies.filter(taxonomy =>
     resources.some(resource => resource.categoryName === taxonomy.name)
@@ -20,6 +21,20 @@ const Services = ({
     taxonomy =>
       (taxonomy.resources = resources.filter(resource => taxonomy.name == resource.categoryName))
   );
+
+  const detailsClicked = (e, id, serviceId) => {
+    e.preventDefault();
+    const isOpen = document.getElementById(id).getAttribute('open');
+    document.getElementsByName('refer-details').forEach(x => x.removeAttribute('open'));
+    if (!isOpen) {
+      document.getElementById(id).setAttribute('open', true);
+      setOpenId(serviceId);
+      residentFormCallback(true);
+    } else {
+      setOpenId(null);
+      residentFormCallback(false);
+    }
+  };
 
   return (
     <>
@@ -49,9 +64,10 @@ const Services = ({
                         {...resource}
                         updateSelectedResources={() => {}}
                         refererInfo={refererInfo}
-                        residentFormCallback={residentFormCallback}
                         referralCompletion={referralCompletion}
                         setReferralCompletion={setReferralCompletion}
+                        detailsClicked={detailsClicked}
+                        openId={openId}
                       />
                     ))}
                   </AccordionItem>
