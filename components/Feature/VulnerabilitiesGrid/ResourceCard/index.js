@@ -30,6 +30,8 @@ const ResourceCard = ({
   setReferralCompletion,
   detailsClicked,
   openReferralForm,
+  referralFields,
+  setReferralFields,
   ...others
 }) => {
   const [validationError, setValidationError] = useState({});
@@ -188,6 +190,10 @@ const ResourceCard = ({
                   name="referral-reason"
                   rows="5"
                   aria-describedby="more-detail-hint more-detail-error"
+                  defaultValue={referralFields['referral-reason']}
+                  onChange={e => {
+                    setReferralFields({ ...referralFields, 'referral-reason': e.target.value });
+                  }}
                   required
                   onInvalid={e => onInvalidField(e.target.id)}></textarea>
               </div>
@@ -216,6 +222,10 @@ const ResourceCard = ({
                   name="conversation-notes"
                   rows="5"
                   aria-describedby="more-detail-hint more-detail-error"
+                  defaultValue={referralFields['conversation-notes']}
+                  onChange={e => {
+                    setReferralFields({ ...referralFields, 'conversation-notes': e.target.value });
+                  }}
                   required
                   onInvalid={e => onInvalidField(e.target.id)}></textarea>
               </div>

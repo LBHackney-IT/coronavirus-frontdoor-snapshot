@@ -12,6 +12,7 @@ const Services = ({
 }) => {
   const [expandedGroups, setExpandedGroups] = useState({});
   const [openReferralForm, setOpenReferralForm] = useState({});
+  const [referralFields, setReferralFields] = useState({});
 
   const taxonomiesToRender = taxonomies.filter(taxonomy =>
     resources.some(resource => resource.categoryName === taxonomy.name)
@@ -68,6 +69,8 @@ const Services = ({
                         setReferralCompletion={setReferralCompletion}
                         detailsClicked={detailsClicked}
                         openReferralForm={openReferralForm}
+                        referralFields={referralFields}
+                        setReferralFields={setReferralFields}
                       />
                     ))}
                   </AccordionItem>
