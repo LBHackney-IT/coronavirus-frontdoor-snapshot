@@ -1,7 +1,7 @@
 import createEndpoint from 'lib/api/utils/createEndpoint';
 import Response from 'lib/api/domain/Response';
 import { createReferral } from 'lib/dependencies';
-import { getUsername, getTokenFromAuthHeader } from 'lib/utils/token';
+import { Referral } from '../../../lib/domain';
 
 export const endpoint = ({ createReferral }) =>
   createEndpoint(
@@ -61,30 +61,26 @@ export const endpoint = ({ createReferral }) =>
       },
       headers
     }) => {
-      const referral = await createReferral.execute({
-        resident: {
+      const referral = await createReferral.execute(
+        new Referral({
           firstName,
           lastName,
           phone,
           email,
           address,
           postcode,
+          referralReason,
+          conversationNotes,
+          referrerOrganisation,
+          referrerName,
+          referrerEmail,
           dateOfBirth,
-        },
-        referrer: {
-          name: referrerName,
-          organisation: referrerOrganisation,
-          email: referrerEmail
-        },
-        referralReason,
-        conversationNotes,
-        service: {
-          id: serviceId,
-          name: serviceName,
-          contactEmail: serviceContactEmail,
-          referralEmail: serviceReferralEmail
-        }
-      });
+          serviceId,
+          serviceName,
+          serviceContactEmail,
+          serviceReferralEmail
+        })
+      );
       return Response.created(referral);
     }
   );
