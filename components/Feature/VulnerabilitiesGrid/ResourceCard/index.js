@@ -144,7 +144,7 @@ const ResourceCard = ({
         />
       </>
       <details className="govuk-details" data-module="govuk-details">
-        {(process.env.REFERRALS_ENABLED == 'true' &&  referralContact.length > 0) && (
+        {(process.env.REFERRALS_ENABLED == 'true' &&  referralContact?.length > 0) && (
           <summary
             id={`referral-${id}`}
             type="submit"
