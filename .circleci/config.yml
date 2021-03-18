@@ -69,7 +69,7 @@ jobs:
       - run:
           name: Run integration tests
           command: |
-            export REFERRALS_ENABLED=true
+            export NEXT_REFERRALS_ENABLED=true
             export NEXT_PUBLIC_API_URL=http://localhost:3000/api
             export SHOW_TOPIC_EXPLORER=true
             export INH_URL=https://inh-admin-test.hackney.gov.uk

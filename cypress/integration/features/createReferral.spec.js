@@ -6,12 +6,12 @@ context('Create referral', () => {
       cy.injectAxe();
     });
 
-    xit('resident form is hidden', () => {
+    it('resident form is hidden', () => {
       cy.contains('Residents details').should('be.visible');
       cy.contains('#resident-details').should('not.be.visible');
     });
 
-    xit('referral form', () => {
+    it('referral form', () => {
       cy.get('[data-testid=accordion-item]')
         .eq(0)
         .click();
@@ -46,7 +46,7 @@ context('Create referral', () => {
       cy.injectAxe();
     });
 
-    xit('resident form is hidden', () => {
+    it('resident form is hidden', () => {
       cy.contains('Residents details')
         .should('be.visible')
         .click();
@@ -59,7 +59,7 @@ context('Create referral', () => {
       cy.get('#postcode').type('M3 0W');
     });
 
-    xit('referral form', () => {
+    it('referral form', () => {
       cy.get('[data-testid=accordion-item]')
         .eq(0)
         .click();
