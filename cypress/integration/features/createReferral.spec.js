@@ -16,20 +16,20 @@ context('Create referral', () => {
         .eq(0)
         .click();
 
-      cy.get('#referral-1-form').should('not.exist');
-      cy.get('#referral-1')
+      cy.get('#referral-ABC123-form').should('not.exist');
+      cy.get('#referral-ABC123')
         .contains('Refer')
         .click();
 
-      cy.get('#referral-reason-1').type(
+      cy.get('#referral-reason-ABC123').type(
         'Sunt in culpa qui officia deserunt mollit anim id est laborum.'
       );
-      cy.get('#conversation-notes-1').type('Excepteur sint occaecat cupidatat non proident');
-      cy.get('#consent-1').click();
-      cy.get('#referer-name-1').type('Tina Belcher');
-      cy.get('#referer-organisation-1').type("Bob's Burgers");
-      cy.get('#referer-email-1').type('tina@bburgers.com');
-      cy.get('#submit-1').click();
+      cy.get('#conversation-notes-ABC123').type('Excepteur sint occaecat cupidatat non proident');
+      cy.get('#consent-ABC123').click();
+      cy.get('#referer-name-ABC123').type('Tina Belcher');
+      cy.get('#referer-organisation-ABC123').type("Bob's Burgers");
+      cy.get('#referer-email-ABC123').type('tina@bburgers.com');
+      cy.get('#submit-ABC123').click();
 
       cy.get('#firstName').should('have.class', 'govuk-input--error');
       cy.get('#lastName').should('have.class', 'govuk-input--error');
@@ -64,21 +64,26 @@ context('Create referral', () => {
         .eq(0)
         .click();
 
-      cy.get('#referral-1-form').should('not.exist');
-      cy.get('#referral-1')
+      cy.get('#referral-ABC123-form').should('not.exist');
+      cy.get('#referral-ABC123')
         .contains('Refer')
         .click();
 
-      cy.get('#submit-1').click();
+      cy.get('#submit-ABC123').click();
 
-      cy.get('#referral-reason-1').should('have.class', 'govuk-input--error');
-      cy.get('#conversation-notes-1').should('have.class', 'govuk-input--error');
+      cy.get('#referral-reason-ABC123').should('have.class', 'govuk-input--error');
+      cy.get('#conversation-notes-ABC123').should('have.class', 'govuk-input--error');
 
-      cy.get('#consent-1-error').should('exist');
+      cy.get('#consent-ABC123-error').should('exist');
 
-      cy.get('#referer-name-1').should('have.class', 'govuk-input--error');
-      cy.get('#referer-organisation-1').should('have.class', 'govuk-input--error');
-      cy.get('#referer-email-1').should('have.class', 'govuk-input--error');
+      cy.get('#referer-name-ABC123').should('have.class', 'govuk-input--error');
+      cy.get('#referer-organisation-ABC123').should('have.class', 'govuk-input--error');
+      cy.get('#referer-email-ABC123').should('have.class', 'govuk-input--error');
     });
   });
 });
+
+
+// test that not all services have refer button
+// test green box
+// test and implemnt red box
