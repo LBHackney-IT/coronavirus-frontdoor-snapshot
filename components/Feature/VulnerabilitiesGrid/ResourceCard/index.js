@@ -30,16 +30,11 @@ const ResourceCard = ({
   setReferralCompletion,
   detailsClicked,
   openReferralForm,
-  referralFields,
-  setReferralFields,
+  referralData,
+  setReferralData,
   ...others
 }) => {
   const [validationError, setValidationError] = useState({});
-  const [referrerData, setReferrerData] = useState({
-    name: refererInfo?.name,
-    email: refererInfo?.email,
-    organisation: refererInfo?.iss
-  });
 
   const trimLength = (s, length) => (s.length > length ? s.substring(0, length) + '...' : s);
 
@@ -190,9 +185,9 @@ const ResourceCard = ({
                   name="referral-reason"
                   rows="5"
                   aria-describedby="more-detail-hint more-detail-error"
-                  defaultValue={referralFields['referral-reason']}
+                  defaultValue={referralData['referral-reason']}
                   onChange={e => {
-                    setReferralFields({ ...referralFields, 'referral-reason': e.target.value });
+                    setReferralData({ ...referralData, 'referral-reason': e.target.value });
                   }}
                   required
                   onInvalid={e => onInvalidField(e.target.id)}></textarea>
@@ -222,9 +217,9 @@ const ResourceCard = ({
                   name="conversation-notes"
                   rows="5"
                   aria-describedby="more-detail-hint more-detail-error"
-                  defaultValue={referralFields['conversation-notes']}
+                  defaultValue={referralData['conversation-notes']}
                   onChange={e => {
-                    setReferralFields({ ...referralFields, 'conversation-notes': e.target.value });
+                    setReferralData({ ...referralData, 'conversation-notes': e.target.value });
                   }}
                   required
                   onInvalid={e => onInvalidField(e.target.id)}></textarea>
@@ -286,11 +281,10 @@ const ResourceCard = ({
                     }`}
                     id={`referer-name-${id}`}
                     name="referer-name"
-                    value={referrerData?.name}
                     type="text"
+                    defaultValue={referralData['referer-name']}
                     onChange={e => {
-                      const newFullNameVal = e.target.value;
-                      setReferrerData({ ...referrerData, name: newFullNameVal });
+                      setReferralData({ ...referralData, 'referer-name': e.target.value });
                     }}
                     aria-describedby="refererName-hint"
                     aria-describedby="refererName"
@@ -323,17 +317,13 @@ const ResourceCard = ({
                     id={`referer-organisation-${id}`}
                     name="referer-organisation"
                     type="text"
+                    defaultValue={referralData['referer-organisation']}
                     onChange={e => {
-                      const newOrganisationVal = e.target.value;
-                      setReferrerData({
-                        ...referrerData,
-                        organisation: newOrganisationVal
-                      });
+                      setReferralData({ ...referralData, 'referer-organisation': e.target.value });
                     }}
                     aria-describedby="refererorganisation-hint"
                     aria-describedby="refererorganisation"
                     onInvalid={e => onInvalidField(e.target.id)}
-                    value={referrerData?.organisation} //we probably dont want this, im not sure if exrternal users will have iss set for them as their own org
                     required
                   />
                 </div>
@@ -360,11 +350,10 @@ const ResourceCard = ({
                     id={`referer-email-${id}`}
                     name="referer-email"
                     type="email"
+                    defaultValue={referralData['referer-email']}
                     onChange={e => {
-                      const newEmailVal = e.target.value;
-                      setReferrerData({ ...referrerData, email: newEmailVal });
+                      setReferralData({ ...referralData, 'referer-email': e.target.value });
                     }}
-                    value={referrerData?.email}
                     aria-describedby="refererorganisation-hint"
                     aria-describedby="refererorganisation"
                     onInvalid={e => onInvalidField(e.target.id)}
