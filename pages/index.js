@@ -29,6 +29,7 @@ const Index = ({
   const [gernericRefferalFormComplete, setGernericRefferalFormComplete] = useState(false);
   const [residentInfo, setResidentInfo] = useState(false);
   const [showResidentForm, setShowResidentForm] = useState(false);
+  const [referralCompletion, setReferralCompletion] = useState({ tis: null });
 
   const residentFormCallback = val => {
     setShowResidentForm(val);
@@ -44,6 +45,7 @@ const Index = ({
           showResidentForm={showResidentForm}
           setShowResidentForm={setShowResidentForm}
           token={token}
+          setReferralCompletion={setReferralCompletion}
         />
       )}
       <div>
@@ -65,6 +67,8 @@ const Index = ({
         residentInfo={residentInfo}
         refererInfo={refererInfo}
         residentFormCallback={residentFormCallback}
+        referralCompletion={referralCompletion}
+        setReferralCompletion={setReferralCompletion}
       />
       <a
         href="https://forms.gle/B6vEMgp7sCsjJqNdA"

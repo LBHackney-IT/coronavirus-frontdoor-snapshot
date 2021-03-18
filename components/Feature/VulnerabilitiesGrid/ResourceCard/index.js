@@ -27,6 +27,8 @@ const ResourceCard = ({
   categoryId,
   refererInfo,
   residentFormCallback,
+  referralCompletion,
+  setReferralCompletion,
   ...others
 }) => {
   const [validationError, setValidationError] = useState({});
@@ -132,7 +134,11 @@ const ResourceCard = ({
             Distance: distance && distance < 100 ? distance + ' miles' : null,
             Distribution: distributionElement,
             Telephone: telephone,
-            'Service Description': serviceDescription
+            'Service Description': serviceDescription,
+            Address: address,
+            Description: description,
+            Website: websiteElement,
+            'Additional notes': notes
           }}
           customStyle="small"
         />
@@ -146,11 +152,12 @@ const ResourceCard = ({
             onClick={() => {
               residentFormCallback(hideForm);
               setHideForm(!hideForm);
+              setReferralCompletion({});
             }}>
             Refer
           </summary>
         )}
-        {!hideForm && (
+        {!hideForm && referralCompletion.success != id && (
           <div hidden={hideForm} id={`referral-${id}-form`}>
             <div
               className={`govuk-form-group govuk-!-padding-bottom-2 ${
@@ -349,6 +356,7 @@ const ResourceCard = ({
                   onInvalid={e => onInvalidField(e.target.id)}
                   required
                 />
+                <input form="resident-details" value={id} name="service-id" hidden />
               </div>
             </div>
             <div className="govuk-form-group govuk-!-padding-bottom-2">
@@ -364,37 +372,24 @@ const ResourceCard = ({
             </div>
           </div>
         )}
-      </details>
-      <details className="govuk-details" data-module="govuk-details">
-        <summary id={`summary-${id}`} className="">
-          View more information
-        </summary>
-        <SummaryList
-          key={`moreResourceInfo-${id}-${categoryId}`}
-          name={'moreResourceInfo'}
-          entries={{
-            Address: address,
-            Description: description,
-            Website: websiteElement,
-            'Additional notes': notes
-          }}
-          customStyle="small"
-        />
-        {snapshot && (
-          <div className="govuk-checkboxes__item">
-            <input
-              className="govuk-checkboxes__input"
-              id={`input-${id}`}
-              onClick={() => updateResource()}
-              type="checkbox"
-              value={name}
-            />
-            <label className="govuk-label govuk-checkboxes__label" id={`label-${id}`}>
-              Would you like to recommend this resource?
-            </label>
-          </div>
+        {referralCompletion.success == id && (
+          <div className={`${css['success-message']}`}>Successfully submitted referral!</div>
         )}
       </details>
+      {snapshot && (
+        <div className="govuk-checkboxes__item">
+          <input
+            className="govuk-checkboxes__input"
+            id={`input-${id}`}
+            onClick={() => updateResource()}
+            type="checkbox"
+            value={name}
+          />
+          <label className="govuk-label govuk-checkboxes__label" id={`label-${id}`}>
+            Would you like to recommend this resource?
+          </label>
+        </div>
+      )}
     </div>
   );
 };
