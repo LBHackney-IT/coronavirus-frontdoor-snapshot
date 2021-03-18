@@ -39,13 +39,14 @@ const Index = ({
   };
   return (
     <>
-      {process.env.REFERRALS_ENABLED && (
+      {process.env.REFERRALS_ENABLED == 'true' && (
         <ResidentDetailsForm
           residentInfoCallback={residentInfoCallback}
           showResidentForm={showResidentForm}
           setShowResidentForm={setShowResidentForm}
           token={token}
           setReferralCompletion={setReferralCompletion}
+          referralCompletion={referralCompletion}
         />
       )}
       <div>

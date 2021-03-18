@@ -144,7 +144,7 @@ const ResourceCard = ({
         />
       </>
       <details className="govuk-details" data-module="govuk-details">
-        {process.env.REFERRALS_ENABLED && (
+        {process.env.REFERRALS_ENABLED == 'true' && (
           <summary
             id={`referral-${id}`}
             type="submit"
@@ -152,12 +152,11 @@ const ResourceCard = ({
             onClick={() => {
               residentFormCallback(hideForm);
               setHideForm(!hideForm);
-              setReferralCompletion({});
             }}>
             Refer
           </summary>
         )}
-        {!hideForm && referralCompletion.success != id && (
+        {!hideForm && !referralCompletion[id] && (
           <div hidden={hideForm} id={`referral-${id}-form`}>
             <div
               className={`govuk-form-group govuk-!-padding-bottom-2 ${
@@ -372,10 +371,11 @@ const ResourceCard = ({
             </div>
           </div>
         )}
-        {referralCompletion.success == id && (
-          <div className={`${css['success-message']}`}>Successfully submitted referral!</div>
-        )}
       </details>
+
+      {referralCompletion[id] && (
+        <div className={`${css['success-message']}`}>Successfully submitted referral!</div>
+      )}
       {snapshot && (
         <div className="govuk-checkboxes__item">
           <input

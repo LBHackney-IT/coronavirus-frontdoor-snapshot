@@ -7,7 +7,8 @@ const ResidentDetailsForm = ({
   token,
   showResidentForm,
   setShowResidentForm,
-  setReferralCompletion
+  setReferralCompletion,
+  referralCompletion
 }) => {
   const { createReferral } = useReferral({ token });
   const [residentInfo, setResidentInfo] = useState({
@@ -60,7 +61,7 @@ const ResidentDetailsForm = ({
     };
     const result = await createReferral(referral);
     if (result.id) {
-      setReferralCompletion({ success: serviceId });
+      setReferralCompletion({ ...referralCompletion, [serviceId]: true });
     }
   };
   return (
