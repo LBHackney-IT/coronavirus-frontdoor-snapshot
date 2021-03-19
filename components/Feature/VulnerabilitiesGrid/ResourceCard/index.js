@@ -140,149 +140,59 @@ const ResourceCard = ({
           customStyle="small"
         />
       </>
-      <details
-        className="govuk-details"
-        name="refer-details"
-        id={`referral-${id}-details`}
-        data-module="govuk-details">
-        {process.env.REFERRALS_ENABLED == 'true' && referralContact?.length > 0 && (
-          <summary
-            id={`referral-${id}`}
-            type="submit"
-            form="resident-details"
-            onClick={e => {
-              detailsClicked(e, `referral-${id}-details`, id, categoryName);
-            }}>
-            Refer
-          </summary>
-        )}
-        {openReferralForm.id == id &&
-          openReferralForm.categoryName == categoryName &&
-          !referralCompletion[id] && (
-            <div id={`referral-${id}-form`}>
-              <input
-                form="resident-details"
-                id={`service-name-${id}`}
-                name="service-name"
-                value={name}
-                type="text"
-                hidden
-              />
-              <input
-                form="resident-details"
-                id={`service-contact-email-${id}`}
-                name="service-contact-email"
-                value={email}
-                type="text"
-                hidden
-              />
-              <input
-                form="resident-details"
-                id={`service-contact-phone-${id}`}
-                name="service-contact-phone"
-                value={telephone}
-                type="text"
-                hidden
-              />
-              <input
-                form="resident-details"
-                id={`service-referral-email-${id}`}
-                name="service-referral-email"
-                value={referralContact}
-                type="text"
-                hidden
-              />
-              <div
-                className={`govuk-form-group govuk-!-padding-bottom-2 ${
-                  validationError[`referral-reason-${id}`] ? 'govuk-form-group--error' : ''
-                }`}>
-                <legend className="govuk-fieldset__legend">
-                  Reason for referral, please give as much detail as possible
-                </legend>
-                {validationError[`referral-reason-${id}`] && (
-                  <span
-                    id="more-detail-error"
-                    className={` ${
-                      validationError[`referral-reason-${id}`] ? 'govuk-error-message' : ''
-                    }`}>
-                    <span className="govuk-visually-hidden">Error:</span> Enter more detail
-                  </span>
-                )}
-                <textarea
+      {referralContact?.length > 0 && (
+        <details
+          className="govuk-details"
+          name="refer-details"
+          id={`referral-${id}-details`}
+          data-module="govuk-details">
+          {process.env.REFERRALS_ENABLED == 'true' && (
+            <summary
+              id={`referral-${id}`}
+              type="submit"
+              form="resident-details"
+              onClick={e => {
+                detailsClicked(e, `referral-${id}-details`, id, categoryName);
+              }}>
+              Refer
+            </summary>
+          )}
+          {openReferralForm.id == id &&
+            openReferralForm.categoryName == categoryName &&
+            !referralCompletion[id] && (
+              <div id={`referral-${id}-form`}>
+                <input
                   form="resident-details"
-                  className={`govuk-textarea ${
-                    validationError[`referral-reason-${id}`] ? 'govuk-input--error' : ''
-                  }`}
-                  id={`referral-reason-${id}`}
-                  name="referral-reason"
-                  rows="5"
-                  aria-describedby="more-detail-hint more-detail-error"
-                  required
-                  onInvalid={e => onInvalidField(e.target.id)}></textarea>
-              </div>
-              <div
-                className={`govuk-form-group govuk-!-padding-bottom-2 ${
-                  validationError[`conversation-notes-${id}`] ? 'govuk-form-group--error' : ''
-                }`}>
-                <legend className="govuk-fieldset__legend">
-                  Notes on wider conversation(other needs, living situation, key information
-                </legend>
-                {validationError[`conversation-notes-${id}`] && (
-                  <span
-                    id="more-detail-error"
-                    className={` ${
-                      validationError[`conversation-notes-${id}`] ? 'govuk-error-message' : ''
-                    }`}>
-                    <span className="govuk-visually-hidden">Error:</span> Enter more detail
-                  </span>
-                )}
-                <textarea
+                  id={`service-name-${id}`}
+                  name="service-name"
+                  value={name}
+                  type="text"
+                  hidden
+                />
+                <input
                   form="resident-details"
-                  className={`govuk-textarea ${
-                    validationError[`conversation-notes-${id}`] ? 'govuk-input--error' : ''
-                  }`}
-                  id={`conversation-notes-${id}`}
-                  name="conversation-notes"
-                  rows="5"
-                  aria-describedby="more-detail-hint more-detail-error"
-                  required
-                  onInvalid={e => onInvalidField(e.target.id)}></textarea>
-              </div>
-              <div
-                className={`govuk-form-group govuk-!-padding-bottom-2 ${
-                  validationError[`consent-${id}`] ? 'govuk-form-group--error' : ''
-                }`}>
-                <fieldset className="govuk-fieldset" aria-describedby="consent-hint">
-                  <legend className="govuk-fieldset__legend">
-                    The resident is happy for their information to be shared with third parties
-                  </legend>
-                  <div className="govuk-checkboxes govuk-checkboxes--inline">
-                    {validationError[`consent-${id}`] && (
-                      <span id={`consent-${id}-error`} class="govuk-error-message">
-                        <span class="govuk-visually-hidden">Error:</span>
-                        This is required in order to make the referral.
-                      </span>
-                    )}
-
-                    <div className="govuk-checkboxes__item">
-                      <input
-                        form="resident-details"
-                        className="govuk-checkboxes__input"
-                        id={`consent-${id}`}
-                        name="consent"
-                        type="checkbox"
-                        value="true"
-                        onInvalid={e => onInvalidField(e.target.id)}
-                        required
-                      />
-                      <label className="govuk-label govuk-checkboxes__label" for={`consent-${id}`}>
-                        Yes
-                      </label>
-                    </div>
-                  </div>
-                </fieldset>
-              </div>
-              <div>
+                  id={`service-contact-email-${id}`}
+                  name="service-contact-email"
+                  value={email}
+                  type="text"
+                  hidden
+                />
+                <input
+                  form="resident-details"
+                  id={`service-contact-phone-${id}`}
+                  name="service-contact-phone"
+                  value={telephone}
+                  type="text"
+                  hidden
+                />
+                <input
+                  form="resident-details"
+                  id={`service-referral-email-${id}`}
+                  name="service-referral-email"
+                  value={referralContact}
+                  type="text"
+                  hidden
+                />
                 <div
                   className={`govuk-form-group govuk-!-padding-bottom-2 ${
                     validationError[`referral-reason-${id}`] ? 'govuk-form-group--error' : ''
@@ -506,9 +416,9 @@ const ResourceCard = ({
                   </div>
                 </div>
               </div>
-            </div>
-          )}
-      </details>
+            )}
+        </details>
+      )}
 
       {referralCompletion[id] && (
         <div>
