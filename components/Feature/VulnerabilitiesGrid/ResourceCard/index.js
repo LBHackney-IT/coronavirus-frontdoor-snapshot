@@ -176,6 +176,14 @@ const ResourceCard = ({
             />
             <input
               form="resident-details"
+              id={`service-contact-phone-${id}`}
+              name="service-contact-phone"
+              value={telephone}
+              type="text"
+              hidden
+            />
+            <input
+              form="resident-details"
               id={`service-referral-email-${id}`}
               name="service-referral-email"
               value={referralContact}
@@ -400,8 +408,9 @@ const ResourceCard = ({
       {referralCompletion[id] && (
         <div>
           {referralCompletion[id].errors?.length > 0 ? (
-            <div className={`${css['error-message']}`}>{referralCompletion[id].errors}</div>
-            <div className={`${css['error-message']}`}>{referralCompletion[id].errors.join("\n")}</div>
+            <div className={`${css['error-message']}`}>
+              {referralCompletion[id].errors.join('\n')}
+            </div>
           ) : (
             <div className={`${css['success-message']}`}>Successfully submitted referral</div>
           )}
