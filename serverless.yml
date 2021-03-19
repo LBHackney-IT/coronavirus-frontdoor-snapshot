@@ -47,7 +47,7 @@ functions:
       ALLOWED_GROUPS: ${ssm:/frontdoor-snapshot/${self:provider.stage}/allowed-groups}
       BASIC_ALLOWED_GROUPS: ${ssm:/frontdoor-snapshot/${self:provider.stage}/basic-allowed-groups}
       JWT_SECRET: ${ssm:/common/hackney-jwt-secret}
-      TABLE_NAME_NAME: ${self:provider.environment.TABLE_NAME}
+      TABLE_NAME: ${self:provider.environment.TABLE_NAME}
       NEXT_PUBLIC_API_URL: https://${self:custom.aliases.${self:provider.stage}}/api
       NEXT_PUBLIC_URL: https://${self:custom.aliases.${self:provider.stage}}
       AIRTABLE_API_KEY: ${ssm:/frontdoor-snapshot/airtable-api-key}
