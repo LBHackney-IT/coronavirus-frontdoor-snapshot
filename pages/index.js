@@ -39,7 +39,7 @@ const Index = ({
   };
   return (
     <>
-      {process.env.REFERRALS_ENABLED == 'true' && (
+      {process.env.NEXT_PUBLIC_REFERRALS_ENABLED == 'true' && (
         <ResidentDetailsForm
           residentInfoCallback={residentInfoCallback}
           showResidentForm={showResidentForm}

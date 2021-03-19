@@ -144,7 +144,7 @@ const ResourceCard = ({
         />
       </>
       <details className="govuk-details" data-module="govuk-details">
-        {process.env.REFERRALS_ENABLED == 'true' && (
+        {(process.env.NEXT_PUBLIC_REFERRALS_ENABLED == 'true' &&  referralContact?.length > 0) && (
           <summary
             id={`referral-${id}`}
             type="submit"
@@ -158,6 +158,38 @@ const ResourceCard = ({
         )}
         {!hideForm && !referralCompletion[id] && (
           <div hidden={hideForm} id={`referral-${id}-form`}>
+            <input
+              form="resident-details"
+              id={`service-name-${id}`}
+              name="service-name"
+              value={name}
+              type="text"
+              hidden
+            />
+            <input
+              form="resident-details"
+              id={`service-contact-email-${id}`}
+              name="service-contact-email"
+              value={email}
+              type="text"
+              hidden
+            />
+            <input
+              form="resident-details"
+              id={`service-contact-phone-${id}`}
+              name="service-contact-phone"
+              value={telephone}
+              type="text"
+              hidden
+            />
+            <input
+              form="resident-details"
+              id={`service-referral-email-${id}`}
+              name="service-referral-email"
+              value={referralContact}
+              type="text"
+              hidden
+            />
             <div
               className={`govuk-form-group govuk-!-padding-bottom-2 ${
                 validationError[`referral-reason-${id}`] ? 'govuk-form-group--error' : ''
@@ -374,7 +406,15 @@ const ResourceCard = ({
       </details>
 
       {referralCompletion[id] && (
-        <div className={`${css['success-message']}`}>Successfully submitted referral!</div>
+        <div>
+          {referralCompletion[id].errors?.length > 0 ? (
+            <div className={`${css['error-message']}`}>
+              {referralCompletion[id].errors.join('\n')}
+            </div>
+          ) : (
+            <div className={`${css['success-message']}`}>Successfully submitted referral</div>
+          )}
+        </div>
       )}
       {snapshot && (
         <div className="govuk-checkboxes__item">
