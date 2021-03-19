@@ -52,6 +52,7 @@ jobs:
             export REFERRALS_ENABLED=true
             export NEXT_PUBLIC_REFERRALS_ENABLED=true
             export NEXT_PUBLIC_API_URL=http://localhost:3000/api
+            export NEXT_PUBLIC_REFERRALS_ENABLED=true
             yarn build
       - run:
           name: Run unit tests
