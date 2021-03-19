@@ -5,6 +5,7 @@ import { getTokenFromCookieHeader } from 'lib/utils/token';
 import Services from 'components/Feature/Services';
 import TopicExplorer from 'components/Feature/TopicExplorer';
 import ResidentDetailsForm from 'components/Feature/ResidentDetailsForm';
+import SupportSummary from 'components/Feature/SupportSummary';
 import { useState } from 'react';
 import jsonwebtoken from 'jsonwebtoken';
 
@@ -39,9 +40,6 @@ const Index = ({
   };
   return (
     <>
-      {referralSummary.map(referral => (
-        <p>{referral.serviceName}</p>
-      ))}
       {process.env.REFERRALS_ENABLED == 'true' && (
         <ResidentDetailsForm
           residentInfoCallback={residentInfoCallback}
@@ -54,7 +52,9 @@ const Index = ({
           setReferralSummary={setReferralSummary}
         />
       )}
-      <div>
+      <SupportSummary referralSummary={referralSummary} />
+
+      <div className="govuk-!-margin-top-9">
         {errors.map(err => (
           <p className="govuk-error-message">{err}</p>
         ))}
