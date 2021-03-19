@@ -8,7 +8,9 @@ const ResidentDetailsForm = ({
   showResidentForm,
   setShowResidentForm,
   setReferralCompletion,
-  referralCompletion
+  referralCompletion,
+  referralSummary,
+  setReferralSummary
 }) => {
   const { createReferral } = useReferral({ token });
   const [residentInfo, setResidentInfo] = useState({
@@ -41,6 +43,7 @@ const ResidentDetailsForm = ({
   const onSubmitForm = async e => {
     e.preventDefault();
     const serviceId = e.target['service-id'].value;
+    const serviceName = e.target['service-name'].value;
     const referral = {
       firstName: e.target.firstName.value,
       lastName: e.target.lastName.value,
@@ -58,8 +61,8 @@ const ResidentDetailsForm = ({
         month: e.target['date-of-birth-month'].value,
         day: e.target['date-of-birth-day'].value
       },
-      serviceId: serviceId,
-      serviceName: e.target['service-name'].value,
+      serviceId,
+      serviceName,
       serviceContactEmail: e.target['service-contact-email'].value,
       serviceReferralEmail: e.target['service-referral-email'].value,
       serviceContactPhone: e.target['service-contact-phone'].value
@@ -67,6 +70,13 @@ const ResidentDetailsForm = ({
     const result = await createReferral(referral);
     if (result.id) {
       setReferralCompletion({ ...referralCompletion, [serviceId]: result });
+      const newReferralSummary = referralSummary.concat([
+        {
+          serviceName,
+          serviceId
+        }
+      ]);
+      setReferralSummary(newReferralSummary);
     }
   };
   return (

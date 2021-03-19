@@ -5,6 +5,7 @@ import { getTokenFromCookieHeader } from 'lib/utils/token';
 import Services from 'components/Feature/Services';
 import TopicExplorer from 'components/Feature/TopicExplorer';
 import ResidentDetailsForm from 'components/Feature/ResidentDetailsForm';
+import SupportSummary from 'components/Feature/SupportSummary';
 import { useState } from 'react';
 import jsonwebtoken from 'jsonwebtoken';
 
@@ -26,10 +27,10 @@ const Index = ({
   if (loading) {
     return <p>Loading...</p>;
   }
-  const [gernericRefferalFormComplete, setGernericRefferalFormComplete] = useState(false);
   const [residentInfo, setResidentInfo] = useState(false);
   const [showResidentForm, setShowResidentForm] = useState(false);
   const [referralCompletion, setReferralCompletion] = useState({ tis: null });
+  const [referralSummary, setReferralSummary] = useState([]);
 
   const residentFormCallback = val => {
     setShowResidentForm(val);
@@ -47,9 +48,13 @@ const Index = ({
           token={token}
           setReferralCompletion={setReferralCompletion}
           referralCompletion={referralCompletion}
+          referralSummary={referralSummary}
+          setReferralSummary={setReferralSummary}
         />
       )}
-      <div>
+      <SupportSummary referralSummary={referralSummary} />
+
+      <div className="govuk-!-margin-top-9">
         {errors.map(err => (
           <p className="govuk-error-message">{err}</p>
         ))}
@@ -64,7 +69,6 @@ const Index = ({
       <Services
         taxonomies={fssTaxonomies}
         resources={resources}
-        gernericRefferalFormComplete={gernericRefferalFormComplete}
         residentInfo={residentInfo}
         refererInfo={refererInfo}
         residentFormCallback={residentFormCallback}

@@ -298,6 +298,10 @@ const VulnerabilitiesGrid = ({
                               customerId={customerId}
                               referralCompletion={{}}
                               setReferralCompletion={() => {}}
+                              detailsClicked={null}
+                              openReferralForm={() => {}}
+                              referralData={{}}
+                              setReferralData={() => {}}
                             />
                           );
                         })}
