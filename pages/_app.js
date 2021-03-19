@@ -15,6 +15,7 @@ export default class MyApp extends App {
           <Component {...pageProps} />
         </Layout>
         <script src="/js/govuk.js"></script>
+        <script src="/js/beforeUnload.js"></script>
       </>
     );
   }
