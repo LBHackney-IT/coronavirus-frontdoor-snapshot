@@ -211,7 +211,7 @@ const ResourceCard = ({
                   className={`govuk-form-group govuk-!-padding-bottom-2 ${
                     validationError[`referral-reason-${id}`] ? 'govuk-form-group--error' : ''
                   }`}>
-                  <legend className="govuk-fieldset__legend">
+                  <legend className="govuk-fieldset__legend govuk-fieldset__legend--s">
                     Reason for referral, please give as much detail as possible
                   </legend>
                   {validationError[`referral-reason-${id}`] && (
@@ -243,7 +243,7 @@ const ResourceCard = ({
                   className={`govuk-form-group govuk-!-padding-bottom-2 ${
                     validationError[`conversation-notes-${id}`] ? 'govuk-form-group--error' : ''
                   }`}>
-                  <legend className="govuk-fieldset__legend">
+                  <legend className="govuk-fieldset__legend govuk-fieldset__legend--s">
                     Notes on wider conversation(other needs, living situation, key information
                   </legend>
                   {validationError[`conversation-notes-${id}`] && (
@@ -276,7 +276,7 @@ const ResourceCard = ({
                     validationError[`consent-${id}`] ? 'govuk-form-group--error' : ''
                   }`}>
                   <fieldset className="govuk-fieldset" aria-describedby="consent-hint">
-                    <legend className="govuk-fieldset__legend">
+                    <legend className="govuk-fieldset__legend govuk-fieldset__legend--s">
                       The resident is happy for their information to be shared with third parties
                     </legend>
                     <div className="govuk-checkboxes govuk-checkboxes--inline">
@@ -286,7 +286,6 @@ const ResourceCard = ({
                           This is required in order to make the referral.
                         </span>
                       )}
-
                       <div className="govuk-checkboxes__item">
                         <input
                           form="resident-details"
@@ -307,13 +306,58 @@ const ResourceCard = ({
                     </div>
                   </fieldset>
                 </div>
+                <div class="govuk-form-group govuk-!-padding-bottom-2">
+                  <fieldset class="govuk-fieldset">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+                      How would the resident like to receive details about their referral to this
+                      service?
+                    </legend>
+                    <div id="resident-referral-hint" class="govuk-hint">
+                      Select all that apply.
+                    </div>
+                    <div class="govuk-checkboxes">
+                      <div class="govuk-checkboxes__item">
+                        <input
+                          class="govuk-checkboxes__input"
+                          id="resident-referral-sms"
+                          name="resident-referral-sms"
+                          type="checkbox"
+                          form="resident-details"
+                          value={true}
+                        />
+                        <label
+                          class="govuk-label govuk-checkboxes__label"
+                          for="resident-referral-sms">
+                          By text
+                        </label>
+                      </div>
+                      <div class="govuk-checkboxes__item">
+                        <input
+                          class="govuk-checkboxes__input"
+                          id="resident-referral-email"
+                          name="resident-referral-email"
+                          type="checkbox"
+                          form="resident-details"
+                          value={true}
+                        />
+                        <label
+                          class="govuk-label govuk-checkboxes__label"
+                          for="esident-referral-email">
+                          By email
+                        </label>
+                      </div>
+                    </div>
+                  </fieldset>
+                </div>
                 <div>
                   <div
                     className={`govuk-form-group govuk-!-padding-bottom-2 ${
                       validationError[`referer-name-${id}`] ? 'govuk-form-group--error' : ''
                     }`}>
                     <label className="govuk-label inline" htmlFor="name">
-                      Your name
+                      <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+                        Your name
+                      </legend>
                     </label>
                     <span
                       id="name-error"
@@ -348,7 +392,9 @@ const ResourceCard = ({
                       validationError[`referer-organisation-${id}`] ? 'govuk-form-group--error' : ''
                     }`}>
                     <label className="govuk-label inline" htmlFor="name">
-                      Your organisation
+                      <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+                        Your organisation
+                      </legend>
                     </label>
                     <span
                       id="name-error"
@@ -386,7 +432,9 @@ const ResourceCard = ({
                       validationError[`referer-email-${id}`] ? 'govuk-form-group--error' : ''
                     }`}>
                     <label className="govuk-label inline" htmlFor="name">
-                      Your email
+                      <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+                        Your email
+                      </legend>
                     </label>
                     <span
                       id="name-error"
