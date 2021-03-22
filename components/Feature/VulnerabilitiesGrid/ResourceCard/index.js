@@ -191,6 +191,22 @@ const ResourceCard = ({
                   type="text"
                   hidden
                 />
+                <input
+                  form="resident-details"
+                  id={`service-address-${id}`}
+                  name="service-address"
+                  value={address}
+                  type="text"
+                  hidden
+                />
+                <input
+                  form="resident-details"
+                  id={`service-websites-${id}`}
+                  name="service-websites"
+                  value={websites}
+                  type="text"
+                  hidden
+                />
                 <div
                   className={`govuk-form-group govuk-!-padding-bottom-2 ${
                     validationError[`referral-reason-${id}`] ? 'govuk-form-group--error' : ''
