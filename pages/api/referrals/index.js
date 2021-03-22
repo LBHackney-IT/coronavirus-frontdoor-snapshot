@@ -60,32 +60,38 @@ export const endpoint = ({ createReferral }) =>
         serviceContactPhone,
         serviceReferralEmail,
         serviceAddress,
-        serviceWebsites
+        serviceWebsites,
+        sendResidentSms,
+        sendResidentEmail
       },
       headers
     }) => {
       const referral = await createReferral.execute(
-        new Referral({
-          firstName,
-          lastName,
-          phone,
-          email,
-          address,
-          postcode,
-          referralReason,
-          conversationNotes,
-          referrerOrganisation,
-          referrerName,
-          referrerEmail,
-          dateOfBirth,
-          serviceId,
-          serviceName,
-          serviceContactEmail,
-          serviceContactPhone,
-          serviceReferralEmail,
-          serviceAddress,
-          serviceWebsites
-        })
+        new Referral(
+          {
+            firstName,
+            lastName,
+            phone,
+            email,
+            address,
+            postcode,
+            referralReason,
+            conversationNotes,
+            referrerOrganisation,
+            referrerName,
+            referrerEmail,
+            dateOfBirth,
+            serviceId,
+            serviceName,
+            serviceContactEmail,
+            serviceContactPhone,
+            serviceReferralEmail,
+            serviceAddress,
+            serviceWebsites
+          },
+          sendResidentSms,
+          sendResidentEmail
+        )
       );
       return Response.created(referral);
     }
