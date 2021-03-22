@@ -203,7 +203,15 @@ const ResourceCard = ({
                   form="resident-details"
                   id={`service-websites-${id}`}
                   name="service-websites"
-                  value={websites}
+                  value={websites.join(' ')}
+                  type="text"
+                  hidden
+                />
+                <input
+                  form="resident-details"
+                  id={`service-description-${id}`}
+                  name="service-description"
+                  value={description}
                   type="text"
                   hidden
                 />

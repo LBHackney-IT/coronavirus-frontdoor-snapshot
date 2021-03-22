@@ -67,7 +67,8 @@ const ResidentDetailsForm = ({
       serviceReferralEmail: e.target['service-referral-email'].value,
       serviceContactPhone: e.target['service-contact-phone'].value,
       serviceAddress: e.target['service-address'].value,
-      serviceWebsites: e.target['service-websites'].value,
+      serviceWebsite: e.target['service-websites'].value,
+      serviceDescription: e.target['service-description'].value,
       sendResidentSms: e.target['resident-referral-sms'].value,
       sendResidentEmail: e.target['resident-referral-email'].value
     };
