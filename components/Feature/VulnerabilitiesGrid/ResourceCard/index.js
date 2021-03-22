@@ -146,17 +146,15 @@ const ResourceCard = ({
           name="refer-details"
           id={`referral-${id}-details`}
           data-module="govuk-details">
-          {process.env.REFERRALS_ENABLED == 'true' && (
-            <summary
-              id={`referral-${id}`}
-              type="submit"
-              form="resident-details"
-              onClick={e => {
-                detailsClicked(e, `referral-${id}-details`, id, categoryName);
-              }}>
-              Refer
-            </summary>
-          )}
+          <summary
+            id={`referral-${id}`}
+            type="submit"
+            form="resident-details"
+            onClick={e => {
+              detailsClicked(e, `referral-${id}-details`, id, categoryName);
+            }}>
+            Refer
+          </summary>
           {openReferralForm.id == id &&
             openReferralForm.categoryName == categoryName &&
             !referralCompletion[id] && (

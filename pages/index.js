@@ -40,18 +40,16 @@ const Index = ({
   };
   return (
     <>
-      {process.env.REFERRALS_ENABLED == 'true' && (
-        <ResidentDetailsForm
-          residentInfoCallback={residentInfoCallback}
-          showResidentForm={showResidentForm}
-          setShowResidentForm={setShowResidentForm}
-          token={token}
-          setReferralCompletion={setReferralCompletion}
-          referralCompletion={referralCompletion}
-          referralSummary={referralSummary}
-          setReferralSummary={setReferralSummary}
-        />
-      )}
+      <ResidentDetailsForm
+        residentInfoCallback={residentInfoCallback}
+        showResidentForm={showResidentForm}
+        setShowResidentForm={setShowResidentForm}
+        token={token}
+        setReferralCompletion={setReferralCompletion}
+        referralCompletion={referralCompletion}
+        referralSummary={referralSummary}
+        setReferralSummary={setReferralSummary}
+      />
       <SupportSummary referralSummary={referralSummary} />
 
       <div className="govuk-!-margin-top-9">
