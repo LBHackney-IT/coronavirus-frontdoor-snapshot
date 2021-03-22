@@ -65,7 +65,11 @@ const ResidentDetailsForm = ({
       serviceName,
       serviceContactEmail: e.target['service-contact-email'].value,
       serviceReferralEmail: e.target['service-referral-email'].value,
-      serviceContactPhone: e.target['service-contact-phone'].value
+      serviceContactPhone: e.target['service-contact-phone'].value,
+      serviceAddress: e.target['service-address'].value,
+      serviceWebsites: e.target['service-websites'].value,
+      sendResidentSms: e.target['resident-referral-sms'].value,
+      sendResidentEmail: e.target['resident-referral-email'].value
     };
     const result = await createReferral(referral);
     if (result.id) {
