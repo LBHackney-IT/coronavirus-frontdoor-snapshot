@@ -36,8 +36,11 @@ describe('Create Referral Api', () => {
     const serviceName = 'ABC service';
     const serviceContactEmail = 'abc@email.com';
     const serviceReferralEmail = 'referralservice@email.com';
-    const serviceWebsite = 'www.service.com';
+    const serviceWebsites = 'www.service.com';
     const serviceAddress = '123 Some st, E3 1J';
+    const serviceContactPhone = '02023456789';
+    const sendResidentSms = true;
+    const sendResidentEmail = true;
 
     const response = await call({
       body: {
@@ -56,37 +59,49 @@ describe('Create Referral Api', () => {
         serviceId,
         serviceName,
         serviceContactEmail,
-        serviceReferralEmail
+        serviceReferralEmail,
+        serviceWebsites,
+        serviceContactPhone,
+        serviceAddress,
+        sendResidentSms,
+        sendResidentEmail
       },
       headers: {}
     });
-    expect(createReferral.execute).toHaveBeenCalledWith({
-      resident: {
-        firstName,
-        lastName,
-        phone,
-        email,
-        address,
-        postcode,
-        dateOfBirth
+    expect(createReferral.execute).toHaveBeenCalledWith(
+      {
+        resident: {
+          firstName,
+          lastName,
+          phone,
+          email,
+          address,
+          postcode,
+          dateOfBirth
+        },
+        referrer: {
+          name: referrerName,
+          organisation: referrerOrganisation,
+          email: referrerEmail
+        },
+        referralReason,
+        conversationNotes,
+        service: {
+          id: serviceId,
+          name: serviceName,
+          contactEmail: serviceContactEmail,
+          referralEmail: serviceReferralEmail,
+          address: serviceAddress,
+          contactPhone: serviceContactPhone,
+          websites: serviceWebsites
+        },
+        id: undefined,
+        systemIds: undefined,
+        created: expect.any(String)
       },
-      referrer: {
-        name: referrerName,
-        organisation: referrerOrganisation,
-        email: referrerEmail
-      },
-      referralReason,
-      conversationNotes,
-      service: {
-        id: serviceId,
-        name: serviceName,
-        contactEmail: serviceContactEmail,
-        referralEmail: serviceReferralEmail
-      },
-      id: undefined,
-      systemIds: undefined,
-      created: expect.any(String)
-    });
+      sendResidentSms,
+      sendResidentEmail
+    );
     expect(response.statusCode).toBe(201);
   });
 
