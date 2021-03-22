@@ -36,7 +36,7 @@ describe('Create Referral Api', () => {
     const serviceName = 'ABC service';
     const serviceContactEmail = 'abc@email.com';
     const serviceReferralEmail = 'referralservice@email.com';
-    const serviceWebsites = 'www.service.com';
+    const serviceWebsite = 'www.service.com';
     const serviceAddress = '123 Some st, E3 1J';
     const serviceContactPhone = '02023456789';
     const sendResidentSms = true;
@@ -60,7 +60,7 @@ describe('Create Referral Api', () => {
         serviceName,
         serviceContactEmail,
         serviceReferralEmail,
-        serviceWebsites,
+        serviceWebsite,
         serviceContactPhone,
         serviceAddress,
         sendResidentSms,
@@ -93,7 +93,7 @@ describe('Create Referral Api', () => {
           referralEmail: serviceReferralEmail,
           address: serviceAddress,
           contactPhone: serviceContactPhone,
-          websites: serviceWebsites
+          websites: serviceWebsite
         },
         id: undefined,
         systemIds: undefined,
