@@ -58,7 +58,9 @@ export const endpoint = ({ createReferral }) =>
         serviceName,
         serviceContactEmail,
         serviceContactPhone,
-        serviceReferralEmail
+        serviceReferralEmail,
+        serviceWebsite,
+        serviceAddress
       },
       headers
     }) => {
@@ -80,7 +82,9 @@ export const endpoint = ({ createReferral }) =>
           serviceName,
           serviceContactEmail,
           serviceContactPhone,
-          serviceReferralEmail
+          serviceReferralEmail,
+          serviceWebsite,
+          serviceAddress
         })
       );
       return Response.created(referral);
