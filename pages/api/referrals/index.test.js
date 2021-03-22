@@ -36,6 +36,8 @@ describe('Create Referral Api', () => {
     const serviceName = 'ABC service';
     const serviceContactEmail = 'abc@email.com';
     const serviceReferralEmail = 'referralservice@email.com';
+    const serviceWebsite = 'www.service.com';
+    const serviceAddress = '123 Some st, E3 1J';
 
     const response = await call({
       body: {
