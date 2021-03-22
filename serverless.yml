@@ -61,6 +61,7 @@ functions:
       FSS_PUBLIC_API_URL: ${ssm:/frontdoor-snapshot/${self:provider.stage}/fss-public-api-url}
       REFERRAL_EMAIL_TEMPLATE_ID: ${ssm:/frontdoor-snapshot/referral-email-template-id}
       REFERRAL_RECEIPT_EMAIL_TEMPLATE_ID: ${ssm:/frontdoor-snapshot/referral-email-receipt-template-id}
+      REFERRAL_RESIDENT_EMAIL_TEMPLATE_ID: ${ssm:/frontdoor-snapshot/referral-resident-email-template-id}
       GOV_NOTIFY_API_KEY: ${ssm:/frontdoor-snapshot/gov-notify-api-key}
 
   cf-snapshot-authorizer:
