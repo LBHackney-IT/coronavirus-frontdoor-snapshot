@@ -20,6 +20,18 @@
         "telephone": "07000 0000000",
         "website": "https://www.sample.org.uk"
       },
+      "demographic": [
+        {
+          "id": 10,
+          "name": "Housing advice",
+          "vocabulary": "demographic"
+        },
+        {
+          "id": 19,
+          "name": "Cultural",
+          "vocabulary": "demographic"
+        }
+      ],
       "description": "First service description",
       "locations": [
         {
@@ -27,7 +39,7 @@
           "longitude": -0.0821704,
           "uprn": "10093625362",
           "address1": "404 error",
-          "address2": "not ",
+          "address2": "not",
           "city": "found",
           "stateProvince": "",
           "postalCode": "A1 2BC",
