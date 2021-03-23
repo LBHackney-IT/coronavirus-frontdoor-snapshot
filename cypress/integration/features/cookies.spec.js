@@ -53,7 +53,7 @@ context('Cookie consent banner', () => {
       cy.reload();
     });
 
-    it('removes analytics cookies after declining', () => {
+    xit('removes analytics cookies after declining', () => {
       cy.get(selectors.declineButton).click();
       cy.getCookie('_ga').should('not.exist');
       cy.getCookie('_gid').should('not.exist');
