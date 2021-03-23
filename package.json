@@ -51,7 +51,7 @@
     "babel-jest": "^25.5.1",
     "chai": "^4.2.0",
     "clipboardy": "^2.3.0",
-    "cypress": "6.0.0",
+    "cypress": "6.8.0",
     "cypress-axe": "^0.8.1",
     "dynamodb-admin": "^4.0.0",
     "eslint": "^6.6.0",
