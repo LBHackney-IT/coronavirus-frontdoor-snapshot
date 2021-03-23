@@ -493,11 +493,13 @@ const ResourceCard = ({
       {referralCompletion[id] && (
         <div>
           {referralCompletion[id].errors?.length > 0 ? (
-            <div className={`${css['error-message']}`}>
+            <div data-testid="referral-errors-banner" className={`${css['error-message']}`}>
               {referralCompletion[id].errors.join('\n')}
             </div>
           ) : (
-            <div className={`${css['success-message']}`}>Successfully submitted referral</div>
+            <div data-testid="successful-referral-banner" className={`${css['success-message']}`}>
+              Successfully submitted referral
+            </div>
           )}
         </div>
       )}
