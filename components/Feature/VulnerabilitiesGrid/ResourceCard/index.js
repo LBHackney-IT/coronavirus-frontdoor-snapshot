@@ -32,6 +32,7 @@ const ResourceCard = ({
   openReferralForm,
   referralData,
   setReferralData,
+  demographic,
   ...others
 }) => {
   const [validationError, setValidationError] = useState({});
@@ -129,11 +130,14 @@ const ResourceCard = ({
             Distance: distance && distance < 100 ? distance + ' miles' : null,
             Distribution: distributionElement,
             Telephone: telephone,
-            'Service Description': serviceDescription,
+            Email: email,
+            Description: serviceDescription,
+            "Who's this for?": demographic,
             Address: address,
-            Description: description,
+            'Relevant support': description,
+            Address: address,
             Website: websiteElement,
-            'Additional notes': notes
+            'Online referral': referralWebsite
           }}
           customStyle="small"
         />
