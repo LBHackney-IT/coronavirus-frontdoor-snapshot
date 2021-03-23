@@ -8,7 +8,7 @@ context('Create referral', () => {
 
     it('resident form is hidden', () => {
       cy.contains('Residents details').should('be.visible');
-      cy.contains('#resident-details').should('not.be.visible');
+      cy.get('#resident-details').should('not.be.visible');
     });
 
     it('referral form', () => {
@@ -16,8 +16,8 @@ context('Create referral', () => {
         .eq(0)
         .click();
 
-      cy.get('#referral-ABC123-form').should('not.exist');
-      cy.get('#referral-ABC123')
+      cy.get('#referral-ABC123-1-form').should('not.exist');
+      cy.get('#referral-ABC123-1')
         .contains('Refer')
         .click();
 
@@ -64,8 +64,8 @@ context('Create referral', () => {
         .eq(0)
         .click();
 
-      cy.get('#referral-ABC123-form').should('not.exist');
-      cy.get('#referral-ABC123')
+      cy.get('#referral-ABC123-1-form').should('not.exist');
+      cy.get('#referral-ABC123-1')
         .contains('Refer')
         .click();
 
@@ -82,8 +82,3 @@ context('Create referral', () => {
     });
   });
 });
-
-
-// test that not all services have refer button
-// test green box
-// test and implemnt red box

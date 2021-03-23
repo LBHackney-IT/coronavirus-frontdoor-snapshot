@@ -42,11 +42,9 @@ const ResourceCard = ({
     websites &&
     websites.length > 0 &&
     websites.map(website => (
-      <div>
         <a href={website} target="_blank" rel="noopener noreferrer">
           {website}
         </a>
-      </div>
     ));
   const distributionElement = tags.filter(t => HIDDEN_TAGS.includes(t)).join(', ');
   const tagsElement = tags
@@ -144,21 +142,21 @@ const ResourceCard = ({
         <details
           className="govuk-details"
           name="refer-details"
-          id={`referral-${id}-details`}
+          id={`referral-${id}-${categoryId}-details`}
           data-module="govuk-details">
           <summary
-            id={`referral-${id}`}
+            id={`referral-${id}-${categoryId}`}
             type="submit"
             form="resident-details"
             onClick={e => {
-              detailsClicked(e, `referral-${id}-details`, id, categoryName);
+              detailsClicked(e, `referral-${id}-${categoryId}-details`, id, categoryName);
             }}>
             Refer
           </summary>
           {openReferralForm.id == id &&
             openReferralForm.categoryName == categoryName &&
             !referralCompletion[id] && (
-              <div id={`referral-${id}-form`}>
+              <div id={`referral-${id}-${categoryId}-form`}>
                 <input
                   form="resident-details"
                   id={`service-name-${id}`}

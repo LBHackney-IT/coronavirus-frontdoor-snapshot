@@ -68,6 +68,7 @@ const Services = ({
                         {...resource}
                         updateSelectedResources={() => {}}
                         refererInfo={refererInfo}
+                        categoryId={taxonomy.id}
                         referralCompletion={referralCompletion}
                         setReferralCompletion={setReferralCompletion}
                         detailsClicked={detailsClicked}
