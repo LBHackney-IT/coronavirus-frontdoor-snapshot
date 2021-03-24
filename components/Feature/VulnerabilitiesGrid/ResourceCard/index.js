@@ -96,11 +96,13 @@ const ResourceCard = ({
             type="checkbox"
             onClick={() => {
               updateSignpostSummary({
-                serviceName: name,
-                serviceTelephone: telephone,
-                serviceEmail: email,
-                serviceAddress: address,
-                serviceWebsites: websites,
+                id,
+                name,
+                telephone,
+                contactEmail: email,
+                referralEmail: referralContact,
+                address,
+                website: websites,
                 categoryName
               });
             }}

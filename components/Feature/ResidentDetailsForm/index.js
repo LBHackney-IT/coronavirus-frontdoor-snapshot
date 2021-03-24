@@ -48,6 +48,7 @@ const ResidentDetailsForm = ({
     const serviceEmail = e.target['service-contact-email'].value;
     const serviceAddress = e.target['service-address'].value;
     const serviceWebsites = e.target['service-websites'].value;
+    const referralEmail = e.target['service-referral-email'].value;
 
     const referral = {
       firstName: e.target.firstName.value,
@@ -82,12 +83,14 @@ const ResidentDetailsForm = ({
       setReferralCompletion({ ...referralCompletion, [serviceId]: result });
       const newReferralSummary = referralSummary.concat([
         {
-          serviceName,
-          serviceTelephone,
-          serviceEmail,
-          serviceAddress,
-          serviceWebsites,
-          serviceId
+          name: serviceName,
+          telephone: serviceTelephone,
+          contactEmail: serviceEmail,
+          referralEmail,
+          address: serviceAddress,
+          website: serviceWebsites,
+          id: serviceId,
+          referralId: result.id
         }
       ]);
       setReferralSummary(newReferralSummary);
@@ -303,6 +306,7 @@ const ResidentDetailsForm = ({
                       type="text"
                       pattern="[0-9]*"
                       inputmode="numeric"
+                      onChange={e => handleOnChange(e.target.id, e.target.value)}
                     />
                   </div>
                 </div>
@@ -320,6 +324,7 @@ const ResidentDetailsForm = ({
                       type="text"
                       pattern="[0-9]*"
                       inputmode="numeric"
+                      onChange={e => handleOnChange(e.target.id, e.target.value)}
                     />
                   </div>
                 </div>
@@ -335,6 +340,7 @@ const ResidentDetailsForm = ({
                       type="text"
                       pattern="[0-9]*"
                       inputmode="numeric"
+                      onChange={e => handleOnChange(e.target.id, e.target.value)}
                     />
                   </div>
                 </div>
