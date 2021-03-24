@@ -33,6 +33,11 @@ const Index = ({
   const [referralCompletion, setReferralCompletion] = useState({ tis: null });
   const [referralSummary, setReferralSummary] = useState([]);
   const [signpostSummary, setSignpostSummary] = useState([]);
+  const [referrerData, setReferrerData] = useState({
+    'referer-email': refererInfo?.email,
+    'referer-name': refererInfo?.name,
+    'referer-organisation': refererInfo?.iss
+  });
 
   const residentFormCallback = val => {
     setShowResidentForm(val);
@@ -40,15 +45,67 @@ const Index = ({
   const residentInfoCallback = value => {
     setResidentInfo(value);
   };
-  const updateSignpostSummary = (serviceName, categoryName) => {
+  const updateSignpostSummary = service => {
     let newSignpostSummary;
-    if (signpostSummary.some(x => x.serviceName == serviceName && x.categoryName == categoryName)) {
+    if (
+      signpostSummary.some(
+        x => x.serviceName == service.serviceName && x.categoryName == service.categoryName
+      )
+    ) {
       newSignpostSummary = signpostSummary.filter(
-        x => x.serviceName != serviceName || x.categoryName != categoryName
+        x => x.serviceName != service.serviceName || x.categoryName != service.categoryName
       );
-    } else newSignpostSummary = signpostSummary.concat([{ serviceName, categoryName }]);
+    } else newSignpostSummary = signpostSummary.concat([{ ...service }]);
     setSignpostSummary(newSignpostSummary);
+    setEmailBody(updateEmailBody(newSignpostSummary));
   };
+
+  const sendSummary = e => {
+    e.preventDefault();
+    console.log('sent');
+    console.log(e.target);
+  };
+
+  const updateEmailBody = (
+    newSignpostSummary = signpostSummary,
+    newReferralSummary = referralSummary
+  ) => {
+    return `Hi ${residentInfo.firstName} ${residentInfo.lastName},
+
+...
+
+We discussed the following services in our conversation today:
+${newSignpostSummary.map(
+  (signpost, index) =>
+    `${index + 1}. ${signpost.serviceName}
+${signpost.serviceTelephone}
+${signpost.serviceEmail}
+${signpost.serviceAddress}
+${signpost.serviceWebsites?.join(', ')}
+  `
+)}
+
+
+I referred you to the following services:
+${newReferralSummary.map(
+  (ref, index) => `${index + 1}. ${ref.serviceName}
+${ref.serviceTelephone}
+${ref.serviceEmail}
+${ref.serviceAddress}
+${ref.serviceWebsites}
+`
+)}
+
+
+Thanks, 
+${referrerData['referer-name']}
+${referrerData['referer-email']}
+${referrerData['referer-organisation']}
+`;
+  };
+
+  const [emailBody, setEmailBody] = useState(updateEmailBody());
+
   return (
     <>
       <ResidentDetailsForm
@@ -60,6 +117,8 @@ const Index = ({
         referralCompletion={referralCompletion}
         referralSummary={referralSummary}
         setReferralSummary={setReferralSummary}
+        updateEmailBody={updateEmailBody}
+        setEmailBody={setEmailBody}
       />
       <div className="govuk-!-margin-top-9">
         {errors.map(err => (
@@ -82,8 +141,18 @@ const Index = ({
         referralCompletion={referralCompletion}
         setReferralCompletion={setReferralCompletion}
         updateSignpostSummary={updateSignpostSummary}
+        referrerData={referrerData}
+        setReferrerData={setReferrerData}
       />
-      <SupportSummary referralSummary={referralSummary} signpostSummary={signpostSummary} />
+      <SupportSummary
+        referralSummary={referralSummary}
+        signpostSummary={signpostSummary}
+        referrerData={referrerData}
+        setReferrerData={setReferrerData}
+        sendSummary={sendSummary}
+        emailBody={emailBody}
+        setEmailBody={setEmailBody}
+      />
       <a
         href="https://forms.gle/B6vEMgp7sCsjJqNdA"
         target="_blank"

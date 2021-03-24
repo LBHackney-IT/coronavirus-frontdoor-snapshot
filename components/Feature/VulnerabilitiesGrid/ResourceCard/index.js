@@ -25,13 +25,14 @@ const ResourceCard = ({
   serviceDescription,
   residentInfo,
   categoryId,
-  refererInfo,
   referralCompletion,
   setReferralCompletion,
   detailsClicked,
   openReferralForm,
   referralData,
   setReferralData,
+  referrerData,
+  setReferrerData,
   demographic,
   updateSignpostSummary,
   ...others
@@ -93,8 +94,15 @@ const ResourceCard = ({
             id={`add-to-summary-checkbox-${id}-${categoryId}`}
             name="add-to-summary-checkbox"
             type="checkbox"
-            onClick={e => {
-              updateSignpostSummary(name, categoryName);
+            onClick={() => {
+              updateSignpostSummary({
+                serviceName: name,
+                serviceTelephone: telephone,
+                serviceEmail: email,
+                serviceAddress: address,
+                serviceWebsites: websites,
+                categoryName
+              });
             }}
             value={true}
           />
@@ -370,9 +378,9 @@ const ResourceCard = ({
                       id={`referer-name-${id}`}
                       name="referer-name"
                       type="text"
-                      defaultValue={referralData['referer-name']}
+                      defaultValue={referrerData['referer-name']}
                       onChange={e => {
-                        setReferralData({ ...referralData, 'referer-name': e.target.value });
+                        setReferrerData({ ...referrerData, 'referer-name': e.target.value });
                       }}
                       aria-describedby="refererName-hint"
                       aria-describedby="refererName"
@@ -407,10 +415,10 @@ const ResourceCard = ({
                       id={`referer-organisation-${id}`}
                       name="referer-organisation"
                       type="text"
-                      defaultValue={referralData['referer-organisation']}
+                      defaultValue={referrerData['referer-organisation']}
                       onChange={e => {
-                        setReferralData({
-                          ...referralData,
+                        setReferrerData({
+                          ...referrerData,
                           'referer-organisation': e.target.value
                         });
                       }}
@@ -447,9 +455,9 @@ const ResourceCard = ({
                       id={`referer-email-${id}`}
                       name="referer-email"
                       type="email"
-                      defaultValue={referralData['referer-email']}
+                      defaultValue={referrerData['referer-email']}
                       onChange={e => {
-                        setReferralData({ ...referralData, 'referer-email': e.target.value });
+                        setReferrerData({ ...referrerData, 'referer-email': e.target.value });
                       }}
                       aria-describedby="refererorganisation-hint"
                       aria-describedby="refererorganisation"

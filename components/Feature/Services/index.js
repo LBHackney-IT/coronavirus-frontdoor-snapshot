@@ -5,19 +5,17 @@ import { Accordion, AccordionItem } from 'components/Form';
 const Services = ({
   resources,
   taxonomies,
-  refererInfo,
   residentFormCallback,
   referralCompletion,
   setReferralCompletion,
-  updateSignpostSummary
+  updateSignpostSummary,
+  referrerData,
+  setReferrerData
 }) => {
   const [expandedGroups, setExpandedGroups] = useState({});
   const [openReferralForm, setOpenReferralForm] = useState({});
-  const [referralData, setReferralData] = useState({
-    'referer-email': refererInfo?.email,
-    'referer-name': refererInfo?.name,
-    'referer-organisation': refererInfo?.iss
-  });
+  const [referralData, setReferralData] = useState({});
+
   const taxonomiesToRender = taxonomies.filter(taxonomy =>
     resources.some(resource => resource.categoryName === taxonomy.name)
   );
@@ -68,7 +66,6 @@ const Services = ({
                         data-testid={`resource-${resource.id}`}
                         {...resource}
                         updateSelectedResources={() => {}}
-                        refererInfo={refererInfo}
                         categoryId={taxonomy.id}
                         referralCompletion={referralCompletion}
                         setReferralCompletion={setReferralCompletion}
@@ -76,6 +73,8 @@ const Services = ({
                         openReferralForm={openReferralForm}
                         referralData={referralData}
                         setReferralData={setReferralData}
+                        referrerData={referrerData}
+                        setReferrerData={setReferrerData}
                         updateSignpostSummary={updateSignpostSummary}
                       />
                     ))}

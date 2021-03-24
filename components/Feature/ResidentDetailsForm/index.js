@@ -10,7 +10,9 @@ const ResidentDetailsForm = ({
   setReferralCompletion,
   referralCompletion,
   referralSummary,
-  setReferralSummary
+  setReferralSummary,
+  updateEmailBody,
+  setEmailBody
 }) => {
   const { createReferral } = useReferral({ token });
   const [residentInfo, setResidentInfo] = useState({
@@ -24,11 +26,9 @@ const ResidentDetailsForm = ({
   const [validationError, setValidationError] = useState({});
 
   const handleOnChange = (id, value) => {
-    setResidentInfo({ ...residentInfo, [id]: value });
     let newResidentInfo = { ...residentInfo, [id]: value };
-    if (Object.values(newResidentInfo).every(k => k)) {
-      residentInfoCallback(residentInfo);
-    }
+    setResidentInfo(newResidentInfo);
+    residentInfoCallback(newResidentInfo);
   };
 
   const onInvalidField = value => {
@@ -44,6 +44,11 @@ const ResidentDetailsForm = ({
     e.preventDefault();
     const serviceId = e.target['service-id'].value;
     const serviceName = e.target['service-name'].value;
+    const serviceTelephone = e.target['service-contact-phone'].value;
+    const serviceEmail = e.target['service-contact-email'].value;
+    const serviceAddress = e.target['service-address'].value;
+    const serviceWebsites = e.target['service-websites'].value;
+
     const referral = {
       firstName: e.target.firstName.value,
       lastName: e.target.lastName.value,
@@ -78,10 +83,15 @@ const ResidentDetailsForm = ({
       const newReferralSummary = referralSummary.concat([
         {
           serviceName,
+          serviceTelephone,
+          serviceEmail,
+          serviceAddress,
+          serviceWebsites,
           serviceId
         }
       ]);
       setReferralSummary(newReferralSummary);
+      setEmailBody(updateEmailBody(undefined, newReferralSummary));
     }
   };
   return (
