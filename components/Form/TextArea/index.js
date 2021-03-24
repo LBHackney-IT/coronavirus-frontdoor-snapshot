@@ -5,7 +5,7 @@ const TextArea = ({ label, name, onChange, value }) => {
   return (
     <div className="govuk-form-group even-spacing" data-testid={name}>
       <label htmlFor={`${name}`}>
-        <p>{label}</p>
+        <strong>{label}</strong>
       </label>
       <textarea
         className="govuk-textarea"
