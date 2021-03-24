@@ -8,7 +8,6 @@ import ResidentDetailsForm from 'components/Feature/ResidentDetailsForm';
 import SupportSummary from 'components/Feature/SupportSummary';
 import { useState } from 'react';
 import jsonwebtoken from 'jsonwebtoken';
-import { sign } from 'crypto';
 
 const Index = ({
   resources,
