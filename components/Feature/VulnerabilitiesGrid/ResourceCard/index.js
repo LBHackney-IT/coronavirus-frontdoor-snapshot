@@ -78,51 +78,13 @@ const ResourceCard = ({
     setValidationError({ [value]: true, ...validationError });
   };
 
-  const copyToClipboard = () => {
-    var copyText = document.getElementById(`resource-${name}`);
-    copyText.hidden = false;
-    copyText.select();
-    copyText.setSelectionRange(0, 99999);
-    document.execCommand('copy');
-    copyText.hidden = true;
-  };
-
-  const clipboardServiceDetails =
-    'Service Name: ' +
-    name +
-    (telephone ? '\nTelephone: ' + telephone : '') +
-    (serviceDescription ? '\nService Description: ' + serviceDescription : '') +
-    (address ? '\nAddress: ' + address : '') +
-    (description ? '\nDescription: ' + description : '') +
-    (websites.length > 0
-      ? '\nWebsites: ' +
-        JSON.stringify(websites)
-          .replace('[', '')
-          .replace(']', '')
-      : '') +
-    (referralWebsite ? '\nReferral website: ' + referralWebsite : '') +
-    (referralContact ? '\nReferral email: ' + referralContact : '');
-
   return (
     <div className={`resource ${css.resource}`} {...others}>
       <div className={`${css.tags__container} card-header-tag`} data-testid="resource-card-tags">
         {tagsElement}
       </div>
-      <textarea id={`resource-${name}`} type="hidden" value={clipboardServiceDetails} hidden />
       <div>
-        <h3 className={`${css['inline-header']}`}>
-          {name}
-          <a
-            id={`copy-clipboard-icon-${id}`}
-            title="copy"
-            href="javascript:void(0)"
-            onClick={() => copyToClipboard()}>
-            <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 0 24 24" width="24">
-              <path d="M0 0h24v24H0z" fill="none" />
-              <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z" />
-            </svg>
-          </a>
-        </h3>
+        <h3 className={`${css['inline-header']}`}>{name}</h3>
 
         <div className={`govuk-checkboxes__item ${css['inline-header']}`}>
           <input
