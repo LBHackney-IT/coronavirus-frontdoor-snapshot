@@ -58,31 +58,6 @@ const Index = ({
     setEmailBody(updateEmailBody(newSignpostSummary));
   };
 
-  const sendSummary = async e => {
-    e.preventDefault();
-    const summary = {
-      firstName: residentInfo.firstName,
-      lastName: residentInfo.lastName,
-      phone: residentInfo.phone,
-      email: residentInfo.email,
-      address: residentInfo.address,
-      postcode: residentInfo.postcode,
-      userOrganisation: e.target['summary-organisation'].value,
-      userName: e.target['summary-name'].value,
-      userEmail: e.target['summary-email'].value,
-      dateOfBirth: {
-        year: residentInfo['date-of-birth-year'],
-        month: residentInfo['date-of-birth-month'],
-        day: residentInfo['date-of-birth-day']
-      },
-      services: signpostSummary.concat(referralSummary),
-      signPostingMessage: e.target['support-summary-note'].value
-    };
-    console.log(summary);
-
-    // const result = await saveSummarry(summary);
-  };
-
   const updateEmailBody = (
     newSignpostSummary = signpostSummary,
     newReferralSummary = referralSummary
@@ -166,7 +141,7 @@ ${referrerData['referer-organisation']}
         signpostSummary={signpostSummary}
         referrerData={referrerData}
         setReferrerData={setReferrerData}
-        sendSummary={sendSummary}
+        residentInfo={residentInfo}
         emailBody={emailBody}
         setEmailBody={setEmailBody}
       />
