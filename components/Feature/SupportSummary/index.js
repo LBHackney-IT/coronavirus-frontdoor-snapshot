@@ -54,7 +54,7 @@ const SupportSummary = ({
           <div className="govuk-!-margin-bottom-5">
             {referralSummary.length > 0 &&
               referralSummary.map(referral => (
-                <div className="govuk-!-margin-bottom-1">{referral.serviceName}</div>
+                <div className="govuk-!-margin-bottom-1">{referral.name}</div>
               ))}
           </div>
           <strong>Services signposted to</strong>
@@ -66,7 +66,7 @@ const SupportSummary = ({
           <div className="govuk-!-margin-bottom-5">
             {signpostSummary.length > 0 &&
               signpostSummary.map(signpost => (
-                <div className="govuk-!-margin-bottom-1">{signpost.serviceName}</div>
+                <div className="govuk-!-margin-bottom-1">{signpost.name}</div>
               ))}
           </div>
           {!hideForm && (
