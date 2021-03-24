@@ -43,9 +43,9 @@ const ResourceCard = ({
     websites &&
     websites.length > 0 &&
     websites.map(website => (
-        <a href={website} target="_blank" rel="noopener noreferrer">
-          {website}
-        </a>
+      <a href={website} target="_blank" rel="noopener noreferrer">
+        {website}
+      </a>
     ));
   const distributionElement = tags.filter(t => HIDDEN_TAGS.includes(t)).join(', ');
   const tagsElement = tags
@@ -109,19 +109,36 @@ const ResourceCard = ({
         {tagsElement}
       </div>
       <textarea id={`resource-${name}`} type="hidden" value={clipboardServiceDetails} hidden />
-      <h3>
-        {name}{' '}
-        <a
-          id={`copy-clipboard-icon-${id}`}
-          title="copy"
-          href="javascript:void(0)"
-          onClick={() => copyToClipboard()}>
-          <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 0 24 24" width="24">
-            <path d="M0 0h24v24H0z" fill="none" />
-            <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z" />
-          </svg>
-        </a>
-      </h3>
+      <div>
+        <h3 className={`${css['inline-header']}`}>
+          {name}
+          <a
+            id={`copy-clipboard-icon-${id}`}
+            title="copy"
+            href="javascript:void(0)"
+            onClick={() => copyToClipboard()}>
+            <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 0 24 24" width="24">
+              <path d="M0 0h24v24H0z" fill="none" />
+              <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z" />
+            </svg>
+          </a>
+        </h3>
+
+        <div className={`govuk-checkboxes__item ${css['inline-header']}`}>
+          <input
+            className="govuk-checkboxes__input"
+            id={`add-to-summary-checkbox-${id}-${categoryId}`}
+            name="add-to-summary-checkbox"
+            type="checkbox"
+            value={true}
+          />
+          <label
+            className="govuk-label govuk-checkboxes__label"
+            for={`add-to-summary-checkbox-${id}-${categoryId}`}>
+            Add to summary
+          </label>
+        </div>
+      </div>
       <>
         <SummaryList
           key={`resourceInfo-${id}-${categoryId}`}

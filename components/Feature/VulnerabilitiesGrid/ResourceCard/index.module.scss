@@ -69,7 +69,8 @@
     }
   }
 }
-.success-message, .error-message {
+.success-message,
+.error-message {
   padding: 16px 16px 16px 16px;
 }
 .success-message {
@@ -77,4 +78,9 @@
 }
 .error-message {
   background-color: #f4ccccff !important;
+}
+
+.inline-header {
+  display: inline-block;
+  margin-right: 10px;
 }
