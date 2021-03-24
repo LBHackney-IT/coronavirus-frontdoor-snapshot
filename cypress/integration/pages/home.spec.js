@@ -68,7 +68,7 @@ context('Index page', () => {
         .should('have.length', 2);
     });
 
-    it.only('Displays the correct resource information for council resources', () => {
+    it('Displays the correct resource information for council resources', () => {
       cy.get('[data-testid=accordion-item]')
         .eq(0)
         .click();
