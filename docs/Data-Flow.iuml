@@ -1,0 +1,65 @@
+@startuml
+!include <awslib/AWSCommon>
+!include <awslib/General/all>
+
+!include <awslib/Compute/all>
+!include <awslib/Database/all>
+!include <awslib/AWSSimplified>
+!include <material/common>
+!include <material/message_text>
+
+!include <logos/google-drive.puml>
+
+skinparam linetype polyline
+skinparam defaultTextAlignment center
+
+skinparam rectangle {
+    StereotypeFontSize 12
+    BackgroundColor AWS_BG_COLOR
+    BorderColor AWS_BORDER_COLOR
+    BorderColor<<grouped>> #000000
+}
+
+!define GoogleDrive(e_alias, e_label, e_techn) AWSEntity(e_alias, e_label, e_techn, #4285F4, google-drive, google-drive)
+!define Airtable(e_alias, e_label, e_techn) rectangle "<img:https://airtable.com/favicon.ico>\n\n==e_label" <<e_stereo>> as e_alias
+!define Notify(e_alias, e_label, e_techn) MA_MESSAGE_TEXT(Grey, 1, e_alias, rectangle, e_label)
+
+title Better Conversations Data Flow
+
+Users(sources, "Call Handlers","")
+
+
+rectangle "Application" <<grouped>> {
+    Lambda(betterConversationsUI, "Better Conversations UI", "")
+    Lambda(betterConversationsAPI, "Better Conversations API", "")
+    DynamoDB(db, "Database", "")
+
+    sources --> betterConversationsUI
+    betterConversationsUI --> betterConversationsAPI
+
+    betterConversationsAPI --> db
+}
+
+rectangle  "Conversation Prompts" <<grouped>> {
+    Airtable(airtableQuestions, "Prompts\nBank of Resources", "")
+    betterConversationsAPI --> airtableQuestions
+}
+
+rectangle  "Support Services" <<grouped>> {
+    Airtable(airtableSecretServices, "Council Services\nInternal Council Services for BC", "")
+    Lambda(findSupportServices, "Find Support Services", "")
+
+    airtableSecretServices -[hidden]-> findSupportServices
+
+    betterConversationsAPI -> airtableSecretServices
+    betterConversationsAPI -> findSupportServices
+}
+
+rectangle  "Messaging" <<grouped>> {
+    Notify(govNotify, "GOV.UK Notify","")
+    betterConversationsAPI -> govNotify : Send SMS and Emails
+}
+
+
+
+@enduml
