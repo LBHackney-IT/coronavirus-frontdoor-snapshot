@@ -19,16 +19,24 @@ const SupportSummary = ({ referralSummary, signpostSummary }) => {
               Search for services to refer residents to
             </span>
           )}
-          {referralSummary.length > 0 &&
-            referralSummary.map(referral => <div>{referral.serviceName}</div>)}
+          <div className="govuk-!-margin-bottom-5">
+            {referralSummary.length > 0 &&
+              referralSummary.map(referral => (
+                <div className="govuk-!-margin-bottom-1">{referral.serviceName}</div>
+              ))}
+          </div>
           <strong>Services signposted to</strong>
           {signpostSummary.length == 0 && (
             <span id="summary-signposts-hint" className="govuk-hint  lbh-hint">
               Search for services to signpost residents to
             </span>
           )}
-          {signpostSummary.length > 0 &&
-            signpostSummary.map(signpost => <div>{signpost.serviceName}</div>)}
+          <div className="govuk-!-margin-bottom-5">
+            {signpostSummary.length > 0 &&
+              signpostSummary.map(signpost => (
+                <div className="govuk-!-margin-bottom-1">{signpost.serviceName}</div>
+              ))}
+          </div>
           <form id="summary-form" onSubmit={sendSummary}>
             <TextArea label="Add a note for the resident" name="support-summary-note" value="" />
             <strong>Your details</strong>
