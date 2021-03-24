@@ -2,7 +2,7 @@ import { TextArea, TextInput, Button } from 'components/Form';
 import Details from 'components/Form/Details';
 import Heading from 'components/Heading';
 
-const SupportSummary = ({ referralSummary }) => {
+const SupportSummary = ({ referralSummary, signpostSummary }) => {
   const sendSummary = e => {
     e.preventDefault();
     console.log('sent');
@@ -22,9 +22,13 @@ const SupportSummary = ({ referralSummary }) => {
           {referralSummary.length > 0 &&
             referralSummary.map(referral => <div>{referral.serviceName}</div>)}
           <strong>Services signposted to</strong>
-          <span id="summary-signposts-hint" className="govuk-hint lbh-hint">
-            Search for services to signpost residents to
-          </span>
+          {signpostSummary.length == 0 && (
+            <span id="summary-signposts-hint" className="govuk-hint  lbh-hint">
+              Search for services to signpost residents to
+            </span>
+          )}
+          {signpostSummary.length > 0 &&
+            signpostSummary.map(signpost => <div>{signpost.serviceName}</div>)}
           <form id="summary-form" onSubmit={sendSummary}>
             <TextArea label="Add a note for the resident" name="support-summary-note" value="" />
             <strong>Your details</strong>

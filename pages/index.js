@@ -8,6 +8,7 @@ import ResidentDetailsForm from 'components/Feature/ResidentDetailsForm';
 import SupportSummary from 'components/Feature/SupportSummary';
 import { useState } from 'react';
 import jsonwebtoken from 'jsonwebtoken';
+import { sign } from 'crypto';
 
 const Index = ({
   resources,
@@ -31,12 +32,22 @@ const Index = ({
   const [showResidentForm, setShowResidentForm] = useState(false);
   const [referralCompletion, setReferralCompletion] = useState({ tis: null });
   const [referralSummary, setReferralSummary] = useState([]);
+  const [signpostSummary, setSignpostSummary] = useState([]);
 
   const residentFormCallback = val => {
     setShowResidentForm(val);
   };
   const residentInfoCallback = value => {
     setResidentInfo(value);
+  };
+  const updateSignpostSummary = (serviceName, categoryName) => {
+    let newSignpostSummary;
+    if (signpostSummary.some(x => x.serviceName == serviceName && x.categoryName == categoryName)) {
+      newSignpostSummary = signpostSummary.filter(
+        x => x.serviceName != serviceName || x.categoryName != categoryName
+      );
+    } else newSignpostSummary = signpostSummary.concat([{ serviceName, categoryName }]);
+    setSignpostSummary(newSignpostSummary);
   };
   return (
     <>
@@ -50,8 +61,6 @@ const Index = ({
         referralSummary={referralSummary}
         setReferralSummary={setReferralSummary}
       />
-      <SupportSummary referralSummary={referralSummary} />
-
       <div className="govuk-!-margin-top-9">
         {errors.map(err => (
           <p className="govuk-error-message">{err}</p>
@@ -72,7 +81,9 @@ const Index = ({
         residentFormCallback={residentFormCallback}
         referralCompletion={referralCompletion}
         setReferralCompletion={setReferralCompletion}
+        updateSignpostSummary={updateSignpostSummary}
       />
+      <SupportSummary referralSummary={referralSummary} signpostSummary={signpostSummary} />
       <a
         href="https://forms.gle/B6vEMgp7sCsjJqNdA"
         target="_blank"

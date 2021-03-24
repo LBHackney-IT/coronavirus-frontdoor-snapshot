@@ -8,7 +8,8 @@ const Services = ({
   refererInfo,
   residentFormCallback,
   referralCompletion,
-  setReferralCompletion
+  setReferralCompletion,
+  updateSignpostSummary
 }) => {
   const [expandedGroups, setExpandedGroups] = useState({});
   const [openReferralForm, setOpenReferralForm] = useState({});
@@ -75,6 +76,7 @@ const Services = ({
                         openReferralForm={openReferralForm}
                         referralData={referralData}
                         setReferralData={setReferralData}
+                        updateSignpostSummary={updateSignpostSummary}
                       />
                     ))}
                   </AccordionItem>

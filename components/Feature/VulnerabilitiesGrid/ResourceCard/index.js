@@ -33,6 +33,7 @@ const ResourceCard = ({
   referralData,
   setReferralData,
   demographic,
+  updateSignpostSummary,
   ...others
 }) => {
   const [validationError, setValidationError] = useState({});
@@ -92,6 +93,9 @@ const ResourceCard = ({
             id={`add-to-summary-checkbox-${id}-${categoryId}`}
             name="add-to-summary-checkbox"
             type="checkbox"
+            onClick={e => {
+              updateSignpostSummary(name, categoryName);
+            }}
             value={true}
           />
           <label
