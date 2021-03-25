@@ -111,7 +111,7 @@ const ResourceCard = ({
           />
           <label
             className="govuk-label govuk-checkboxes__label"
-            for={`add-to-summary-checkbox-${id}-${categoryId}`}>
+            htmlFor={`add-to-summary-checkbox-${id}-${categoryId}`}>
             Add to summary
           </label>
         </div>
@@ -285,8 +285,8 @@ const ResourceCard = ({
                     </legend>
                     <div className="govuk-checkboxes govuk-checkboxes--inline">
                       {validationError[`consent-${id}`] && (
-                        <span id={`consent-${id}-error`} class="govuk-error-message">
-                          <span class="govuk-visually-hidden">Error:</span>
+                        <span id={`consent-${id}-error`} className="govuk-error-message">
+                          <span className="govuk-visually-hidden">Error:</span>
                           This is required in order to make the referral.
                         </span>
                       )}
@@ -303,26 +303,26 @@ const ResourceCard = ({
                         />
                         <label
                           className="govuk-label govuk-checkboxes__label"
-                          for={`consent-${id}`}>
+                          htmlFor={`consent-${id}`}>
                           Yes
                         </label>
                       </div>
                     </div>
                   </fieldset>
                 </div>
-                <div class="govuk-form-group govuk-!-padding-bottom-2">
-                  <fieldset class="govuk-fieldset">
-                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+                <div className="govuk-form-group govuk-!-padding-bottom-2">
+                  <fieldset className="govuk-fieldset">
+                    <legend className="govuk-fieldset__legend govuk-fieldset__legend--s">
                       How would the resident like to receive details about their referral to this
                       service?
                     </legend>
-                    <div id="resident-referral-hint" class="govuk-hint">
+                    <div id="resident-referral-hint" className="govuk-hint">
                       Select all that apply.
                     </div>
-                    <div class="govuk-checkboxes">
-                      <div class="govuk-checkboxes__item">
+                    <div className="govuk-checkboxes">
+                      <div className="govuk-checkboxes__item">
                         <input
-                          class="govuk-checkboxes__input"
+                          className="govuk-checkboxes__input"
                           id="resident-referral-sms"
                           name="resident-referral-sms"
                           type="checkbox"
@@ -330,14 +330,14 @@ const ResourceCard = ({
                           value={true}
                         />
                         <label
-                          class="govuk-label govuk-checkboxes__label"
-                          for="resident-referral-sms">
+                          className="govuk-label govuk-checkboxes__label"
+                          htmlFor="resident-referral-sms">
                           By text
                         </label>
                       </div>
-                      <div class="govuk-checkboxes__item">
+                      <div className="govuk-checkboxes__item">
                         <input
-                          class="govuk-checkboxes__input"
+                          className="govuk-checkboxes__input"
                           id="resident-referral-email"
                           name="resident-referral-email"
                           type="checkbox"
@@ -345,8 +345,8 @@ const ResourceCard = ({
                           value={true}
                         />
                         <label
-                          class="govuk-label govuk-checkboxes__label"
-                          for="esident-referral-email">
+                          className="govuk-label govuk-checkboxes__label"
+                          htmlFor="esident-referral-email">
                           By email
                         </label>
                       </div>
@@ -359,7 +359,7 @@ const ResourceCard = ({
                       validationError[`referer-name-${id}`] ? 'govuk-form-group--error' : ''
                     }`}>
                     <label className="govuk-label inline" htmlFor="name">
-                      <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+                      <legend className="govuk-fieldset__legend govuk-fieldset__legend--s">
                         Your name
                       </legend>
                     </label>
@@ -396,7 +396,7 @@ const ResourceCard = ({
                       validationError[`referer-organisation-${id}`] ? 'govuk-form-group--error' : ''
                     }`}>
                     <label className="govuk-label inline" htmlFor="name">
-                      <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+                      <legend className="govuk-fieldset__legend govuk-fieldset__legend--s">
                         Your organisation
                       </legend>
                     </label>
@@ -436,7 +436,7 @@ const ResourceCard = ({
                       validationError[`referer-email-${id}`] ? 'govuk-form-group--error' : ''
                     }`}>
                     <label className="govuk-label inline" htmlFor="name">
-                      <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+                      <legend className="govuk-fieldset__legend govuk-fieldset__legend--s">
                         Your email
                       </legend>
                     </label>

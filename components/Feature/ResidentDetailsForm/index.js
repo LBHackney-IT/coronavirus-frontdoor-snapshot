@@ -296,7 +296,9 @@ const ResidentDetailsForm = ({
               <div className="govuk-date-input" id="date-of-birth">
                 <div className="govuk-date-input__item">
                   <div className="govuk-form-group">
-                    <label className="govuk-label govuk-date-input__label" for="date-of-birth-day">
+                    <label
+                      className="govuk-label govuk-date-input__label"
+                      htmlFor="date-of-birth-day">
                       Day
                     </label>
                     <input
@@ -305,7 +307,7 @@ const ResidentDetailsForm = ({
                       name="date-of-birth-day"
                       type="text"
                       pattern="[0-9]*"
-                      inputmode="numeric"
+                      inputMode="numeric"
                       onChange={e => handleOnChange(e.target.id, e.target.value)}
                     />
                   </div>
@@ -314,7 +316,7 @@ const ResidentDetailsForm = ({
                   <div className="govuk-form-group">
                     <label
                       className="govuk-label govuk-date-input__label"
-                      for="date-of-birth-month">
+                      htmlFor="date-of-birth-month">
                       Month
                     </label>
                     <input
@@ -323,14 +325,16 @@ const ResidentDetailsForm = ({
                       name="date-of-birth-month"
                       type="text"
                       pattern="[0-9]*"
-                      inputmode="numeric"
+                      inputMode="numeric"
                       onChange={e => handleOnChange(e.target.id, e.target.value)}
                     />
                   </div>
                 </div>
                 <div className="govuk-date-input__item">
                   <div className="govuk-form-group">
-                    <label className="govuk-label govuk-date-input__label" for="date-of-birth-year">
+                    <label
+                      className="govuk-label govuk-date-input__label"
+                      htmlFor="date-of-birth-year">
                       Year
                     </label>
                     <input
@@ -339,7 +343,7 @@ const ResidentDetailsForm = ({
                       name="date-of-birth-year"
                       type="text"
                       pattern="[0-9]*"
-                      inputmode="numeric"
+                      inputMode="numeric"
                       onChange={e => handleOnChange(e.target.id, e.target.value)}
                     />
                   </div>

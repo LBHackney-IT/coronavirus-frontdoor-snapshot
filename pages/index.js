@@ -124,8 +124,10 @@ ${referrerData['referer-organisation']}
         setEmailBody={setEmailBody}
       />
       <div className="govuk-!-margin-top-9">
-        {errors.map(err => (
-          <p className="govuk-error-message">{err}</p>
+        {errors.map((err, index) => (
+          <p key={`error-getting-resources-${index}`} className="govuk-error-message">
+            {err}
+          </p>
         ))}
       </div>
       {showTopicExplorer && (
