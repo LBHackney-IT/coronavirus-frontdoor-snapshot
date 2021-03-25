@@ -24,9 +24,9 @@ export const endpoint = ({ createConversation }) =>
           validate: ({ body }) => body.email && body.email.length > 0
         },
         {
-          name: 'services',
-          failureMessage: 'services are required',
-          validate: ({ body }) => body.services && body.services.length > 0
+          name: 'discussedServices',
+          failureMessage: 'discussed services are required',
+          validate: ({ body }) => body.discussedServices && body.discussedServices.length > 0
         },
         {
           name: 'signPostingMessage',
@@ -47,7 +47,7 @@ export const endpoint = ({ createConversation }) =>
         userName,
         userEmail,
         dateOfBirth,
-        services,
+        discussedServices,
         signPostingMessage
       },
       headers
@@ -63,7 +63,7 @@ export const endpoint = ({ createConversation }) =>
         userName,
         userEmail,
         dateOfBirth,
-        services,
+        discussedServices,
         signPostingMessage
       });
       const referral = await createConversation.execute(convo);
