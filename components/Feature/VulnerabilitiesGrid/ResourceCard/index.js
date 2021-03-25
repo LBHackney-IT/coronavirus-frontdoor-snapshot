@@ -1,4 +1,5 @@
 import css from './index.module.scss';
+import notificationCss from '../../notification-messages.module.scss';
 import SummaryList from 'components/Form/SummaryList';
 import { useState } from 'react';
 
@@ -25,14 +26,16 @@ const ResourceCard = ({
   serviceDescription,
   residentInfo,
   categoryId,
-  refererInfo,
   referralCompletion,
   setReferralCompletion,
   detailsClicked,
   openReferralForm,
   referralData,
   setReferralData,
+  referrerData,
+  setReferrerData,
   demographic,
+  updateSignpostSummary,
   ...others
 }) => {
   const [validationError, setValidationError] = useState({});
@@ -43,9 +46,9 @@ const ResourceCard = ({
     websites &&
     websites.length > 0 &&
     websites.map(website => (
-        <a href={website} target="_blank" rel="noopener noreferrer">
-          {website}
-        </a>
+      <a href={website} target="_blank" rel="noopener noreferrer">
+        {website}
+      </a>
     ));
   const distributionElement = tags.filter(t => HIDDEN_TAGS.includes(t)).join(', ');
   const tagsElement = tags
@@ -78,50 +81,41 @@ const ResourceCard = ({
     setValidationError({ [value]: true, ...validationError });
   };
 
-  const copyToClipboard = () => {
-    var copyText = document.getElementById(`resource-${name}`);
-    copyText.hidden = false;
-    copyText.select();
-    copyText.setSelectionRange(0, 99999);
-    document.execCommand('copy');
-    copyText.hidden = true;
-  };
-
-  const clipboardServiceDetails =
-    'Service Name: ' +
-    name +
-    (telephone ? '\nTelephone: ' + telephone : '') +
-    (serviceDescription ? '\nService Description: ' + serviceDescription : '') +
-    (address ? '\nAddress: ' + address : '') +
-    (description ? '\nDescription: ' + description : '') +
-    (websites.length > 0
-      ? '\nWebsites: ' +
-        JSON.stringify(websites)
-          .replace('[', '')
-          .replace(']', '')
-      : '') +
-    (referralWebsite ? '\nReferral website: ' + referralWebsite : '') +
-    (referralContact ? '\nReferral email: ' + referralContact : '');
-
   return (
     <div className={`resource ${css.resource}`} {...others}>
       <div className={`${css.tags__container} card-header-tag`} data-testid="resource-card-tags">
         {tagsElement}
       </div>
-      <textarea id={`resource-${name}`} type="hidden" value={clipboardServiceDetails} hidden />
-      <h3>
-        {name}{' '}
-        <a
-          id={`copy-clipboard-icon-${id}`}
-          title="copy"
-          href="javascript:void(0)"
-          onClick={() => copyToClipboard()}>
-          <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 0 24 24" width="24">
-            <path d="M0 0h24v24H0z" fill="none" />
-            <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z" />
-          </svg>
-        </a>
-      </h3>
+      <div>
+        <h3 className={`${css['inline-header']}`}>{name}</h3>
+
+        <div className={`govuk-checkboxes__item ${css['inline-header']}`}>
+          <input
+            className="govuk-checkboxes__input"
+            id={`add-to-summary-checkbox-${id}-${categoryId}`}
+            name="add-to-summary-checkbox"
+            type="checkbox"
+            onClick={() => {
+              updateSignpostSummary({
+                id,
+                name,
+                telephone,
+                contactEmail: email,
+                referralEmail: referralContact,
+                address,
+                websites: websites.join(', '),
+                categoryName
+              });
+            }}
+            value={true}
+          />
+          <label
+            className="govuk-label govuk-checkboxes__label"
+            htmlFor={`add-to-summary-checkbox-${id}-${categoryId}`}>
+            Add to summary
+          </label>
+        </div>
+      </div>
       <>
         <SummaryList
           key={`resourceInfo-${id}-${categoryId}`}
@@ -133,7 +127,6 @@ const ResourceCard = ({
             Email: email,
             Description: serviceDescription,
             "Who's this for?": demographic,
-            Address: address,
             'Relevant support': description,
             Address: address,
             Website: websiteElement,
@@ -291,8 +284,8 @@ const ResourceCard = ({
                     </legend>
                     <div className="govuk-checkboxes govuk-checkboxes--inline">
                       {validationError[`consent-${id}`] && (
-                        <span id={`consent-${id}-error`} class="govuk-error-message">
-                          <span class="govuk-visually-hidden">Error:</span>
+                        <span id={`consent-${id}-error`} className="govuk-error-message">
+                          <span className="govuk-visually-hidden">Error:</span>
                           This is required in order to make the referral.
                         </span>
                       )}
@@ -309,26 +302,26 @@ const ResourceCard = ({
                         />
                         <label
                           className="govuk-label govuk-checkboxes__label"
-                          for={`consent-${id}`}>
+                          htmlFor={`consent-${id}`}>
                           Yes
                         </label>
                       </div>
                     </div>
                   </fieldset>
                 </div>
-                <div class="govuk-form-group govuk-!-padding-bottom-2">
-                  <fieldset class="govuk-fieldset">
-                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+                <div className="govuk-form-group govuk-!-padding-bottom-2">
+                  <fieldset className="govuk-fieldset">
+                    <legend className="govuk-fieldset__legend govuk-fieldset__legend--s">
                       How would the resident like to receive details about their referral to this
                       service?
                     </legend>
-                    <div id="resident-referral-hint" class="govuk-hint">
+                    <div id="resident-referral-hint" className="govuk-hint">
                       Select all that apply.
                     </div>
-                    <div class="govuk-checkboxes">
-                      <div class="govuk-checkboxes__item">
+                    <div className="govuk-checkboxes">
+                      <div className="govuk-checkboxes__item">
                         <input
-                          class="govuk-checkboxes__input"
+                          className="govuk-checkboxes__input"
                           id="resident-referral-sms"
                           name="resident-referral-sms"
                           type="checkbox"
@@ -336,14 +329,14 @@ const ResourceCard = ({
                           value={true}
                         />
                         <label
-                          class="govuk-label govuk-checkboxes__label"
-                          for="resident-referral-sms">
+                          className="govuk-label govuk-checkboxes__label"
+                          htmlFor="resident-referral-sms">
                           By text
                         </label>
                       </div>
-                      <div class="govuk-checkboxes__item">
+                      <div className="govuk-checkboxes__item">
                         <input
-                          class="govuk-checkboxes__input"
+                          className="govuk-checkboxes__input"
                           id="resident-referral-email"
                           name="resident-referral-email"
                           type="checkbox"
@@ -351,8 +344,8 @@ const ResourceCard = ({
                           value={true}
                         />
                         <label
-                          class="govuk-label govuk-checkboxes__label"
-                          for="esident-referral-email">
+                          className="govuk-label govuk-checkboxes__label"
+                          htmlFor="esident-referral-email">
                           By email
                         </label>
                       </div>
@@ -365,7 +358,7 @@ const ResourceCard = ({
                       validationError[`referer-name-${id}`] ? 'govuk-form-group--error' : ''
                     }`}>
                     <label className="govuk-label inline" htmlFor="name">
-                      <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+                      <legend className="govuk-fieldset__legend govuk-fieldset__legend--s">
                         Your name
                       </legend>
                     </label>
@@ -387,9 +380,9 @@ const ResourceCard = ({
                       id={`referer-name-${id}`}
                       name="referer-name"
                       type="text"
-                      defaultValue={referralData['referer-name']}
+                      defaultValue={referrerData['referer-name']}
                       onChange={e => {
-                        setReferralData({ ...referralData, 'referer-name': e.target.value });
+                        setReferrerData({ ...referrerData, 'referer-name': e.target.value });
                       }}
                       aria-describedby="refererName-hint"
                       aria-describedby="refererName"
@@ -402,7 +395,7 @@ const ResourceCard = ({
                       validationError[`referer-organisation-${id}`] ? 'govuk-form-group--error' : ''
                     }`}>
                     <label className="govuk-label inline" htmlFor="name">
-                      <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+                      <legend className="govuk-fieldset__legend govuk-fieldset__legend--s">
                         Your organisation
                       </legend>
                     </label>
@@ -424,10 +417,10 @@ const ResourceCard = ({
                       id={`referer-organisation-${id}`}
                       name="referer-organisation"
                       type="text"
-                      defaultValue={referralData['referer-organisation']}
+                      defaultValue={referrerData['referer-organisation']}
                       onChange={e => {
-                        setReferralData({
-                          ...referralData,
+                        setReferrerData({
+                          ...referrerData,
                           'referer-organisation': e.target.value
                         });
                       }}
@@ -442,7 +435,7 @@ const ResourceCard = ({
                       validationError[`referer-email-${id}`] ? 'govuk-form-group--error' : ''
                     }`}>
                     <label className="govuk-label inline" htmlFor="name">
-                      <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+                      <legend className="govuk-fieldset__legend govuk-fieldset__legend--s">
                         Your email
                       </legend>
                     </label>
@@ -464,9 +457,9 @@ const ResourceCard = ({
                       id={`referer-email-${id}`}
                       name="referer-email"
                       type="email"
-                      defaultValue={referralData['referer-email']}
+                      defaultValue={referrerData['referer-email']}
                       onChange={e => {
-                        setReferralData({ ...referralData, 'referer-email': e.target.value });
+                        setReferrerData({ ...referrerData, 'referer-email': e.target.value });
                       }}
                       aria-describedby="refererorganisation-hint"
                       aria-describedby="refererorganisation"
@@ -495,11 +488,15 @@ const ResourceCard = ({
       {referralCompletion[id] && (
         <div>
           {referralCompletion[id].errors?.length > 0 ? (
-            <div data-testid="referral-errors-banner" className={`${css['error-message']}`}>
+            <div
+              data-testid="referral-errors-banner"
+              className={`${notificationCss['error-message']}`}>
               {referralCompletion[id].errors.join('\n')}
             </div>
           ) : (
-            <div data-testid="successful-referral-banner" className={`${css['success-message']}`}>
+            <div
+              data-testid="successful-referral-banner"
+              className={`${notificationCss['success-message']}`}>
               Successfully submitted referral
             </div>
           )}

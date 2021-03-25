@@ -10,7 +10,9 @@ const ResidentDetailsForm = ({
   setReferralCompletion,
   referralCompletion,
   referralSummary,
-  setReferralSummary
+  setReferralSummary,
+  updateEmailBody,
+  setEmailBody
 }) => {
   const { createReferral } = useReferral({ token });
   const [residentInfo, setResidentInfo] = useState({
@@ -24,11 +26,9 @@ const ResidentDetailsForm = ({
   const [validationError, setValidationError] = useState({});
 
   const handleOnChange = (id, value) => {
-    setResidentInfo({ ...residentInfo, [id]: value });
     let newResidentInfo = { ...residentInfo, [id]: value };
-    if (Object.values(newResidentInfo).every(k => k)) {
-      residentInfoCallback(residentInfo);
-    }
+    setResidentInfo(newResidentInfo);
+    residentInfoCallback(newResidentInfo);
   };
 
   const onInvalidField = value => {
@@ -44,6 +44,12 @@ const ResidentDetailsForm = ({
     e.preventDefault();
     const serviceId = e.target['service-id'].value;
     const serviceName = e.target['service-name'].value;
+    const serviceTelephone = e.target['service-contact-phone'].value;
+    const serviceEmail = e.target['service-contact-email'].value;
+    const serviceAddress = e.target['service-address'].value;
+    const serviceWebsites = e.target['service-websites'].value;
+    const referralEmail = e.target['service-referral-email'].value;
+
     const referral = {
       firstName: e.target.firstName.value,
       lastName: e.target.lastName.value,
@@ -77,11 +83,18 @@ const ResidentDetailsForm = ({
       setReferralCompletion({ ...referralCompletion, [serviceId]: result });
       const newReferralSummary = referralSummary.concat([
         {
-          serviceName,
-          serviceId
+          name: serviceName,
+          telephone: serviceTelephone,
+          contactEmail: serviceEmail,
+          referralEmail,
+          address: serviceAddress,
+          websites: serviceWebsites,
+          id: serviceId,
+          referralId: result.id
         }
       ]);
       setReferralSummary(newReferralSummary);
+      setEmailBody(updateEmailBody(undefined, newReferralSummary));
     }
   };
   return (
@@ -283,7 +296,9 @@ const ResidentDetailsForm = ({
               <div className="govuk-date-input" id="date-of-birth">
                 <div className="govuk-date-input__item">
                   <div className="govuk-form-group">
-                    <label className="govuk-label govuk-date-input__label" for="date-of-birth-day">
+                    <label
+                      className="govuk-label govuk-date-input__label"
+                      htmlFor="date-of-birth-day">
                       Day
                     </label>
                     <input
@@ -292,7 +307,8 @@ const ResidentDetailsForm = ({
                       name="date-of-birth-day"
                       type="text"
                       pattern="[0-9]*"
-                      inputmode="numeric"
+                      inputMode="numeric"
+                      onChange={e => handleOnChange(e.target.id, e.target.value)}
                     />
                   </div>
                 </div>
@@ -300,7 +316,7 @@ const ResidentDetailsForm = ({
                   <div className="govuk-form-group">
                     <label
                       className="govuk-label govuk-date-input__label"
-                      for="date-of-birth-month">
+                      htmlFor="date-of-birth-month">
                       Month
                     </label>
                     <input
@@ -309,13 +325,16 @@ const ResidentDetailsForm = ({
                       name="date-of-birth-month"
                       type="text"
                       pattern="[0-9]*"
-                      inputmode="numeric"
+                      inputMode="numeric"
+                      onChange={e => handleOnChange(e.target.id, e.target.value)}
                     />
                   </div>
                 </div>
                 <div className="govuk-date-input__item">
                   <div className="govuk-form-group">
-                    <label className="govuk-label govuk-date-input__label" for="date-of-birth-year">
+                    <label
+                      className="govuk-label govuk-date-input__label"
+                      htmlFor="date-of-birth-year">
                       Year
                     </label>
                     <input
@@ -324,7 +343,8 @@ const ResidentDetailsForm = ({
                       name="date-of-birth-year"
                       type="text"
                       pattern="[0-9]*"
-                      inputmode="numeric"
+                      inputMode="numeric"
+                      onChange={e => handleOnChange(e.target.id, e.target.value)}
                     />
                   </div>
                 </div>

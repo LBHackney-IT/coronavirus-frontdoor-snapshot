@@ -60,7 +60,7 @@ const TopicExplorer = props => {
   };
   return (
     <>
-      <h2>Discuss a topic</h2>
+      <h2 id="topic-explorer-header">Discuss a topic</h2>
       <div className="govuk-form-group govuk-!-margin-bottom-7">
         <div className="govuk-!-padding-bottom-4" id="keyword-search">
           <label htmlFor="topic-search">Try searching for keywords like </label>

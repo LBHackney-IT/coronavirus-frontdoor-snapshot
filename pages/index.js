@@ -2,12 +2,14 @@ import useReferral from 'lib/api/utils/useReferral';
 import { requestResources, requestPrompts, requestFssResources } from 'lib/api';
 import HttpStatusError from 'lib/api/domain/HttpStatusError';
 import { getTokenFromCookieHeader } from 'lib/utils/token';
+import { getEmailBody } from 'lib/utils/getEmailBody';
 import Services from 'components/Feature/Services';
 import TopicExplorer from 'components/Feature/TopicExplorer';
 import ResidentDetailsForm from 'components/Feature/ResidentDetailsForm';
 import SupportSummary from 'components/Feature/SupportSummary';
 import { useState } from 'react';
 import jsonwebtoken from 'jsonwebtoken';
+import Heading from 'components/Heading';
 
 const Index = ({
   resources,
@@ -31,6 +33,12 @@ const Index = ({
   const [showResidentForm, setShowResidentForm] = useState(false);
   const [referralCompletion, setReferralCompletion] = useState({ tis: null });
   const [referralSummary, setReferralSummary] = useState([]);
+  const [signpostSummary, setSignpostSummary] = useState([]);
+  const [referrerData, setReferrerData] = useState({
+    'referer-email': refererInfo?.email,
+    'referer-name': refererInfo?.name,
+    'referer-organisation': refererInfo?.iss
+  });
 
   const residentFormCallback = val => {
     setShowResidentForm(val);
@@ -38,8 +46,56 @@ const Index = ({
   const residentInfoCallback = value => {
     setResidentInfo(value);
   };
+  const updateSignpostSummary = service => {
+    let newSignpostSummary;
+    if (
+      signpostSummary.some(x => x.name == service.name && x.categoryName == service.categoryName)
+    ) {
+      newSignpostSummary = signpostSummary.filter(
+        x => x.name != service.name || x.categoryName != service.categoryName
+      );
+    } else newSignpostSummary = signpostSummary.concat([{ ...service }]);
+    setSignpostSummary(newSignpostSummary);
+    setEmailBody(updateEmailBody(newSignpostSummary));
+  };
+
+  const updateEmailBody = (
+    newSignpostSummary = signpostSummary,
+    newReferralSummary = referralSummary
+  ) => {
+    return getEmailBody(
+      residentInfo,
+      newSignpostSummary,
+      newReferralSummary,
+      referrerData
+    );
+  };
+
+  const [emailBody, setEmailBody] = useState(updateEmailBody());
+
   return (
     <>
+      {process.env.NEXT_PUBLIC_SIGNPOST_ENABLED.toLowerCase() === 'true' && (
+        <>
+          <Heading as="h2">How to use this tool?</Heading>
+          <div className="govuk-!-margin-bottom-5">
+            <ol>
+              <li className="govuk-!-margin-bottom-1">
+                <a href="#topic-explorer-header">Search for a topic</a> to discuss the resident's
+                whole story and find out what support they need.
+              </li>
+              <li className="govuk-!-margin-bottom-1">
+                <a href="#resources-header">Search for services</a> and refer residents or signpost
+                residents.
+              </li>
+              <li className="govuk-!-margin-bottom-1">
+                <a href="#summary-header">Send a summary email</a> to the resident about your
+                conversation and the services you have discussed.
+              </li>
+            </ol>
+          </div>
+        </>
+      )}
       <ResidentDetailsForm
         residentInfoCallback={residentInfoCallback}
         showResidentForm={showResidentForm}
@@ -49,12 +105,14 @@ const Index = ({
         referralCompletion={referralCompletion}
         referralSummary={referralSummary}
         setReferralSummary={setReferralSummary}
+        updateEmailBody={updateEmailBody}
+        setEmailBody={setEmailBody}
       />
-      <SupportSummary referralSummary={referralSummary} />
-
       <div className="govuk-!-margin-top-9">
-        {errors.map(err => (
-          <p className="govuk-error-message">{err}</p>
+        {errors.map((err, index) => (
+          <p key={`error-getting-resources-${index}`} className="govuk-error-message">
+            {err}
+          </p>
         ))}
       </div>
       {showTopicExplorer && (
@@ -63,7 +121,7 @@ const Index = ({
           <hr className="govuk-section-break hr-additional-spacing" />
         </>
       )}
-      <h2>Resources for residents</h2>
+      <h2 id="resources-header">Resources for residents</h2>
       <Services
         taxonomies={fssTaxonomies}
         resources={resources}
@@ -72,11 +130,27 @@ const Index = ({
         residentFormCallback={residentFormCallback}
         referralCompletion={referralCompletion}
         setReferralCompletion={setReferralCompletion}
+        updateSignpostSummary={updateSignpostSummary}
+        referrerData={referrerData}
+        setReferrerData={setReferrerData}
       />
+      {process.env.NEXT_PUBLIC_SIGNPOST_ENABLED.toLowerCase() === 'true' && (
+        <SupportSummary
+          referralSummary={referralSummary}
+          residentFormCallback={residentFormCallback}
+          signpostSummary={signpostSummary}
+          referrerData={referrerData}
+          setReferrerData={setReferrerData}
+          residentInfo={residentInfo}
+          emailBody={emailBody}
+          setEmailBody={setEmailBody}
+          token={token}
+        />
+      )}
       <a
         href="https://forms.gle/B6vEMgp7sCsjJqNdA"
         target="_blank"
-        className="govuk-button"
+        className="govuk-button govuk-!-margin-top-5"
         data-testid="feedback-link-test">
         Submit feedback
       </a>
