@@ -23,7 +23,18 @@ const SupportSummary = ({
   const [conversationCompletion, setConversationCompletion] = useState(null);
 
   const toggleDetail = e => {
-    if (!residentInfo && hideForm) {
+    if (
+      (!residentInfo.firstName ||
+        !residentInfo.lastName ||
+        !residentInfo.phone ||
+        !residentInfo.email ||
+        !residentInfo.address ||
+        !residentInfo.postcode ||
+        !residentInfo['date-of-birth-year'] ||
+        !residentInfo['date-of-birth-month'] ||
+        !residentInfo['date-of-birth-day']) &&
+      hideForm
+    ) {
       e.preventDefault();
       residentFormCallback(true);
       window.location.href = '#resident-details-header';
