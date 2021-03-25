@@ -127,7 +127,6 @@ const ResourceCard = ({
             Email: email,
             Description: serviceDescription,
             "Who's this for?": demographic,
-            Address: address,
             'Relevant support': description,
             Address: address,
             Website: websiteElement,
