@@ -1,7 +1,7 @@
 import { endpoint } from './index';
 import createMockResponse from 'lib/api/utils/createMockResponse';
 
-describe('Conversation Referral Api', () => {
+describe('Conversation Api', () => {
   const createConversation = { execute: jest.fn() };
   const call = async ({ body, headers, method }) => {
     const response = createMockResponse();
@@ -32,7 +32,7 @@ describe('Conversation Referral Api', () => {
     const postcode = 'SP1 2RM';
     const signPostingMessage =
       'Hi Sue, I referred you to the garlic bread support service and suggested that you get in touch with the chocolate deliveries service';
-    const services = [
+    const discussedServices = [
       {
         id: 2,
         name: 'Garlic Bread Support',
@@ -40,7 +40,7 @@ describe('Conversation Referral Api', () => {
         referralEmail: 'referral@gbs.com',
         website: 'www.gbs.com',
         address: '123 Some st, E3 1J',
-        referral: 'ABC121'
+        referralId: 'ABC121'
       },
       {
         id: 2,
@@ -64,7 +64,7 @@ describe('Conversation Referral Api', () => {
         userName,
         userEmail,
         dateOfBirth,
-        services,
+        discussedServices,
         signPostingMessage
       },
       headers: {}
@@ -84,7 +84,7 @@ describe('Conversation Referral Api', () => {
         organisation: userOrganisation,
         email: userEmail
       },
-      services: services,
+      discussedServices: discussedServices,
       signPostingMessage: signPostingMessage,
       id: undefined,
       systemIds: undefined,
@@ -107,7 +107,7 @@ describe('Conversation Referral Api', () => {
       expect(errors[0]).toBe('first name is required');
       expect(errors[1]).toBe('last name is required');
       expect(errors[2]).toBe('resident email is required');
-      expect(errors[3]).toBe('services are required');
+      expect(errors[3]).toBe('discussed services are required');
       expect(errors[4]).toBe('sign posting message is required');
     });
   });
@@ -121,7 +121,7 @@ describe('Conversation Referral Api', () => {
         firstName: 'sue',
         lastName: 'taylor',
         userEmail: 'user@email.com',
-        services: [{}],
+        discussedServices: [{}],
         signPostingMessage: 'msg',
         email: 'resident@email.com'
       }
