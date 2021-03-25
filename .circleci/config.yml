@@ -65,8 +65,11 @@ jobs:
           aws-secret-access-key: CYPRESS_AWS_SECRET_ACCESS_KEY
           aws-region: CYPRESS_AWS_REGION
       - run:
-          name: Create local DynamoDB vulnerabilities table
+          name: Create local DynamoDB referrals table
           command: aws dynamodb create-table --cli-input-json file://./config/tables/referrals.json --endpoint-url http://localhost:8000 > /dev/null
+      - run:
+          name: Create local DynamoDB conversations table
+          command: aws dynamodb create-table --cli-input-json file://./config/tables/conversations.json --endpoint-url http://localhost:8000 > /dev/null
       - run:
           name: Run integration tests
           command: |
@@ -74,6 +77,7 @@ jobs:
             export SHOW_TOPIC_EXPLORER=true
             export INH_URL=https://inh-admin-test.hackney.gov.uk
             export TABLE_NAME=referrals
+            export CONVERSATIONS_TABLE_NAME=conversations
             export ADDRESSES_API_URL=${ADDRESSES_API_URL}
             export ADDRESSES_API_KEY=${ADDRESSES_API_KEY}
             export AIRTABLE_API_KEY=xx
