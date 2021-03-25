@@ -1,124 +1,74 @@
-# Coronavirus frontdoor Referral
-This is a fork of the Housing vulnerabilities tools. 
+# Better Conversations
 
-## Getting started
-This project uses **yarn** for dependency management and is built with Next.js.
+This tool was designed and built to enable a variety of staff across the council (Customer Services, Social Care
+Practitioners) and external workers (Voluntary Support Network, GPs, etc) to have meaningful conversations with
+residents about topics that may be out of their day-to-day remit.
 
-1. Install the project dependencies
-   ```
-   yarn
-   ```
-   and
-   `mkdir dynamodblocal`
-   if the 'dynamodblocal' directory does not exist.
-2. Create a `.env` file based off of the `.env.sample` that exists.
-3. [Set up DynamoDB Local](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBLocal.html)
-or start a local dynamodb container with Docker like so: `docker-compose up`
-4. Configure AWS cli with `aws configure`
-5. Create local DynamoDB plans table
-   ```bash
-   aws dynamodb create-table --cli-input-json file://./config/tables/referrals.json --endpoint-url http://localhost:8000
-   aws dynamodb create-table --cli-input-json file://./config/tables/conversations.json --endpoint-url http://localhost:8000 > /dev/null
-   ```
-6. Start running your local copy of understanding vulnerability.
-   ```
-   yarn dev
-   ```
+Better Conversations provides the ability to search for conversational prompts on certain topics, such as "Coronavirus",
+"Food", "Health", and "Benefits". The prompts are curated in an Airtable to provide the resident with the best experience
+no matter the background of the person they're talking to.
 
-7. (Optional) add some test data: 
-```
-curl -X POST \
-  http://localhost:3000/api/snapshots \
-  -H 'content-type: application/json' \
-  -d '{
-"firstName" : "Sue",
-"lastName" : "Taylor",
-"dob": {},
-"systemIds": ["123"],
-"createdBy": "",
-"postcode": "E1 6AW"
-}'
-```
-which should return a `201` with a snapshot id like: `rrCN4o37`. Then browse to `http://localhost:3000/snapshots/rrCN4o37` to verify the page opens, if that is the case your local setup is complete.
+Users can refer residents directly to services where the service accepts referrals via email, as well as providing
+receipts to the resident.
 
-## Working with DynamoDB locally
-If you need to view, edit or delete data from your local copy of DynamoDB when working on a feature
-there is a useful admin tool you can run.
+## Intended Users
 
-```(bash)
-yarn dynamo-admin
-```
+* Hackney Customer Services can use the tool to have meaningful conversations on inbound or outbound calls.
+* Voluntary Sector Workers can discover and refer residents to other services, or council services. 
 
-## Testing
+## History
 
-### Unit tests
-Unit tests are written with Jest, we are using `@testing-library/react` for React component testing.
+The tool was initially a forked version of the Benefits and Housing Needs
+[LBHackney-IT/housing-needs-vulnerabilities](https://github.com/LBHackney-IT/housing-needs-vulnerabilities) project. It
+has since undergone significant changes in terms of functionality, however some old references to "vulnerabilities" may
+be present in the code base.
 
-```(bash)
-yarn unit-test
-```
+## Technology
 
-### Integration tests
-Integration tests are written with Cypress.
+This application is built using Next.js in Javascript with DynamoDB and hosted in AWS.
 
-To run integration tests:
+To provide text message and email, GOV.UK Notify is used.
 
-1. Set these env variables to the following values:
-```(bash)
-INH_URL=https://inh-admin-test.hackney.gov.uk
-AIRTABLE_API_KEY=xx
-AIRTABLE_PROMPTS_TABLE_NAME="Conversational Prompts"
-FSS_PUBLIC_API_URL=http://localhost:8085/fss
-AIRTABLE_BASE_ID=baseId123
-AIRTABLE_TABLE_NAMES="Service directory"
-AIRTABLE_BASE_URL=http://localhost:8085
-AIRTABLE_PROMPTS_API_KEY=xx
-AIRTABLE_PROMPTS_BASE_ID=baseId456
-HOTJAR_ID=12345
-```
+For error monitoring and logging, AWS CloudWatch is used.
 
-2. Build the application
-```(bash)
-yarn build
-```
+## Development
 
-3. Run the tests:
-To run in cypress UI:
+Please see the separate [Development Guide](./docs/development.md).
 
-Start the servers and run cyppress-open to launch cypress UI tool:
+## Contributing
 
-```(bash)
-yarn start-test-servers
-yarn cypress-open
-```
+Please see the separate [Contributing Guide](./CONTRIBUTING.md).
 
-To run headlessly (this will launch a local application copy and mock server for you):
+## Further Documentation
 
-```(bash)
-yarn int-test
-```
+* [Project Drive](https://drive.google.com/drive/u/0/folders/0ADRAoyKRsyCkUk9PVA)
+* [Project Documentation](https://docs.google.com/document/d/1jPv-VTpeJvvCZdRepX-WC6GDgDs2w_J9gPzjyvdevPE/edit)
 
-## Deployment
-Infrastructure and code are deployed to AWS using Serverless.
+## See Related Projects
 
-### Automated deployments
-Merging into `master` triggers an automated deployment into the staging environment.
-To promote this to production you will need to manually approve the deployment in CircleCI.
+* [LBHackney-IT/cv-19-res-support-v3](https://github.com/LBHackney-IT/cv-19-res-support-v3) API for Here To Help
+* [LBHackney-IT/coronavirus-here-to-help-frontend](https://github.com/LBHackney-IT/coronavirus-here-to-help-frontend) Frontend for Here To Help
 
-## Pages and API endpoints
-Login is handled by Support For Hackney Residents, so long as the Hackney token cookie is set users will be signed in here too.
+## Contributors
 
-### GET /api/snapshots/{id}
-Retrieves a vulnerabilities snapshot, given a snapshot id.
+### Acitve Maintainers
 
-### POST /api/snapshots/find
-Used by other applications (such as Support For Hackney Residents) to find snapshots related to a particular person given their name, an optionally an array of identifiers.
+* **Liudvikas Taluntis** - Engineer at Hackney
 
-### POST /api/snapshots
-Creates a new, empty, vulnerabilities snapshot for a specified person.
+### Previous Maintainers
 
-### /loggedout
-The page displayed when a user is logged out.
+* **Andy Carr** - FutureGov
+* **Antony O'Neill** - Lead Engineer at [Made Tech](https://www.madetech.com/) ([antony@ant-web.co.uk](mailto:antony@ant-web.co.uk))
+* **Ben Dalton** - Engineer at [Made Tech](https://www.madetech.com/) ([ben.dalton@madetech.com](mailto:ben.dalton@madetech.com))
+* **Bogdan Zaharia** - Engineer at [Made Tech](https://www.madetech.com/)
+* **Elena Vilimaite** - Senior Engineer at [Made Tech](https://www.madetech.com/) ([elena@madetech.com](mailto:elena@madetech.com))
+* **Katrina Kosiak** - Engineer at [Made Tech](https://www.madetech.com/) ([katrina@madetech.com](mailto:katrina@madetech.com))
+* **Kyle Chapman** - Senior Engineer at [Made Tech](https://www.madetech.com/)
+* **Matt Millar** - Lead Engineer at [Made Tech](https://www.madetech.com/)
+* **Maysa Kanoni** - Engineer at [Made Tech](https://www.madetech.com/) ([maysa@madetech.com](mailto:maysa@madetech.com))
+* **Riccardo Noviello** - FutureGov
+* **Tom Davies** - Senior Engineer at [Made Tech](https://www.madetech.com/)
 
-### /snapshots/{id}
-Displays a vulnerability snapshot, if there is no data saved this will display the edit view - else it displays a readonly view of the snapshot.
+## License
+
+[MIT](./LICENSE)

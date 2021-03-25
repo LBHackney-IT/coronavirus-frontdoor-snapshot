@@ -1,0 +1,10 @@
+@startuml
+!include <awslib/AWSSimplified>
+!include <awslib/AWSCommon>
+
+!include <awslib/ApplicationIntegration/all>
+!include <office/Clouds/cloud>
+
+listsprites
+
+@enduml
