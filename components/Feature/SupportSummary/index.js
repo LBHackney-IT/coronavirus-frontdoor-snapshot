@@ -22,10 +22,11 @@ const SupportSummary = ({
   const [formErrorMsg, setFormErrorMsg] = useState(false);
   const [conversationCompletion, setConversationCompletion] = useState(null);
 
-  const toggle_detail = e => {
+  const toggleDetail = e => {
     if (!residentInfo && hideForm) {
       e.preventDefault();
       residentFormCallback(true);
+      window.location.href = '#resident-details-header';
     } else if (referralSummary.length < 1 && signpostSummary.length < 1) {
       e.preventDefault();
       setFormErrorMsg(true);
@@ -70,7 +71,7 @@ const SupportSummary = ({
       <Details
         title="Email the resident with details of services"
         onclick={e => {
-          toggle_detail(e);
+          toggleDetail(e);
         }}>
         {conversationCompletion && (
           <div>
