@@ -88,7 +88,7 @@ const ResidentDetailsForm = ({
           contactEmail: serviceEmail,
           referralEmail,
           address: serviceAddress,
-          website: serviceWebsites,
+          websites: serviceWebsites,
           id: serviceId,
           referralId: result.id
         }

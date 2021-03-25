@@ -102,7 +102,7 @@ const ResourceCard = ({
                 contactEmail: email,
                 referralEmail: referralContact,
                 address,
-                website: websites,
+                websites: websites.join(', '),
                 categoryName
               });
             }}

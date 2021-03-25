@@ -58,35 +58,29 @@ const Index = ({
     setEmailBody(updateEmailBody(newSignpostSummary));
   };
 
+  const getServiceSummaryText = (index, service) => {
+    return `${index + 1}. ${service.name || ''}
+    ${service.telephone || ''}
+    ${service.contactEmail || ''}
+    ${service.address || ''}
+    ${service.websites || ''}
+    
+`;
+  };
   const updateEmailBody = (
     newSignpostSummary = signpostSummary,
     newReferralSummary = referralSummary
   ) => {
-    return `Hi ${residentInfo.firstName} ${residentInfo.lastName},
+    return `Hi ${residentInfo.firstName || ''} ${residentInfo.lastName || ''},
 
 ...
 
 We discussed the following services in our conversation today:
-${newSignpostSummary.map(
-  (signpost, index) =>
-    `${index + 1}. ${signpost.name}
-${signpost.telephone}
-${signpost.contactEmail}
-${signpost.address}
-${signpost.website?.join(', ')}
-  `
-)}
+${newSignpostSummary.map((signpost, index) => getServiceSummaryText(index, signpost)).join('')}
 
 
 I referred you to the following services:
-${newReferralSummary.map(
-  (ref, index) => `${index + 1}. ${ref.name}
-${ref.telephone}
-${ref.contactEmail}
-${ref.address}
-${ref.website}
-`
-)}
+${newReferralSummary.map((ref, index) => getServiceSummaryText(index, ref)).join('')}
 
 
 Thanks, 
