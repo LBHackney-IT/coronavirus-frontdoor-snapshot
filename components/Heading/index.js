@@ -14,11 +14,12 @@ const defaults = {
   h4: 's'
 };
 
-const Heading = ({ as, size, children }) => {
+const Heading = ({ as, size, children, id }) => {
   return React.createElement(
     as,
     {
-      className: sizes[size || defaults[as]]
+      className: sizes[size || defaults[as]],
+      id
     },
     children
   );

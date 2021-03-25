@@ -40,7 +40,9 @@ const SupportSummary = ({
   };
   return (
     <>
-      <Heading as="h2">Send a summary of today's support</Heading>
+      <Heading as="h2" id="summary-header">
+        Send a summary of today's support
+      </Heading>
       <Details
         title="Email the resident with details of services"
         onclick={() => setHideForm(!hideForm)}>

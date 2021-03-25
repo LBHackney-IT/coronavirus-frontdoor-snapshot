@@ -8,6 +8,7 @@ import ResidentDetailsForm from 'components/Feature/ResidentDetailsForm';
 import SupportSummary from 'components/Feature/SupportSummary';
 import { useState } from 'react';
 import jsonwebtoken from 'jsonwebtoken';
+import Heading from 'components/Heading';
 
 const Index = ({
   resources,
@@ -99,6 +100,23 @@ ${referrerData['referer-organisation']}
 
   return (
     <>
+      <Heading as="h2">How to use this tool?</Heading>
+      <div className="govuk-!-margin-bottom-5">
+        <ol>
+          <li className="govuk-!-margin-bottom-1">
+            <a href="#topic-explorer-header">Search for a topic</a> to discuss the resident's whole
+            story and find out what support they need.
+          </li>
+          <li className="govuk-!-margin-bottom-1">
+            <a href="#resources-header">Search for services</a> and refer residents or signpost
+            residents.
+          </li>
+          <li className="govuk-!-margin-bottom-1">
+            <a href="#summary-header">Send a summary email</a> to the resident about your
+            conversation and the services you have discussed.
+          </li>
+        </ol>
+      </div>
       <ResidentDetailsForm
         residentInfoCallback={residentInfoCallback}
         showResidentForm={showResidentForm}
@@ -122,7 +140,7 @@ ${referrerData['referer-organisation']}
           <hr className="govuk-section-break hr-additional-spacing" />
         </>
       )}
-      <h2>Resources for residents</h2>
+      <h2 id="resources-header">Resources for residents</h2>
       <Services
         taxonomies={fssTaxonomies}
         resources={resources}
