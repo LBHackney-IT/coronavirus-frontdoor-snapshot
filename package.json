@@ -68,5 +68,6 @@
     "sass": "^1.26.5",
     "serverless": "^1.70.1",
     "start-server-and-test": "^1.11.0"
-  }
+  },
+  "license" : "MIT"
 }
