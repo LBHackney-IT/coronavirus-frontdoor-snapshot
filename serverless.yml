@@ -7,6 +7,7 @@ provider:
   stage: ${opt:stage}
   environment:
     TABLE_NAME: '${self:service}-${self:provider.stage}-referrals'
+    CONVERSATIONS_TABLE_NAME: '${self:service}-${self:provider.stage}-conversations'
   iamRoleStatements:
     - Effect: Allow
       Action:
@@ -48,6 +49,7 @@ functions:
       BASIC_ALLOWED_GROUPS: ${ssm:/frontdoor-snapshot/${self:provider.stage}/basic-allowed-groups}
       JWT_SECRET: ${ssm:/common/hackney-jwt-secret}
       TABLE_NAME: ${self:provider.environment.TABLE_NAME}
+      CONVERSATIONS_TABLE_NAME: ${self:provider.environment.CONVERSATIONS_TABLE_NAME}
       NEXT_PUBLIC_API_URL: https://${self:custom.aliases.${self:provider.stage}}/api
       NEXT_PUBLIC_URL: https://${self:custom.aliases.${self:provider.stage}}
       AIRTABLE_API_KEY: ${ssm:/frontdoor-snapshot/airtable-api-key}
@@ -62,6 +64,7 @@ functions:
       REFERRAL_EMAIL_TEMPLATE_ID: ${ssm:/frontdoor-snapshot/referral-email-template-id}
       REFERRAL_RECEIPT_EMAIL_TEMPLATE_ID: ${ssm:/frontdoor-snapshot/referral-email-receipt-template-id}
       REFERRAL_RESIDENT_EMAIL_TEMPLATE_ID: ${ssm:/frontdoor-snapshot/referral-resident-email-template-id}
+      SIGNPOSTL_EMAIL_TEMPLATE_ID: ${ssm:/frontdoor-snapshot/signpost-email-template-id}
       REFERRAL_RESIDENT_SMS_TEMPLATE_ID: ${ssm:/frontdoor-snapshot/referral-resident-sms-template-id}
       GOV_NOTIFY_API_KEY: ${ssm:/frontdoor-snapshot/gov-notify-api-key}
 
@@ -78,7 +81,7 @@ functions:
 
 resources:
   Resources:
-    VulnerabilitiesTable:
+    ReferralsTable:
       Type: AWS::DynamoDB::Table
       Properties:
         TableName: ${self:provider.environment.TABLE_NAME}
@@ -109,7 +112,37 @@ resources:
               NonKeyAttributes:
                 - id
                 - systemIds
-
+    ConversationsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:provider.environment.CONVERSATIONS_TABLE_NAME}
+        BillingMode: PAY_PER_REQUEST
+        SSESpecification:
+          SSEEnabled: true
+        PointInTimeRecoverySpecification:
+          PointInTimeRecoveryEnabled: true
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+          - AttributeName: queryLastName
+            AttributeType: S
+          - AttributeName: queryFirstName
+            AttributeType: S
+        GlobalSecondaryIndexes:
+          - IndexName: NamesIndex
+            KeySchema:
+              - AttributeName: queryLastName
+                KeyType: HASH
+              - AttributeName: queryFirstName
+                KeyType: RANGE
+            Projection:
+              ProjectionType: INCLUDE
+              NonKeyAttributes:
+                - id
+                - systemIds
     CloudFrontDistribution:
       Type: AWS::CloudFront::Distribution
       Properties:
