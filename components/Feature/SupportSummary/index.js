@@ -13,12 +13,27 @@ const SupportSummary = ({
   emailBody,
   setEmailBody,
   residentInfo,
+  residentFormCallback,
   token
 }) => {
   const { createConversation } = useConversation({ token });
 
   const [hideForm, setHideForm] = useState(true);
+  const [formErrorMsg, setFormErrorMsg] = useState(false);
   const [conversationCompletion, setConversationCompletion] = useState(null);
+
+  const toggle_detail = e => {
+    if (!residentInfo && hideForm) {
+      e.preventDefault();
+      residentFormCallback(true);
+    } else if (referralSummary.length < 1 && signpostSummary.length < 1) {
+      e.preventDefault();
+      setFormErrorMsg(true);
+    } else {
+      setFormErrorMsg(false);
+      setHideForm(!hideForm);
+    }
+  };
 
   const sendSummary = async e => {
     e.preventDefault();
@@ -54,15 +69,19 @@ const SupportSummary = ({
       </Heading>
       <Details
         title="Email the resident with details of services"
-        onclick={() => setHideForm(!hideForm)}>
+        onclick={e => {
+          toggle_detail(e);
+        }}>
         {conversationCompletion && (
           <div>
             {conversationCompletion.errors?.length > 0 ? (
-              <div data-testid="referral-errors-banner" className={`${css['error-message']}`}>
+              <div data-testid="conversation-errors-banner" className={`${css['error-message']}`}>
                 {conversationCompletion.errors.join('\n')}
               </div>
             ) : (
-              <div data-testid="successful-referral-banner" className={`${css['success-message']}`}>
+              <div
+                data-testid="successful-conversation-banner"
+                className={`${css['success-message']}`}>
                 Successfully submitted conversation
               </div>
             )}
@@ -103,6 +122,7 @@ const SupportSummary = ({
                 value={emailBody}
                 label="Add a note for the resident"
                 name="support-summary-note"
+                rows="20"
                 onChange={value => {
                   setEmailBody(value);
                 }}
@@ -140,10 +160,18 @@ const SupportSummary = ({
               />
               <Button type="submit" text="Send" />
             </form>
-            )}
           </div>
         )}
       </Details>
+      {formErrorMsg && (
+        <div className="govuk-!-margin-top-4">
+          <div className={`${css['error-message']}`}>
+            <a href="#resources-header">
+              Please make a referral or choose at least one service to add to summary
+            </a>
+          </div>
+        </div>
+      )}
     </>
   );
 };

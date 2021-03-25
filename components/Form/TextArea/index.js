@@ -1,4 +1,4 @@
-const TextArea = ({ label, name, onChange, value }) => {
+const TextArea = ({ label, name, onChange, value, rows }) => {
   const updateValue = e => {
     onChange(e.currentTarget.value);
   };
@@ -11,7 +11,7 @@ const TextArea = ({ label, name, onChange, value }) => {
         className="govuk-textarea"
         id={name}
         name={name}
-        rows="4"
+        rows={rows || '4'}
         onChange={updateValue}
         value={value}></textarea>
     </div>
