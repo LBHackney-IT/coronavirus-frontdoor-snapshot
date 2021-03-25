@@ -81,7 +81,7 @@ functions:
 
 resources:
   Resources:
-    ReferralsTable:
+    VulnerabilitiesTable:
       Type: AWS::DynamoDB::Table
       Properties:
         TableName: ${self:provider.environment.TABLE_NAME}
