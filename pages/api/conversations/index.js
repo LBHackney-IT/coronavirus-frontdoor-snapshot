@@ -72,23 +72,3 @@ export const endpoint = ({ createConversation }) =>
   );
 
 export default endpoint({ createConversation });
-
-// services = [
-//   {
-//     id: 2,
-//     name: 'Garlic Bread Support',
-//     contactEmail: 'contact@gbs.com',
-//     referralEmail: 'referral@gbs.com',
-//     website: 'www.gbs.com',
-//     address: '123 Some st, E3 1J',
-//     referral: 'ABC121'
-//   },
-//   {
-//     id: 2,
-//     name: 'Chocolate Deliveries',
-//     contactEmail: 'contact@chocolatedeliveries.com',
-//     referralEmail: 'referral@chocolatedeliveries.com',
-//     website: 'www.chocolatedeliveries.com',
-//     address: '123 Other st, E3 1P'
-//   }
-// ]
