@@ -2,6 +2,8 @@ import { TextArea, TextInput, Button } from 'components/Form';
 import Details from 'components/Form/Details';
 import Heading from 'components/Heading';
 import { useState } from 'react';
+import useConversation from 'lib/api/utils/useConversation';
+import css from '../notification-messages.module.scss';
 
 const SupportSummary = ({
   referralSummary,
@@ -10,9 +12,13 @@ const SupportSummary = ({
   setReferrerData,
   emailBody,
   setEmailBody,
-  residentInfo
+  residentInfo,
+  token
 }) => {
+  const { createConversation } = useConversation({ token });
+
   const [hideForm, setHideForm] = useState(true);
+  const [conversationCompletion, setConversationCompletion] = useState(null);
 
   const sendSummary = async e => {
     e.preventDefault();
@@ -31,12 +37,15 @@ const SupportSummary = ({
         month: residentInfo['date-of-birth-month'],
         day: residentInfo['date-of-birth-day']
       },
-      services: signpostSummary.concat(referralSummary),
+      discussedServices: signpostSummary.concat(referralSummary),
       signPostingMessage: e.target['support-summary-note'].value
     };
-    console.log(summary);
 
-    // const result = await saveSummarry(summary);
+    const result = await createConversation(summary);
+    if (result.id) {
+      setConversationCompletion(result);
+      setHideForm(true);
+    }
   };
   return (
     <>
@@ -46,32 +55,49 @@ const SupportSummary = ({
       <Details
         title="Email the resident with details of services"
         onclick={() => setHideForm(!hideForm)}>
-        <div className="govuk-details__text">
-          <strong>Services referred to</strong>
-          {referralSummary.length == 0 && (
-            <span id="summary-referrals-hint" className="govuk-hint  lbh-hint">
-              Search for services to refer residents to
-            </span>
-          )}
-          <div className="govuk-!-margin-bottom-5">
-            {referralSummary.length > 0 &&
-              referralSummary.map(referral => (
-                <div className="govuk-!-margin-bottom-1">{referral.name}</div>
-              ))}
+        {conversationCompletion && (
+          <div>
+            {conversationCompletion.errors?.length > 0 ? (
+              <div data-testid="referral-errors-banner" className={`${css['error-message']}`}>
+                {conversationCompletion.errors.join('\n')}
+              </div>
+            ) : (
+              <div data-testid="successful-referral-banner" className={`${css['success-message']}`}>
+                Successfully submitted conversation
+              </div>
+            )}
+            <h4>
+              To help another resident please{' '}
+              <a href="javascript:window.location.href=window.location.href">refresh this page</a>
+            </h4>
           </div>
-          <strong>Services signposted to</strong>
-          {signpostSummary.length == 0 && (
-            <span id="summary-signposts-hint" className="govuk-hint  lbh-hint">
-              Search for services to signpost residents to
-            </span>
-          )}
-          <div className="govuk-!-margin-bottom-5">
-            {signpostSummary.length > 0 &&
-              signpostSummary.map(signpost => (
-                <div className="govuk-!-margin-bottom-1">{signpost.name}</div>
-              ))}
-          </div>
-          {!hideForm && (
+        )}
+        {!hideForm && (
+          <div className="govuk-details__text">
+            <strong>Services referred to</strong>
+            {referralSummary.length == 0 && (
+              <span id="summary-referrals-hint" className="govuk-hint  lbh-hint">
+                Search for services to refer residents to
+              </span>
+            )}
+            <div className="govuk-!-margin-bottom-5">
+              {referralSummary.length > 0 &&
+                referralSummary.map(referral => (
+                  <div className="govuk-!-margin-bottom-1">{referral.name}</div>
+                ))}
+            </div>
+            <strong>Services signposted to</strong>
+            {signpostSummary.length == 0 && (
+              <span id="summary-signposts-hint" className="govuk-hint  lbh-hint">
+                Search for services to signpost residents to
+              </span>
+            )}
+            <div className="govuk-!-margin-bottom-5">
+              {signpostSummary.length > 0 &&
+                signpostSummary.map(signpost => (
+                  <div className="govuk-!-margin-bottom-1">{signpost.name}</div>
+                ))}
+            </div>
             <form id="summary-form" onSubmit={sendSummary}>
               <TextArea
                 value={emailBody}
@@ -114,8 +140,9 @@ const SupportSummary = ({
               />
               <Button type="submit" text="Send" />
             </form>
-          )}
-        </div>
+            )}
+          </div>
+        )}
       </Details>
     </>
   );

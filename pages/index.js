@@ -155,6 +155,7 @@ ${referrerData['referer-organisation']}
         residentInfo={residentInfo}
         emailBody={emailBody}
         setEmailBody={setEmailBody}
+        token={token}
       />
       <a
         href="https://forms.gle/B6vEMgp7sCsjJqNdA"

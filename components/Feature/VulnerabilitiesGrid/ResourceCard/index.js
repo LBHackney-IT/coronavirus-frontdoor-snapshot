@@ -1,4 +1,5 @@
 import css from './index.module.scss';
+import notificationCss from '../../notification-messages.module.scss';
 import SummaryList from 'components/Form/SummaryList';
 import { useState } from 'react';
 
@@ -488,11 +489,15 @@ const ResourceCard = ({
       {referralCompletion[id] && (
         <div>
           {referralCompletion[id].errors?.length > 0 ? (
-            <div data-testid="referral-errors-banner" className={`${css['error-message']}`}>
+            <div
+              data-testid="referral-errors-banner"
+              className={`${notificationCss['error-message']}`}>
               {referralCompletion[id].errors.join('\n')}
             </div>
           ) : (
-            <div data-testid="successful-referral-banner" className={`${css['success-message']}`}>
+            <div
+              data-testid="successful-referral-banner"
+              className={`${notificationCss['success-message']}`}>
               Successfully submitted referral
             </div>
           )}
