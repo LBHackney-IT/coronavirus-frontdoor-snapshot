@@ -50,6 +50,7 @@ jobs:
           name: Build the application
           command: |
             export NEXT_PUBLIC_API_URL=http://localhost:3000/api
+            export NEXT_PUBLIC_SIGNPOST_ENABLED=true
             export NEXT_PUBLIC_ENV=test
             yarn build
       - run:
@@ -80,6 +81,7 @@ jobs:
             export CONVERSATIONS_TABLE_NAME=conversations
             export ADDRESSES_API_URL=${ADDRESSES_API_URL}
             export ADDRESSES_API_KEY=${ADDRESSES_API_KEY}
+            export NEXT_PUBLIC_SIGNPOST_ENABLED=true
             export AIRTABLE_API_KEY=xx
             export AIRTABLE_PROMPTS_TABLE_NAME="Conversational Prompts"
             export FSS_PUBLIC_API_URL=http://localhost:8085/fss

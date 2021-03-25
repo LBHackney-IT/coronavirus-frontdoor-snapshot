@@ -2,6 +2,7 @@ import useReferral from 'lib/api/utils/useReferral';
 import { requestResources, requestPrompts, requestFssResources } from 'lib/api';
 import HttpStatusError from 'lib/api/domain/HttpStatusError';
 import { getTokenFromCookieHeader } from 'lib/utils/token';
+import { getEmailBody } from 'lib/utils/getEmailBody';
 import Services from 'components/Feature/Services';
 import TopicExplorer from 'components/Feature/TopicExplorer';
 import ResidentDetailsForm from 'components/Feature/ResidentDetailsForm';
@@ -58,36 +59,16 @@ const Index = ({
     setEmailBody(updateEmailBody(newSignpostSummary));
   };
 
-  const getServiceSummaryText = (index, service) => {
-    return `${index + 1}. ${service.name || ''}
-    ${service.telephone || ''}
-    ${service.contactEmail || ''}
-    ${service.address || ''}
-    ${service.websites || ''}
-    
-`;
-  };
   const updateEmailBody = (
     newSignpostSummary = signpostSummary,
     newReferralSummary = referralSummary
   ) => {
-    return `Hi ${residentInfo.firstName || ''} ${residentInfo.lastName || ''},
-
-...
-
-We discussed the following services in our conversation today:
-${newSignpostSummary.map((signpost, index) => getServiceSummaryText(index, signpost)).join('')}
-
-
-I referred you to the following services:
-${newReferralSummary.map((ref, index) => getServiceSummaryText(index, ref)).join('')}
-
-
-Thanks, 
-${referrerData['referer-name']}
-${referrerData['referer-email']}
-${referrerData['referer-organisation']}
-`;
+    return getEmailBody(
+      residentInfo,
+      newSignpostSummary,
+      newReferralSummary,
+      referrerData
+    );
   };
 
   const [emailBody, setEmailBody] = useState(updateEmailBody());
