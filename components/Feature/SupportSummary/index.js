@@ -29,10 +29,7 @@ const SupportSummary = ({
         !residentInfo.phone ||
         !residentInfo.email ||
         !residentInfo.address ||
-        !residentInfo.postcode ||
-        !residentInfo['date-of-birth-year'] ||
-        !residentInfo['date-of-birth-month'] ||
-        !residentInfo['date-of-birth-day']) &&
+        !residentInfo.postcode) &&
       hideForm
     ) {
       e.preventDefault();
