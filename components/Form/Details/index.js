@@ -1,11 +1,11 @@
 import css from './index.module.scss';
 
-const Details = ({ color, children, title, onclick }) => (
-  <details className={`govuk-details ${css['lbh-details']}`} data-module="govuk-details">
+const Details = ({ color, children, title, onclick, id }) => (
+  <details className={`govuk-details ${css['lbh-details']}`} data-module="govuk-details" id={`details-${id}`}>
     <summary
       className={`govuk-details__summary ${css['lbh-details__summary']}`}
       style={color && { color: `${color}` }}
-      data-testid="details-summary"
+      id={`summary-${id}`}
       onClick={onclick}>
       <span className="govuk-details__summary-text">{title}</span>
     </summary>
