@@ -37,7 +37,7 @@ const Index = ({
   const [referrerData, setReferrerData] = useState({
     'referer-email': refererInfo?.email,
     'referer-name': refererInfo?.name,
-    'referer-organisation': refererInfo?.iss
+    'referer-organisation': refererInfo.groups.includes(process.env.EXTERNAL_USER_GROUP) ? '' : 'Hackney Council'
   });
 
   const residentFormCallback = val => {
@@ -147,6 +147,7 @@ Index.getInitialProps = async ({ req: { headers }, res }) => {
       return jsonwebtoken.decode(token);
     };
     const refererInfo = retrieveRefererInfo(token);
+
     const initialReferral = { vulnerabilities: [], assets: [], notes: null };
     const otherResources = await requestResources({ token });
     const fss = await requestFssResources({
