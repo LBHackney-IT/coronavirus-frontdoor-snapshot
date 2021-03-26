@@ -78,6 +78,7 @@ const SupportSummary = ({
       </Heading>
       <Details
         title="Email the resident with details of services"
+        id="summary-form"
         onclick={e => {
           toggleDetail(e);
         }}>
@@ -94,7 +95,7 @@ const SupportSummary = ({
                 Successfully submitted conversation
               </div>
             )}
-            <h4>
+            <h4 data-testid="conversation-competition-msg">
               To help another resident please{' '}
               <a href="javascript:window.location.href=window.location.href">refresh this page</a>
             </h4>
@@ -167,14 +168,14 @@ const SupportSummary = ({
                 validate
                 required={true}
               />
-              <Button type="submit" text="Send" />
+              <Button type="submit" text="Send" id="summary-submit" />
             </form>
           </div>
         )}
       </Details>
       {formErrorMsg && (
         <div className="govuk-!-margin-top-4">
-          <div className={`${css['error-message']}`}>
+          <div className={`${css['error-message']}`} id="summary-error">
             <a href="#resources-header">
               Please make a referral or choose at least one service to add to summary
             </a>
