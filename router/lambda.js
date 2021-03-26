@@ -23,6 +23,7 @@ server.all('/_next/static/*', (req, res) => nextRequestHandler(req, res)); // ne
 server.all('/js/*', (req, res) => nextRequestHandler(req, res)); // public js
 server.all('/assets/*', (req, res) => nextRequestHandler(req, res)); // public assets
 server.all('/favicon.ico', (req, res) => nextRequestHandler(req, res)); // favicon
+server.all('/privacy', (req, res) => nextRequestHandler(req, res)); // auth is handled by the authorizer
 
 const authoriseHandler = (req, res, next) => {
   const isAuthenticated = checkAuth.execute({
