@@ -36,6 +36,7 @@ const ResourceCard = ({
   setReferrerData,
   demographic,
   updateSignpostSummary,
+  councilTags,
   ...others
 }) => {
   const [validationError, setValidationError] = useState({});
@@ -54,10 +55,15 @@ const ResourceCard = ({
   const tagsElement = tags
     .filter(t => !HIDDEN_TAGS.includes(t))
     .map(item => (
-      <span key={'tags-' + item} className={`${css.tags} tag-element ${css[`${item}-tag`]}`}>
+      <span key={'tags-' + item} className={`${css.tags} tag-element`}>
         {trimLength(item, 20)}
       </span>
     ));
+  const councilTagsElement = councilTags.map(item => (
+    <span key={'tags-' + item} className={`${css.tags} tag-element ${css[`Council-tag`]}`}>
+      {trimLength(item, 20)}
+    </span>
+  ));
   const snapshot = customerId != undefined ? true : false;
   const updateResource = () => {
     updateSelectedResources({
@@ -85,6 +91,7 @@ const ResourceCard = ({
     <div className={`resource ${css.resource}`} {...others}>
       <div className={`${css.tags__container} card-header-tag`} data-testid="resource-card-tags">
         {tagsElement}
+        {councilTagsElement}
       </div>
       <div>
         <h3 className={`${css['inline-header']}`}>{name}</h3>

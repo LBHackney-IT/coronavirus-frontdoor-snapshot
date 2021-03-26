@@ -78,7 +78,8 @@
         "Referral Website": "https://www.test.abc.com",
         "Categories": ["First category"],
         "Who's this for": "this is for you",
-        "Relevant Support": "some details"
+        "Relevant Support": "some details",
+        "Organisation": ["Magic"]
       },
       "createdTime": "2020-06-17T11:01:33.000Z"
     }

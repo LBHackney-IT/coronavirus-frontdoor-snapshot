@@ -56,7 +56,7 @@ context('Index page', () => {
       cy.get('[data-testid=resource-card-tags]')
         .eq(0)
         .should('contain', 'First category')
-        .and('contain', 'Council')
+        .and('contain', 'Magic')
         .children()
         .should('have.length', 2);
 
