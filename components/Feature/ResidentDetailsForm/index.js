@@ -99,7 +99,9 @@ const ResidentDetailsForm = ({
   };
   return (
     <div>
-      <h1 className="govuk-heading-l">Who are you helping?</h1>
+      <h1 className="govuk-heading-l" id="resident-details-header">
+        Who are you helping?
+      </h1>
       <details className="govuk-details" onClick={() => setShowResidentForm(!showResidentForm)}>
         <summary>Residents details</summary>
       </details>
