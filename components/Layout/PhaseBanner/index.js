@@ -3,11 +3,10 @@ const PhaseBanner = ({ phase, feedbackUrl }) => (
     <p className="govuk-phase-banner__content">
       <strong className="govuk-tag govuk-phase-banner__content__tag">{phase}</strong>
       <span className="govuk-phase-banner__text">
-        This is a new service – your{' '}
+        Is information about a service missing?{' '}
         <a className="govuk-link" href={feedbackUrl} target="_blank">
-          feedback
-        </a>{' '}
-        will help us to improve it.
+          Please tell us here.
+        </a>
       </span>
     </p>
   </div>
