@@ -212,7 +212,7 @@ describe('Referral form', () => {
         }
       });
       cy.get('#referer-email-ABC123').type('perm-fail@test.com');
-      cy.get('#submit-ABC123').click();
+      cy.get('#submit-ABC123').click({ force: true });
       cy.get(`[data-testid=referral-errors-banner]`).should('be.visible');
     });
   });
