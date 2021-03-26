@@ -20,6 +20,8 @@ export default class AppDocument extends Document {
             }}
           />
           <script
+            src={`https://www.googleoptimize.com/optimize.js?id=${process.env.OPTIMIZE_ID}`}></script>
+          <script
             async
             src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GTM_ID}`}
           />
