@@ -37,7 +37,7 @@ const Index = ({
   const [referrerData, setReferrerData] = useState({
     'referer-email': refererInfo?.email,
     'referer-name': refererInfo?.name,
-    'referer-organisation': refererInfo.groups.includes(process.env.EXTERNAL_USER_GROUP) ? '' : 'Hackney Council'
+    'referer-organisation': refererInfo?.groups.includes(process.env.EXTERNAL_USER_GROUP) ? '' : 'Hackney Council'
   });
 
   const residentFormCallback = val => {

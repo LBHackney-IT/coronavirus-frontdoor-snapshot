@@ -75,12 +75,12 @@ describe('Referral form', () => {
     cy.get('#referral-ABC123-1').click();
 
     cy.get('#referer-name-ABC123').type('Tina Belcher');
-    cy.get('#referer-organisation-ABC123').type("Bob's Burgers");
+    cy.get('#referer-organisation-ABC123').should('have.value', 'Hackney Council');
     cy.get('#referer-email-ABC123').type('perm-fail@simulator.notify');
 
     cy.get('#referral-abc-1').click();
     cy.get('#referer-name-abc').should('have.value', 'Tina Belcher');
-    cy.get('#referer-organisation-abc').should('have.value', "Bob's Burgers");
+    cy.get('#referer-organisation-abc').should('have.value', 'Hackney Council');
     cy.get('#referer-email-abc').should('have.value', 'perm-fail@simulator.notify');
   });
 
@@ -112,7 +112,7 @@ describe('Referral form', () => {
         cy.get('#conversation-notes-ABC123').type('Excepteur sint occaecat cupidatat non proident');
         cy.get('#consent-ABC123').click();
         cy.get('#referer-name-ABC123').type('Tina Belcher');
-        cy.get('#referer-organisation-ABC123').type("Bob's Burgers");
+        cy.get('#referer-organisation-ABC123').should('have.value', 'Hackney Council');
         cy.get('#referer-email-ABC123').type('tina@bburgers.com');
         cy.get('#submit-ABC123').click();
 
@@ -162,7 +162,6 @@ describe('Referral form', () => {
         cy.get('#consent-ABC123-error').should('exist');
 
         cy.get('#referer-name-ABC123').should('have.class', 'govuk-input--error');
-        cy.get('#referer-organisation-ABC123').should('have.class', 'govuk-input--error');
         cy.get('#referer-email-ABC123').should('have.class', 'govuk-input--error');
       });
     });
@@ -188,7 +187,7 @@ describe('Referral form', () => {
       cy.get('#conversation-notes-ABC123').type('Excepteur sint occaecat cupidatat non proident');
       cy.get('#consent-ABC123').click();
       cy.get('#referer-name-ABC123').type('Tina Belcher');
-      cy.get('#referer-organisation-ABC123').type("Bob's Burgers");
+      cy.get('#referer-organisation-ABC123').should('have.value', 'Hackney Council');
     });
     it('Displays a success message if referral is made', () => {
       cy.intercept('/api/referrals', {

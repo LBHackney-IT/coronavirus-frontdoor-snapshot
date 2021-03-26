@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 context('Create summary', () => {
   const referrerName = 'Tina Belcher';
-  const refererOrganisation = "Bob's Burgers";
+  const refererOrganisation = 'Hackney Council';
   const referrerEmail = 'tina@bburgers.com';
 
   before(() => {
@@ -70,7 +70,7 @@ context('Create summary', () => {
         'Thanks, \n' +
         '\n' +
         '\n' +
-        '\n'
+        'Hackney Council\n'
     );
   });
 
@@ -83,7 +83,7 @@ context('Create summary', () => {
     cy.get('#conversation-notes-abc').type('Excepteur sint occaecat cupidatat non proident');
     cy.get('#consent-abc').click();
     cy.get('#referer-name-abc').type(referrerName);
-    cy.get('#referer-organisation-abc').type(refererOrganisation);
+    cy.get('#referer-organisation-abc').should('have.value', refererOrganisation);
 
     cy.intercept('/api/referrals', {
       status: 201,

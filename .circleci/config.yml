@@ -150,6 +150,7 @@ jobs:
             export AWS_CERTIFICATE_ARN=<< parameters.AWS_CERTIFICATE_ARN >>
             export NEXT_PUBLIC_URL=<< parameters.URL >>
             export HOTJAR_ID=<< parameters.HOTJAR_ID >>
+            export OPTIMIZE_ID=${OPTIMIZE_ID}
             export NEXT_PUBLIC_ENV=<< parameters.stage_name >>
             yarn
             yarn build
