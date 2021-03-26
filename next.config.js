@@ -4,8 +4,8 @@ module.exports = {
     return config;
   },
   env: {
-    ADDRESSES_API_URL: process.env.ADDRESSES_API_URL,
     ADDRESSES_API_KEY: process.env.ADDRESSES_API_KEY,
+    ADDRESSES_API_URL: process.env.ADDRESSES_API_URL,
     HOTJAR_ID: process.env.HOTJAR_ID,
     INH_URL: process.env.INH_URL
   },

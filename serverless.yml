@@ -44,29 +44,29 @@ functions:
       - http: ANY /{proxy+}
     timeout: 120
     environment:
-      ENV: ${self:provider.stage}
-      ALLOWED_GROUPS: ${ssm:/frontdoor-snapshot/${self:provider.stage}/allowed-groups}
-      BASIC_ALLOWED_GROUPS: ${ssm:/frontdoor-snapshot/${self:provider.stage}/basic-allowed-groups}
-      JWT_SECRET: ${ssm:/common/hackney-jwt-secret}
-      TABLE_NAME: ${self:provider.environment.TABLE_NAME}
-      CONVERSATIONS_TABLE_NAME: ${self:provider.environment.CONVERSATIONS_TABLE_NAME}
-      NEXT_PUBLIC_API_URL: https://${self:custom.aliases.${self:provider.stage}}/api
-      NEXT_PUBLIC_URL: https://${self:custom.aliases.${self:provider.stage}}
       AIRTABLE_API_KEY: ${ssm:/frontdoor-snapshot/airtable-api-key}
       AIRTABLE_BASE_ID: ${ssm:/frontdoor-snapshot/airtable-base-id}
-      AIRTABLE_TABLE_NAMES: ${ssm:/frontdoor-snapshot/airtable-table-names}
       AIRTABLE_PROMPTS_API_KEY: ${ssm:/frontdoor-snapshot/airtable-prompts-api-key}
       AIRTABLE_PROMPTS_BASE_ID: ${ssm:/frontdoor-snapshot/airtable-prompts-base-id}
       AIRTABLE_PROMPTS_TABLE_NAME: ${ssm:/frontdoor-snapshot/${self:provider.stage}/airtable-prompts-table-name}
-      INH_URL: ${ssm:/frontdoor-snapshot/inh-url}
-      SHOW_TOPIC_EXPLORER: true
+      AIRTABLE_TABLE_NAMES: ${ssm:/frontdoor-snapshot/airtable-table-names}
+      ALLOWED_GROUPS: ${ssm:/frontdoor-snapshot/${self:provider.stage}/allowed-groups}
+      BASIC_ALLOWED_GROUPS: ${ssm:/frontdoor-snapshot/${self:provider.stage}/basic-allowed-groups}
+      CONVERSATIONS_TABLE_NAME: ${self:provider.environment.CONVERSATIONS_TABLE_NAME}
+      ENV: ${self:provider.stage}
       FSS_PUBLIC_API_URL: ${ssm:/frontdoor-snapshot/${self:provider.stage}/fss-public-api-url}
+      GOV_NOTIFY_API_KEY: ${ssm:/frontdoor-snapshot/gov-notify-api-key}
+      INH_URL: ${ssm:/frontdoor-snapshot/inh-url}
+      JWT_SECRET: ${ssm:/common/hackney-jwt-secret}
+      NEXT_PUBLIC_API_URL: https://${self:custom.aliases.${self:provider.stage}}/api
+      NEXT_PUBLIC_URL: https://${self:custom.aliases.${self:provider.stage}}
       REFERRAL_EMAIL_TEMPLATE_ID: ${ssm:/frontdoor-snapshot/referral-email-template-id}
       REFERRAL_RECEIPT_EMAIL_TEMPLATE_ID: ${ssm:/frontdoor-snapshot/referral-email-receipt-template-id}
       REFERRAL_RESIDENT_EMAIL_TEMPLATE_ID: ${ssm:/frontdoor-snapshot/referral-resident-email-template-id}
-      SIGNPOSTL_EMAIL_TEMPLATE_ID: ${ssm:/frontdoor-snapshot/signpost-email-template-id}
       REFERRAL_RESIDENT_SMS_TEMPLATE_ID: ${ssm:/frontdoor-snapshot/referral-resident-sms-template-id}
-      GOV_NOTIFY_API_KEY: ${ssm:/frontdoor-snapshot/gov-notify-api-key}
+      SHOW_TOPIC_EXPLORER: true
+      SIGNPOSTL_EMAIL_TEMPLATE_ID: ${ssm:/frontdoor-snapshot/signpost-email-template-id}
+      TABLE_NAME: ${self:provider.environment.TABLE_NAME}
 
   cf-snapshot-authorizer:
     name: ${self:service}-authorizer-${self:provider.stage}
