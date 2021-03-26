@@ -28,7 +28,7 @@ const authoriseHandler = (req, res, next) => {
   const isAuthenticated = checkAuth.execute({
     token: req.cookies.hackneyToken
   });
-  if (!isAuthenticated && (req.url !== '/loggedout' || req.url !== '/privacy')) {
+  if (!isAuthenticated && req.url !== '/loggedout') {
     res.writeHead(302, { Location: '/loggedout' });
     return res.end();
   }
@@ -39,7 +39,7 @@ const basicAuthoriseHandler = (req, res, next) => {
   const isAuthenticated = checkBasicAuth.execute({
     token: req.cookies.hackneyToken
   });
-  if (!isAuthenticated && (req.url !== '/loggedout' || req.url !== '/privacy')) {
+  if (!isAuthenticated && req.url !== '/loggedout') {
     res.writeHead(302, { Location: '/loggedout' });
     return res.end();
   }
