@@ -11,10 +11,19 @@ no matter the background of the person they're talking to.
 Users can refer residents directly to services where the service accepts referrals via email, as well as providing
 receipts to the resident.
 
-## Intended Users
+## Intended Users & Authorisation
 
 * Hackney Customer Services can use the tool to have meaningful conversations on inbound or outbound calls.
 * Voluntary Sector Workers can discover and refer residents to other services, or council services. 
+
+There are types of authorisation groups that are permitted access to the tool, these are configured using environment
+variables:
+
+* `ALLOWED_GROUPS` - 
+* `BASIC_ALLOWED_GROUPS` - 
+
+The groups stored in those environment variables will differ. Speak to an active maintainer for more information.
+
 
 ## History
 
