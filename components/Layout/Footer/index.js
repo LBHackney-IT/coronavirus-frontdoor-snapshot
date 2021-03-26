@@ -17,6 +17,14 @@ const Footer = () => (
             </a>
             , except where otherwise stated
           </span>
+          <div className="govuk-!-margin-top-5">
+            We use{' '}
+            <a href="/privacy" className="govuk-link">
+              cookies to collect information
+            </a>{' '}
+            about how you use this site. We use this information to make the website work as well as
+            possible.
+          </div>
         </div>
       </div>
     </div>
