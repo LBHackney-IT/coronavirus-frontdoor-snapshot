@@ -30,6 +30,21 @@ While the "I Need Help" tool has been replaced by "Here To Help", the tool remai
 
 It has an integration with Better Conversations as documented [here](https://docs.google.com/document/d/1jzpirzR3U8pDOwy_H-sI3jtZi9Or_2nPQH6nCW1lEuY/edit#heading=h.u4foorjj4xue)
 
+## Authentication
+
+A quick note on authentication before you get started. Users are authenticated using Google SSO and a cookie is stored
+on the hackney.gov.uk domain.
+
+In order to provide the cookie to the application you'll need to ensure that your localhost is accessible at localdev.hackney.gov.uk
+
+Add this line to your hosts file (Windows: `C:\Windows\System32\drivers\etc\hosts`, Linux/Mac: `/etc/hosts`):
+
+```
+127.0.0.1	localdev.hackney.gov.uk
+```
+
+When you next launch the app, it should be on `http://localdev.hackney.gov.uk:3000`.
+
 ## Getting started
 
 1. Install the project dependencies
