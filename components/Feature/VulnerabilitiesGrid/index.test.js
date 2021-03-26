@@ -280,7 +280,8 @@ describe('VulnerabilitiesGrid', () => {
           address: '1 Poole Rd, London E9 7AE',
           postcode: 'E9 7AE',
           tags: ['Social isolation'],
-          coordinates: '51.5365,-0.0802'
+          coordinates: '51.5365,-0.0802',
+          councilTags: []
         }
       ];
 
@@ -309,7 +310,8 @@ describe('VulnerabilitiesGrid', () => {
         name: 'Hackney Shine',
         description: 'We offer free online and over the phone advice service to ...',
         websites: ['https://hackney.gov.uk/shine'],
-        tags: ['Financial stability']
+        tags: ['Financial stability'],
+        councilTags: []
       }
     ];
 
