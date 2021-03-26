@@ -63,39 +63,30 @@ const Index = ({
     newSignpostSummary = signpostSummary,
     newReferralSummary = referralSummary
   ) => {
-    return getEmailBody(
-      residentInfo,
-      newSignpostSummary,
-      newReferralSummary,
-      referrerData
-    );
+    return getEmailBody(residentInfo, newSignpostSummary, newReferralSummary, referrerData);
   };
 
   const [emailBody, setEmailBody] = useState(updateEmailBody());
 
   return (
     <>
-      {process.env.NEXT_PUBLIC_SIGNPOST_ENABLED.toLowerCase() === 'true' && (
-        <>
-          <Heading as="h2">How to use this tool?</Heading>
-          <div className="govuk-!-margin-bottom-5">
-            <ol>
-              <li className="govuk-!-margin-bottom-1">
-                <a href="#topic-explorer-header">Search for a topic</a> to discuss the resident's
-                whole story and find out what support they need.
-              </li>
-              <li className="govuk-!-margin-bottom-1">
-                <a href="#resources-header">Search for services</a> and refer residents or signpost
-                residents.
-              </li>
-              <li className="govuk-!-margin-bottom-1">
-                <a href="#summary-header">Send a summary email</a> to the resident about your
-                conversation and the services you have discussed.
-              </li>
-            </ol>
-          </div>
-        </>
-      )}
+      <Heading as="h2">How to use this tool?</Heading>
+      <div className="govuk-!-margin-bottom-5">
+        <ol>
+          <li className="govuk-!-margin-bottom-1">
+            <a href="#topic-explorer-header">Search for a topic</a> to discuss the resident's whole
+            story and find out what support they need.
+          </li>
+          <li className="govuk-!-margin-bottom-1">
+            <a href="#resources-header">Search for services</a> and refer residents or signpost
+            residents.
+          </li>
+          <li className="govuk-!-margin-bottom-1">
+            <a href="#summary-header">Send a summary email</a> to the resident about your
+            conversation and the services you have discussed.
+          </li>
+        </ol>
+      </div>
       <ResidentDetailsForm
         residentInfoCallback={residentInfoCallback}
         showResidentForm={showResidentForm}
@@ -134,19 +125,17 @@ const Index = ({
         referrerData={referrerData}
         setReferrerData={setReferrerData}
       />
-      {process.env.NEXT_PUBLIC_SIGNPOST_ENABLED.toLowerCase() === 'true' && (
-        <SupportSummary
-          referralSummary={referralSummary}
-          residentFormCallback={residentFormCallback}
-          signpostSummary={signpostSummary}
-          referrerData={referrerData}
-          setReferrerData={setReferrerData}
-          residentInfo={residentInfo}
-          emailBody={emailBody}
-          setEmailBody={setEmailBody}
-          token={token}
-        />
-      )}
+      <SupportSummary
+        referralSummary={referralSummary}
+        residentFormCallback={residentFormCallback}
+        signpostSummary={signpostSummary}
+        referrerData={referrerData}
+        setReferrerData={setReferrerData}
+        residentInfo={residentInfo}
+        emailBody={emailBody}
+        setEmailBody={setEmailBody}
+        token={token}
+      />
     </>
   );
 };
