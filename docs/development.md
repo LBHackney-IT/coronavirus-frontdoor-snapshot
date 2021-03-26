@@ -92,7 +92,11 @@ FSS_PUBLIC_API_URL=http://localhost:8085/fss
 HOTJAR_ID=12345
 INH_URL=https://inh-admin-test.hackney.gov.uk
 ```
-
+  You may need to also change the following variables, depending on your setup
+```bash
+NEXT_PUBLIC_URL=http://localdev.hackney.gov.uk:3000
+NEXT_PUBLIC_API_URL=http://localdev.hackney.gov.uk:3000/api
+```
 2. Build the application
 ```(bash)
 yarn build
