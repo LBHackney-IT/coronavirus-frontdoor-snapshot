@@ -122,3 +122,7 @@ The page displayed when a user is logged out.
 
 ### /snapshots/{id}
 Displays a vulnerability snapshot, if there is no data saved this will display the edit view - else it displays a readonly view of the snapshot.
+
+# License
+
+[MIT](./LICENSE)
