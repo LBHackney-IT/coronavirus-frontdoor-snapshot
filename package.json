@@ -1,6 +1,7 @@
 {
   "name": "coronavirus-frontdoor-snapshot",
   "version": "0.1.0",
+  "license": "MIT",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
