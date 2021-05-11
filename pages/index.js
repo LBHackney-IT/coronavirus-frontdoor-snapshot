@@ -10,6 +10,7 @@ import SupportSummary from 'components/Feature/SupportSummary';
 import { useState } from 'react';
 import jsonwebtoken from 'jsonwebtoken';
 import Heading from 'components/Heading';
+import Head from 'next/head';
 
 const Index = ({
   resources,
@@ -70,6 +71,9 @@ const Index = ({
 
   return (
     <>
+      <Head>
+        <title>Better Conversations</title>
+      </Head>
       <Heading as="h2">How to use this tool?</Heading>
       <div className="govuk-!-margin-bottom-5">
         <ol>

@@ -1,7 +1,12 @@
 import Heading from 'components/Heading';
+import Head from 'next/head';
+
 export default function Privacy() {
   return (
     <>
+      <Head>
+        <title>Privacy</title>
+      </Head>
       <Heading as="h1">Better Conversations Privacy Statement</Heading>
       <Heading as="h2">Analytics and cookies</Heading>
       <p>
