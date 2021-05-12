@@ -1,4 +1,4 @@
-import Head from 'next/head'
+import Head from 'next/head';
 
 export default function LoggedOut() {
   const url = process.env.NEXT_PUBLIC_URL;
