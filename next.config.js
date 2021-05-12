@@ -12,5 +12,22 @@ module.exports = {
     INH_URL: process.env.INH_URL
   },
   distDir: 'build/_next',
-  target: 'server'
+  target: 'server',
+  headers: async () => {
+    return [
+      {
+        source: '/(.*?)',
+        headers: [
+          {
+            key: 'X-Frame-Options',
+            value: 'deny'
+          },
+          {
+            key: 'X-XSS-Protection',
+            value: '1'
+          }
+        ]
+      }
+    ];
+  }
 };
