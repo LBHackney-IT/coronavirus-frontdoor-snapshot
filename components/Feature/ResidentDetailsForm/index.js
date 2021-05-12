@@ -26,18 +26,16 @@ const ResidentDetailsForm = ({
   const [validationError, setValidationError] = useState({});
 
   const handleOnChange = (id, value) => {
+    delete validationError[id];
     let newResidentInfo = { ...residentInfo, [id]: value };
     setResidentInfo(newResidentInfo);
     residentInfoCallback(newResidentInfo);
   };
 
   const onInvalidField = value => {
-    Object.values(validationError).every(k => {
-      if (value != k) {
-        validationError[k] = false;
-      }
+    setValidationError(x => {
+      return { [value]: true, ...x };
     });
-    setValidationError({ [value]: true, ...validationError });
   };
 
   const onSubmitForm = async e => {

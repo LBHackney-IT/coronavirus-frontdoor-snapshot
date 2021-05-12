@@ -35,6 +35,7 @@ const SupportSummary = ({
       e.preventDefault();
       residentFormCallback(true);
       window.location.href = '#resident-details-header';
+      document.querySelector('#resident-details').checkValidity();
     } else if (referralSummary.length < 1 && signpostSummary.length < 1) {
       e.preventDefault();
       setFormErrorMsg(true);
