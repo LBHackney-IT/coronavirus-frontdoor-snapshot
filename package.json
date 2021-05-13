@@ -11,7 +11,7 @@
     "deploy": "yarn && next build && yarn --production=true && sls deploy --aws-profile hnserverless -s staging && yarn",
     "start-with-routing": "node ./router/lambda.js",
     "cypress-open": "npx cypress open --env AWS_SECRET_ACCESS_KEY=bar,AWS_REGION=localhost,AWS_ACCESS_KEY_ID=foo",
-    "cypress-run": "cypress run --browser firefox",
+    "cypress-run": "cypress run --browser firefox --parallel",
     "int-test": "start-server-and-test start-test-servers http://localhost:3000 cypress-run",
     "unit-test": "jest --runInBand",
     "dynamo-admin": "DYNAMO_ENDPOINT=http://localhost:8000 dynamodb-admin",

@@ -41,6 +41,7 @@ jobs:
   build-and-test:
     executor: build-and-test
     working_directory: ~/repo
+    parallelism: 4
     steps:
       - checkout
       - run:
