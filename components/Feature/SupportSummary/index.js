@@ -47,6 +47,7 @@ const SupportSummary = ({
 
   const sendSummary = async e => {
     e.preventDefault();
+    e.target['submit-summary'].setAttribute('disabled', true);
     const summary = {
       firstName: residentInfo.firstName,
       lastName: residentInfo.lastName,
@@ -169,7 +170,7 @@ const SupportSummary = ({
                 validate
                 required={true}
               />
-              <Button type="submit" text="Send" id="summary-submit" />
+              <Button type="submit" text="Send" id="summary-submit" name="submit-summary" />
             </form>
           </div>
         )}
