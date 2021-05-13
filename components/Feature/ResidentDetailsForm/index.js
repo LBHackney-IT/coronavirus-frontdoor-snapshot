@@ -40,6 +40,7 @@ const ResidentDetailsForm = ({
 
   const onSubmitForm = async e => {
     e.preventDefault();
+    e.target.Submit.setAttribute('disabled', true);
     const serviceId = e.target['service-id'].value;
     const serviceName = e.target['service-name'].value;
     const serviceTelephone = e.target['service-contact-phone'].value;
