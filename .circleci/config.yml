@@ -159,6 +159,11 @@ workflows:
       - build-and-test
       - cypress/install:
           yarn: true
+          post-install:
+            - persist_to_workspace:
+                root: *workspace_root
+                paths:
+                  - ./*
       - cypress/run:
           executor: build-and-test
           yarn: true
