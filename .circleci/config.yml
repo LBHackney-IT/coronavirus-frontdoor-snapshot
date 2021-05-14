@@ -94,7 +94,11 @@ jobs:
       - run:
           name: Create local DynamoDB conversations table
           command: aws dynamodb create-table --cli-input-json file://./config/tables/conversations.json --endpoint-url http://localhost:8000 > /dev/null
-
+      - persist_to_workspace:
+          root: *workspace_root
+          paths:
+            - ./*
+            
   assume-role-staging:
     executor: python
     steps:
@@ -157,13 +161,6 @@ workflows:
   continuous-delivery:
     jobs:
       - build-and-test
-      - cypress/install:
-          yarn: true
-          post-install:
-            - persist_to_workspace:
-                root: *workspace_root
-                paths:
-                  - ./*
       - cypress/run:
           executor: build-and-test
           yarn: true
@@ -174,7 +171,6 @@ workflows:
           name: Run integration tests
           requires:
             - build-and-test
-            - cypress/install
           record: true
           parallel: true
           parallelism: 4
