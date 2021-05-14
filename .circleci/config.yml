@@ -157,7 +157,8 @@ workflows:
   continuous-delivery:
     jobs:
       - build-and-test
-      - cypress/install
+      - cypress/install:
+          yarn: true
       - cypress/run:
           executor: build-and-test
           yarn: true
