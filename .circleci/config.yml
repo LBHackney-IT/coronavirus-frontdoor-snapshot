@@ -166,6 +166,7 @@ workflows:
       - cypress/run:
           executor: build-and-test
           yarn: true
+          browser: firefox
           start: yarn start-test-servers
           attach-workspace: true
           working_directory: ~/repo
