@@ -207,7 +207,6 @@ workflows:
           context: api-assume-role-staging-context
           requires:
             - build-and-test
-            - cypress/run
           filters:
             branches:
               only: master
