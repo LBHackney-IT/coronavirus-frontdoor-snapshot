@@ -174,7 +174,6 @@ workflows:
           requires:
             - build-and-test
             - cypress/install
-          record: true
           parallel: true
           parallelism: 4
           group: 'all tests'
