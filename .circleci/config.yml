@@ -173,6 +173,7 @@ workflows:
           name: Run integration tests
           requires:
             - build-and-test
+            - cypress/install
           record: true
           parallel: true
           parallelism: 4
