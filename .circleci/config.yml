@@ -94,35 +94,6 @@ jobs:
       - run:
           name: Create local DynamoDB conversations table
           command: aws dynamodb create-table --cli-input-json file://./config/tables/conversations.json --endpoint-url http://localhost:8000 > /dev/null
-      - run:
-          name: Run integration tests
-          command: |
-            export NEXT_PUBLIC_API_URL=http://localhost:3000/api
-            export SHOW_TOPIC_EXPLORER=true
-            export INH_URL=https://inh-admin-test.hackney.gov.uk
-            export TABLE_NAME=referrals
-            export CONVERSATIONS_TABLE_NAME=conversations
-            export ADDRESSES_API_URL=${ADDRESSES_API_URL}
-            export ADDRESSES_API_KEY=${ADDRESSES_API_KEY}
-            export AIRTABLE_API_KEY=xx
-            export AIRTABLE_PROMPTS_TABLE_NAME="Conversational Prompts"
-            export FSS_PUBLIC_API_URL=http://localhost:8085/fss
-            export AIRTABLE_BASE_ID=baseId123
-            export AIRTABLE_TABLE_NAMES="Service directory"
-            export AIRTABLE_BASE_URL=http://localhost:8085
-            export AIRTABLE_PROMPTS_API_KEY=xx
-            export AIRTABLE_PROMPTS_BASE_ID=baseId456
-            export HOTJAR_ID=12345
-            export ALLOWED_GROUPS=xx
-            export BASIC_ALLOWED_GROUPS=xx
-            export NEXT_PUBLIC_SINGLEVIEW_URL=https://staging-singleview.hackney.gov.uk
-            export GOV_NOTIFY_API_KEY=xx
-            export NEXT_PUBLIC_ENV=test
-            CYPRESS_CACHE_FOLDER=~/repo/cypress_cache yarn run int-test
-      - store_artifacts:
-          path: ~/repo/cypress/screenshots
-      - store_artifacts:
-          path: ~/repo/cypress/videos
 
   assume-role-staging:
     executor: python
