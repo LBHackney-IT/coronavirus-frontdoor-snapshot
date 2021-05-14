@@ -161,6 +161,7 @@ workflows:
           executor: build-and-test
           yarn: true
           start: yarn start-test-servers
+          attach-workspace: true
           working_directory: ~/repo
           wait-on: 'http://localhost:3000'
           name: Run integration tests
