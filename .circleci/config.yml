@@ -3,6 +3,7 @@ version: 2.1
 orbs:
   aws-cli: circleci/aws-cli@1.0.0
   aws_assume_role: lbh-hackit/aws_assume_role@0.1.0
+  cypress: cypress-io/cypress@1
 
 executors:
   build-and-test:
@@ -10,6 +11,29 @@ executors:
       - image: circleci/node:12.13-browsers
       - image: circleci/dynamodb
         entrypoint: ['java', '-Xmx1G', '-jar', 'DynamoDBLocal.jar', '-sharedDb']
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:3000/api
+      SHOW_TOPIC_EXPLORER: true
+      INH_URL: https://inh-admin-test.hackney.gov.uk
+      TABLE_NAME: referrals
+      CONVERSATIONS_TABLE_NAME: conversations
+      ADDRESSES_API_URL: ${ADDRESSES_API_URL}
+      ADDRESSES_API_KEY: ${ADDRESSES_API_KEY}
+      AIRTABLE_API_KEY: xx
+      AIRTABLE_PROMPTS_TABLE_NAME: "Conversational Prompts"
+      FSS_PUBLIC_API_URL: http://localhost:8085/fss
+      AIRTABLE_BASE_ID: baseId123
+      AIRTABLE_TABLE_NAMES: "Service directory"
+      AIRTABLE_BASE_URL: http://localhost:8085
+      AIRTABLE_PROMPTS_API_KEY: xx
+      AIRTABLE_PROMPTS_BASE_ID: baseId456
+      HOTJAR_ID: 12345
+      ALLOWED_GROUPS: xx
+      BASIC_ALLOWED_GROUPS: xx
+      NEXT_PUBLIC_SINGLEVIEW_URL: https://staging-singleview.hackney.gov.uk
+      GOV_NOTIFY_API_KEY: xx
+      NEXT_PUBLIC_ENV: test
+      CYPRESS_CACHE_FOLDER: ~/repo/cypress_cache
   python:
     docker:
       - image: circleci/python:3.7
@@ -41,7 +65,6 @@ jobs:
   build-and-test:
     executor: build-and-test
     working_directory: ~/repo
-    parallelism: 4
     steps:
       - checkout
       - run:
@@ -163,6 +186,24 @@ workflows:
   continuous-delivery:
     jobs:
       - build-and-test
+      - cypress/run:
+          executor: build-and-test
+          yarn: true
+          start: yarn start-test-servers
+          wait-on: 'http://localhost:3000'
+          name: Run integration tests
+          requires:
+            - build-and-test
+          record: true
+          parallel: true
+          parallelism: 4
+          group: 'all tests'
+          ci-build-id: 'testing-commit-${CIRCLE_SHA1}'
+          post-steps:
+            - store_artifacts:
+                path: ~/repo/cypress/screenshots
+            - store_artifacts:
+                path: ~/repo/cypress/videos
       - assume-role-staging:
           context: api-assume-role-staging-context
           requires:
