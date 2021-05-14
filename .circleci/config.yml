@@ -157,6 +157,7 @@ workflows:
   continuous-delivery:
     jobs:
       - build-and-test
+      - cypress/install
       - cypress/run:
           executor: build-and-test
           yarn: true
@@ -167,6 +168,7 @@ workflows:
           name: Run integration tests
           requires:
             - build-and-test
+            - cypress/install
           record: true
           parallel: true
           parallelism: 4
