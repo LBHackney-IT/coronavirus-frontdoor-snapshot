@@ -175,9 +175,28 @@ workflows:
           requires:
             - build-and-test
             - cypress/install
-          parallel: true
-          parallelism: 4
-          group: 'all tests'
+          group: 'page tests'
+          spec: cypress/integration/pages/*
+          ci-build-id: 'testing-commit-${CIRCLE_SHA1}'
+          post-steps:
+            - store_artifacts:
+                path: ~/repo/cypress/screenshots
+            - store_artifacts:
+                path: ~/repo/cypress/videos
+      - cypress/run:
+          executor: build-and-test
+          yarn: true
+          browser: firefox
+          start: yarn start-test-servers
+          attach-workspace: true
+          working_directory: ~/repo
+          wait-on: 'http://localhost:3000'
+          name: Run integration tests
+          requires:
+            - build-and-test
+            - cypress/install
+          group: 'feature tests'
+          spec: cypress/integration/features/*
           ci-build-id: 'testing-commit-${CIRCLE_SHA1}'
           post-steps:
             - store_artifacts:
@@ -188,6 +207,7 @@ workflows:
           context: api-assume-role-staging-context
           requires:
             - build-and-test
+            - cypress/run
           filters:
             branches:
               only: master
