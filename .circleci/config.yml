@@ -98,7 +98,7 @@ jobs:
           root: *workspace_root
           paths:
             - ./*
-            
+
   assume-role-staging:
     executor: python
     steps:
@@ -161,6 +161,8 @@ workflows:
   continuous-delivery:
     jobs:
       - build-and-test
+      - cypress/install:
+          yarn: true
       - cypress/run:
           executor: build-and-test
           yarn: true
