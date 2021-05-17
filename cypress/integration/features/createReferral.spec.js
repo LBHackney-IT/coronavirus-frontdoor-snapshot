@@ -173,7 +173,7 @@ describe('Referral form', () => {
       cy.get('[data-testid=accordion-item]')
         .eq(0)
         .click();
-      cy.get('#referral-ABC123-1').click();
+      cy.get('#referral-ABC123-1').click({ force: true });
       cy.get('#firstName').type('Luna');
       cy.get('#lastName').type('Kitty');
       cy.get('#phone').type('07700900000');
@@ -181,12 +181,18 @@ describe('Referral form', () => {
       cy.get('#address').type('159 Cute Street');
       cy.get('#postcode').type('M3 0W');
 
-      cy.get('#referral-reason-ABC123').type(
-        'Sunt in culpa qui officia deserunt mollit anim id est laborum.'
-      );
-      cy.get('#conversation-notes-ABC123').type('Excepteur sint occaecat cupidatat non proident');
-      cy.get('#consent-ABC123').click();
-      cy.get('#referer-name-ABC123').type('Tina Belcher');
+      cy.get(
+        '#referral-reason-ABC123'
+      ).type('Sunt in culpa qui officia deserunt mollit anim id est laborum.', { force: true });
+
+      cy.get('#conversation-notes-ABC123').type('Excepteur sint occaecat cupidatat non proident', {
+        force: true
+      });
+
+      cy.get('#consent-ABC123').click({ force: true });
+      cy.get('#referer-name-ABC123').type('Tina Belcher', {
+        force: true
+      });
       cy.get('#referer-organisation-ABC123').should('have.value', 'Hackney Council');
     });
     it('Displays a success message if referral is made', () => {
