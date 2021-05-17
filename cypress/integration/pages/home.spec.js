@@ -127,6 +127,7 @@ context('Index page', () => {
       cy.get('#keyword-search')
         .contains('food')
         .click();
+      cy.get('#topic-search').click();
       cy.get('#topic-search').should('have.value', 'food');
     });
 
@@ -134,6 +135,7 @@ context('Index page', () => {
       cy.get('#keyword-search')
         .contains('health')
         .click();
+      cy.get('#topic-search').click();
       cy.get('#topic-search').should('have.value', 'health');
     });
 
@@ -141,6 +143,7 @@ context('Index page', () => {
       cy.get('#keyword-search')
         .contains('benefits')
         .click();
+      cy.get('#topic-search').click();
       cy.get('#topic-search').should('have.value', 'benefits');
     });
 
