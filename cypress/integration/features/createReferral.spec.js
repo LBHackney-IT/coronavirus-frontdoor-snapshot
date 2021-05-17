@@ -173,7 +173,7 @@ describe('Referral form', () => {
       cy.get('[data-testid=accordion-item]')
         .eq(0)
         .click();
-      cy.get('#referral-ABC123-1').click();
+      cy.get('#referral-ABC123-1').click({ force: true });
       cy.get('#firstName').type('Luna');
       cy.get('#lastName').type('Kitty');
       cy.get('#phone').type('07700900000');
