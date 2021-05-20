@@ -25,6 +25,8 @@ const Services = ({
       (taxonomy.resources = resources.filter(resource => taxonomy.name == resource.categoryName))
   );
 
+  const [tax, setTax] = useState(taxonomiesToRender);
+
   const detailsClicked = (e, id, serviceId, categoryName) => {
     e.preventDefault();
     const isOpen = document.getElementById(id).getAttribute('open');
@@ -39,11 +41,21 @@ const Services = ({
     }
   };
 
+  const handleSearch = () => {
+    const newTax = tax.map(x => {
+      let newResources = x.resources.filter(z => z.email.includes('test'));
+      return { ...x, resources: newResources };
+    });
+    setTax(newTax);
+  };
   return (
     <>
       <div className="govuk-grid-column-full-width">
+        <button className="govuk-button" data-testid="cookies-yes-button" onClick={handleSearch}>
+          Search test
+        </button>
         <Accordion title="">
-          {taxonomiesToRender.map(taxonomy => {
+          {tax.map(taxonomy => {
             return (
               <>
                 {
