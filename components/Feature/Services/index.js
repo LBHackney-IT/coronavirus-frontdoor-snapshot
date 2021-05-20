@@ -41,9 +41,18 @@ const Services = ({
     }
   };
 
-  const handleSearch = () => {
-    const newTax = tax.map(x => {
-      let newResources = x.resources.filter(z => z.email.includes('test'));
+  const handleSearch = e => {
+    e.preventDefault();
+    const searchTerm = e.target['search-input'].value;
+
+    const newTax = taxonomiesToRender.map(x => {
+      let newResources = x.resources.filter(z => {
+        return Object.values(z)
+          .flat()
+          .some(k => {
+            return k.toString().includes(searchTerm);
+          });
+      });
       return { ...x, resources: newResources };
     });
     setTax(newTax);
@@ -51,9 +60,18 @@ const Services = ({
   return (
     <>
       <div className="govuk-grid-column-full-width">
-        <button className="govuk-button" data-testid="cookies-yes-button" onClick={handleSearch}>
-          Search test
-        </button>
+        <form onSubmit={handleSearch}>
+          <input
+            id="topic-search"
+            list="input-tags"
+            type="text"
+            name="search-input"
+            className="govuk-input govuk-input--width-20"
+          />
+          <button type="submit" className="govuk-button" data-testid="cookies-yes-button">
+            Search
+          </button>
+        </form>
         <Accordion title="">
           {tax.map(taxonomy => {
             return (
