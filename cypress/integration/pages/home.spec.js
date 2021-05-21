@@ -7,7 +7,6 @@ context('Index page', () => {
 
   describe('Page structure', () => {
     it('has the right headings', () => {
-      cy.contains('Discuss a topic').should('be.visible');
       cy.contains('Resources for residents').should('be.visible');
     });
 
@@ -119,42 +118,6 @@ context('Index page', () => {
         .and('contain', 'https://www.sample.org.uk')
         .and('contain', 'Online referral')
         .and('contain', 'referal.form.com');
-    });
-  });
-
-  describe('Topic Explorer', () => {
-    xit('can show food example prompts', () => {
-      cy.get('#keyword-search')
-        .contains('food')
-        .click();
-        cy.get('#topic-search').click();
-      cy.get('#topic-search').should('have.value', 'food');
-    });
-
-    xit('can show health example prompts', () => {
-      cy.get('#keyword-search')
-        .contains('health')
-        .click();
-      cy.get('#topic-search').click();
-      cy.get('#topic-search').should('have.value', 'health');
-    });
-
-    xit('can show benefits prompts', () => {
-      cy.get('#keyword-search')
-        .contains('benefits')
-        .click();
-      cy.get('#topic-search').click();
-      cy.get('#topic-search').should('have.value', 'benefits');
-    });
-
-    it('does not show search options when there is no text in the input', () => {
-      cy.get('#topic-search').click();
-      cy.get('option').should('not.exist');
-    });
-
-    it('does show search options when there is text in the input', () => {
-      cy.get('#topic-search').type('a');
-      cy.get('option').should('exist');
     });
   });
 });

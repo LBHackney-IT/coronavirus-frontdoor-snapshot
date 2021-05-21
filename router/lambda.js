@@ -11,7 +11,6 @@ server.use(files(path.join(__dirname, 'public')));
 
 // public routes
 server.all('/api/resources', (req, res) => nextRequestHandler(req, res)); // auth is handled by the authorizer
-server.all('/api/prompts', (req, res) => nextRequestHandler(req, res)); // auth is handled by the authorizer
 server.all('/api/resources/fss', (req, res) => nextRequestHandler(req, res)); // auth is handled by the authorizer
 server.all('/api/referrals', (req, res) => nextRequestHandler(req, res)); // auth is handled by the authorizer
 server.all(

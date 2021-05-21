@@ -1,15 +1,14 @@
 import { useState, useEffect } from 'react';
 import useReferral from 'lib/api/utils/useReferral';
-import { requestReferral, requestResources, requestPrompts } from 'lib/api';
+import { requestReferral, requestResources } from 'lib/api';
 import HttpStatusError from 'lib/api/domain/HttpStatusError';
 import { getTokenFromCookieHeader } from 'lib/utils/token';
 import { Button, TextArea } from 'components/Form';
 import VulnerabilitiesGrid from 'components/Feature/VulnerabilitiesGrid';
 import { convertIsoDateToString, convertIsoDateToYears } from 'lib/utils/date';
 import geoCoordinates from 'lib/api/utils/geoCoordinates';
-import TopicExplorer from 'components/Feature/TopicExplorer';
 
-const ReferralSummary = ({ resources, initialReferral, token, topics, showTopicExplorer }) => {
+const ReferralSummary = ({ resources, initialReferral, token }) => {
   const { referral, loading, updateReferral } = useReferral(initialReferral.referralId, {
     initialReferral,
     token
@@ -104,12 +103,6 @@ const ReferralSummary = ({ resources, initialReferral, token, topics, showTopicE
         <span className="govuk-body govuk-!-font-weight-bold" data-testid="age-and-date-of-birth">
           Aged {convertIsoDateToYears(dob)} ({convertIsoDateToString(dob)})
         </span>
-      )}
-      {editReferral && (
-        <>
-          <TopicExplorer topics={topics} />
-          <hr className="govuk-section-break hr-additional-spacing" />
-        </>
       )}
       {editReferral && (
         <>
@@ -222,15 +215,11 @@ ReferralSummary.getInitialProps = async ({ query: { id }, req: { headers }, res 
     const token = getTokenFromCookieHeader(headers);
     const initialReferral = await requestReferral(id, { token });
     const resources = await requestResources({ token });
-    const topics = await requestPrompts({ token });
-    const showTopicExplorer = process.env.SHOW_TOPIC_EXPLORER;
 
     return {
       resources: resources.data,
       initialReferral,
-      token,
-      topics: topics.data,
-      showTopicExplorer
+      token
     };
   } catch (err) {
     res.writeHead(err instanceof HttpStatusError ? err.statusCode : 500).end();
