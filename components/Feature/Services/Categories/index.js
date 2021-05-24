@@ -1,6 +1,6 @@
 import CategoryCard from './CategoryCard';
 
-const Categories = ({ categorisedResources, setSelectedCategory }) => {
+const Categories = ({ categorisedResources, clickCategory }) => {
   let groupedCategories = [];
   let i = 0;
   while (i < categorisedResources.length) {
@@ -15,7 +15,7 @@ const Categories = ({ categorisedResources, setSelectedCategory }) => {
             {group.map(taxonomy => {
               return (
                 <div className="govuk-grid-column-one-third">
-                  <CategoryCard category={taxonomy} onclick={setSelectedCategory}></CategoryCard>
+                  <CategoryCard category={taxonomy} onclick={clickCategory}></CategoryCard>
                 </div>
               );
             })}

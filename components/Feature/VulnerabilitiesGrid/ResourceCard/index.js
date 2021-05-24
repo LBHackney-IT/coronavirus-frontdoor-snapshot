@@ -94,7 +94,9 @@ const ResourceCard = ({
         {councilTagsElement}
       </div>
       <div>
-        <h3 className={`${css['inline-header']}`}>{name}</h3>
+        <h3 className={`${css['inline-header']}`} data-testid="resource-card-header">
+          {name}
+        </h3>
 
         <div className={`govuk-checkboxes__item ${css['inline-header']}`}>
           <input

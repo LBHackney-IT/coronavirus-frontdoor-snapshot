@@ -29,12 +29,14 @@ const Services = ({
     }
   };
 
+  const clickCategory = e => {
+    document.getElementsByName('refer-details').forEach(x => x.removeAttribute('open'));
+    setOpenReferralForm({});
+    setSelectedCategory(e);
+  };
   return (
     <>
-      <Categories
-        categorisedResources={categorisedResources}
-        setSelectedCategory={setSelectedCategory}
-      />
+      <Categories categorisedResources={categorisedResources} clickCategory={clickCategory} />
       <div className="govuk-grid-column-full"></div>
       <div className="govuk-grid-column-full-width">
         {categorisedResources

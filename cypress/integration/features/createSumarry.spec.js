@@ -41,7 +41,7 @@ context('Create summary', () => {
   });
 
   it('adds selected services to summary', () => {
-    cy.get('[data-testid=accordion-item]')
+    cy.get('[data-testid=category-card]')
       .eq(1)
       .click();
 

@@ -34,7 +34,10 @@ const CategoryCard = ({ category, onclick }) => {
   };
 
   return (
-    <div className={`${styles['card']}`} onClick={() => onclick(category.name)}>
+    <div
+      className={`${styles['card']}`}
+      onClick={() => onclick(category.name)}
+      data-testid="category-card">
       <div className={`${styles['icon']} fa-layers fa-fw`}>
         <FontAwesomeIcon
           icon={faCircle}

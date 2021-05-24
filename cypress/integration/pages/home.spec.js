@@ -17,26 +17,23 @@ context('Index page', () => {
 
   describe('Resources', () => {
     it('shows category headers containing resources', () => {
-      cy.get('[data-testid=accordion-item]').should('have.length', 3);
-      cy.get('[data-testid=accordion-item]')
+      cy.get('[data-testid=category-card]').should('have.length', 3);
+      cy.get('[data-testid=category-card]')
         .should('contain', 'First category')
         .and('contain', 'Second category')
         .and('contain', 'Third category');
     });
 
     it('does not show category headers without resources', () => {
-      cy.get('[data-testid=accordion-item]').should('not.contain', 'Fourth category');
+      cy.get('[data-testid=category-card]').should('not.contain', 'Fourth category');
     });
 
     it('Displays the resources', () => {
-      cy.get('[data-testid=accordion-item]')
+      cy.get('[data-testid=category-card]')
         .eq(0)
         .click();
 
-      cy.get('[data-testid=accordion-content]')
-        .eq(0)
-        .children()
-        .should('have.length', 5);
+      cy.get('[data-testid=resource-card-header]').should('have.length', 5);
 
       cy.get('[data-testid=resource-1]')
         .eq(0)
@@ -48,7 +45,7 @@ context('Index page', () => {
     });
 
     it('Displays the correct tags', () => {
-      cy.get('[data-testid=accordion-item]')
+      cy.get('[data-testid=category-card]')
         .eq(0)
         .click();
 
@@ -68,7 +65,7 @@ context('Index page', () => {
     });
 
     it('Displays the correct resource information for council resources', () => {
-      cy.get('[data-testid=accordion-item]')
+      cy.get('[data-testid=category-card]')
         .eq(0)
         .click();
 
@@ -95,7 +92,7 @@ context('Index page', () => {
     });
 
     it('Displays the correct resource information for FSS resources', () => {
-      cy.get('[data-testid=accordion-item]')
+      cy.get('[data-testid=category-card]')
         .eq(0)
         .click();
 
