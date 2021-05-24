@@ -3,17 +3,18 @@
   padding: 16px;
   background-color: #f1f1f1;
   margin-bottom: 16px;
-  display: inline-block;
-  width: 50%;
+  overflow: hidden;
 }
 
 .icon {
   font-size: 60px;
-  // float: left;
-  display: block;
+  float: left;
 }
 
 .content {
-  display: block;
-  // background-color: hotpink;
+  margin-left: 75px;
+}
+
+.card-title {
+  margin: 0 0 0 0;
 }

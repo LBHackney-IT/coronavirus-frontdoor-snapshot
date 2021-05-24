@@ -38,22 +38,17 @@ const CategoryCard = ({ category, onclick }) => {
   };
   return (
     <div className={`${styles['card']}`} onClick={() => onclick(category.name)}>
-      <div className={styles['icon']} style={{ backgroundColor: 'blue', width: '80px' }}>
-        <div>
-          <div className="fa-layers fa-fw">
-            <FontAwesomeIcon icon={faCircle} color="green" />
-            <FontAwesomeIcon
-              icon={
-                categoryIcons[category.name] ? categoryIcons[category.name] : categoryIcons.default
-              }
-              inverse
-              transform="shrink-6"
-            />
-          </div>
-        </div>
+      <div className={`${styles['icon']} fa-layers fa-fw`}>
+        <FontAwesomeIcon icon={faCircle} color="green" />
+        <FontAwesomeIcon
+          icon={categoryIcons[category.name] ? categoryIcons[category.name] : categoryIcons.default}
+          inverse
+          transform="shrink-6"
+        />
       </div>
-      <div className={styles['content']} style={{ backgroundColor: 'hotpink', float: 'right' }}>
-        <p>{category.name}</p> <p>{category.description}</p>
+      <div className={styles['content']}>
+        <h4 className={`${styles['card-title']}`}>{category.name}</h4>
+        <p>{category.description}</p>
       </div>
     </div>
   );
