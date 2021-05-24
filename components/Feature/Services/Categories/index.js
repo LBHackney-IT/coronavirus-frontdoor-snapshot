@@ -1,17 +1,12 @@
 import CategoryCard from './CategoryCard';
 
 const Categories = ({ categorisedResources, setSelectedCategory }) => {
-  const splitArrayIntoChunksOfLen = (arr, len) => {
-    var chunks = [],
-      i = 0,
-      n = arr.length;
-    while (i < n) {
-      chunks.push(arr.slice(i, (i += len)));
-    }
-    return chunks;
-  };
+  let groupedCategories = [];
+  let i = 0;
+  while (i < categorisedResources.length) {
+    groupedCategories.push(categorisedResources.slice(i, (i += 3)));
+  }
 
-  const groupedCategories = splitArrayIntoChunksOfLen(categorisedResources, 3);
   return (
     <div className="govuk-width-container">
       {groupedCategories.map(group => {

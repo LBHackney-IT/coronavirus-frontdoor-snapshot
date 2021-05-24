@@ -1,4 +1,3 @@
-// import React, { useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faComments,
@@ -39,18 +38,10 @@ const CategoryCard = ({ category, onclick }) => {
       <div className={`${styles['icon']} fa-layers fa-fw`}>
         <FontAwesomeIcon
           icon={faCircle}
-          color={
-            categoryIcons[category.name]
-              ? categoryIcons[category.name].color
-              : categoryIcons.default.color
-          }
+          color={categoryIcons[category.name]?.color || categoryIcons.default.color}
         />
         <FontAwesomeIcon
-          icon={
-            categoryIcons[category.name]
-              ? categoryIcons[category.name].icon
-              : categoryIcons.default.icon
-          }
+          icon={categoryIcons[category.name]?.icon || categoryIcons.default.icon}
           inverse
           transform="shrink-6"
         />
