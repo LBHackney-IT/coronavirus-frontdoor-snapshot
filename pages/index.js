@@ -8,10 +8,9 @@ import ResidentDetailsForm from 'components/Feature/ResidentDetailsForm';
 import SupportSummary from 'components/Feature/SupportSummary';
 import { useState } from 'react';
 import jsonwebtoken from 'jsonwebtoken';
-import Heading from 'components/Heading';
 import Head from 'next/head';
 
-const Index = ({ resources, initialReferral, token, fssTaxonomies, errors, refererInfo }) => {
+const Index = ({ categorisedResources, initialReferral, token, errors, refererInfo }) => {
   const { referral, loading, updateReferral } = useReferral(initialReferral.referralId, {
     initialReferral,
     token
@@ -87,8 +86,7 @@ const Index = ({ resources, initialReferral, token, fssTaxonomies, errors, refer
       </div>
       <h2 id="resources-header">Resources for residents</h2>
       <Services
-        taxonomies={fssTaxonomies}
-        resources={resources}
+        categorisedResources={categorisedResources}
         residentInfo={residentInfo}
         refererInfo={refererInfo}
         residentFormCallback={residentFormCallback}
@@ -134,10 +132,21 @@ Index.getInitialProps = async ({ req: { headers }, res }) => {
       return a.name < b.name ? -1 : a.name > b.name ? 1 : 0;
     });
 
+    //filters out taxonomies with no resources
+    const categorisedResources = fssTaxonomies.filter(taxonomy =>
+      resources.some(resource => resource.categoryName === taxonomy.name)
+    );
+
+    //for each taxonomy only leave resources with the same category name as the taxonomy name
+    categorisedResources.forEach(
+      taxonomy =>
+        (taxonomy.resources = resources.filter(resource => taxonomy.name == resource.categoryName))
+    );
+
     const errors = [otherResources.error].concat(fssErrors);
 
     return {
-      resources,
+      categorisedResources,
       initialReferral,
       token,
       fssTaxonomies,

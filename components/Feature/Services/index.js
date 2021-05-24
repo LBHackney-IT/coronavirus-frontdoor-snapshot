@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import ResourceCard from 'components/Feature/VulnerabilitiesGrid/ResourceCard';
+import Categories from './Categories';
 
 const Services = ({
-  resources,
-  taxonomies,
+  categorisedResources,
   residentFormCallback,
   referralCompletion,
   setReferralCompletion,
@@ -14,17 +14,6 @@ const Services = ({
   const [openReferralForm, setOpenReferralForm] = useState({});
   const [referralData, setReferralData] = useState({});
   const [selectedCategory, setSelectedCategory] = useState(null);
-
-  //filters out taxonomies with no resources
-  const taxonomiesToRender = taxonomies.filter(taxonomy =>
-    resources.some(resource => resource.categoryName === taxonomy.name)
-  );
-
-  //for each taxonomy only leave resources with the same category name as the taxonomy name
-  taxonomiesToRender.forEach(
-    taxonomy =>
-      (taxonomy.resources = resources.filter(resource => taxonomy.name == resource.categoryName))
-  );
 
   const detailsClicked = (e, id, serviceId, categoryName) => {
     e.preventDefault();
@@ -42,8 +31,13 @@ const Services = ({
 
   return (
     <>
+      <Categories
+        categorisedResources={categorisedResources}
+        setSelectedCategory={setSelectedCategory}
+      />
+      <div className="govuk-grid-column-full"></div>
       <div className="govuk-grid-column-full-width">
-        {taxonomiesToRender
+        {categorisedResources
           .filter(x => x.name == selectedCategory)
           .map(taxonomy => {
             return (
