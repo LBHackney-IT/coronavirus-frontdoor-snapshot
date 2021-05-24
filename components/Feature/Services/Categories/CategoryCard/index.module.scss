@@ -1,6 +1,6 @@
 .card {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* this adds the "card" effect */
-  padding: 16px;
+  padding: 16px 16px 16px 4px;
   border: 1px solid #dddddd;
   background-color: #f1f1f1;
   margin-bottom: 16px;
@@ -8,14 +8,24 @@
 }
 
 .icon {
-  font-size: 52px;
+  font-size: 48px;
   float: left;
 }
 
 .content {
-  margin-left: 75px;
+  font-family: 'Open Sans';
+  margin-left: 67px;
 }
 
-.card-title {
+.content h4 {
+  font-size: 17px;
+  font-weight: 400;
   margin: 0 0 0 0;
+}
+
+.content p {
+  margin-bottom: 0;
+  margin-top: 4px;
+  color: #525a5b;
+  font-size: 13px;
 }

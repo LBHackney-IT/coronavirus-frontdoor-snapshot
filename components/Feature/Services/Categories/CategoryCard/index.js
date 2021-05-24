@@ -56,7 +56,7 @@ const CategoryCard = ({ category, onclick }) => {
         />
       </div>
       <div className={styles['content']}>
-        <h4 className={`${styles['card-title']}`}>{category.name}</h4>
+        <h4>{category.name}</h4>
         <p>{category.description}</p>
       </div>
     </div>
