@@ -1,10 +1,9 @@
 import useReferral from 'lib/api/utils/useReferral';
-import { requestResources, requestPrompts, requestFssResources } from 'lib/api';
+import { requestResources, requestFssResources } from 'lib/api';
 import HttpStatusError from 'lib/api/domain/HttpStatusError';
 import { getTokenFromCookieHeader } from 'lib/utils/token';
 import { getEmailBody } from 'lib/utils/getEmailBody';
 import Services from 'components/Feature/Services';
-import TopicExplorer from 'components/Feature/TopicExplorer';
 import ResidentDetailsForm from 'components/Feature/ResidentDetailsForm';
 import SupportSummary from 'components/Feature/SupportSummary';
 import { useState } from 'react';
@@ -12,16 +11,7 @@ import jsonwebtoken from 'jsonwebtoken';
 import Heading from 'components/Heading';
 import Head from 'next/head';
 
-const Index = ({
-  resources,
-  initialReferral,
-  token,
-  showTopicExplorer,
-  topics,
-  fssTaxonomies,
-  errors,
-  refererInfo
-}) => {
+const Index = ({ resources, initialReferral, token, fssTaxonomies, errors, refererInfo }) => {
   const { referral, loading, updateReferral } = useReferral(initialReferral.referralId, {
     initialReferral,
     token
@@ -38,7 +28,9 @@ const Index = ({
   const [referrerData, setReferrerData] = useState({
     'referer-email': refererInfo?.email,
     'referer-name': refererInfo?.name,
-    'referer-organisation': refererInfo?.groups.includes(process.env.EXTERNAL_USER_GROUP) ? '' : 'Hackney Council'
+    'referer-organisation': refererInfo?.groups.includes(process.env.EXTERNAL_USER_GROUP)
+      ? ''
+      : 'Hackney Council'
   });
 
   const residentFormCallback = val => {
@@ -74,23 +66,6 @@ const Index = ({
       <Head>
         <title>Better Conversations</title>
       </Head>
-      <Heading as="h2">How to use this tool?</Heading>
-      <div className="govuk-!-margin-bottom-5">
-        <ol>
-          <li className="govuk-!-margin-bottom-1">
-            <a href="#topic-explorer-header">Search for a topic</a> to discuss the resident's whole
-            story and find out what support they need.
-          </li>
-          <li className="govuk-!-margin-bottom-1">
-            <a href="#resources-header">Search for services</a> and refer residents or signpost
-            residents.
-          </li>
-          <li className="govuk-!-margin-bottom-1">
-            <a href="#summary-header">Send a summary email</a> to the resident about your
-            conversation and the services you have discussed.
-          </li>
-        </ol>
-      </div>
       <ResidentDetailsForm
         residentInfoCallback={residentInfoCallback}
         showResidentForm={showResidentForm}
@@ -110,12 +85,6 @@ const Index = ({
           </p>
         ))}
       </div>
-      {showTopicExplorer && (
-        <>
-          <TopicExplorer topics={topics} />
-          <hr className="govuk-section-break hr-additional-spacing" />
-        </>
-      )}
       <h2 id="resources-header">Resources for residents</h2>
       <Services
         taxonomies={fssTaxonomies}
@@ -161,20 +130,16 @@ Index.getInitialProps = async ({ req: { headers }, res }) => {
     const fssTaxonomies = fss.data.fssTaxonomies;
     const fssErrors = fss.error;
 
-    const topics = await requestPrompts({ token });
-    const showTopicExplorer = process.env.SHOW_TOPIC_EXPLORER;
     const resources = fssResources.concat(otherResources.data).sort((a, b) => {
       return a.name < b.name ? -1 : a.name > b.name ? 1 : 0;
     });
 
-    const errors = [otherResources.error].concat(fssErrors).concat(topics.error);
+    const errors = [otherResources.error].concat(fssErrors);
 
     return {
       resources,
       initialReferral,
       token,
-      showTopicExplorer,
-      topics: topics.data,
       fssTaxonomies,
       errors,
       refererInfo

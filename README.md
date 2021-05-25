@@ -1,5 +1,5 @@
 # Coronavirus frontdoor Referral
-This is a fork of the Housing vulnerabilities tools. 
+This is a fork of the Housing vulnerabilities tools.
 
 ## Getting started
 This project uses **yarn** for dependency management and is built with Next.js.
@@ -13,7 +13,7 @@ This project uses **yarn** for dependency management and is built with Next.js.
    if the 'dynamodblocal' directory does not exist.
 2. Create a `.env` file based off of the `.env.sample` that exists.
 3. [Set up DynamoDB Local](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBLocal.html)
-or start a local dynamodb container with Docker like so: `docker-compose up`
+   or start a local dynamodb container with Docker like so: `docker-compose up`
 4. Configure AWS cli with `aws configure`
 5. Create local DynamoDB plans table
    ```bash
@@ -25,7 +25,7 @@ or start a local dynamodb container with Docker like so: `docker-compose up`
    yarn dev
    ```
 
-7. (Optional) add some test data: 
+7. (Optional) add some test data:
 ```
 curl -X POST \
   http://localhost:3000/api/snapshots \
@@ -67,13 +67,10 @@ To run integration tests:
 ```(bash)
 INH_URL=https://inh-admin-test.hackney.gov.uk
 AIRTABLE_API_KEY=xx
-AIRTABLE_PROMPTS_TABLE_NAME="Conversational Prompts"
 FSS_PUBLIC_API_URL=http://localhost:8085/fss
 AIRTABLE_BASE_ID=baseId123
 AIRTABLE_TABLE_NAMES="Service directory"
 AIRTABLE_BASE_URL=http://localhost:8085
-AIRTABLE_PROMPTS_API_KEY=xx
-AIRTABLE_PROMPTS_BASE_ID=baseId456
 HOTJAR_ID=12345
 ```
 
@@ -83,7 +80,7 @@ yarn build
 ```
 
 3. Run the tests:
-To run in cypress UI:
+   To run in cypress UI:
 
 Start the servers and run cyppress-open to launch cypress UI tool:
 
