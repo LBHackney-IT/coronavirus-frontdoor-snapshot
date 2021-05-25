@@ -1,4 +1,5 @@
 import CategoryCard from './CategoryCard';
+import styles from './index.module.scss';
 
 const Categories = ({ categorisedResources, clickCategory }) => {
   let groupedCategories = [];
@@ -11,10 +12,10 @@ const Categories = ({ categorisedResources, clickCategory }) => {
     <div className="govuk-width-container">
       {groupedCategories.map(group => {
         return (
-          <div className={`govuk-grid-row`}>
+          <div className={`govuk-grid-row ${styles['row']}`}>
             {group.map(taxonomy => {
               return (
-                <div className="govuk-grid-column-one-third">
+                <div className={`govuk-grid-column-one-third ${styles['column']}`}>
                   <CategoryCard category={taxonomy} onclick={clickCategory}></CategoryCard>
                 </div>
               );
