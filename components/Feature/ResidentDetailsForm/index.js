@@ -112,13 +112,10 @@ const ResidentDetailsForm = ({
               validationError.firstName ? 'govuk-form-group--error' : ''
             }`}>
             <div className="govuk-!-padding-bottom-2">
-              <label className="govuk-label inline" htmlFor="name">
+              <label className="govuk-label inline" htmlFor="firstName">
                 First name
               </label>
-              <span
-                id="name-error"
-                className="govuk-error-message"
-                aria-describedby="input-name-error">
+              <span id="name-error" className="govuk-error-message">
                 <span hidden={!validationError.firstName} data-testid="name-error">
                   Enter the first name
                 </span>
@@ -142,13 +139,10 @@ const ResidentDetailsForm = ({
               validationError.lastName ? 'govuk-form-group--error' : ''
             }`}>
             <div className="govuk-!-padding-bottom-2">
-              <label className="govuk-label inline" htmlFor="name">
+              <label className="govuk-label inline" htmlFor="lastName">
                 Last name
               </label>
-              <span
-                id="name-error"
-                className="govuk-error-message"
-                aria-describedby="input-name-error">
+              <span id="name-error" className="govuk-error-message">
                 <span hidden={!validationError.lastName} data-testid="name-error">
                   Enter the last name
                 </span>
@@ -175,10 +169,7 @@ const ResidentDetailsForm = ({
               <label className="govuk-label inline" htmlFor="phone">
                 Phone
               </label>
-              <span
-                id="phone-error"
-                className="govuk-error-message"
-                aria-describedby="input-phone-error">
+              <span id="phone-error" className="govuk-error-message">
                 <span hidden={!validationError.phone} data-testid="phone-error">
                   Enter the phone number
                 </span>
@@ -190,7 +181,6 @@ const ResidentDetailsForm = ({
                 id="phone"
                 name="phone"
                 type="number"
-                aria-describedby="telephone-number-error"
                 onChange={e => handleOnChange(e.target.id, e.target.value)}
                 required
                 onInvalid={e => onInvalidField(e.target.id)}
@@ -205,10 +195,7 @@ const ResidentDetailsForm = ({
               <label className="govuk-label inline" htmlFor="email">
                 Email
               </label>
-              <span
-                id="email-error"
-                className="govuk-error-message"
-                aria-describedby="input-email-error">
+              <span id="email-error" className="govuk-error-message">
                 <span hidden={!validationError.email} data-testid="email-error">
                   Enter the email address
                 </span>
@@ -221,7 +208,6 @@ const ResidentDetailsForm = ({
                 name="email"
                 type="email"
                 spellCheck="false"
-                aria-describedby="email-hint email error"
                 onChange={e => handleOnChange(e.target.id, e.target.value)}
                 required
                 onInvalid={e => onInvalidField(e.target.id)}
@@ -236,10 +222,7 @@ const ResidentDetailsForm = ({
               <label className="govuk-label inline" htmlFor="address">
                 Address
               </label>
-              <span
-                id="address-error"
-                className="govuk-error-message"
-                aria-describedby="input-address-error">
+              <span id="address-error" className="govuk-error-message">
                 <span hidden={!validationError.address} data-testid="address-error">
                   Enter the address
                 </span>
@@ -251,7 +234,6 @@ const ResidentDetailsForm = ({
                 id="address"
                 name="event-name"
                 type="text"
-                aria-describedby="event-name-hint"
                 onChange={e => handleOnChange(e.target.id, e.target.value)}
                 required
                 onInvalid={e => onInvalidField(e.target.id)}
@@ -266,10 +248,7 @@ const ResidentDetailsForm = ({
               <label className="govuk-label inline" htmlFor="postcode">
                 Postcode
               </label>
-              <span
-                id="postcode-error"
-                className="govuk-error-message"
-                aria-describedby="input-postcode-error">
+              <span id="postcode-error" className="govuk-error-message">
                 <span hidden={!validationError.postcode} data-testid="postcode-error">
                   Enter the postcode
                 </span>
@@ -281,7 +260,6 @@ const ResidentDetailsForm = ({
                 id="postcode"
                 name="event-name"
                 type="text"
-                aria-describedby="event-name-hint"
                 onChange={e => handleOnChange(e.target.id, e.target.value)}
                 required
                 onInvalid={e => onInvalidField(e.target.id)}
@@ -289,10 +267,7 @@ const ResidentDetailsForm = ({
             </div>
           </div>
           <div className="govuk-form-group">
-            <fieldset
-              className="govuk-fieldset"
-              role="group"
-              aria-describedby="date-of-birth-section">
+            <fieldset className="govuk-fieldset" role="group">
               <legend className="govuk-fieldset__legend">Date of birth</legend>
               <div className="govuk-date-input" id="date-of-birth">
                 <div className="govuk-date-input__item">
