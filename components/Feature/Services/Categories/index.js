@@ -9,7 +9,7 @@ const Categories = ({ categorisedResources, clickCategory }) => {
   }
 
   return (
-    <div className="govuk-width-container">
+    <div>
       {groupedCategories.map(group => {
         return (
           <div className={`govuk-grid-row ${styles['row']}`}>

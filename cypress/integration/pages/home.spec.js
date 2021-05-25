@@ -7,11 +7,30 @@ context('Index page', () => {
 
   describe('Page structure', () => {
     it('has the right headings', () => {
-      cy.contains('Resources for residents').should('be.visible');
+      cy.contains('Explore categories').should('be.visible');
     });
 
     it('has no content outside top-level headings', () => {
       cy.checkA11y('#content > h2', null, cy.terminalLog);
+    });
+  });
+
+  describe('Categories', () => {
+    it('shows category headers containing resources', () => {
+      cy.get('[data-testid=search-results-header]').should('not.exist');
+
+      cy.get('[data-testid=category-card]')
+        .eq(0)
+        .click();
+      
+      cy.get('[data-testid=search-results-header]').should('contain', 'First category');
+
+      cy.get('[data-testid=category-card]')
+        .eq(1)
+        .click();
+
+      cy.get('[data-testid=search-results-header]').should('not.contain', 'First category');
+      cy.get('[data-testid=search-results-header]').should('contain', 'Second category');
     });
   });
 

@@ -84,7 +84,6 @@ const Index = ({ categorisedResources, initialReferral, token, errors, refererIn
           </p>
         ))}
       </div>
-      <h2 id="resources-header">Resources for residents</h2>
       <Services
         categorisedResources={categorisedResources}
         residentInfo={residentInfo}

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import ResourceCard from 'components/Feature/VulnerabilitiesGrid/ResourceCard';
 import Categories from './Categories';
+import styles from './index.module.scss';
 
 const Services = ({
   categorisedResources,
@@ -36,14 +37,24 @@ const Services = ({
   };
   return (
     <>
+      <h2 id="resources-header" className={`govuk-heading-l`}>Explore categories</h2>
       <Categories categorisedResources={categorisedResources} clickCategory={clickCategory} />
       <div className="govuk-grid-column-full"></div>
       <div className="govuk-grid-column-full-width">
+        <hr
+          className={`govuk-section-break govuk-section-break--m govuk-section-break--visible ${styles['horizontal-divider']}`}
+        />
         {categorisedResources
           .filter(x => x.name == selectedCategory)
           .map(taxonomy => {
             return (
               <>
+                <h2>Search results</h2>
+                <h2
+                  data-testid="search-results-header"
+                  className={`${styles['search-results-header']}`}>
+                  {selectedCategory}
+                </h2>
                 {taxonomy.resources.map(resource => (
                   <ResourceCard
                     key={`resource-card-${resource.id}-${resource.name}`}
