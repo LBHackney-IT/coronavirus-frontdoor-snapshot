@@ -131,12 +131,10 @@ Index.getInitialProps = async ({ req: { headers }, res }) => {
       return a.name < b.name ? -1 : a.name > b.name ? 1 : 0;
     });
 
-    //filters out taxonomies with no resources
     const categorisedResources = fssTaxonomies.filter(taxonomy =>
       resources.some(resource => resource.categoryName === taxonomy.name)
     );
 
-    //for each taxonomy only leave resources with the same category name as the taxonomy name
     categorisedResources.forEach(
       taxonomy =>
         (taxonomy.resources = resources.filter(resource => taxonomy.name == resource.categoryName))
