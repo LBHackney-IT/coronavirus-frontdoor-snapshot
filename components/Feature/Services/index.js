@@ -34,10 +34,13 @@ const Services = ({
     document.getElementsByName('refer-details').forEach(x => x.removeAttribute('open'));
     setOpenReferralForm({});
     setSelectedCategory(e);
+    window.location.href = '#search-results-header';
   };
   return (
     <>
-      <h2 id="resources-header" className={`govuk-heading-l`}>Explore categories</h2>
+      <h2 id="resources-header" className={`govuk-heading-l`}>
+        Explore categories
+      </h2>
       <Categories categorisedResources={categorisedResources} clickCategory={clickCategory} />
       <div className="govuk-grid-column-full"></div>
       <div className="govuk-grid-column-full-width">
@@ -49,7 +52,7 @@ const Services = ({
           .map(taxonomy => {
             return (
               <>
-                <h2>Search results</h2>
+                <h2 id="search-results-header">Search results</h2>
                 <h2
                   data-testid="search-results-header"
                   className={`${styles['search-results-header']}`}>
