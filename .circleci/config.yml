@@ -173,7 +173,7 @@ workflows:
           aws-access-key-id: AWS_ACCESS_KEY_ID_STAGING
           aws-secret-access-key: AWS_SECRET_ACCESS_KEY_STAGING
           AWS_CERTIFICATE_ARN: arn:aws:acm:us-east-1:715003523189:certificate/8f7fa30c-a4e5-4775-b827-ade824a33c9a
-          GTM_ID: ${NEXT_PUBLIC_GTM_ID}
+          GTM_ID: ${NEXT_PUBLIC_STAGING_GTM_ID}
           SINGLEVIEW_URL: ${NEXT_PUBLIC_SINGLEVIEW_URL_STAGING}
           INH_URL: ${INH_URL_STAGING}
           URL: ${NEXT_PUBLIC_URL_STAGING}
