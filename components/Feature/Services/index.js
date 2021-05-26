@@ -2,6 +2,8 @@ import { useState } from 'react';
 import ResourceCard from 'components/Feature/VulnerabilitiesGrid/ResourceCard';
 import Categories from './Categories';
 import styles from './index.module.scss';
+import { sendDataToAnalytics } from 'lib/utils/analytics';
+import { CATEGORY_CATEGORIES, ACTION_CLICK } from 'lib/utils/analyticsConstants';
 
 const Services = ({
   categorisedResources,
@@ -35,7 +37,9 @@ const Services = ({
     setOpenReferralForm({});
     setSelectedCategory(e);
     window.location.href = '#search-results-header';
+    sendDataToAnalytics({ action: ACTION_CLICK, category: CATEGORY_CATEGORIES, label: e });
   };
+
   return (
     <>
       <h2 id="resources-header" className={`govuk-heading-l`}>
