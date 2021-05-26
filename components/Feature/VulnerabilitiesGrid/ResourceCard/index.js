@@ -45,12 +45,14 @@ const ResourceCard = ({
 
   const websiteElement =
     websites &&
-    websites.length > 0 &&
-    websites.map(website => (
-      <a href={website} target="_blank" rel="noopener noreferrer">
-        {website}
-      </a>
-    ));
+    websites.filter(x => x).length > 0 &&
+    websites
+      .filter(x => x)
+      .map(website => (
+        <a href={website} target="_blank" rel="noopener noreferrer">
+          {website}
+        </a>
+      ));
   const distributionElement = tags.filter(t => HIDDEN_TAGS.includes(t)).join(', ');
   const tagsElement = tags
     .filter(t => !HIDDEN_TAGS.includes(t))
@@ -94,7 +96,9 @@ const ResourceCard = ({
         {councilTagsElement}
       </div>
       <div>
-        <h3 className={`${css['inline-header']}`}>{name}</h3>
+        <h3 className={`${css['inline-header']}`} data-testid="resource-card-header">
+          {name}
+        </h3>
 
         <div className={`govuk-checkboxes__item ${css['inline-header']}`}>
           <input
@@ -352,7 +356,7 @@ const ResourceCard = ({
                         />
                         <label
                           className="govuk-label govuk-checkboxes__label"
-                          htmlFor="esident-referral-email">
+                          htmlFor="resident-referral-email">
                           By email
                         </label>
                       </div>
@@ -364,7 +368,7 @@ const ResourceCard = ({
                     className={`govuk-form-group govuk-!-padding-bottom-2 ${
                       validationError[`referer-name-${id}`] ? 'govuk-form-group--error' : ''
                     }`}>
-                    <label className="govuk-label inline" htmlFor="name">
+                    <label className="govuk-label inline" htmlFor={`referer-name-${id}`}>
                       <legend className="govuk-fieldset__legend govuk-fieldset__legend--s">
                         Your name
                       </legend>
@@ -401,7 +405,7 @@ const ResourceCard = ({
                     className={`govuk-form-group govuk-!-padding-bottom-2 ${
                       validationError[`referer-organisation-${id}`] ? 'govuk-form-group--error' : ''
                     }`}>
-                    <label className="govuk-label inline" htmlFor="name">
+                    <label className="govuk-label inline" htmlFor={`referer-organisation-${id}`}>
                       <legend className="govuk-fieldset__legend govuk-fieldset__legend--s">
                         Your organisation
                       </legend>
@@ -441,7 +445,7 @@ const ResourceCard = ({
                     className={`govuk-form-group govuk-!-padding-bottom-2 ${
                       validationError[`referer-email-${id}`] ? 'govuk-form-group--error' : ''
                     }`}>
-                    <label className="govuk-label inline" htmlFor="name">
+                    <label className="govuk-label inline" htmlFor={`referer-email-${id}`}>
                       <legend className="govuk-fieldset__legend govuk-fieldset__legend--s">
                         Your email
                       </legend>

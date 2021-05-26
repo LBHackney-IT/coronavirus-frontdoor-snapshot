@@ -18,6 +18,9 @@
     "lint": "eslint --fix --ext js lib/ pages/ && echo 'Lint complete.'"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.35",
+    "@fortawesome/free-solid-svg-icons": "^5.15.3",
+    "@fortawesome/react-fontawesome": "^0.1.14",
     "airtable": "^0.8.1",
     "cookie": "^0.4.1",
     "cookie-parser": "^1.4.5",

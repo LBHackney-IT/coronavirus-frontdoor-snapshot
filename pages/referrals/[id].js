@@ -106,7 +106,7 @@ const ReferralSummary = ({ resources, initialReferral, token }) => {
       )}
       {editReferral && (
         <>
-          <h2>Resources for residents</h2>
+          <h2>Explore categories</h2>
           Resident's postcode: {postcode}
           <VulnerabilitiesGrid
             onError={handleError}

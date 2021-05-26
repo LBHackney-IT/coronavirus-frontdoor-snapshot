@@ -4,7 +4,9 @@ context('Create referral', () => {});
 describe('Referral form', () => {
   before(() => {
     cy.visit('/');
-    cy.get('[data-testid=accordion-item]')
+  });
+  beforeEach(() => {
+    cy.get('[data-testid=category-card]')
       .eq(0)
       .click();
   });
@@ -19,7 +21,7 @@ describe('Referral form', () => {
 
     cy.get('#referral-ABC123-1-form').should('not.exist');
 
-    cy.get('[data-testid=accordion-item]')
+    cy.get('[data-testid=category-card]')
       .eq(1)
       .click();
 
@@ -35,6 +37,12 @@ describe('Referral form', () => {
   });
 
   it('Renders hidden referral fields', () => {
+    cy.get('[data-testid=category-card]')
+      .eq(1)
+      .click();
+
+    cy.get('#referral-abc-2').click();
+
     cy.get('#service-name-abc')
       .should('not.be.visible')
       .and('have.value', 'Kingsman');
@@ -97,7 +105,7 @@ describe('Referral form', () => {
       });
 
       it('referral form', () => {
-        cy.get('[data-testid=accordion-item]')
+        cy.get('[data-testid=category-card]')
           .eq(0)
           .click();
 
@@ -145,7 +153,7 @@ describe('Referral form', () => {
       });
 
       it('referral form', () => {
-        cy.get('[data-testid=accordion-item]')
+        cy.get('[data-testid=category-card]')
           .eq(0)
           .click();
 
@@ -170,7 +178,7 @@ describe('Referral form', () => {
   describe('Error handling', () => {
     beforeEach(() => {
       cy.visit('/');
-      cy.get('[data-testid=accordion-item]')
+      cy.get('[data-testid=category-card]')
         .eq(0)
         .click();
       cy.get('#referral-ABC123-1').click({ force: true });
