@@ -49,9 +49,16 @@ const ResourceCard = ({
     websites
       .filter(x => x)
       .map(website => (
-        <a href={website} target="_blank" rel="noopener noreferrer">
-          {website}
-        </a>
+        <>
+          <a
+            key={`website-link-${website}`}
+            href={website}
+            target="_blank"
+            rel="noopener noreferrer">
+            {website}
+          </a>
+          <br />
+        </>
       ));
   const distributionElement = tags.filter(t => HIDDEN_TAGS.includes(t)).join(', ');
   const tagsElement = tags
