@@ -129,7 +129,6 @@ const ResourceCard = ({
       </div>
       <>
         <SummaryList
-          key={`resourceInfo-${id}-${categoryId}`}
           name={['resourceInfo']}
           entries={{
             Distance: distance && distance < 100 ? distance + ' miles' : null,

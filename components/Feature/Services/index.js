@@ -55,7 +55,7 @@ const Services = ({
           .filter(x => x.name == selectedCategory)
           .map(taxonomy => {
             return (
-              <>
+              <div key={`search-result-${taxonomy.id}`}>
                 <h2 id="search-results-header">Search results</h2>
                 <h2
                   data-testid="search-results-header"
@@ -80,7 +80,7 @@ const Services = ({
                     updateSignpostSummary={updateSignpostSummary}
                   />
                 ))}
-              </>
+              </div>
             );
           })}
       </div>

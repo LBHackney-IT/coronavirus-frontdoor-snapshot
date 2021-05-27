@@ -10,12 +10,14 @@ const Categories = ({ categorisedResources, clickCategory }) => {
 
   return (
     <div>
-      {groupedCategories.map(group => {
+      {groupedCategories.map((group, i) => {
         return (
-          <div className={`govuk-grid-row ${styles['row']}`}>
+          <div key={`category-group-${i}`} className={`govuk-grid-row ${styles['row']}`}>
             {group.map(taxonomy => {
               return (
-                <div className={`govuk-grid-column-one-third ${styles['column']}`}>
+                <div
+                  key={`category-card-${taxonomy.name}`}
+                  className={`govuk-grid-column-one-third ${styles['column']}`}>
                   <CategoryCard category={taxonomy} onclick={clickCategory}></CategoryCard>
                 </div>
               );
