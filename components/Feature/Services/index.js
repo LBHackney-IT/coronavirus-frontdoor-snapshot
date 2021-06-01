@@ -35,17 +35,20 @@ const Services = ({
 
   const flattenSearchResults = searchResults => {
     const resources = searchResults.map(category => category.resources).flat();
-    const res = [];
+    let res = [];
     resources.forEach(resource => {
       let index = res.findIndex(x => x.id === resource.id);
-      if (index > -1) {
-        res[index].description = res[index].description + '. ' + resource.description;
+      if (index > -1 && resource.description) {
+        res[index].description = [res[index].description, resource.description]
+          .filter(x => x?.trim())
+          .map(x => x.trim())
+          .join('. ');
       } else {
         res.push(resource);
       }
     });
     return {
-      name: 'Search results',
+      name: `${res.length} ${res.length == 1 ? 'result' : 'results'}`,
       resources: res
     };
   };
@@ -57,13 +60,14 @@ const Services = ({
     const searchResults = getSearchResults(searchTerm, categorisedResources);
     const newFilteredResources = flattenSearchResults(searchResults);
     setFilteredResources(newFilteredResources);
+    window.location.href = '#search-results-divider';
   };
 
   const clickCategory = e => {
     document.getElementsByName('refer-details').forEach(x => x.removeAttribute('open'));
     const newCategory = e;
     setOpenReferralForm({});
-    window.location.href = '#search-results-header';
+    window.location.href = '#search-results-divider';
     sendDataToAnalytics({ action: ACTION_CLICK, category: CATEGORY_CATEGORIES, label: e });
     setFilteredResources(
       categorisedResources[categorisedResources.findIndex(x => x.name === newCategory)]
@@ -94,6 +98,7 @@ const Services = ({
       <div className="govuk-grid-column-full"></div>
       <div className="govuk-grid-column-full-width">
         <hr
+          id="search-results-divider"
           className={`govuk-section-break govuk-section-break--m govuk-section-break--visible ${styles['horizontal-divider']}`}
         />
         {filteredResources && (
