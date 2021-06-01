@@ -81,13 +81,14 @@ const Services = ({
       </h2>
       <form onSubmit={handleSearch}>
         <input
-          id="topic-search"
+          id="keyword-search"
+          data-testid="keyword-search"
           list="input-tags"
           type="text"
           name="search-input"
           className="govuk-input govuk-input--width-30"
         />
-        <button type="submit" className="govuk-button" data-testid="cookies-yes-button">
+        <button type="submit" className="govuk-button" data-testid="keyword-search-button">
           Search
         </button>
       </form>
