@@ -3,6 +3,7 @@ import ResourceCard from 'components/Feature/VulnerabilitiesGrid/ResourceCard';
 import Categories from './Categories';
 import styles from './index.module.scss';
 import { sendDataToAnalytics } from 'lib/utils/analytics';
+import { getSearchResults } from 'lib/utils/search';
 import { CATEGORY_CATEGORIES, ACTION_CLICK } from 'lib/utils/analyticsConstants';
 
 const Services = ({
@@ -17,6 +18,7 @@ const Services = ({
   const [openReferralForm, setOpenReferralForm] = useState({});
   const [referralData, setReferralData] = useState({});
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [filteredResources, setFilteredResources] = useState([]);
 
   const detailsClicked = (e, id, serviceId, categoryName) => {
     e.preventDefault();
@@ -32,16 +34,57 @@ const Services = ({
     }
   };
 
+  const handleSearch = e => {
+    e.preventDefault();
+    setSelectedCategory(null);
+    const searchTerm = e.target['search-input'].value;
+
+    const searchResults = getSearchResults(searchTerm, categorisedResources);
+
+    const resources = searchResults.map(category => category.resources).flat();
+
+    const res = [];
+    resources.forEach(resource => {
+      let index = res.findIndex(x => x.id === resource.id);
+      if (index > -1) {
+        res[index].description = res[index].description + '. ' + resource.description;
+      } else {
+        res.push(resource);
+      }
+    });
+
+    const newFilteredResources = {
+      name: 'search results',
+      resources: res
+    };
+
+    setFilteredResources([newFilteredResources]);
+  };
+
   const clickCategory = e => {
     document.getElementsByName('refer-details').forEach(x => x.removeAttribute('open'));
+    const newCategory = e;
     setOpenReferralForm({});
-    setSelectedCategory(e);
+    setSelectedCategory(newCategory);
     window.location.href = '#search-results-header';
     sendDataToAnalytics({ action: ACTION_CLICK, category: CATEGORY_CATEGORIES, label: e });
+    setFilteredResources(categorisedResources.filter(x => x.name == newCategory));
   };
 
   return (
     <>
+      <form onSubmit={handleSearch}>
+        <input
+          id="topic-search"
+          list="input-tags"
+          type="text"
+          name="search-input"
+          className="govuk-input govuk-input--width-20"
+        />
+        <button type="submit" className="govuk-button" data-testid="cookies-yes-button">
+          Search
+        </button>
+      </form>
       <h2 id="resources-header" className={`govuk-heading-l`}>
         Explore categories
       </h2>
@@ -51,38 +94,36 @@ const Services = ({
         <hr
           className={`govuk-section-break govuk-section-break--m govuk-section-break--visible ${styles['horizontal-divider']}`}
         />
-        {categorisedResources
-          .filter(x => x.name == selectedCategory)
-          .map(taxonomy => {
-            return (
-              <div key={`search-result-${taxonomy.id}`}>
-                <h2 id="search-results-header">Search results</h2>
-                <h2
-                  data-testid="search-results-header"
-                  className={`${styles['search-results-header']}`}>
-                  {selectedCategory}
-                </h2>
-                {taxonomy.resources.map(resource => (
-                  <ResourceCard
-                    key={`resource-card-${resource.id}-${resource.name}`}
-                    data-testid={`resource-${resource.id}`}
-                    {...resource}
-                    updateSelectedResources={() => {}}
-                    categoryId={taxonomy.id}
-                    referralCompletion={referralCompletion}
-                    setReferralCompletion={setReferralCompletion}
-                    detailsClicked={detailsClicked}
-                    openReferralForm={openReferralForm}
-                    referralData={referralData}
-                    setReferralData={setReferralData}
-                    referrerData={referrerData}
-                    setReferrerData={setReferrerData}
-                    updateSignpostSummary={updateSignpostSummary}
-                  />
-                ))}
-              </div>
-            );
-          })}
+        {filteredResources.map(taxonomy => {
+          return (
+            <div key={`search-result-${taxonomy.id}`}>
+              <h2 id="search-results-header">Search results</h2>
+              <h2
+                data-testid="search-results-header"
+                className={`${styles['search-results-header']}`}>
+                {selectedCategory}
+              </h2>
+              {taxonomy.resources.map(resource => (
+                <ResourceCard
+                  key={`resource-card-${resource.id}-${resource.name}`}
+                  data-testid={`resource-${resource.id}`}
+                  {...resource}
+                  updateSelectedResources={() => {}}
+                  categoryId={taxonomy.id}
+                  referralCompletion={referralCompletion}
+                  setReferralCompletion={setReferralCompletion}
+                  detailsClicked={detailsClicked}
+                  openReferralForm={openReferralForm}
+                  referralData={referralData}
+                  setReferralData={setReferralData}
+                  referrerData={referrerData}
+                  setReferrerData={setReferrerData}
+                  updateSignpostSummary={updateSignpostSummary}
+                />
+              ))}
+            </div>
+          );
+        })}
       </div>
     </>
   );
