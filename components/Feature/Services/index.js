@@ -85,7 +85,7 @@ const Services = ({
           id="keyword-search"
           data-testid="keyword-search"
           list="input-tags"
-          type="text"
+          type="search"
           name="search-input"
           className="govuk-input govuk-input--width-30"
         />
