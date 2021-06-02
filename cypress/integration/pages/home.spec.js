@@ -144,9 +144,29 @@ context('Index page', () => {
 
   describe('Search', () => {
     it('shows all resources if the search input is empty', () => {
-      cy.get('[data-testid=keyword-search-button]').click();
+      cy.get('[data-testid="keyword-search-button"]').click();
 
-      cy.get('[data-testid=search-results-header]').should('contain', '7 results');
+      cy.get('[data-testid="search-results-header"]').should('contain', '8 results');
+    });
+
+    it('shows singular text if only 1 result returned', () => {
+      cy.get('[data-testid="keyword-search"]').type('abc mental health');
+      cy.get('[data-testid="keyword-search-button"]').click();
+
+      cy.get('[data-testid="search-results-header"]').should('contain', '1 result');
+      cy.get('[data-testid="search-results-header"]').should('not.contain', '1 results');
+    });
+
+    it('shows plural text if no results', () => {
+      cy.get('[data-testid="keyword-search"]').type('sdjkfhdjksfhdjsfhjdksf');
+      cy.get('[data-testid="keyword-search-button"]').click();
+
+      cy.get('[data-testid="search-results-header"]').should('contain', '0 results');
+    });
+
+    it('press enter when focus is in input will also search', () => {
+      cy.get('[data-testid="keyword-search"]').type('kingsman {enter}');
+      cy.get('[data-testid="search-results-header"]').should('contain', '2 results');
     });
   });
 });
