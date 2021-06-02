@@ -2,9 +2,9 @@ import { useState } from 'react';
 import ResourceCard from 'components/Feature/VulnerabilitiesGrid/ResourceCard';
 import Categories from './Categories';
 import styles from './index.module.scss';
-import { sendDataToAnalytics } from 'lib/utils/analytics';
+import { sendDataToAnalytics, getUserGroup } from 'lib/utils/analytics';
 import { getSearchResults } from 'lib/utils/search';
-import { CATEGORY_CATEGORIES, ACTION_CLICK } from 'lib/utils/analyticsConstants';
+import { CATEGORY_CATEGORIES, CATEGORY_SEARCH } from 'lib/utils/analyticsConstants';
 
 const Services = ({
   categorisedResources,
@@ -61,15 +61,24 @@ const Services = ({
     const newFilteredResources = flattenSearchResults(searchResults);
 
     setFilteredResources(newFilteredResources);
+    sendDataToAnalytics({
+      action: getUserGroup(referrerData['user-groups']),
+      category: CATEGORY_SEARCH,
+      label: searchTerm,
+      value: newFilteredResources.resources.length
+    });
     window.location.href = '#search-results-divider';
   };
-
   const clickCategory = e => {
     document.getElementsByName('refer-details').forEach(x => x.removeAttribute('open'));
     const newCategory = e;
     setOpenReferralForm({});
     window.location.href = '#search-results-divider';
-    sendDataToAnalytics({ action: ACTION_CLICK, category: CATEGORY_CATEGORIES, label: e });
+    sendDataToAnalytics({
+      action: getUserGroup(referrerData['user-groups']),
+      category: CATEGORY_CATEGORIES,
+      label: e
+    });
     setFilteredResources(
       categorisedResources[categorisedResources.findIndex(x => x.name === newCategory)]
     );
