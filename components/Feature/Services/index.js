@@ -38,7 +38,7 @@ const Services = ({
     let res = [];
     resources.forEach(resource => {
       let index = res.findIndex(x => x.id === resource.id);
-      if (index > -1 && resource.description) {
+      if (index > -1) {
         res[index].description = [res[index].description, resource.description]
           .filter(x => x?.trim())
           .map(x => x.trim())
@@ -59,6 +59,7 @@ const Services = ({
     const searchTerm = e.target['search-input'].value;
     const searchResults = getSearchResults(searchTerm, categorisedResources);
     const newFilteredResources = flattenSearchResults(searchResults);
+
     setFilteredResources(newFilteredResources);
     window.location.href = '#search-results-divider';
   };
@@ -103,7 +104,7 @@ const Services = ({
           className={`govuk-section-break govuk-section-break--m govuk-section-break--visible ${styles['horizontal-divider']}`}
         />
         {filteredResources && (
-          <div key={`search-result-${filteredResources.id}`}>
+          <div key={`search-result-${filteredResources.id}`} data-testid="search-results-container">
             <h2 id="search-results-header">Search results</h2>
             <h2
               data-testid="search-results-header"

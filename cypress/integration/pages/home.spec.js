@@ -146,7 +146,7 @@ context('Index page', () => {
     it('shows all resources if the search input is empty', () => {
       cy.get('[data-testid="keyword-search-button"]').click();
 
-      cy.get('[data-testid="search-results-header"]').should('contain', '8 results');
+      cy.get('[data-testid="search-results-header"]').should('contain', '7 results');
     });
 
     it('shows singular text if only 1 result returned', () => {
@@ -167,6 +167,18 @@ context('Index page', () => {
     it('press enter when focus is in input will also search', () => {
       cy.get('[data-testid="keyword-search"]').type('kingsman {enter}');
       cy.get('[data-testid="search-results-header"]').should('contain', '2 results');
+    });
+
+    it('returns only services containing search term', () => {
+      cy.get('[data-testid="keyword-search"]').type('abc');
+      cy.get('[data-testid="keyword-search-button"]').click();
+
+      cy.get('[data-testid="search-results-container"]')
+        .find('[data-testid="resource-card-tags"]')
+        .should('have.length', 1);
+
+      cy.get('[data-testid="resource-card-tags"]').should('contain', 'Magic');
+      cy.get('[data-testid="resource-card-tags"]').should('contain', 'First category');
     });
   });
 });
