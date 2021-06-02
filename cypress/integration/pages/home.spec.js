@@ -166,7 +166,7 @@ context('Index page', () => {
 
     it('press enter when focus is in input will also search', () => {
       cy.get('[data-testid="keyword-search"]').type('kingsman {enter}');
-      cy.get('[data-testid="search-results-header"]').should('contain', '2 results');
+      cy.get('[data-testid="search-results-header"]').should('contain', '1 result');
     });
 
     it('returns only services containing search term', () => {
