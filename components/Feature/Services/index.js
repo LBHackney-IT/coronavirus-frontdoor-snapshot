@@ -71,7 +71,6 @@ const Services = ({
   };
   const clickCategory = e => {
     document.getElementsByName('refer-details').forEach(x => x.removeAttribute('open'));
-    const newCategory = e;
     setOpenReferralForm({});
     window.location.href = '#search-results-divider';
     sendDataToAnalytics({
@@ -79,17 +78,18 @@ const Services = ({
       category: CATEGORY_CATEGORIES,
       label: e
     });
-    setFilteredResources(
-      categorisedResources[categorisedResources.findIndex(x => x.name === newCategory)]
-    );
+    setFilteredResources(categorisedResources[categorisedResources.findIndex(x => x.name === e)]);
   };
 
   return (
     <>
-      <h2 id="search-for-support-header" className={`govuk-heading-l`}>
-        Search for support
-      </h2>
       <form onSubmit={handleSearch}>
+        <label
+          htmlFor="keyword-search"
+          id="search-for-support-header"
+          className={`govuk-heading-l`}>
+          Search for support
+        </label>
         <input
           id="keyword-search"
           data-testid="keyword-search"
