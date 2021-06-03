@@ -3,6 +3,7 @@ context('Index page', () => {
   beforeEach(() => {
     cy.visit('/');
     cy.injectAxe();
+    cy.checkA11y();
   });
 
   describe('Page structure', () => {
