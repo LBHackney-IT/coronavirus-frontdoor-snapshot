@@ -99,7 +99,10 @@ const Services = ({
           placeholder="Type here what you are looking for..."
           className="govuk-input govuk-input--width-30"
         />
-        <button type="submit" className="govuk-button" data-testid="keyword-search-button">
+        <button
+          type="submit"
+          className="govuk-button govuk-!-margin-left-2"
+          data-testid="keyword-search-button">
           Search
         </button>
       </form>
