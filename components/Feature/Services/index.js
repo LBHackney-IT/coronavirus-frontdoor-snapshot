@@ -96,6 +96,7 @@ const Services = ({
           list="input-tags"
           type="search"
           name="search-input"
+          placeholder="Type here what you are looking for..."
           className="govuk-input govuk-input--width-30"
         />
         <button type="submit" className="govuk-button" data-testid="keyword-search-button">
