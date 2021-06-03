@@ -48,8 +48,6 @@ functions:
       ALLOWED_GROUPS: ${ssm:/frontdoor-snapshot/${self:provider.stage}/allowed-groups}
       BASIC_ALLOWED_GROUPS: ${ssm:/frontdoor-snapshot/${self:provider.stage}/basic-allowed-groups}
       EXTERNAL_USER_GROUP: ${ssm:/frontdoor-snapshot/${self:provider.stage}/external-user-group}
-      ASC_FRONTDOOR_USER_GROUP: ${ssm:/frontdoor-snapshot/${self:provider.stage}/asc-frontdoor-user-group}
-      ASC_INFORMATION_USER_GROUP: ${ssm:/frontdoor-snapshot/${self:provider.stage}/asc-information-user-group}
       JWT_SECRET: ${ssm:/common/hackney-jwt-secret}
       TABLE_NAME: ${self:provider.environment.TABLE_NAME}
       CONVERSATIONS_TABLE_NAME: ${self:provider.environment.CONVERSATIONS_TABLE_NAME}
