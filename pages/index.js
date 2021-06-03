@@ -29,7 +29,8 @@ const Index = ({ categorisedResources, initialReferral, token, errors, refererIn
     'referer-name': refererInfo?.name,
     'referer-organisation': refererInfo?.groups.includes(process.env.EXTERNAL_USER_GROUP)
       ? ''
-      : 'Hackney Council'
+      : 'Hackney Council',
+    'user-groups': refererInfo?.groups
   });
 
   const residentFormCallback = val => {

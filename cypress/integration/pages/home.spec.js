@@ -10,6 +10,11 @@ context('Index page', () => {
       cy.contains('Explore categories').should('be.visible');
     });
 
+    it('displays the search-box', () => {
+      cy.contains('Search for support').should('be.visible');
+      cy.get('[data-testid=keyword-search]').should('be.visible');
+    });
+
     it('has no content outside top-level headings', () => {
       cy.checkA11y('#content > h2', null, cy.terminalLog);
     });
@@ -22,7 +27,7 @@ context('Index page', () => {
       cy.get('[data-testid=category-card]')
         .eq(0)
         .click();
-      
+
       cy.get('[data-testid=search-results-header]').should('contain', 'First category');
 
       cy.get('[data-testid=category-card]')
@@ -134,6 +139,46 @@ context('Index page', () => {
         .and('contain', 'https://www.sample.org.uk')
         .and('contain', 'Online referral')
         .and('contain', 'referal.form.com');
+    });
+  });
+
+  describe('Search', () => {
+    it('shows all resources if the search input is empty', () => {
+      cy.get('[data-testid="keyword-search-button"]').click();
+
+      cy.get('[data-testid="search-results-header"]').should('contain', '7 results');
+    });
+
+    it('shows singular text if only 1 result returned', () => {
+      cy.get('[data-testid="keyword-search"]').type('abc mental health');
+      cy.get('[data-testid="keyword-search-button"]').click();
+
+      cy.get('[data-testid="search-results-header"]').should('contain', '1 result');
+      cy.get('[data-testid="search-results-header"]').should('not.contain', '1 results');
+    });
+
+    it('shows plural text if no results', () => {
+      cy.get('[data-testid="keyword-search"]').type('sdjkfhdjksfhdjsfhjdksf');
+      cy.get('[data-testid="keyword-search-button"]').click();
+
+      cy.get('[data-testid="search-results-header"]').should('contain', '0 results');
+    });
+
+    it('press enter when focus is in input will also search', () => {
+      cy.get('[data-testid="keyword-search"]').type('kingsman {enter}');
+      cy.get('[data-testid="search-results-header"]').should('contain', '1 result');
+    });
+
+    it('returns only services containing search term', () => {
+      cy.get('[data-testid="keyword-search"]').type('abc');
+      cy.get('[data-testid="keyword-search-button"]').click();
+
+      cy.get('[data-testid="search-results-container"]')
+        .find('[data-testid="resource-card-tags"]')
+        .should('have.length', 1);
+
+      cy.get('[data-testid="resource-card-tags"]').should('contain', 'Magic');
+      cy.get('[data-testid="resource-card-tags"]').should('contain', 'First category');
     });
   });
 });
