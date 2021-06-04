@@ -60,6 +60,8 @@ const Services = ({
     const searchResults = getSearchResults(searchTerm, categorisedResources);
     const newFilteredResources = flattenSearchResults(searchResults);
 
+    newFilteredResources.resources.sort((a, b) => b.weight - a.weight);
+
     setFilteredResources(newFilteredResources);
     sendDataToAnalytics({
       action: getUserGroup(referrerData['user-groups']),
