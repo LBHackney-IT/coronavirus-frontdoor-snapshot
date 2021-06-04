@@ -180,5 +180,16 @@ context('Index page', () => {
       cy.get('[data-testid="resource-card-tags"]').should('contain', 'Magic');
       cy.get('[data-testid="resource-card-tags"]').should('contain', 'First category');
     });
+
+    it('returns services ordered by full match then individual word match', () => {
+      const searchTerm = 'Second service';
+      cy.get('[data-testid="keyword-search"]').type(searchTerm);
+      cy.get('[data-testid="keyword-search-button"]').click();
+
+      cy.get('[data-testid="search-results-container"]')
+        .find('[data-testid="resource-card-header"]')
+        .first()
+        .should('contain', searchTerm);
+    });
   });
 });
