@@ -191,5 +191,16 @@ context('Index page', () => {
         .first()
         .should('contain', searchTerm);
     });
+
+    it('returns services matched on a synonym', () => {
+      const searchTerm = 'testsynonym';
+      cy.get('[data-testid="keyword-search"]').type(searchTerm);
+      cy.get('[data-testid="keyword-search-button"]').click();
+
+      cy.get('[data-testid="search-results-container"]')
+        .find('[data-testid="resource-card-header"]')
+        .first()
+        .should('contain', 'Second service');
+    });
   });
 });
