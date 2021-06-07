@@ -1,6 +1,5 @@
 import css from './index.module.scss';
 import notificationCss from '../../notification-messages.module.scss';
-import SummaryList from 'components/Form/SummaryList';
 import { useState } from 'react';
 
 const HIDDEN_TAGS = ['Delivery', 'Collection', 'Food'];
@@ -103,9 +102,49 @@ const ResourceCard = ({
         {councilTagsElement}
       </div>
       <div>
-        <h3 className={`${css['inline-header']}`} data-testid="resource-card-header">
-          {name}
-        </h3>
+        <div className={`govuk-grid-row`}>
+          <div className={`govuk-grid-column-two-thirds`}>
+            <h3 className={`${css['inline-header']}`} data-testid="resource-card-header">
+              {websites?.length > 0 ? (
+                <a
+                  key={`website-link-${websites[0]}`}
+                  href={websites[0]}
+                  target="_blank"
+                  rel="noopener noreferrer">
+                  {name}
+                </a>
+              ) : (
+                { name }
+              )}
+            </h3>
+            {demographic?.length && <p>This is for {demographic}</p>}
+          </div>
+
+          <div className={`govuk-grid-column-one-third`}>
+            {telephone?.length > 0 && (
+              <>
+                <h4>{telephone}</h4>
+              </>
+            )}
+
+            {email?.includes('@') && (
+              <>
+                <a href={`mailto:${email}`}>{email}</a>
+                <br />
+              </>
+            )}
+
+            {address?.length > 0 && (
+              <>
+                {address}
+                <br />
+              </>
+            )}
+          </div>
+        </div>
+
+        {serviceDescription?.length > 0 && <p>{serviceDescription}</p>}
+        {description?.length > 0 && <p>{description}</p>}
 
         <div className={`govuk-checkboxes__item ${css['inline-header']}`}>
           <input
@@ -134,24 +173,6 @@ const ResourceCard = ({
           </label>
         </div>
       </div>
-      <>
-        <SummaryList
-          name={['resourceInfo']}
-          entries={{
-            Distance: distance && distance < 100 ? distance + ' miles' : null,
-            Distribution: distributionElement,
-            Telephone: telephone,
-            Email: email,
-            Description: serviceDescription,
-            "Who's this for?": demographic,
-            'Relevant support': description,
-            Address: address,
-            Website: websiteElement,
-            'Online referral': referralWebsite
-          }}
-          customStyle="small"
-        />
-      </>
       {referralContact?.length > 0 && (
         <details
           className="govuk-details"
