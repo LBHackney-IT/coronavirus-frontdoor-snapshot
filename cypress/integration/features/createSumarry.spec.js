@@ -53,7 +53,7 @@ context('Create summary', () => {
 
     cy.get('#support-summary-note').should(
       'have.value',
-      'Hi Luna Kitty,\n' +
+      'If you wish to reply to this email please respond to referrer at \n  \n  Hi Luna Kitty,\n' +
         '\n' +
         'We discussed the following services in our conversation today:\n' +
         '    1. First service\n' +
@@ -98,7 +98,7 @@ context('Create summary', () => {
 
     cy.get('#support-summary-note').should(
       'have.value',
-      'Hi Luna Kitty,\n' +
+      'If you wish to reply to this email please respond to Tina Belcher at tina@bburgers.com\n  \n  Hi Luna Kitty,\n' +
         '\n' +
         'We discussed the following services in our conversation today:\n' +
         '    1. First service\n' +
