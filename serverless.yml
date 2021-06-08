@@ -180,6 +180,15 @@ resources:
                 HTTPPort: 80
                 HTTPSPort: 443
                 OriginProtocolPolicy: https-only
+    ApiMetricFilter:
+      Type: AWS::Logs::MetricFilter
+      Properties:
+        FilterPattern: 'Error'
+        LogGroupName: '/aws/lambda/${self:service}-${self:provider.stage}'
+        MetricTransformations:
+          - MetricName: errors-${self:custom.stage}
+            MetricNamespace: ErrorLogs
+            MetricValue: '1'
 
 custom:
   authorizer:
