@@ -186,7 +186,7 @@ resources:
         FilterPattern: 'Error'
         LogGroupName: '/aws/lambda/${self:service}-${self:provider.stage}'
         MetricTransformations:
-          - MetricName: errors-${self:custom.stage}
+          - MetricName: 'errors-${self:provider.stage}'
             MetricNamespace: ErrorLogs
             MetricValue: '1'
 
