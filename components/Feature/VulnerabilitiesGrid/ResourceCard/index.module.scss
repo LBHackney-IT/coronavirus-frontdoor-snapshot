@@ -13,6 +13,36 @@
     margin: 1em 0 0.5em 0;
     font-size: 0.9em;
   }
+
+  .header-container {
+      h3 {
+        margin: 0;
+        width: 100%;
+      }
+
+      span {
+        color: #525a5b;
+        font-size: 13px;
+      }
+  }
+
+  .contact-container {
+    text-align: right;
+
+    h4 {
+      margin: 0;
+    }
+  }
+
+  .refer-button {
+    min-width: 130px;
+    float: right;
+  }
+
+  .clear-both {
+    clear: both;
+  }
+
   .tags__container {
     margin-bottom: 10px;
   }
@@ -76,9 +106,4 @@
 }
 .error-message {
   background-color: #f4ccccff !important;
-}
-
-.inline-header {
-  display: inline-block;
-  margin-right: 10px;
 }
