@@ -167,7 +167,7 @@ const ResourceCard = ({
             </div>
           </div>
           <div className={`govuk-grid-column-one-half`}>
-            {referralContact?.length > 0 && (
+            {referralContact?.length > 0 ? (
               <span id={`referral-${id}-${categoryId}-details`} name="refer-details">
                 <button
                   id={`referral-${id}-${categoryId}`}
@@ -526,6 +526,18 @@ const ResourceCard = ({
                     </div>
                   )}
               </span>
+            ) : (
+              referralWebsite.length > 0 &&
+              (referralWebsite.startsWith('http') ? (
+                <a href={referralWebsite} target="_blank" className={css['refer-link']}>
+                  Refer via external website
+                </a>
+              ) : (
+                <span className={css['refer-text']}>
+                  <h4>Referral information</h4>
+                  <span>{referralWebsite}</span>
+                </span>
+              ))
             )}
           </div>
         </div>
