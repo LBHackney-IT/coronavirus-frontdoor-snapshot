@@ -168,7 +168,7 @@ const ResourceCard = ({
           </div>
           <div className={`govuk-grid-column-one-half`}>
             {referralContact?.length > 0 && (
-              <div id={`referral-${id}-${categoryId}-details`} name="refer-details">
+              <span id={`referral-${id}-${categoryId}-details`} name="refer-details">
                 <button
                   id={`referral-${id}-${categoryId}`}
                   className={`govuk-button ${css['refer-button']}`}
@@ -240,7 +240,7 @@ const ResourceCard = ({
                         hidden
                       />
                       <div
-                        className={`govuk-form-group govuk-!-padding-bottom-2 ${
+                        className={`govuk-form-group govuk-!-padding-bottom-2 govuk-!-padding-top-4 ${
                           validationError[`referral-reason-${id}`] ? 'govuk-form-group--error' : ''
                         }`}>
                         <legend className="govuk-fieldset__legend govuk-fieldset__legend--s">
@@ -525,7 +525,7 @@ const ResourceCard = ({
                       </div>
                     </div>
                   )}
-              </div>
+              </span>
             )}
           </div>
         </div>

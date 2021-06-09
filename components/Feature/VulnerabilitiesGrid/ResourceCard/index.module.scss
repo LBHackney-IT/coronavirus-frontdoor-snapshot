@@ -33,11 +33,15 @@
       margin: 0;
       font-size: 1.1em;
     }
+
+    div {
+      margin: 4px 0;
+    }
   }
 
   .refer-button {
-    min-width: 130px;
     float: right;
+    margin-bottom: 0px;
   }
 
   .referral-form {
