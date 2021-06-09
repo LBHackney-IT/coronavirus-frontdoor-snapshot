@@ -6,7 +6,7 @@ import useConversation from 'lib/api/utils/useConversation';
 import css from '../notification-messages.module.scss';
 import styles from './index.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 const SupportSummary = ({
   referralSummary,
@@ -132,16 +132,16 @@ const SupportSummary = ({
               {signpostSummary.length > 0 &&
                 signpostSummary.map(signpost => (
                   <div className="govuk-!-margin-bottom-1">
-                    {signpost.name}
                     {toBeDeleted != signpost.name && (
                       <button
                         onClick={() => setToBeDeleted(signpost.name)}
                         className={styles['remove-button']}>
-                        <FontAwesomeIcon icon={faTimesCircle} color="red" />
+                        <FontAwesomeIcon icon={faTimes} color="red" />
                       </button>
                     )}
+                    {signpost.name}
                     {toBeDeleted == signpost.name && (
-                      <>
+                      <div>
                         <strong className={styles['remove-prompt']}>
                           Are you sure you wish to remove {signpost.name} from the summary?
                         </strong>
@@ -155,7 +155,7 @@ const SupportSummary = ({
                           className={`govuk-button ${styles['button']}`}>
                           Yes
                         </button>
-                      </>
+                      </div>
                     )}
                   </div>
                 ))}
