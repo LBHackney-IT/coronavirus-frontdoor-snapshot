@@ -31,6 +31,7 @@
 
     h4 {
       margin: 0;
+      font-size: 1.1em;
     }
   }
 
@@ -39,7 +40,7 @@
     float: right;
   }
 
-  .clear-both {
+  .referral-form {
     clear: both;
   }
 
@@ -78,6 +79,10 @@
         text-overflow: ellipsis;
       }
     }
+  }
+
+  .checkbox-label {
+    font-weight: bold;
   }
 
   details {

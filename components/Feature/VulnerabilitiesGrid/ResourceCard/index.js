@@ -124,7 +124,11 @@ const ResourceCard = ({
           <div className={`govuk-grid-column-one-third ${css['contact-container']}`}>
             {telephone?.length > 0 && <h4>{telephone}</h4>}
 
-            {email?.includes('@') && <div><a href={`mailto:${email}`}>{email}</a></div>}
+            {email?.includes('@') && (
+              <div>
+                <a href={`mailto:${email}`}>{email}</a>
+              </div>
+            )}
 
             {address?.length > 0 && <span>{address}</span>}
           </div>
@@ -156,7 +160,7 @@ const ResourceCard = ({
                 value={true}
               />
               <label
-                className="govuk-label govuk-checkboxes__label"
+                className={`govuk-label govuk-checkboxes__label ${css['checkbox-label']}`}
                 htmlFor={`add-to-summary-checkbox-${id}-${categoryId}`}>
                 Share service with a resident
               </label>
@@ -175,11 +179,10 @@ const ResourceCard = ({
                   }}>
                   Create Referral
                 </button>
-                <div className={`${css['clear-both']}`}></div>
                 {openReferralForm.id == id &&
                   openReferralForm.categoryName == categoryName &&
                   !referralCompletion[id] && (
-                    <div id={`referral-${id}-${categoryId}-form`}>
+                    <div id={`referral-${id}-${categoryId}-form`} className={css['referral-form']}>
                       <input
                         form="resident-details"
                         id={`service-name-${id}`}
