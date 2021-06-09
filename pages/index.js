@@ -93,6 +93,7 @@ const Index = ({ categorisedResources, initialReferral, token, errors, refererIn
         referralCompletion={referralCompletion}
         setReferralCompletion={setReferralCompletion}
         updateSignpostSummary={updateSignpostSummary}
+        signpostSummary={signpostSummary}
         referrerData={referrerData}
         setReferrerData={setReferrerData}
       />

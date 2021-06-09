@@ -36,6 +36,7 @@ const ResourceCard = ({
   setReferrerData,
   demographic,
   updateSignpostSummary,
+  signpostSummary,
   councilTags,
   ...others
 }) => {
@@ -126,6 +127,7 @@ const ResourceCard = ({
               });
             }}
             value={true}
+            checked={signpostSummary?.some(x => x.name == name)}
           />
           <label
             className="govuk-label govuk-checkboxes__label"
