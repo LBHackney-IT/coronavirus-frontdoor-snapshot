@@ -4,6 +4,9 @@ import Heading from 'components/Heading';
 import { useState } from 'react';
 import useConversation from 'lib/api/utils/useConversation';
 import css from '../notification-messages.module.scss';
+import styles from './index.module.scss';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 
 const SupportSummary = ({
   referralSummary,
@@ -14,13 +17,15 @@ const SupportSummary = ({
   setEmailBody,
   residentInfo,
   residentFormCallback,
-  token
+  token,
+  updateSignpostSummary
 }) => {
   const { createConversation } = useConversation({ token });
 
   const [hideForm, setHideForm] = useState(true);
   const [formErrorMsg, setFormErrorMsg] = useState(false);
   const [conversationCompletion, setConversationCompletion] = useState(null);
+  const [toBeDeleted, setToBeDeleted] = useState(null);
 
   const toggleDetail = e => {
     if (
@@ -126,7 +131,33 @@ const SupportSummary = ({
             <div className="govuk-!-margin-bottom-5">
               {signpostSummary.length > 0 &&
                 signpostSummary.map(signpost => (
-                  <div className="govuk-!-margin-bottom-1">{signpost.name}</div>
+                  <div className="govuk-!-margin-bottom-1">
+                    {signpost.name}
+                    {toBeDeleted != signpost.name && (
+                      <button
+                        onClick={() => setToBeDeleted(signpost.name)}
+                        className={styles['remove-button']}>
+                        <FontAwesomeIcon icon={faTimesCircle} color="red" />
+                      </button>
+                    )}
+                    {toBeDeleted == signpost.name && (
+                      <>
+                        <strong className={styles['remove-prompt']}>
+                          Are you sure you wish to remove {signpost.name} from the summary?
+                        </strong>
+                        <button
+                          className={`govuk-button govuk-button--secondary ${styles['button']}`}
+                          onClick={() => setToBeDeleted(null)}>
+                          No
+                        </button>
+                        <button
+                          onClick={() => updateSignpostSummary(signpost)}
+                          className={`govuk-button ${styles['button']}`}>
+                          Yes
+                        </button>
+                      </>
+                    )}
+                  </div>
                 ))}
             </div>
             <form id="summary-form" onSubmit={sendSummary}>

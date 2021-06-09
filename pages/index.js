@@ -100,6 +100,7 @@ const Index = ({ categorisedResources, initialReferral, token, errors, refererIn
         referralSummary={referralSummary}
         residentFormCallback={residentFormCallback}
         signpostSummary={signpostSummary}
+        updateSignpostSummary={updateSignpostSummary}
         referrerData={referrerData}
         setReferrerData={setReferrerData}
         residentInfo={residentInfo}
