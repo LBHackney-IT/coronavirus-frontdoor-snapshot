@@ -135,7 +135,8 @@ const SupportSummary = ({
                     {toBeDeleted != signpost.name && (
                       <button
                         onClick={() => setToBeDeleted(signpost.name)}
-                        className={styles['remove-button']}>
+                        className={styles['remove-button']}
+                        data-testid="remove-from-summary">
                         <FontAwesomeIcon icon={faTimes} color="red" />
                       </button>
                     )}
@@ -147,12 +148,14 @@ const SupportSummary = ({
                         </strong>
                         <button
                           className={`govuk-button govuk-button--secondary ${styles['button']}`}
-                          onClick={() => setToBeDeleted(null)}>
+                          onClick={() => setToBeDeleted(null)}
+                          data-testid="remove-from-summary-no">
                           No
                         </button>
                         <button
                           onClick={() => updateSignpostSummary(signpost)}
-                          className={`govuk-button ${styles['button']}`}>
+                          className={`govuk-button ${styles['button']}`}
+                          data-testid="remove-from-summary-yes">
                           Yes
                         </button>
                       </div>

@@ -138,6 +138,22 @@ context('Create summary', () => {
     cy.get('#summary-organisation').should('have.value', refererOrganisation);
   });
 
+  it('can cancel removal of services from summary', () => {
+    cy.get('[data-testid=remove-from-summary]')
+      .first()
+      .click();
+    cy.get('[data-testid=remove-from-summary-no]').click();
+    cy.get('#support-summary-note').should('contain', 'First service');
+  });
+
+  it('can remove services from summary', () => {
+    cy.get('[data-testid=remove-from-summary]')
+      .first()
+      .click();
+    cy.get('[data-testid=remove-from-summary-yes]').click();
+    cy.get('#support-summary-note').should('not.contain', 'First service');
+  });
+
   it('should display success message', () => {
     cy.intercept('/api/conversations', {
       status: 201,
