@@ -104,8 +104,8 @@ context('Index page', () => {
         .and('contain', 'some details')
         .and('contain', '101 Test Ln, Hackney');
 
-      cy.get('[data-testid=resource-ABC123] > [data-testid=resource-card-header]')
-        .find('a')
+      cy.get('[data-testid=resource-ABC123]')
+        .find('[data-testid=resource-card-header] > a')
         .first()
         .should('have.attr', 'href', 'https://sample.com/test_mental_health')
         .and('have.attr', 'target', '_blank');
@@ -127,11 +127,76 @@ context('Index page', () => {
         .and('contain', 'Help with first category from the first service')
         .and('contain', '404 error, not, found');
 
-      cy.get('[data-testid=resource-1] > [data-testid=resource-card-header]')
-        .find('a')
+      cy.get('[data-testid=resource-1]')
+        .find('[data-testid=resource-card-header] > a')
         .first()
         .should('have.attr', 'href', 'https://www.sample.org.uk')
         .and('have.attr', 'target', '_blank');
+    });
+
+    it('Displays only the Create Referral button if both an email and website exist in service data', () => {
+      cy.get('[data-testid=category-card]')
+        .eq(0)
+        .click();
+
+      cy.get('[data-testid=resource-abc]')
+        .eq(0)
+        .should('contain', 'Kingsman');
+
+      cy.get('[data-testid=resource-abc]')
+        .find('[data-testid=refer-button]')
+        .first()
+        .should('contain', 'Create Referral');
+
+      cy.get('[data-testid=resource-abc]')
+        .find('[data-testid=refer-link]')
+        .should('not.exist');
+
+      cy.get('[data-testid=resource-2]')
+        .find('[data-testid=refer-text]')
+        .should('not.exist');
+    });
+
+    it('Displays only the Referral Link if only a website exists in service data', () => {
+      cy.get('[data-testid=category-card]')
+        .eq(0)
+        .click();
+
+      cy.get('[data-testid=resource-2]')
+        .eq(0)
+        .should('contain', 'Second service');
+
+      cy.get('[data-testid=resource-2]')
+        .find('[data-testid=refer-text]')
+        .should('not.exist');
+
+      cy.get('[data-testid=resource-2]')
+        .find('[data-testid=refer-link]')
+        .first()
+        .should('have.attr', 'href', 'http://referal.form2.com')
+        .and('have.attr', 'target', '_blank');
+    });
+
+    it('Clicking Create Referral opens a form that will send to the correct email address', () => {
+      cy.get('[data-testid=category-card]')
+        .eq(0)
+        .click();
+
+      cy.get('[data-testid=resource-abc]')
+        .eq(0)
+        .should('contain', 'Kingsman');
+
+      cy.get('[data-testid=resource-abc]')
+        .find('[data-testid=refer-button]')
+        .click();
+
+      cy.get('[data-testid=resource-abc]')
+        .find('input[name="service-referral-email"]')
+        .should('have.attr', 'value', 'elena@madetech.com');
+
+      cy.get('[data-testid=resource-abc]')
+        .find('input[name="service-contact-email"]')
+        .should('have.attr', 'value', 'service@test.testy.com');
     });
   });
 

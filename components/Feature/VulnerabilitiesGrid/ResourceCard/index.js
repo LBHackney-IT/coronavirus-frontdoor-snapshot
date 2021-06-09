@@ -174,6 +174,7 @@ const ResourceCard = ({
                   className={`govuk-button ${css['refer-button']}`}
                   type="submit"
                   form="resident-details"
+                  data-testid="refer-button"
                   onClick={e => {
                     detailsClicked(e, `referral-${id}-${categoryId}-details`, id, categoryName);
                   }}>
@@ -527,13 +528,17 @@ const ResourceCard = ({
                   )}
               </span>
             ) : (
-              referralWebsite.length > 0 &&
+              referralWebsite?.length > 0 &&
               (referralWebsite.startsWith('http') ? (
-                <a href={referralWebsite} target="_blank" className={css['refer-link']}>
+                <a
+                  href={referralWebsite}
+                  target="_blank"
+                  data-testid="refer-link"
+                  className={css['refer-link']}>
                   Refer via external website
                 </a>
               ) : (
-                <span className={css['refer-text']}>
+                <span className={css['refer-text']} data-testid="refer-text">
                   <h4>Referral information</h4>
                   <span>{referralWebsite}</span>
                 </span>
