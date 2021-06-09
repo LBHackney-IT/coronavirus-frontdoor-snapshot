@@ -96,23 +96,19 @@ context('Index page', () => {
       cy.get('[data-testid=resource-ABC123]')
         .eq(0)
         .should('contain', 'ABC  mental health Test')
-        .and('contain', 'Telephone')
         .and('contain', '123456421')
-        .and('contain', 'Email')
         .and('contain', 'test@abc.testy.com')
-        .and('contain', 'Description')
         .and('contain', 'Description for ABC  mental health Test services')
-        .and('contain', "Who's this for?")
+        .and('contain', 'This is for')
         .and('contain', 'this is for you')
-        .and('contain', 'Relevant support')
         .and('contain', 'some details')
-        .and('contain', 'Address')
-        .and('contain', '101 Test Ln, Hackney')
-        .and('contain', 'Website')
-        .and('contain', 'https://sample.com/test_mental_health')
-        .and('contain', 'https://sample.com/test_mental_health_too')
-        .and('contain', 'Online referral')
-        .and('contain', 'https://www.test.abc.com');
+        .and('contain', '101 Test Ln, Hackney');
+
+      cy.get('[data-testid=resource-ABC123] > [data-testid=resource-card-header]')
+        .find('a')
+        .first()
+        .should('have.attr', 'href', 'https://sample.com/test_mental_health')
+        .and('have.attr', 'target', '_blank');
     });
 
     it('Displays the correct resource information for FSS resources', () => {
@@ -123,22 +119,19 @@ context('Index page', () => {
       cy.get('[data-testid=resource-1]')
         .eq(0)
         .should('contain', 'First service')
-        .and('contain', 'Telephone')
         .and('contain', '07000 0000000')
-        .and('contain', 'Email')
         .and('contain', 'help@gmail.com')
-        .and('contain', 'Description')
         .and('contain', 'First service description')
-        .and('contain', "Who's this for?")
+        .and('contain', 'This is for')
         .and('contain', 'Housing advice, Cultural')
-        .and('contain', 'Relevant support')
         .and('contain', 'Help with first category from the first service')
-        .and('contain', 'Address')
-        .and('contain', '404 error, not, found')
-        .and('contain', 'Website')
-        .and('contain', 'https://www.sample.org.uk')
-        .and('contain', 'Online referral')
-        .and('contain', 'referal.form.com');
+        .and('contain', '404 error, not, found');
+
+      cy.get('[data-testid=resource-1] > [data-testid=resource-card-header]')
+        .find('a')
+        .first()
+        .should('have.attr', 'href', 'https://www.sample.org.uk')
+        .and('have.attr', 'target', '_blank');
     });
   });
 
