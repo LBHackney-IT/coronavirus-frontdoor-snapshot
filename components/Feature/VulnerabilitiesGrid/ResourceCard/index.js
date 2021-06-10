@@ -1,8 +1,12 @@
 import css from './index.module.scss';
 import notificationCss from '../../notification-messages.module.scss';
 import { useState } from 'react';
-
-const HIDDEN_TAGS = ['Delivery', 'Collection', 'Food'];
+import { sendDataToAnalytics, getUserGroup } from 'lib/utils/analytics';
+import {
+  REFERRAL_OPEN,
+  REFERRAL_CLICK_WEBSITE,
+  SERVICE_CLICK_WEBSITE
+} from 'lib/utils/analyticsConstants';
 
 const ResourceCard = ({
   id,
@@ -39,34 +43,15 @@ const ResourceCard = ({
   ...others
 }) => {
   const [validationError, setValidationError] = useState({});
+  const [noteOpen, setNoteOpen] = useState(false);
 
   const trimLength = (s, length) => (s.length > length ? s.substring(0, length) + '...' : s);
 
-  const websiteElement =
-    websites &&
-    websites.filter(x => x).length > 0 &&
-    websites
-      .filter(x => x)
-      .map(website => (
-        <>
-          <a
-            key={`website-link-${website}`}
-            href={website}
-            target="_blank"
-            rel="noopener noreferrer">
-            {website}
-          </a>
-          <br />
-        </>
-      ));
-  const distributionElement = tags.filter(t => HIDDEN_TAGS.includes(t)).join(', ');
-  const tagsElement = tags
-    .filter(t => !HIDDEN_TAGS.includes(t))
-    .map(item => (
-      <span key={'tags-' + item} className={`${css.tags} tag-element`}>
-        {trimLength(item, 20)}
-      </span>
-    ));
+  const tagsElement = tags.map(item => (
+    <span key={'tags-' + item} className={`${css.tags} tag-element`}>
+      {trimLength(item, 20)}
+    </span>
+  ));
   const councilTagsElement = councilTags.map(item => (
     <span key={'tags-' + item} className={`${css.tags} tag-element ${css[`Council-tag`]}`}>
       {trimLength(item, 20)}
@@ -95,6 +80,10 @@ const ResourceCard = ({
     setValidationError({ [value]: true, ...validationError });
   };
 
+  const fullDescription = serviceDescription + ' ' + description;
+  const first = fullDescription?.substring(0, 250);
+  const second = fullDescription?.substring(250);
+
   return (
     <div className={`resource ${css.resource}`} {...others}>
       <div className={`${css.tags__container} card-header-tag`} data-testid="resource-card-tags">
@@ -111,6 +100,13 @@ const ResourceCard = ({
                   key={`website-link-${websites[0]}`}
                   href={websites[0]}
                   target="_blank"
+                  onClick={() => {
+                    sendDataToAnalytics({
+                      action: getUserGroup(referrerData['user-groups']),
+                      category: SERVICE_CLICK_WEBSITE,
+                      label: name
+                    });
+                  }}
                   rel="noopener noreferrer">
                   {name}
                 </a>
@@ -133,10 +129,27 @@ const ResourceCard = ({
             {address?.length > 0 && <span>{address}</span>}
           </div>
         </div>
-
-        {serviceDescription?.length > 0 && <p>{serviceDescription}</p>}
-        {description?.length > 0 && <p>{description}</p>}
-
+        {fullDescription && (
+          <p>
+            {first}
+            {second.length > 0 && !noteOpen ? (
+              <>
+                ...
+                <button onClick={() => setNoteOpen(true)} className={css['toggle-button']}>
+                  Show more
+                </button>
+              </>
+            ) : (
+              ''
+            )}
+            {noteOpen && second}
+            {noteOpen && (
+              <button onClick={() => setNoteOpen(false)} className={css['toggle-button']}>
+                Show less
+              </button>
+            )}
+          </p>
+        )}
         <div className={`govuk-grid-row`}>
           <div className={`govuk-grid-column-one-half`}>
             <div className={`govuk-checkboxes__item ${css['inline-header']}`}>
@@ -172,11 +185,15 @@ const ResourceCard = ({
                 <button
                   id={`referral-${id}-${categoryId}`}
                   className={`govuk-button ${css['refer-button']}`}
-                  type="submit"
-                  form="resident-details"
+                  type="button"
                   data-testid="refer-button"
                   onClick={e => {
                     detailsClicked(e, `referral-${id}-${categoryId}-details`, id, categoryName);
+                    sendDataToAnalytics({
+                      action: getUserGroup(referrerData['user-groups']),
+                      category: REFERRAL_OPEN,
+                      label: name
+                    });
                   }}>
                   Create Referral
                 </button>
@@ -533,6 +550,13 @@ const ResourceCard = ({
                 <a
                   href={referralWebsite}
                   target="_blank"
+                  onClick={() =>
+                    sendDataToAnalytics({
+                      action: getUserGroup(referrerData['user-groups']),
+                      category: REFERRAL_CLICK_WEBSITE,
+                      label: name
+                    })
+                  }
                   data-testid="refer-link"
                   className={css['refer-link']}>
                   Refer via external website

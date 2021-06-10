@@ -57,6 +57,16 @@
     clear: both;
   }
 
+  .toggle-button {
+    margin: 6px 0 0 0;
+    background: none;
+    border: none;
+    color: #00703c;
+    font-size: 1em;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+
   .tags__container {
     margin-bottom: 10px;
   }
