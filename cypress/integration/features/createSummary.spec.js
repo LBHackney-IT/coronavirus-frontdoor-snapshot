@@ -45,7 +45,11 @@ context('Create summary', () => {
       .eq(1)
       .click();
 
+    cy.get('[data-testid=added-to-summary-banner-1-2]').should('not.exist');
+
     cy.get('#add-to-summary-checkbox-1-2').click();
+
+    cy.get('[data-testid=added-to-summary-banner-1-2]').should('exist');
 
     cy.get('#summary-summary-form').click();
 

@@ -592,7 +592,9 @@ const ResourceCard = ({
         </div>
       )}
       {signpostSummary?.some(x => x.name == name) && (
-        <div className={`${css['success-message']}`}>
+        <div
+          className={`${css['success-message']}`}
+          data-testid={`added-to-summary-banner-${id}-${categoryId}`}>
           You have added a service to your sumary email{' '}
           <a className={`${css['summary-link']}`} href="#summary-header">
             view summary email
