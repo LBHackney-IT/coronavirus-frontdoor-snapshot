@@ -111,7 +111,7 @@ const ResourceCard = ({
                   {name}
                 </a>
               ) : (
-                { name }
+                name
               )}
             </h3>
             {demographic?.length > 0 && <span>This is for {demographic}</span>}
