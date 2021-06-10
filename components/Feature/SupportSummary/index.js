@@ -6,7 +6,7 @@ import useConversation from 'lib/api/utils/useConversation';
 import css from '../notification-messages.module.scss';
 import styles from './index.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 
 const SupportSummary = ({
   referralSummary,
@@ -133,14 +133,17 @@ const SupportSummary = ({
                 signpostSummary.map(signpost => (
                   <div className="govuk-!-margin-bottom-1">
                     {toBeDeleted != signpost.name && (
-                      <button
-                        onClick={() => setToBeDeleted(signpost.name)}
-                        className={styles['remove-button']}
-                        data-testid="remove-from-summary">
-                        <FontAwesomeIcon icon={faTimes} color="red" />
-                      </button>
+                      <>
+                        <button
+                          onClick={() => setToBeDeleted(signpost.name)}
+                          className={styles['remove-button']}
+                          disabled={toBeDeleted == signpost.name}
+                          data-testid="remove-from-summary">
+                          <FontAwesomeIcon icon={faTimesCircle} color="red" />
+                        </button>
+                        {signpost.name}
+                      </>
                     )}
-                    {signpost.name}
                     {toBeDeleted == signpost.name && (
                       <div>
                         <strong className={styles['remove-prompt']}>

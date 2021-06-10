@@ -2,17 +2,20 @@
   background: none;
   border: none;
   padding: 0;
-  color: red;
-  text-decoration: underline;
   cursor: pointer;
-  padding-right: 10px;
+  margin-right: 10px;
+  width: 35px;
+  height: 35px;
+  font-size: medium;
 }
+
 .button {
   margin: 0 0 0 10px;
-  padding: 2px;
-  font-size: small;
+  padding: 4px;
+  font-size: medium;
 }
 
 .remove-prompt {
-  font-size: small;
+  font-size: medium;
+  margin-left: 45px;
 }
