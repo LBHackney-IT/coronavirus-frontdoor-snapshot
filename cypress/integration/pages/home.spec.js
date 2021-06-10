@@ -96,23 +96,19 @@ context('Index page', () => {
       cy.get('[data-testid=resource-ABC123]')
         .eq(0)
         .should('contain', 'ABC  mental health Test')
-        .and('contain', 'Telephone')
         .and('contain', '123456421')
-        .and('contain', 'Email')
         .and('contain', 'test@abc.testy.com')
-        .and('contain', 'Description')
         .and('contain', 'Description for ABC  mental health Test services')
-        .and('contain', "Who's this for?")
+        .and('contain', 'This is for')
         .and('contain', 'this is for you')
-        .and('contain', 'Relevant support')
         .and('contain', 'some details')
-        .and('contain', 'Address')
-        .and('contain', '101 Test Ln, Hackney')
-        .and('contain', 'Website')
-        .and('contain', 'https://sample.com/test_mental_health')
-        .and('contain', 'https://sample.com/test_mental_health_too')
-        .and('contain', 'Online referral')
-        .and('contain', 'https://www.test.abc.com');
+        .and('contain', '101 Test Ln, Hackney');
+
+      cy.get('[data-testid=resource-ABC123]')
+        .find('[data-testid=resource-card-header] > a')
+        .first()
+        .should('have.attr', 'href', 'https://sample.com/test_mental_health')
+        .and('have.attr', 'target', '_blank');
     });
 
     it('Displays the correct resource information for FSS resources', () => {
@@ -123,22 +119,84 @@ context('Index page', () => {
       cy.get('[data-testid=resource-1]')
         .eq(0)
         .should('contain', 'First service')
-        .and('contain', 'Telephone')
         .and('contain', '07000 0000000')
-        .and('contain', 'Email')
         .and('contain', 'help@gmail.com')
-        .and('contain', 'Description')
         .and('contain', 'First service description')
-        .and('contain', "Who's this for?")
+        .and('contain', 'This is for')
         .and('contain', 'Housing advice, Cultural')
-        .and('contain', 'Relevant support')
         .and('contain', 'Help with first category from the first service')
-        .and('contain', 'Address')
-        .and('contain', '404 error, not, found')
-        .and('contain', 'Website')
-        .and('contain', 'https://www.sample.org.uk')
-        .and('contain', 'Online referral')
-        .and('contain', 'referal.form.com');
+        .and('contain', '404 error, not, found');
+
+      cy.get('[data-testid=resource-1]')
+        .find('[data-testid=resource-card-header] > a')
+        .first()
+        .should('have.attr', 'href', 'https://www.sample.org.uk')
+        .and('have.attr', 'target', '_blank');
+    });
+
+    it('Displays only the Create Referral button if both an email and website exist in service data', () => {
+      cy.get('[data-testid=category-card]')
+        .eq(0)
+        .click();
+
+      cy.get('[data-testid=resource-abc]')
+        .eq(0)
+        .should('contain', 'Kingsman');
+
+      cy.get('[data-testid=resource-abc]')
+        .find('[data-testid=refer-button]')
+        .first()
+        .should('contain', 'Create Referral');
+
+      cy.get('[data-testid=resource-abc]')
+        .find('[data-testid=refer-link]')
+        .should('not.exist');
+
+      cy.get('[data-testid=resource-2]')
+        .find('[data-testid=refer-text]')
+        .should('not.exist');
+    });
+
+    it('Displays only the Referral Link if only a website exists in service data', () => {
+      cy.get('[data-testid=category-card]')
+        .eq(0)
+        .click();
+
+      cy.get('[data-testid=resource-2]')
+        .eq(0)
+        .should('contain', 'Second service');
+
+      cy.get('[data-testid=resource-2]')
+        .find('[data-testid=refer-text]')
+        .should('not.exist');
+
+      cy.get('[data-testid=resource-2]')
+        .find('[data-testid=refer-link]')
+        .first()
+        .should('have.attr', 'href', 'http://referal.form2.com')
+        .and('have.attr', 'target', '_blank');
+    });
+
+    it('Clicking Create Referral opens a form that will send to the correct email address', () => {
+      cy.get('[data-testid=category-card]')
+        .eq(0)
+        .click();
+
+      cy.get('[data-testid=resource-abc]')
+        .eq(0)
+        .should('contain', 'Kingsman');
+
+      cy.get('[data-testid=resource-abc]')
+        .find('[data-testid=refer-button]')
+        .click();
+
+      cy.get('[data-testid=resource-abc]')
+        .find('input[name="service-referral-email"]')
+        .should('have.attr', 'value', 'elena@madetech.com');
+
+      cy.get('[data-testid=resource-abc]')
+        .find('input[name="service-contact-email"]')
+        .should('have.attr', 'value', 'service@test.testy.com');
     });
   });
 

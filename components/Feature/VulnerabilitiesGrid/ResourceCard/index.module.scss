@@ -2,10 +2,8 @@
 
 .resource {
   margin-bottom: 0.5em;
-  width: 45%;
+  width: 95%;
   display: inline-table;
-  margin-right: 30px;
-  margin-bottom: 40px;
 
   h3 {
     margin-top: 0;
@@ -15,6 +13,60 @@
     margin: 1em 0 0.5em 0;
     font-size: 0.9em;
   }
+
+  .header-container {
+      h3 {
+        margin: 0;
+        width: 100%;
+      }
+
+      span {
+        color: #525a5b;
+        font-size: 13px;
+      }
+  }
+
+  .contact-container {
+    text-align: right;
+
+    h4 {
+      margin: 0;
+      font-size: 1.1em;
+    }
+
+    div {
+      margin: 4px 0;
+    }
+  }
+
+  .refer-button {
+    float: right;
+    margin-bottom: 0px;
+  }
+
+  .refer-link {
+    float: right;
+    margin-top: 9px;
+  }
+
+  .refer-text {
+    float: right;
+  }
+
+  .referral-form {
+    clear: both;
+  }
+
+  .toggle-button {
+    margin: 6px 0 0 0;
+    background: none;
+    border: none;
+    color: #00703c;
+    font-size: 1em;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+
   .tags__container {
     margin-bottom: 10px;
   }
@@ -52,6 +104,10 @@
     }
   }
 
+  .checkbox-label {
+    font-weight: bold;
+  }
+
   details {
     font-size: 1em;
 
@@ -78,9 +134,4 @@
 }
 .error-message {
   background-color: #f4ccccff !important;
-}
-
-.inline-header {
-  display: inline-block;
-  margin-right: 10px;
 }

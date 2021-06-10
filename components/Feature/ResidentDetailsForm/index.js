@@ -1,6 +1,8 @@
 import React from 'react';
 import { useState } from 'react';
 import useReferral from 'lib/api/utils/useReferral';
+import { sendDataToAnalytics, getUserGroup } from 'lib/utils/analytics';
+import { REFERRAL_SUBMIT_SUCCESS, REFERRAL_SUBMIT_INVALID } from 'lib/utils/analyticsConstants';
 
 const ResidentDetailsForm = ({
   residentInfoCallback,
@@ -12,7 +14,8 @@ const ResidentDetailsForm = ({
   referralSummary,
   setReferralSummary,
   updateEmailBody,
-  setEmailBody
+  setEmailBody,
+  referrerData
 }) => {
   const { createReferral } = useReferral({ token });
   const [residentInfo, setResidentInfo] = useState({
@@ -78,6 +81,7 @@ const ResidentDetailsForm = ({
       sendResidentEmail: e.target['resident-referral-email'].checked
     };
     const result = await createReferral(referral);
+
     if (result.id) {
       setReferralCompletion({ ...referralCompletion, [serviceId]: result });
       const newReferralSummary = referralSummary.concat([
@@ -94,6 +98,11 @@ const ResidentDetailsForm = ({
       ]);
       setReferralSummary(newReferralSummary);
       setEmailBody(updateEmailBody(undefined, newReferralSummary));
+      sendDataToAnalytics({
+        action: getUserGroup(referrerData['user-groups']),
+        category: REFERRAL_SUBMIT_SUCCESS,
+        label: serviceName
+      });
     }
   };
   return (
@@ -106,7 +115,16 @@ const ResidentDetailsForm = ({
       </details>
 
       {
-        <form id="resident-details" onSubmit={onSubmitForm} hidden={!showResidentForm}>
+        <form
+          id="resident-details"
+          onInvalid={() => {
+            sendDataToAnalytics({
+              action: getUserGroup(referrerData['user-groups']),
+              category: REFERRAL_SUBMIT_INVALID
+            });
+          }}
+          onSubmit={onSubmitForm}
+          hidden={!showResidentForm}>
           <div
             className={`govuk-form-group ${
               validationError.firstName ? 'govuk-form-group--error' : ''
