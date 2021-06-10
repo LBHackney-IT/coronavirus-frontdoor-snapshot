@@ -186,7 +186,12 @@ const ResourceCard = ({
               <span id={`referral-${id}-${categoryId}-details`} name="refer-details">
                 <button
                   id={`referral-${id}-${categoryId}`}
-                  className={`govuk-button ${css['refer-button']}`}
+                  className={`govuk-button ${css['refer-button']} 
+                  ${
+                    openReferralForm.id == id && openReferralForm.categoryName == categoryName
+                      ? 'govuk-button--secondary'
+                      : ''
+                  } `}
                   type="button"
                   data-testid="refer-button"
                   onClick={e => {
@@ -197,7 +202,9 @@ const ResourceCard = ({
                       label: name
                     });
                   }}>
-                  Create Referral
+                  {openReferralForm.id == id && openReferralForm.categoryName == categoryName
+                    ? 'Cancel'
+                    : 'Create Referral'}
                 </button>
                 {openReferralForm.id == id &&
                   openReferralForm.categoryName == categoryName &&
@@ -595,9 +602,9 @@ const ResourceCard = ({
         <div
           className={`${css['success-message']}`}
           data-testid={`added-to-summary-banner-${id}-${categoryId}`}>
-          You have added a service to your sumary email{' '}
+          You have added a service to your sumary email
           <a className={`${css['summary-link']}`} href="#summary-header">
-            view summary email
+            View summary email
           </a>
         </div>
       )}
