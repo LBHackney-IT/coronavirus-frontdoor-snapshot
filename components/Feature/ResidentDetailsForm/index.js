@@ -117,8 +117,7 @@ const ResidentDetailsForm = ({
       {
         <form
           id="resident-details"
-          onInvalid={e => {
-            console.log(e);
+          onInvalid={() => {
             sendDataToAnalytics({
               action: getUserGroup(referrerData['user-groups']),
               category: REFERRAL_SUBMIT_INVALID
