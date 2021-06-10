@@ -172,6 +172,7 @@ const ResourceCard = ({
                   });
                 }}
                 value={true}
+                checked={signpostSummary?.some(x => x.name == name)}
               />
               <label
                 className={`govuk-label govuk-checkboxes__label ${css['checkbox-label']}`}
@@ -588,6 +589,14 @@ const ResourceCard = ({
               Successfully submitted referral
             </div>
           )}
+        </div>
+      )}
+      {signpostSummary?.some(x => x.name == name) && (
+        <div className={`${css['success-message']}`}>
+          You have added a service to your sumary email{' '}
+          <a className={`${css['summary-link']}`} href="#summary-header">
+            view summary email
+          </a>
         </div>
       )}
       {snapshot && (

@@ -71,6 +71,7 @@
     "react-test-renderer": "16.13.1",
     "sass": "^1.26.5",
     "serverless": "^1.70.1",
+    "serverless-plugin-metric": "^1.2.2",
     "start-server-and-test": "^1.11.0"
   }
 }

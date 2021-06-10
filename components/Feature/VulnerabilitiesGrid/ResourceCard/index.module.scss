@@ -15,15 +15,15 @@
   }
 
   .header-container {
-      h3 {
-        margin: 0;
-        width: 100%;
-      }
+    h3 {
+      margin: 0;
+      width: 100%;
+    }
 
-      span {
-        color: #525a5b;
-        font-size: 13px;
-      }
+    span {
+      color: #525a5b;
+      font-size: 13px;
+    }
   }
 
   .contact-container {
@@ -130,8 +130,19 @@
   padding: 16px 16px 16px 16px;
 }
 .success-message {
-  background-color: #ddffdd !important;
+  background-color: #dbedc2 !important;
 }
 .error-message {
   background-color: #f4ccccff !important;
+}
+
+.success-message {
+  background-color: #dbedc2 !important;
+  border-left: 2px solid;
+  border-color: #8aa367;
+  margin-top: 16px;
+}
+
+.summary-link {
+  float: right;
 }
