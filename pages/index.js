@@ -77,6 +77,7 @@ const Index = ({ categorisedResources, initialReferral, token, errors, refererIn
         setReferralSummary={setReferralSummary}
         updateEmailBody={updateEmailBody}
         setEmailBody={setEmailBody}
+        referrerData={referrerData}
       />
       <div className="govuk-!-margin-top-9">
         {errors.map((err, index) => (
