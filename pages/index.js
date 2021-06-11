@@ -97,7 +97,6 @@ const Index = ({ categorisedResources, initialReferral, token, errors, refererIn
         signpostSummary={signpostSummary}
         referrerData={referrerData}
         setReferrerData={setReferrerData}
-        signpostSummary={signpostSummary}
       />
       <SupportSummary
         referralSummary={referralSummary}
