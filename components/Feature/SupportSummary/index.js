@@ -7,6 +7,12 @@ import css from '../notification-messages.module.scss';
 import styles from './index.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import { sendDataToAnalytics, getUserGroup } from 'lib/utils/analytics';
+import {
+  SEND_SUMMARY_SUCCESS,
+  SEND_SUMMARY_INVALID_COUNT,
+  SEND_SUMMARY_SUCCESS_COUNT
+} from 'lib/utils/analyticsConstants';
 
 const SupportSummary = ({
   referralSummary,
@@ -76,8 +82,30 @@ const SupportSummary = ({
     if (result.id) {
       setConversationCompletion(result);
       setHideForm(true);
+      sendDataToAnalytics({
+        action: getUserGroup(referrerData['user-groups']),
+        category: SEND_SUMMARY_SUCCESS_COUNT,
+        label: signpostSummary.length
+      });
+
+      signpostSummary.forEach(signpost => {
+        sendDataToAnalytics({
+          action: getUserGroup(referrerData['user-groups']),
+          category: SEND_SUMMARY_SUCCESS,
+          label: signpost.name
+        });
+      });
     }
   };
+
+  const onInvalidAnalytics = () => {
+    sendDataToAnalytics({
+      action: getUserGroup(referrerData['user-groups']),
+      category: SEND_SUMMARY_INVALID_COUNT,
+      label: signpostSummary.length
+    });
+  };
+
   return (
     <>
       <Heading as="h2" id="summary-header">
@@ -166,7 +194,7 @@ const SupportSummary = ({
                   </div>
                 ))}
             </div>
-            <form id="summary-form" onSubmit={sendSummary}>
+            <form id="summary-form" onInvalid={() => onInvalidAnalytics()} onSubmit={sendSummary}>
               <TextArea
                 value={emailBody}
                 label="Add a note for the resident"

@@ -5,7 +5,8 @@ import { sendDataToAnalytics, getUserGroup } from 'lib/utils/analytics';
 import {
   REFERRAL_OPEN,
   REFERRAL_CLICK_WEBSITE,
-  SERVICE_CLICK_WEBSITE
+  SERVICE_CLICK_WEBSITE,
+  VIEW_SUMMARY_EMAIL_CLICKED
 } from 'lib/utils/analyticsConstants';
 
 const ResourceCard = ({
@@ -603,7 +604,16 @@ const ResourceCard = ({
           className={`${css['success-message']}`}
           data-testid={`added-to-summary-banner-${id}-${categoryId}`}>
           You have added a service to your sumary email
-          <a className={`${css['summary-link']}`} href="#summary-header">
+          <a
+            className={`${css['summary-link']}`}
+            href="#summary-header"
+            onClick={() =>
+              sendDataToAnalytics({
+                action: getUserGroup(referrerData['user-groups']),
+                category: VIEW_SUMMARY_EMAIL_CLICKED,
+                label: name
+              })
+            }>
             View summary email
           </a>
         </div>
