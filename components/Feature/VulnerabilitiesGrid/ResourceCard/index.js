@@ -53,7 +53,6 @@ const ResourceCard = ({
   setEmailBody,
   ...others
 }) => {
-  const [validationError, setValidationError] = useState({});
   const [noteOpen, setNoteOpen] = useState(false);
 
   const trimLength = (s, length) => (s.length > length ? s.substring(0, length) + '...' : s);
@@ -81,15 +80,6 @@ const ResourceCard = ({
       notes: notes
     });
   };
-
-  // const onInvalidField = value => {
-  //   Object.values(validationError).every(k => {
-  //     if (value != k) {
-  //       validationError[k] = false;
-  //     }
-  //   });
-  //   setValidationError({ [value]: true, ...validationError });
-  // };
 
   const fullDescription = serviceDescription + ' ' + description;
   const first = fullDescription?.substring(0, 250);
@@ -222,8 +212,6 @@ const ResourceCard = ({
                     <div id={`referral-${id}-${categoryId}-form`} className={css['referral-form']}>
                       <ReferralForm
                         residentInfoCallback={residentInfoCallback}
-                        showResidentForm={showResidentForm}
-                        setShowResidentForm={setShowResidentForm}
                         token={token}
                         setReferralCompletion={setReferralCompletion}
                         referralCompletion={referralCompletion}
@@ -238,8 +226,6 @@ const ResourceCard = ({
                         description={description}
                         websites={websites}
                         address={address}
-                        postcode={postcode}
-                        tags={tags}
                         telephone={telephone}
                         referralContact={referralContact}
                         referralData={referralData}

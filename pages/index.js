@@ -94,21 +94,13 @@ const Index = ({ categorisedResources, initialReferral, token, errors, refererIn
       />
       <SupportSummary
         referralSummary={referralSummary}
-        residentFormCallback={residentFormCallback}
         signpostSummary={signpostSummary}
         updateSignpostSummary={updateSignpostSummary}
         referrerData={referrerData}
         setReferrerData={setReferrerData}
-        residentInfo={residentInfo}
         emailBody={emailBody}
         setEmailBody={setEmailBody}
         token={token}
-        residentInfoCallback={residentInfoCallback}
-        showResidentForm={showResidentForm}
-        setShowResidentForm={setShowResidentForm}
-        setReferralSummary={setReferralSummary}
-        updateEmailBody={updateEmailBody}
-        setReferralCompletion={setReferralCompletion}
       />
     </>
   );

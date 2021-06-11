@@ -21,7 +21,6 @@ const SupportSummary = ({
   setReferrerData,
   emailBody,
   setEmailBody,
-  residentInfo,
   token,
   updateSignpostSummary
 }) => {
@@ -54,19 +53,19 @@ const SupportSummary = ({
     e.preventDefault();
     e.target['submit-summary'].setAttribute('disabled', true);
     const summary = {
-      firstName: residentInfo.firstName,
-      lastName: residentInfo.lastName,
-      phone: residentInfo.phone,
-      email: residentInfo.email,
-      address: residentInfo.address,
-      postcode: residentInfo.postcode,
+      firstName: e.target.firstName.value,
+      lastName: e.target.lastName.value,
+      phone: e.target.phone.value,
+      email: e.target.email.value,
+      address: e.target.address.value,
+      postcode: e.target.postcode.value,
       userOrganisation: e.target['summary-organisation'].value,
       userName: e.target['summary-name'].value,
       userEmail: e.target['summary-email'].value,
       dateOfBirth: {
-        year: residentInfo['date-of-birth-year'],
-        month: residentInfo['date-of-birth-month'],
-        day: residentInfo['date-of-birth-day']
+        year: e.target['date-of-birth-year'].value,
+        month: e.target['date-of-birth-month'].value,
+        day: e.target['date-of-birth-day'].value
       },
       discussedServices: signpostSummary.concat(referralSummary),
       signPostingMessage: e.target['support-summary-note'].value
