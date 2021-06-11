@@ -13,7 +13,8 @@ const Services = ({
   setReferralCompletion,
   updateSignpostSummary,
   referrerData,
-  setReferrerData
+  setReferrerData,
+  signpostSummary
 }) => {
   const [openReferralForm, setOpenReferralForm] = useState({});
   const [referralData, setReferralData] = useState({});
@@ -143,6 +144,7 @@ const Services = ({
                 referrerData={referrerData}
                 setReferrerData={setReferrerData}
                 updateSignpostSummary={updateSignpostSummary}
+                signpostSummary={signpostSummary}
               />
             ))}
           </div>

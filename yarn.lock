@@ -10380,6 +10380,11 @@ serverless-http@^2.4.1:
   optionalDependencies:
     "@types/aws-lambda" "^8.10.19"
 
+serverless-plugin-metric@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/serverless-plugin-metric/-/serverless-plugin-metric-1.2.2.tgz#c546bea629061a5cd73f7c81d6c4e1aea6c8d1b6"
+  integrity sha512-Wd19bclaFMaEtOtKv37+6XFVVNC9GkjXOWSYM5nebZRqSfK9Iyr4qOfatJmeyUvH4YVT4ZH3n53GzZwRtkfwPQ==
+
 serverless@^1.70.1:
   version "1.79.0"
   resolved "https://registry.yarnpkg.com/serverless/-/serverless-1.79.0.tgz#5bbe9bb3651c6b673b5b688f7bb09e9c9c9b31be"

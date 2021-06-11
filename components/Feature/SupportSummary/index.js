@@ -4,6 +4,15 @@ import Heading from 'components/Heading';
 import { useState } from 'react';
 import useConversation from 'lib/api/utils/useConversation';
 import css from '../notification-messages.module.scss';
+import styles from './index.module.scss';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import { sendDataToAnalytics, getUserGroup } from 'lib/utils/analytics';
+import {
+  SEND_SUMMARY_SUCCESS,
+  SEND_SUMMARY_INVALID_COUNT,
+  SEND_SUMMARY_SUCCESS_COUNT
+} from 'lib/utils/analyticsConstants';
 
 const SupportSummary = ({
   referralSummary,
@@ -14,13 +23,15 @@ const SupportSummary = ({
   setEmailBody,
   residentInfo,
   residentFormCallback,
-  token
+  token,
+  updateSignpostSummary
 }) => {
   const { createConversation } = useConversation({ token });
 
   const [hideForm, setHideForm] = useState(true);
   const [formErrorMsg, setFormErrorMsg] = useState(false);
   const [conversationCompletion, setConversationCompletion] = useState(null);
+  const [toBeDeleted, setToBeDeleted] = useState(null);
 
   const toggleDetail = e => {
     if (
@@ -71,8 +82,30 @@ const SupportSummary = ({
     if (result.id) {
       setConversationCompletion(result);
       setHideForm(true);
+      sendDataToAnalytics({
+        action: getUserGroup(referrerData['user-groups']),
+        category: SEND_SUMMARY_SUCCESS_COUNT,
+        label: signpostSummary.length
+      });
+
+      signpostSummary.forEach(signpost => {
+        sendDataToAnalytics({
+          action: getUserGroup(referrerData['user-groups']),
+          category: SEND_SUMMARY_SUCCESS,
+          label: signpost.name
+        });
+      });
     }
   };
+
+  const onInvalidAnalytics = () => {
+    sendDataToAnalytics({
+      action: getUserGroup(referrerData['user-groups']),
+      category: SEND_SUMMARY_INVALID_COUNT,
+      label: signpostSummary.length
+    });
+  };
+
   return (
     <>
       <Heading as="h2" id="summary-header">
@@ -126,10 +159,42 @@ const SupportSummary = ({
             <div className="govuk-!-margin-bottom-5">
               {signpostSummary.length > 0 &&
                 signpostSummary.map(signpost => (
-                  <div className="govuk-!-margin-bottom-1">{signpost.name}</div>
+                  <div className="govuk-!-margin-bottom-1">
+                    {toBeDeleted != signpost.name && (
+                      <>
+                        <button
+                          onClick={() => setToBeDeleted(signpost.name)}
+                          className={styles['remove-button']}
+                          disabled={toBeDeleted == signpost.name}
+                          data-testid="remove-from-summary">
+                          <FontAwesomeIcon icon={faTimesCircle} color="red" />
+                        </button>
+                        {signpost.name}
+                      </>
+                    )}
+                    {toBeDeleted == signpost.name && (
+                      <div>
+                        <strong className={styles['remove-prompt']}>
+                          Are you sure you wish to remove {signpost.name} from the summary?
+                        </strong>
+                        <button
+                          className={`govuk-button govuk-button--secondary ${styles['button']}`}
+                          onClick={() => setToBeDeleted(null)}
+                          data-testid="remove-from-summary-no">
+                          No
+                        </button>
+                        <button
+                          onClick={() => updateSignpostSummary(signpost)}
+                          className={`govuk-button ${styles['button']}`}
+                          data-testid="remove-from-summary-yes">
+                          Yes
+                        </button>
+                      </div>
+                    )}
+                  </div>
                 ))}
             </div>
-            <form id="summary-form" onSubmit={sendSummary}>
+            <form id="summary-form" onInvalid={() => onInvalidAnalytics()} onSubmit={sendSummary}>
               <TextArea
                 value={emailBody}
                 label="Add a note for the resident"

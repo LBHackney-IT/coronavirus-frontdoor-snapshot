@@ -45,7 +45,11 @@ context('Create summary', () => {
       .eq(1)
       .click();
 
+    cy.get('[data-testid=added-to-summary-banner-1-2]').should('not.exist');
+
     cy.get('#add-to-summary-checkbox-1-2').click();
+
+    cy.get('[data-testid=added-to-summary-banner-1-2]').should('exist');
 
     cy.get('#summary-summary-form').click();
 
@@ -57,14 +61,15 @@ context('Create summary', () => {
         '\n' +
         'We discussed the following services in our conversation today:\n' +
         '    1. First service\n' +
-        '    07000 0000000 \n' +
+        '    07000 0000000 ' +
         '\n' +
-        '    help@gmail.com \n' +
+        '    help@gmail.com ' +
         '\n' +
-        '    404 error, not, found \n' +
+        '    404 error, not, found ' +
         '\n' +
-        '    https://www.sample.org.uk \n' +
+        '    https://www.sample.org.uk ' +
         ' \n' +
+        '\n' +
         '\n' +
         '\n' +
         'Thanks, \n' +
@@ -102,25 +107,27 @@ context('Create summary', () => {
         '\n' +
         'We discussed the following services in our conversation today:\n' +
         '    1. First service\n' +
-        '    07000 0000000 \n' +
+        '    07000 0000000 ' +
         '\n' +
-        '    help@gmail.com \n' +
+        '    help@gmail.com ' +
         '\n' +
-        '    404 error, not, found \n' +
+        '    404 error, not, found ' +
         '\n' +
-        '    https://www.sample.org.uk \n' +
+        '    https://www.sample.org.uk ' +
         ' \n' +
+        '\n' +
         '\n' +
         'I referred you to the following services:\n' +
         '    1. Kingsman\n' +
-        '    123456789 \n' +
+        '    123456789 ' +
         '\n' +
-        '    service@test.testy.com \n' +
+        '    service@test.testy.com ' +
         '\n' +
-        '    1 test Rd, London \n' +
+        '    1 test Rd, London ' +
         '\n' +
-        '    https://sample.com/test_kingsman \n' +
+        '    https://sample.com/test_kingsman ' +
         ' \n' +
+        '\n' +
         '\n' +
         'Thanks, \n' +
         `${referrerName}\n` +
@@ -133,6 +140,22 @@ context('Create summary', () => {
     cy.get('#summary-name').should('have.value', referrerName);
     cy.get('#summary-email').should('have.value', referrerEmail);
     cy.get('#summary-organisation').should('have.value', refererOrganisation);
+  });
+
+  it('can cancel removal of services from summary', () => {
+    cy.get('[data-testid=remove-from-summary]')
+      .first()
+      .click();
+    cy.get('[data-testid=remove-from-summary-no]').click();
+    cy.get('#support-summary-note').should('contain', 'First service');
+  });
+
+  it('can remove services from summary', () => {
+    cy.get('[data-testid=remove-from-summary]')
+      .first()
+      .click();
+    cy.get('[data-testid=remove-from-summary-yes]').click();
+    cy.get('#support-summary-note').should('not.contain', 'First service');
   });
 
   it('should display success message', () => {

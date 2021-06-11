@@ -261,4 +261,26 @@ context('Index page', () => {
         .should('contain', 'Second service');
     });
   });
+
+  describe('Add to summary', () => {
+    it('persists checked summaries across different service views', () => {
+      cy.get('[data-testid=category-card]')
+        .eq(1)
+        .click();
+      cy.get('#add-to-summary-checkbox-1-2').should('not.be.checked');
+
+      cy.get('#add-to-summary-checkbox-1-2').click();
+
+      cy.get('#add-to-summary-checkbox-1-2').should('be.checked');
+
+      cy.get('[data-testid=category-card]')
+        .eq(2)
+        .click();
+
+      cy.get('[data-testid=category-card]')
+        .eq(1)
+        .click();
+      cy.get('#add-to-summary-checkbox-1-2').should('be.checked');
+    });
+  });
 });

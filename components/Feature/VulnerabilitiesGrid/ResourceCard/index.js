@@ -5,7 +5,8 @@ import { sendDataToAnalytics, getUserGroup } from 'lib/utils/analytics';
 import {
   REFERRAL_OPEN,
   REFERRAL_CLICK_WEBSITE,
-  SERVICE_CLICK_WEBSITE
+  SERVICE_CLICK_WEBSITE,
+  VIEW_SUMMARY_EMAIL_CLICKED
 } from 'lib/utils/analyticsConstants';
 
 const ResourceCard = ({
@@ -39,6 +40,7 @@ const ResourceCard = ({
   setReferrerData,
   demographic,
   updateSignpostSummary,
+  signpostSummary,
   councilTags,
   ...others
 }) => {
@@ -171,6 +173,7 @@ const ResourceCard = ({
                   });
                 }}
                 value={true}
+                checked={signpostSummary?.some(x => x.name == name)}
               />
               <label
                 className={`govuk-label govuk-checkboxes__label ${css['checkbox-label']}`}
@@ -184,7 +187,12 @@ const ResourceCard = ({
               <span id={`referral-${id}-${categoryId}-details`} name="refer-details">
                 <button
                   id={`referral-${id}-${categoryId}`}
-                  className={`govuk-button ${css['refer-button']}`}
+                  className={`govuk-button ${css['refer-button']} 
+                  ${
+                    openReferralForm.id == id && openReferralForm.categoryName == categoryName
+                      ? 'govuk-button--secondary'
+                      : ''
+                  } `}
                   type="button"
                   data-testid="refer-button"
                   onClick={e => {
@@ -195,7 +203,9 @@ const ResourceCard = ({
                       label: name
                     });
                   }}>
-                  Create Referral
+                  {openReferralForm.id == id && openReferralForm.categoryName == categoryName
+                    ? 'Cancel'
+                    : 'Create Referral'}
                 </button>
                 {openReferralForm.id == id &&
                   openReferralForm.categoryName == categoryName &&
@@ -587,6 +597,25 @@ const ResourceCard = ({
               Successfully submitted referral
             </div>
           )}
+        </div>
+      )}
+      {signpostSummary?.some(x => x.name == name) && (
+        <div
+          className={`${css['success-message']}`}
+          data-testid={`added-to-summary-banner-${id}-${categoryId}`}>
+          You have added a service to your sumary email
+          <a
+            className={`${css['summary-link']}`}
+            href="#summary-header"
+            onClick={() =>
+              sendDataToAnalytics({
+                action: getUserGroup(referrerData['user-groups']),
+                category: VIEW_SUMMARY_EMAIL_CLICKED,
+                label: name
+              })
+            }>
+            View summary email
+          </a>
         </div>
       )}
       {snapshot && (
