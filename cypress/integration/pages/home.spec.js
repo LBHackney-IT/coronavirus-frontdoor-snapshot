@@ -68,6 +68,24 @@ context('Index page', () => {
         .should('contain', 'Second service');
     });
 
+    it('Does not show demographics label when there are no demographics', () => {
+      cy.get('[data-testid=category-card]')
+        .eq(0)
+        .click();
+
+      cy.get('[data-testid=resource-2]')
+        .eq(0)
+        .should('contain', 'Second service');
+
+      cy.get('[data-testid=resource-1]')
+        .eq(0)
+        .should('contain', 'This is for');
+
+      cy.get('[data-testid=resource-2]')
+        .eq(0)
+        .should('not.contain', 'This is for');
+    });
+
     it('Displays the correct tags', () => {
       cy.get('[data-testid=category-card]')
         .eq(0)

@@ -116,7 +116,7 @@ const ResourceCard = ({
                 name
               )}
             </h3>
-            {demographic?.length > 0 && <span>This is for {demographic}</span>}
+            {demographic?.trim().length > 0 && <span>This is for {demographic}</span>}
           </div>
 
           <div className={`govuk-grid-column-one-third ${css['contact-container']}`}>
