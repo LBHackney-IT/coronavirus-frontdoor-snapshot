@@ -8,6 +8,7 @@ import {
   SERVICE_CLICK_WEBSITE,
   VIEW_SUMMARY_EMAIL_CLICKED
 } from 'lib/utils/analyticsConstants';
+import ResidentDetailsForm from 'components/Feature/ResidentDetailsForm';
 
 const ResourceCard = ({
   id,
@@ -42,6 +43,14 @@ const ResourceCard = ({
   updateSignpostSummary,
   signpostSummary,
   councilTags,
+  residentInfoCallback,
+  showResidentForm,
+  setShowResidentForm,
+  token,
+  referralSummary,
+  setReferralSummary,
+  updateEmailBody,
+  setEmailBody,
   ...others
 }) => {
   const [validationError, setValidationError] = useState({});
@@ -211,6 +220,19 @@ const ResourceCard = ({
                   openReferralForm.categoryName == categoryName &&
                   !referralCompletion[id] && (
                     <div id={`referral-${id}-${categoryId}-form`} className={css['referral-form']}>
+                      <ResidentDetailsForm
+                        residentInfoCallback={residentInfoCallback}
+                        showResidentForm={showResidentForm}
+                        setShowResidentForm={setShowResidentForm}
+                        token={token}
+                        setReferralCompletion={setReferralCompletion}
+                        referralCompletion={referralCompletion}
+                        referralSummary={referralSummary}
+                        setReferralSummary={setReferralSummary}
+                        updateEmailBody={updateEmailBody}
+                        setEmailBody={setEmailBody}
+                        referrerData={referrerData}
+                      />
                       <input
                         form="resident-details"
                         id={`service-name-${id}`}

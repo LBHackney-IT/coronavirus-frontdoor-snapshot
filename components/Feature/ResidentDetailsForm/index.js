@@ -7,8 +7,6 @@ import { REFERRAL_SUBMIT_SUCCESS, REFERRAL_SUBMIT_INVALID } from 'lib/utils/anal
 const ResidentDetailsForm = ({
   residentInfoCallback,
   token,
-  showResidentForm,
-  setShowResidentForm,
   setReferralCompletion,
   referralCompletion,
   referralSummary,
@@ -107,12 +105,9 @@ const ResidentDetailsForm = ({
   };
   return (
     <div>
-      <h1 className="govuk-heading-l" id="resident-details-header">
+      <h3 className="govuk-heading-m" id="resident-details-header">
         Who are you helping?
-      </h1>
-      <details className="govuk-details" onClick={() => setShowResidentForm(!showResidentForm)}>
-        <summary>Residents details</summary>
-      </details>
+      </h3>
 
       {
         <form
@@ -123,8 +118,7 @@ const ResidentDetailsForm = ({
               category: REFERRAL_SUBMIT_INVALID
             });
           }}
-          onSubmit={onSubmitForm}
-          hidden={!showResidentForm}>
+          onSubmit={onSubmitForm}>
           <div
             className={`govuk-form-group ${
               validationError.firstName ? 'govuk-form-group--error' : ''
@@ -139,9 +133,7 @@ const ResidentDetailsForm = ({
                 </span>
               </span>
               <input
-                className={`govuk-input govuk-!-width-two-thirds ${
-                  validationError.firstName ? 'govuk-input--error' : ''
-                }`}
+                className={`govuk-input  ${validationError.firstName ? 'govuk-input--error' : ''}`}
                 id="firstName"
                 name="firstName"
                 type="text"
@@ -166,9 +158,7 @@ const ResidentDetailsForm = ({
                 </span>
               </span>
               <input
-                className={`govuk-input govuk-!-width-two-thirds ${
-                  validationError.lastName ? 'govuk-input--error' : ''
-                }`}
+                className={`govuk-input  ${validationError.lastName ? 'govuk-input--error' : ''}`}
                 id="lastName"
                 name="lastName"
                 type="text"
@@ -193,9 +183,7 @@ const ResidentDetailsForm = ({
                 </span>
               </span>
               <input
-                className={`govuk-input govuk-!-width-two-thirds ${
-                  validationError.phone ? 'govuk-input--error' : ''
-                }`}
+                className={`govuk-input  ${validationError.phone ? 'govuk-input--error' : ''}`}
                 id="phone"
                 name="phone"
                 type="number"
@@ -219,9 +207,7 @@ const ResidentDetailsForm = ({
                 </span>
               </span>
               <input
-                className={`govuk-input govuk-!-width-two-thirds ${
-                  validationError.email ? 'govuk-input--error' : ''
-                }`}
+                className={`govuk-input  ${validationError.email ? 'govuk-input--error' : ''}`}
                 id="email"
                 name="email"
                 type="email"
@@ -246,9 +232,7 @@ const ResidentDetailsForm = ({
                 </span>
               </span>
               <input
-                className={`govuk-input govuk-!-width-two-thirds ${
-                  validationError.address ? 'govuk-input--error' : ''
-                }`}
+                className={`govuk-input  ${validationError.address ? 'govuk-input--error' : ''}`}
                 id="address"
                 name="event-name"
                 type="text"
@@ -272,9 +256,7 @@ const ResidentDetailsForm = ({
                 </span>
               </span>
               <input
-                className={`govuk-input govuk-!-width-two-thirds ${
-                  validationError.postcode ? 'govuk-input--error' : ''
-                }`}
+                className={`govuk-input  ${validationError.postcode ? 'govuk-input--error' : ''}`}
                 id="postcode"
                 name="event-name"
                 type="text"

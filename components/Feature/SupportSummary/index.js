@@ -13,6 +13,7 @@ import {
   SEND_SUMMARY_INVALID_COUNT,
   SEND_SUMMARY_SUCCESS_COUNT
 } from 'lib/utils/analyticsConstants';
+import ResidentDetailsForm from 'components/Feature/ResidentDetailsForm';
 
 const SupportSummary = ({
   referralSummary,
@@ -22,9 +23,15 @@ const SupportSummary = ({
   emailBody,
   setEmailBody,
   residentInfo,
-  residentFormCallback,
   token,
-  updateSignpostSummary
+  updateSignpostSummary,
+  residentInfoCallback,
+  showResidentForm,
+  setShowResidentForm,
+  setReferralSummary,
+  updateEmailBody,
+  setReferralCompletion,
+  referralCompletion
 }) => {
   const { createConversation } = useConversation({ token });
 
@@ -34,20 +41,7 @@ const SupportSummary = ({
   const [toBeDeleted, setToBeDeleted] = useState(null);
 
   const toggleDetail = e => {
-    if (
-      (!residentInfo.firstName ||
-        !residentInfo.lastName ||
-        !residentInfo.phone ||
-        !residentInfo.email ||
-        !residentInfo.address ||
-        !residentInfo.postcode) &&
-      hideForm
-    ) {
-      e.preventDefault();
-      residentFormCallback(true);
-      window.location.href = '#resident-details-header';
-      document.querySelector('#resident-details').checkValidity();
-    } else if (referralSummary.length < 1 && signpostSummary.length < 1) {
+    if (referralSummary.length < 1 && signpostSummary.length < 1) {
       e.preventDefault();
       setFormErrorMsg(true);
     } else {
@@ -138,6 +132,19 @@ const SupportSummary = ({
         )}
         {!hideForm && (
           <div className="govuk-details__text">
+            <ResidentDetailsForm
+              residentInfoCallback={residentInfoCallback}
+              showResidentForm={showResidentForm}
+              setShowResidentForm={setShowResidentForm}
+              token={token}
+              setReferralCompletion={setReferralCompletion}
+              referralCompletion={referralCompletion}
+              referralSummary={referralSummary}
+              setReferralSummary={setReferralSummary}
+              updateEmailBody={updateEmailBody}
+              setEmailBody={setEmailBody}
+              referrerData={referrerData}
+            />
             <strong>Services referred to</strong>
             {referralSummary.length == 0 && (
               <span id="summary-referrals-hint" className="govuk-hint  lbh-hint">

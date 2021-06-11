@@ -14,7 +14,15 @@ const Services = ({
   updateSignpostSummary,
   referrerData,
   setReferrerData,
-  signpostSummary
+  signpostSummary,
+  residentInfoCallback,
+  showResidentForm,
+  setShowResidentForm,
+  token,
+  referralSummary,
+  setReferralSummary,
+  updateEmailBody,
+  setEmailBody
 }) => {
   const [openReferralForm, setOpenReferralForm] = useState({});
   const [referralData, setReferralData] = useState({});
@@ -145,6 +153,14 @@ const Services = ({
                 setReferrerData={setReferrerData}
                 updateSignpostSummary={updateSignpostSummary}
                 signpostSummary={signpostSummary}
+                residentInfoCallback={residentInfoCallback}
+                showResidentForm={showResidentForm}
+                setShowResidentForm={setShowResidentForm}
+                token={token}
+                referralSummary={referralSummary}
+                setReferralSummary={setReferralSummary}
+                updateEmailBody={updateEmailBody}
+                setEmailBody={setEmailBody}
               />
             ))}
           </div>

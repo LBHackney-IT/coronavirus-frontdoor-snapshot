@@ -4,7 +4,6 @@ import HttpStatusError from 'lib/api/domain/HttpStatusError';
 import { getTokenFromCookieHeader } from 'lib/utils/token';
 import { getEmailBody } from 'lib/utils/getEmailBody';
 import Services from 'components/Feature/Services';
-import ResidentDetailsForm from 'components/Feature/ResidentDetailsForm';
 import SupportSummary from 'components/Feature/SupportSummary';
 import { useState } from 'react';
 import jsonwebtoken from 'jsonwebtoken';
@@ -66,19 +65,6 @@ const Index = ({ categorisedResources, initialReferral, token, errors, refererIn
       <Head>
         <title>Better Conversations</title>
       </Head>
-      <ResidentDetailsForm
-        residentInfoCallback={residentInfoCallback}
-        showResidentForm={showResidentForm}
-        setShowResidentForm={setShowResidentForm}
-        token={token}
-        setReferralCompletion={setReferralCompletion}
-        referralCompletion={referralCompletion}
-        referralSummary={referralSummary}
-        setReferralSummary={setReferralSummary}
-        updateEmailBody={updateEmailBody}
-        setEmailBody={setEmailBody}
-        referrerData={referrerData}
-      />
       <div className="govuk-!-margin-top-9">
         {errors.map((err, index) => (
           <p key={`error-getting-resources-${index}`} className="govuk-error-message">
@@ -97,6 +83,14 @@ const Index = ({ categorisedResources, initialReferral, token, errors, refererIn
         signpostSummary={signpostSummary}
         referrerData={referrerData}
         setReferrerData={setReferrerData}
+        residentInfoCallback={residentInfoCallback}
+        showResidentForm={showResidentForm}
+        setShowResidentForm={setShowResidentForm}
+        token={token}
+        referralSummary={referralSummary}
+        setReferralSummary={setReferralSummary}
+        updateEmailBody={updateEmailBody}
+        setEmailBody={setEmailBody}
       />
       <SupportSummary
         referralSummary={referralSummary}
@@ -109,6 +103,12 @@ const Index = ({ categorisedResources, initialReferral, token, errors, refererIn
         emailBody={emailBody}
         setEmailBody={setEmailBody}
         token={token}
+        residentInfoCallback={residentInfoCallback}
+        showResidentForm={showResidentForm}
+        setShowResidentForm={setShowResidentForm}
+        setReferralSummary={setReferralSummary}
+        updateEmailBody={updateEmailBody}
+        setReferralCompletion={setReferralCompletion}
       />
     </>
   );
