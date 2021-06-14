@@ -13,6 +13,7 @@ import {
   SEND_SUMMARY_INVALID_COUNT,
   SEND_SUMMARY_SUCCESS_COUNT
 } from 'lib/utils/analyticsConstants';
+import ResidentDetails from '../ResidentDetails';
 
 const SupportSummary = ({
   referralSummary,
@@ -47,6 +48,10 @@ const SupportSummary = ({
     setValidationError(x => {
       return { [value]: true, ...x };
     });
+  };
+
+  const handleOnChange = id => {
+    delete validationError[id];
   };
 
   const sendSummary = async e => {
@@ -188,221 +193,11 @@ const SupportSummary = ({
                 ))}
             </div>
             <form id="summary-form" onInvalid={() => onInvalidAnalytics()} onSubmit={sendSummary}>
-              <div
-                className={`govuk-form-group ${
-                  validationError.firstName ? 'govuk-form-group--error' : ''
-                }`}>
-                <div className="govuk-!-padding-bottom-2">
-                  <label className="govuk-label inline" htmlFor="firstName">
-                    First name
-                  </label>
-                  <span id="name-error" className="govuk-error-message">
-                    <span hidden={!validationError.firstName} data-testid="name-error">
-                      Enter the first name
-                    </span>
-                  </span>
-                  <input
-                    className={`govuk-input  ${
-                      validationError.firstName ? 'govuk-input--error' : ''
-                    }`}
-                    id="firstName"
-                    name="firstName"
-                    type="text"
-                    onChange={e => handleOnChange(e.target.id, e.target.value)}
-                    aria-describedby="firstName"
-                    onInvalid={e => onInvalidField(e.target.id)}
-                    required
-                  />
-                </div>
-              </div>
-              <div
-                className={`govuk-form-group ${
-                  validationError.lastName ? 'govuk-form-group--error' : ''
-                }`}>
-                <div className="govuk-!-padding-bottom-2">
-                  <label className="govuk-label inline" htmlFor="lastName">
-                    Last name
-                  </label>
-                  <span id="name-error" className="govuk-error-message">
-                    <span hidden={!validationError.lastName} data-testid="name-error">
-                      Enter the last name
-                    </span>
-                  </span>
-                  <input
-                    className={`govuk-input  ${
-                      validationError.lastName ? 'govuk-input--error' : ''
-                    }`}
-                    id="lastName"
-                    name="lastName"
-                    type="text"
-                    aria-describedby="lastName"
-                    onChange={e => handleOnChange(e.target.id, e.target.value)}
-                    onInvalid={e => onInvalidField(e.target.id)}
-                    required
-                  />
-                </div>
-              </div>
-              <div
-                className={`govuk-form-group ${
-                  validationError.phone ? 'govuk-form-group--error' : ''
-                }`}>
-                <div className="govuk-!-padding-bottom-2">
-                  <label className="govuk-label inline" htmlFor="phone">
-                    Phone
-                  </label>
-                  <span id="phone-error" className="govuk-error-message">
-                    <span hidden={!validationError.phone} data-testid="phone-error">
-                      Enter the phone number
-                    </span>
-                  </span>
-                  <input
-                    className={`govuk-input  ${validationError.phone ? 'govuk-input--error' : ''}`}
-                    id="phone"
-                    name="phone"
-                    type="number"
-                    onChange={e => handleOnChange(e.target.id, e.target.value)}
-                    required
-                    onInvalid={e => onInvalidField(e.target.id)}
-                  />
-                </div>
-              </div>
-              <div
-                className={`govuk-form-group ${
-                  validationError.email ? 'govuk-form-group--error' : ''
-                }`}>
-                <div className="govuk-!-padding-bottom-2">
-                  <label className="govuk-label inline" htmlFor="email">
-                    Email
-                  </label>
-                  <span id="email-error" className="govuk-error-message">
-                    <span hidden={!validationError.email} data-testid="email-error">
-                      Enter the email address
-                    </span>
-                  </span>
-                  <input
-                    className={`govuk-input  ${validationError.email ? 'govuk-input--error' : ''}`}
-                    id="email"
-                    name="email"
-                    type="email"
-                    spellCheck="false"
-                    onChange={e => handleOnChange(e.target.id, e.target.value)}
-                    required
-                    onInvalid={e => onInvalidField(e.target.id)}
-                  />
-                </div>
-              </div>
-              <div
-                className={`govuk-form-group ${
-                  validationError.address ? 'govuk-form-group--error' : ''
-                }`}>
-                <div className="govuk-!-padding-bottom-2">
-                  <label className="govuk-label inline" htmlFor="address">
-                    Address
-                  </label>
-                  <span id="address-error" className="govuk-error-message">
-                    <span hidden={!validationError.address} data-testid="address-error">
-                      Enter the address
-                    </span>
-                  </span>
-                  <input
-                    className={`govuk-input  ${
-                      validationError.address ? 'govuk-input--error' : ''
-                    }`}
-                    id="address"
-                    name="event-name"
-                    type="text"
-                    onChange={e => handleOnChange(e.target.id, e.target.value)}
-                    required
-                    onInvalid={e => onInvalidField(e.target.id)}
-                  />
-                </div>
-              </div>
-              <div
-                className={`govuk-form-group ${
-                  validationError.postcode ? 'govuk-form-group--error' : ''
-                }`}>
-                <div className="govuk-!-padding-bottom-2">
-                  <label className="govuk-label inline" htmlFor="postcode">
-                    Postcode
-                  </label>
-                  <span id="postcode-error" className="govuk-error-message">
-                    <span hidden={!validationError.postcode} data-testid="postcode-error">
-                      Enter the postcode
-                    </span>
-                  </span>
-                  <input
-                    className={`govuk-input  ${
-                      validationError.postcode ? 'govuk-input--error' : ''
-                    }`}
-                    id="postcode"
-                    name="event-name"
-                    type="text"
-                    onChange={e => handleOnChange(e.target.id, e.target.value)}
-                    required
-                    onInvalid={e => onInvalidField(e.target.id)}
-                  />
-                </div>
-              </div>
-              <fieldset className="govuk-fieldset" role="group">
-                <legend className="govuk-fieldset__legend">Date of birth</legend>
-                <div className="govuk-date-input" id="date-of-birth">
-                  <div className="govuk-date-input__item">
-                    <div className="govuk-form-group">
-                      <label
-                        className="govuk-label govuk-date-input__label"
-                        htmlFor="date-of-birth-day">
-                        Day
-                      </label>
-                      <input
-                        className="govuk-input govuk-date-input__input govuk-input--width-2"
-                        id="date-of-birth-day"
-                        name="date-of-birth-day"
-                        type="text"
-                        pattern="[0-9]*"
-                        inputMode="numeric"
-                        onChange={e => handleOnChange(e.target.id, e.target.value)}
-                      />
-                    </div>
-                  </div>
-                  <div className="govuk-date-input__item">
-                    <div className="govuk-form-group">
-                      <label
-                        className="govuk-label govuk-date-input__label"
-                        htmlFor="date-of-birth-month">
-                        Month
-                      </label>
-                      <input
-                        className="govuk-input govuk-date-input__input govuk-input--width-2"
-                        id="date-of-birth-month"
-                        name="date-of-birth-month"
-                        type="text"
-                        pattern="[0-9]*"
-                        inputMode="numeric"
-                        onChange={e => handleOnChange(e.target.id, e.target.value)}
-                      />
-                    </div>
-                  </div>
-                  <div className="govuk-date-input__item">
-                    <div className="govuk-form-group">
-                      <label
-                        className="govuk-label govuk-date-input__label"
-                        htmlFor="date-of-birth-year">
-                        Year
-                      </label>
-                      <input
-                        className="govuk-input govuk-date-input__input govuk-input--width-4"
-                        id="date-of-birth-year"
-                        name="date-of-birth-year"
-                        type="text"
-                        pattern="[0-9]*"
-                        inputMode="numeric"
-                        onChange={e => handleOnChange(e.target.id, e.target.value)}
-                      />
-                    </div>
-                  </div>
-                </div>
-              </fieldset>
-
+              <ResidentDetails
+                onInvalidField={onInvalidField}
+                validationError={validationError}
+                handleOnChange={handleOnChange}
+              />
               <TextArea
                 value={emailBody}
                 label="Add a note for the resident"
