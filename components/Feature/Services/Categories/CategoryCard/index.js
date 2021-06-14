@@ -36,6 +36,14 @@ const CategoryCard = ({ category, onclick }) => {
   return (
     <div
       className={`${styles['card']}`}
+      role="button"
+      tabIndex="0"
+      onKeyDown={e => {
+        if (e.key === ' ' || e.key === 'Enter') {
+          e.preventDefault();
+          onclick(category.name);
+        }
+      }}
       onClick={() => onclick(category.name)}
       data-testid="category-card">
       <div className={`${styles['icon']} fa-layers fa-fw`}>
