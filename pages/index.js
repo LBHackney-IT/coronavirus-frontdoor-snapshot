@@ -31,7 +31,7 @@ const Index = ({ categorisedResources, initialReferral, token, errors, refererIn
       : 'Hackney Council',
     'user-groups': refererInfo?.groups
   });
-  const [preserveFormData, setPreserveFormData] = useState(false);
+  const [preserveFormData, setPreserveFormData] = useState(true);
 
   const residentFormCallback = val => {
     setShowResidentForm(val);

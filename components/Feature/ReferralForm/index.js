@@ -27,23 +27,16 @@ const ReferralForm = ({
   setReferrerData,
   setReferralData,
   preserveFormData,
-  setPreserveFormData
+  setPreserveFormData,
+  residentInfo
 }) => {
   const { createReferral } = useReferral({ token });
-  const [residentInfo, setResidentInfo] = useState({
-    name: null,
-    email: null,
-    phone: null,
-    address: null,
-    postcode: null
-  });
 
   const [validationError, setValidationError] = useState({});
 
   const handleOnChange = (id, value) => {
     delete validationError[id];
     let newResidentInfo = { ...residentInfo, [id]: value };
-    setResidentInfo(newResidentInfo);
     residentInfoCallback(newResidentInfo);
   };
 
@@ -139,6 +132,8 @@ const ReferralForm = ({
                 onInvalidField={onInvalidField}
                 validationError={validationError}
                 handleOnChange={handleOnChange}
+                preserveFormData={preserveFormData}
+                residentInfo={residentInfo}
               />
             </div>
             <div className={`govuk-grid-column-one-half`}>

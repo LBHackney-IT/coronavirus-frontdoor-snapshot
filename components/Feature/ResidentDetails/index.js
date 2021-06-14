@@ -1,6 +1,12 @@
 import React from 'react';
 
-const ResidentDetails = ({ validationError, onInvalidField, handleOnChange }) => {
+const ResidentDetails = ({
+  validationError,
+  onInvalidField,
+  handleOnChange,
+  preserveFormData,
+  residentInfo
+}) => {
   return (
     <div>
       <h3 className="govuk-heading-m" id="resident-details-header">
@@ -25,6 +31,7 @@ const ResidentDetails = ({ validationError, onInvalidField, handleOnChange }) =>
             id="firstName"
             name="firstName"
             type="text"
+            defaultValue={preserveFormData ? residentInfo?.firstName : ''}
             onChange={e => handleOnChange(e.target.id, e.target.value)}
             aria-describedby="firstName"
             onInvalid={e => onInvalidField(e.target.id)}
@@ -48,6 +55,7 @@ const ResidentDetails = ({ validationError, onInvalidField, handleOnChange }) =>
             id="lastName"
             name="lastName"
             type="text"
+            defaultValue={preserveFormData ? residentInfo?.lastName : ''}
             aria-describedby="lastName"
             onChange={e => handleOnChange(e.target.id, e.target.value)}
             onInvalid={e => onInvalidField(e.target.id)}
@@ -71,6 +79,7 @@ const ResidentDetails = ({ validationError, onInvalidField, handleOnChange }) =>
             name="phone"
             type="number"
             onChange={e => handleOnChange(e.target.id, e.target.value)}
+            defaultValue={preserveFormData ? residentInfo?.phone : ''}
             required
             onInvalid={e => onInvalidField(e.target.id)}
           />
@@ -92,6 +101,7 @@ const ResidentDetails = ({ validationError, onInvalidField, handleOnChange }) =>
             name="email"
             type="email"
             spellCheck="false"
+            defaultValue={preserveFormData ? residentInfo?.email : ''}
             onChange={e => handleOnChange(e.target.id, e.target.value)}
             required
             onInvalid={e => onInvalidField(e.target.id)}
@@ -114,6 +124,7 @@ const ResidentDetails = ({ validationError, onInvalidField, handleOnChange }) =>
             id="address"
             name="event-name"
             type="text"
+            defaultValue={preserveFormData ? residentInfo?.address : ''}
             onChange={e => handleOnChange(e.target.id, e.target.value)}
             required
             onInvalid={e => onInvalidField(e.target.id)}
@@ -136,6 +147,7 @@ const ResidentDetails = ({ validationError, onInvalidField, handleOnChange }) =>
             id="postcode"
             name="event-name"
             type="text"
+            defaultValue={preserveFormData ? residentInfo?.postcode : ''}
             onChange={e => handleOnChange(e.target.id, e.target.value)}
             required
             onInvalid={e => onInvalidField(e.target.id)}
@@ -156,6 +168,9 @@ const ResidentDetails = ({ validationError, onInvalidField, handleOnChange }) =>
                   id="date-of-birth-day"
                   name="date-of-birth-day"
                   type="text"
+                  defaultValue={
+                    preserveFormData && residentInfo ? residentInfo['date-of-birth-day'] : ''
+                  }
                   pattern="[0-9]*"
                   inputMode="numeric"
                   onChange={e => handleOnChange(e.target.id, e.target.value)}
@@ -174,6 +189,9 @@ const ResidentDetails = ({ validationError, onInvalidField, handleOnChange }) =>
                   id="date-of-birth-month"
                   name="date-of-birth-month"
                   type="text"
+                  defaultValue={
+                    preserveFormData && residentInfo ? residentInfo['date-of-birth-month'] : ''
+                  }
                   pattern="[0-9]*"
                   inputMode="numeric"
                   onChange={e => handleOnChange(e.target.id, e.target.value)}
@@ -190,6 +208,9 @@ const ResidentDetails = ({ validationError, onInvalidField, handleOnChange }) =>
                   id="date-of-birth-year"
                   name="date-of-birth-year"
                   type="text"
+                  defaultValue={
+                    preserveFormData && residentInfo ? residentInfo['date-of-birth-year'] : ''
+                  }
                   pattern="[0-9]*"
                   inputMode="numeric"
                   onChange={e => handleOnChange(e.target.id, e.target.value)}

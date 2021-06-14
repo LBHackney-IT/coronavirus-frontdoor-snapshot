@@ -240,6 +240,12 @@ const ResourceCard = ({
                             }}>
                             Continue Call
                           </button>
+                          <button
+                            type="button"
+                            className="govuk-button"
+                            onClick={() => (window.location = process.env.NEXT_PUBLIC_URL)}>
+                            Finish Call
+                          </button>
                         </>
                       )}
                     </div>
@@ -268,6 +274,7 @@ const ResourceCard = ({
                         setReferralData={setReferralData}
                         preserveFormData={preserveFormData}
                         setPreserveFormData={setPreserveFormData}
+                        residentInfo={residentInfo}
                       />
                     </div>
                   ))}

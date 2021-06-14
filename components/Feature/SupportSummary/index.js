@@ -26,7 +26,9 @@ const SupportSummary = ({
   updateSignpostSummary,
   setResidentInfo,
   residentInfo,
-  updateEmailBody
+  updateEmailBody,
+  preserveFormData,
+  setPreserveFormData
 }) => {
   const [validationError, setValidationError] = useState({});
 
@@ -81,6 +83,8 @@ const SupportSummary = ({
       discussedServices: signpostSummary.concat(referralSummary),
       signPostingMessage: e.target['support-summary-note'].value
     };
+
+    setPreserveFormData(false);
 
     const result = await createConversation(summary);
     if (result.id) {
@@ -203,6 +207,8 @@ const SupportSummary = ({
                 onInvalidField={onInvalidField}
                 validationError={validationError}
                 handleOnChange={handleOnChange}
+                preserveFormData={preserveFormData}
+                residentInfo={residentInfo}
               />
               <TextArea
                 value={emailBody}
