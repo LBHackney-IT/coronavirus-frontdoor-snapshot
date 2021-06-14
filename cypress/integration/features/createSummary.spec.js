@@ -68,13 +68,6 @@ context('Create summary', () => {
   it('add referred services to the summary', () => {
     cy.get('#referral-abc-2').click();
 
-    cy.get('#firstName').type('Luna');
-    cy.get('#lastName').type('Kitty');
-    cy.get('#phone').type('07123456789');
-    cy.get('#email').type('luna@meow.com');
-    cy.get('#address').type('159 Cute Street');
-    cy.get('#postcode').type('M3 0W');
-
     cy.get('#referral-reason-abc').type(
       'Sunt in culpa qui officia deserunt mollit anim id est laborum.'
     );
