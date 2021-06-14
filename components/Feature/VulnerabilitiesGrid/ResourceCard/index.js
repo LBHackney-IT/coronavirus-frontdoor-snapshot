@@ -229,6 +229,8 @@ const ResourceCard = ({
                         telephone={telephone}
                         referralContact={referralContact}
                         referralData={referralData}
+                        setReferrerData={setReferrerData}
+                        setReferralData={setReferralData}
                       />
                     </div>
                   )}

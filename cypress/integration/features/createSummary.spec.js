@@ -9,28 +9,7 @@ context('Create summary', () => {
     cy.injectAxe();
   });
 
-  it('resident form is hidden', () => {
-    cy.contains('Residents details').should('be.visible');
-    cy.get('#resident-details').should('not.be.visible');
-  });
-
-  it('it displays resident detail form when no details are entered', () => {
-    cy.get('#summary-summary-form')
-      .contains('Email the resident with details of services')
-      .click();
-
-    cy.get('#resident-details').should('be.visible');
-    cy.get('#summary-form').should('not.exist');
-  });
-
   it('displays error message when no services are selected', () => {
-    cy.get('#firstName').type('Luna');
-    cy.get('#lastName').type('Kitty');
-    cy.get('#phone').type('07123456789');
-    cy.get('#email').type('luna@meow.com');
-    cy.get('#address').type('159 Cute Street');
-    cy.get('#postcode').type('M3 0W');
-
     cy.get('#summary-summary-form').click();
 
     cy.get('#summary-form').should('not.exist');
@@ -54,6 +33,13 @@ context('Create summary', () => {
     cy.get('#summary-summary-form').click();
 
     cy.get('#summary-error').should('not.exist');
+
+    cy.get('#firstName').type('Luna');
+    cy.get('#lastName').type('Kitty');
+    cy.get('#phone').type('07123456789');
+    cy.get('#email').type('luna@meow.com');
+    cy.get('#address').type('159 Cute Street');
+    cy.get('#postcode').type('M3 0W');
 
     cy.get('#support-summary-note').should(
       'have.value',
@@ -81,6 +67,13 @@ context('Create summary', () => {
 
   it('add referred services to the summary', () => {
     cy.get('#referral-abc-2').click();
+
+    cy.get('#firstName').type('Luna');
+    cy.get('#lastName').type('Kitty');
+    cy.get('#phone').type('07123456789');
+    cy.get('#email').type('luna@meow.com');
+    cy.get('#address').type('159 Cute Street');
+    cy.get('#postcode').type('M3 0W');
 
     cy.get('#referral-reason-abc').type(
       'Sunt in culpa qui officia deserunt mollit anim id est laborum.'

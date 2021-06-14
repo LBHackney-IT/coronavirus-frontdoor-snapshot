@@ -99,11 +99,6 @@ describe('Referral form', () => {
         cy.injectAxe();
       });
 
-      it('resident form is hidden', () => {
-        cy.contains('Residents details').should('be.visible');
-        cy.get('#resident-details').should('not.be.visible');
-      });
-
       it('referral form', () => {
         cy.get('[data-testid=category-card]')
           .eq(0)
@@ -137,19 +132,6 @@ describe('Referral form', () => {
       before(() => {
         cy.visit('/');
         cy.injectAxe();
-      });
-
-      it('resident form is hidden', () => {
-        cy.contains('Residents details')
-          .should('be.visible')
-          .click();
-
-        cy.get('#firstName').type('Luna');
-        cy.get('#lastName').type('Kitty');
-        cy.get('#phone').type('07123456789');
-        cy.get('#email').type('luna@meow.com');
-        cy.get('#address').type('159 Cute Street');
-        cy.get('#postcode').type('M3 0W');
       });
 
       it('referral form', () => {

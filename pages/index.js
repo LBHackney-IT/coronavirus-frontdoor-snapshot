@@ -53,9 +53,11 @@ const Index = ({ categorisedResources, initialReferral, token, errors, refererIn
 
   const updateEmailBody = (
     newSignpostSummary = signpostSummary,
-    newReferralSummary = referralSummary
+    newReferralSummary = referralSummary,
+    newReferrerData = referrerData,
+    newResidentInfo = residentInfo
   ) => {
-    return getEmailBody(residentInfo, newSignpostSummary, newReferralSummary, referrerData);
+    return getEmailBody(newResidentInfo, newSignpostSummary, newReferralSummary, newReferrerData);
   };
 
   const [emailBody, setEmailBody] = useState(updateEmailBody());
@@ -101,6 +103,9 @@ const Index = ({ categorisedResources, initialReferral, token, errors, refererIn
         emailBody={emailBody}
         setEmailBody={setEmailBody}
         token={token}
+        setResidentInfo={setResidentInfo}
+        residentInfo={residentInfo}
+        updateEmailBody={updateEmailBody}
       />
     </>
   );

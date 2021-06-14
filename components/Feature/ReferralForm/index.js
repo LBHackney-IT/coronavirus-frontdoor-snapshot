@@ -23,7 +23,9 @@ const ReferralForm = ({
   address,
   telephone,
   referralContact,
-  referralData
+  referralData,
+  setReferrerData,
+  setReferralData
 }) => {
   const { createReferral } = useReferral({ token });
   const [residentInfo, setResidentInfo] = useState({
@@ -90,28 +92,28 @@ const ReferralForm = ({
     };
     const result = await createReferral(referral);
 
-    if (result.id) {
-      setReferralCompletion({ ...referralCompletion, [serviceId]: result });
-      const newReferralSummary = referralSummary.concat([
-        {
-          name: serviceName,
-          telephone: serviceTelephone,
-          contactEmail: serviceEmail,
-          referralEmail,
-          address: serviceAddress,
-          websites: serviceWebsites,
-          id: serviceId,
-          referralId: result.id
-        }
-      ]);
-      setReferralSummary(newReferralSummary);
-      setEmailBody(updateEmailBody(undefined, newReferralSummary));
-      sendDataToAnalytics({
-        action: getUserGroup(referrerData['user-groups']),
-        category: REFERRAL_SUBMIT_SUCCESS,
-        label: serviceName
-      });
-    }
+    // if (result.id) {
+    setReferralCompletion({ ...referralCompletion, [serviceId]: result });
+    const newReferralSummary = referralSummary.concat([
+      {
+        name: serviceName,
+        telephone: serviceTelephone,
+        contactEmail: serviceEmail,
+        referralEmail,
+        address: serviceAddress,
+        websites: serviceWebsites,
+        id: serviceId,
+        referralId: 1 //result.id
+      }
+    ]);
+    setReferralSummary(newReferralSummary);
+    setEmailBody(updateEmailBody(undefined, newReferralSummary));
+    sendDataToAnalytics({
+      action: getUserGroup(referrerData['user-groups']),
+      category: REFERRAL_SUBMIT_SUCCESS,
+      label: serviceName
+    });
+    // }
   };
   return (
     <div>

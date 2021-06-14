@@ -23,7 +23,10 @@ const SupportSummary = ({
   emailBody,
   setEmailBody,
   token,
-  updateSignpostSummary
+  updateSignpostSummary,
+  setResidentInfo,
+  residentInfo,
+  updateEmailBody
 }) => {
   const [validationError, setValidationError] = useState({});
 
@@ -50,8 +53,11 @@ const SupportSummary = ({
     });
   };
 
-  const handleOnChange = id => {
+  const handleOnChange = (id, value) => {
     delete validationError[id];
+    let newResidentInfo = { ...residentInfo, [id]: value };
+    setResidentInfo(newResidentInfo);
+    setEmailBody(updateEmailBody(undefined, undefined, undefined, newResidentInfo));
   };
 
   const sendSummary = async e => {
@@ -213,7 +219,9 @@ const SupportSummary = ({
                 name="summary-name"
                 value={referrerData['referer-name']}
                 onChange={value => {
-                  setReferrerData({ ...referrerData, 'referer-name': value });
+                  const newReferrerData = { ...referrerData, 'referer-name': value };
+                  setReferrerData(newReferrerData);
+                  setEmailBody(updateEmailBody(undefined, undefined, newReferrerData));
                 }}
                 validate
                 required={true}
@@ -223,7 +231,9 @@ const SupportSummary = ({
                 name="summary-email"
                 value={referrerData['referer-email']}
                 onChange={value => {
-                  setReferrerData({ ...referrerData, 'referer-email': value });
+                  const newReferrerData = { ...referrerData, 'referer-email': value };
+                  setReferrerData(newReferrerData);
+                  setEmailBody(updateEmailBody(undefined, undefined, newReferrerData));
                 }}
                 validate
                 required={true}
@@ -233,7 +243,9 @@ const SupportSummary = ({
                 name="summary-organisation"
                 value={referrerData['referer-organisation']}
                 onChange={value => {
-                  setReferrerData({ ...referrerData, 'referer-organisation': value });
+                  const newReferrerData = { ...referrerData, 'referer-organisation': value };
+                  setReferrerData(newReferrerData);
+                  setEmailBody(updateEmailBody(undefined, undefined, newReferrerData));
                 }}
                 validate
                 required={true}
