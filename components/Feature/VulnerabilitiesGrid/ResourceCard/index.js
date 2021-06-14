@@ -51,6 +51,8 @@ const ResourceCard = ({
   setReferralSummary,
   updateEmailBody,
   setEmailBody,
+  setPreserveFormData,
+  preserveFormData,
   ...others
 }) => {
   const [noteOpen, setNoteOpen] = useState(false);
@@ -181,7 +183,7 @@ const ResourceCard = ({
               </label>
             </div>
           </div>
-          <div className={`govuk-grid-column-one-half`}>
+          <div>
             {referralContact?.length > 0 ? (
               <span id={`referral-${id}-${categoryId}-details`} name="refer-details">
                 <button
@@ -208,7 +210,40 @@ const ResourceCard = ({
                 </button>
                 {openReferralForm.id == id &&
                   openReferralForm.categoryName == categoryName &&
-                  !referralCompletion[id] && (
+                  (referralCompletion[id] ? (
+                    <div>
+                      {referralCompletion[id].errors?.length > 0 ? (
+                        <div
+                          data-testid="referral-errors-banner"
+                          className={`${notificationCss['error-message']}`}>
+                          {referralCompletion[id].errors.join('\n')}
+                        </div>
+                      ) : (
+                        <>
+                          <div
+                            data-testid="successful-referral-banner"
+                            className={`${notificationCss['success-message']}`}>
+                            Successfully submitted referral for {residentInfo?.firstName}{' '}
+                            {residentInfo?.lastName}
+                          </div>
+                          <button
+                            type="button"
+                            className="govuk-button"
+                            onClick={e => {
+                              setPreserveFormData(true);
+                              detailsClicked(
+                                e,
+                                `referral-${id}-${categoryId}-details`,
+                                id,
+                                categoryName
+                              );
+                            }}>
+                            Continue Call
+                          </button>
+                        </>
+                      )}
+                    </div>
+                  ) : (
                     <div id={`referral-${id}-${categoryId}-form`} className={css['referral-form']}>
                       <ReferralForm
                         residentInfoCallback={residentInfoCallback}
@@ -231,9 +266,11 @@ const ResourceCard = ({
                         referralData={referralData}
                         setReferrerData={setReferrerData}
                         setReferralData={setReferralData}
+                        preserveFormData={preserveFormData}
+                        setPreserveFormData={setPreserveFormData}
                       />
                     </div>
-                  )}
+                  ))}
               </span>
             ) : (
               referralWebsite?.length > 0 &&
@@ -262,24 +299,6 @@ const ResourceCard = ({
           </div>
         </div>
       </div>
-
-      {referralCompletion[id] && (
-        <div>
-          {referralCompletion[id].errors?.length > 0 ? (
-            <div
-              data-testid="referral-errors-banner"
-              className={`${notificationCss['error-message']}`}>
-              {referralCompletion[id].errors.join('\n')}
-            </div>
-          ) : (
-            <div
-              data-testid="successful-referral-banner"
-              className={`${notificationCss['success-message']}`}>
-              Successfully submitted referral
-            </div>
-          )}
-        </div>
-      )}
       {signpostSummary?.some(x => x.name == name) && (
         <div
           className={`${css['success-message']}`}

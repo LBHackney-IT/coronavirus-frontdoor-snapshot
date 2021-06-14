@@ -22,7 +22,10 @@ const Services = ({
   referralSummary,
   setReferralSummary,
   updateEmailBody,
-  setEmailBody
+  setEmailBody,
+  residentInfo,
+  setPreserveFormData,
+  preserveFormData
 }) => {
   const [openReferralForm, setOpenReferralForm] = useState({});
   const [referralData, setReferralData] = useState({});
@@ -161,6 +164,9 @@ const Services = ({
                 setReferralSummary={setReferralSummary}
                 updateEmailBody={updateEmailBody}
                 setEmailBody={setEmailBody}
+                residentInfo={residentInfo}
+                setPreserveFormData={setPreserveFormData}
+                preserveFormData={preserveFormData}
               />
             ))}
           </div>
