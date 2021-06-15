@@ -209,6 +209,7 @@ const SupportSummary = ({
                 handleOnChange={handleOnChange}
                 preserveFormData={preserveFormData}
                 residentInfo={residentInfo}
+                formType="summary"
               />
               <TextArea
                 value={emailBody}

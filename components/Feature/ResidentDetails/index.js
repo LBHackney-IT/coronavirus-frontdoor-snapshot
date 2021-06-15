@@ -5,7 +5,8 @@ const ResidentDetails = ({
   onInvalidField,
   handleOnChange,
   preserveFormData,
-  residentInfo
+  residentInfo,
+  formType
 }) => {
   return (
     <div>
@@ -103,7 +104,7 @@ const ResidentDetails = ({
             spellCheck="false"
             defaultValue={preserveFormData ? residentInfo?.email : ''}
             onChange={e => handleOnChange(e.target.id, e.target.value)}
-            required
+            required={formType == 'summary'}
             onInvalid={e => onInvalidField(e.target.id)}
           />
         </div>
