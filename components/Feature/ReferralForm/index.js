@@ -85,7 +85,7 @@ const ReferralForm = ({
       sendResidentSms: e.target['resident-referral-sms'].checked,
       sendResidentEmail: e.target['resident-referral-email'].checked
     };
-    const result = { id: 1 }; // await createReferral(referral);
+    const result = await createReferral(referral);
 
     setPreserveFormData(false);
 
