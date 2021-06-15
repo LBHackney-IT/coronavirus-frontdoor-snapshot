@@ -184,28 +184,35 @@ const ResourceCard = ({
           <div>
             {referralContact?.length > 0 ? (
               <span id={`referral-${id}-${categoryId}-details`} name="refer-details">
-                <button
-                  id={`referral-${id}-${categoryId}`}
-                  className={`govuk-button ${css['refer-button']} 
-                  ${
-                    openReferralForm.id == id && openReferralForm.categoryName == categoryName
-                      ? 'govuk-button--secondary'
-                      : ''
-                  } `}
-                  type="button"
-                  data-testid="refer-button"
-                  onClick={e => {
-                    detailsClicked(e, `referral-${id}-${categoryId}-details`, id, categoryName);
-                    sendDataToAnalytics({
-                      action: getUserGroup(referrerData['user-groups']),
-                      category: REFERRAL_OPEN,
-                      label: name
-                    });
-                  }}>
-                  {openReferralForm.id == id && openReferralForm.categoryName == categoryName
-                    ? 'Cancel'
-                    : 'Create Referral'}
-                </button>
+                {(openReferralForm.id != id || openReferralForm.categoryName != categoryName) && (
+                  <button
+                    id={`referral-${id}-${categoryId}`}
+                    className={`govuk-button ${css['refer-button']}`}
+                    type="button"
+                    data-testid="refer-button"
+                    onClick={e => {
+                      detailsClicked(e, `referral-${id}-${categoryId}-details`, id, categoryName);
+                      sendDataToAnalytics({
+                        action: getUserGroup(referrerData['user-groups']),
+                        category: REFERRAL_OPEN,
+                        label: name
+                      });
+                    }}>
+                    Create Referral
+                  </button>
+                )}
+                {openReferralForm.id == id && openReferralForm.categoryName == categoryName && (
+                  <button
+                    id={`referral-${id}-${categoryId}`}
+                    className={`govuk-button ${css['refer-button']} govuk-button--secondary`}
+                    type="button"
+                    data-testid="refer-button"
+                    onClick={e =>
+                      detailsClicked(e, `referral-${id}-${categoryId}-details`, id, categoryName)
+                    }>
+                    Cancel
+                  </button>
+                )}
                 {openReferralForm.id == id &&
                   openReferralForm.categoryName == categoryName &&
                   (referralCompletion[id] ? (
@@ -307,7 +314,7 @@ const ResourceCard = ({
         <div
           className={`${css['success-message']}`}
           data-testid={`added-to-summary-banner-${id}-${categoryId}`}>
-          You have added a service to your sumary email
+          You have added a service to your summary email
           <a
             className={`${css['summary-link']}`}
             href="#summary-header"
