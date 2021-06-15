@@ -38,6 +38,9 @@ const ReferralForm = ({
 
   const handleOnChange = (id, value) => {
     delete validationError[id];
+    if (id == 'email' && value == '') {
+      document.getElementById('resident-referral-email').checked = false;
+    }
     let newResidentInfo = { ...residentInfo, [id]: value };
     setResidentInfo(newResidentInfo);
   };
@@ -137,6 +140,7 @@ const ReferralForm = ({
                 handleOnChange={handleOnChange}
                 preserveFormData={preserveFormData}
                 residentInfo={residentInfo}
+                formType="referral"
               />
             </div>
             <div className={`govuk-grid-column-one-half`}>
@@ -319,6 +323,7 @@ const ReferralForm = ({
                         name="resident-referral-email"
                         type="checkbox"
                         value={true}
+                        disabled={residentInfo.email == null || residentInfo.email == ''}
                       />
                       <label
                         className="govuk-label govuk-checkboxes__label"

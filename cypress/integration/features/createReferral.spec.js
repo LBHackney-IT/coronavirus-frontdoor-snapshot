@@ -122,7 +122,6 @@ describe('Referral form', () => {
         cy.get('#firstName').should('have.class', 'govuk-input--error');
         cy.get('#lastName').should('have.class', 'govuk-input--error');
         cy.get('#phone').should('have.class', 'govuk-input--error');
-        cy.get('#email').should('have.class', 'govuk-input--error');
         cy.get('#address').should('have.class', 'govuk-input--error');
         cy.get('#postcode').should('have.class', 'govuk-input--error');
       });
