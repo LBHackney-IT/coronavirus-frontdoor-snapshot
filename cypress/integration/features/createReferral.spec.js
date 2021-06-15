@@ -294,6 +294,30 @@ describe('Referral form', () => {
       cy.get('#postcode').should('have.value', 'M3 0W');
     });
 
+    it('Does not persist the data across referrals if continue call is not selected', () => {
+      cy.intercept('/api/referrals', {
+        status: 201,
+        body: {
+          id: '123',
+          errors: []
+        }
+      });
+      cy.get('#referer-email-ABC123').type('perm-fail@test.com');
+      cy.get('#submit-ABC123').click({ force: true });
+
+      cy.get('[data-testid=category-card]')
+        .eq(1)
+        .click();
+      cy.get('#referral-abc-2').click({ force: true });
+
+      cy.get('#firstName').should('not.have.value', 'Luna');
+      cy.get('#lastName').should('not.have.value', 'Kitty');
+      cy.get('#phone').should('not.have.value', '07700900000');
+      cy.get('#email').should('not.have.value', 'luna@meow.com');
+      cy.get('#address').should('not.have.value', '159 Cute Street');
+      cy.get('#postcode').should('not.have.value', 'M3 0W');
+    });
+
     it('Persists the data to summary if continue call is selected', () => {
       cy.intercept('/api/referrals', {
         status: 201,
