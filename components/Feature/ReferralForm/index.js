@@ -6,7 +6,7 @@ import { REFERRAL_SUBMIT_SUCCESS, REFERRAL_SUBMIT_INVALID } from 'lib/utils/anal
 import ResidentDetails from '../ResidentDetails';
 
 const ReferralForm = ({
-  residentInfoCallback,
+  setResidentInfo,
   token,
   setReferralCompletion,
   referralCompletion,
@@ -37,7 +37,7 @@ const ReferralForm = ({
   const handleOnChange = (id, value) => {
     delete validationError[id];
     let newResidentInfo = { ...residentInfo, [id]: value };
-    residentInfoCallback(newResidentInfo);
+    setResidentInfo(newResidentInfo);
   };
 
   const onInvalidField = value => {

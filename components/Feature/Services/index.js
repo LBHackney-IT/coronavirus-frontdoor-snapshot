@@ -8,16 +8,13 @@ import { CATEGORY_CATEGORIES, CATEGORY_SEARCH } from 'lib/utils/analyticsConstan
 
 const Services = ({
   categorisedResources,
-  residentFormCallback,
   referralCompletion,
   setReferralCompletion,
   updateSignpostSummary,
   referrerData,
   setReferrerData,
   signpostSummary,
-  residentInfoCallback,
-  showResidentForm,
-  setShowResidentForm,
+  setResidentInfo,
   token,
   referralSummary,
   setReferralSummary,
@@ -38,10 +35,8 @@ const Services = ({
     if (!isOpen) {
       document.getElementById(id).setAttribute('open', true);
       setOpenReferralForm({ id: serviceId, categoryName });
-      residentFormCallback(true);
     } else {
       setOpenReferralForm({});
-      residentFormCallback(false);
     }
   };
 
@@ -141,8 +136,6 @@ const Services = ({
 
             {filteredResources.resources.map(resource => (
               <ResourceCard
-                key={`resource-card-${resource.id}-${resource.name}`}
-                data-testid={`resource-${resource.id}`}
                 {...resource}
                 updateSelectedResources={() => {}}
                 categoryId={filteredResources.id}
@@ -156,9 +149,7 @@ const Services = ({
                 setReferrerData={setReferrerData}
                 updateSignpostSummary={updateSignpostSummary}
                 signpostSummary={signpostSummary}
-                residentInfoCallback={residentInfoCallback}
-                showResidentForm={showResidentForm}
-                setShowResidentForm={setShowResidentForm}
+                setResidentInfo={setResidentInfo}
                 token={token}
                 referralSummary={referralSummary}
                 setReferralSummary={setReferralSummary}
