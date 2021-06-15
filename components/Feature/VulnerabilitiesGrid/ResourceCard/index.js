@@ -224,12 +224,16 @@ const ResourceCard = ({
                           {referralCompletion[id].errors.join('\n')}
                         </div>
                       )}
-                      <div
-                        data-testid="successful-referral-banner"
-                        className={`${notificationCss['success-message']}`}>
-                        Successfully submitted referral for {residentInfo?.firstName}{' '}
-                        {residentInfo?.lastName}
-                      </div>
+                      {!referralCompletion[id].errors?.includes(
+                        'Failed to send referral email to service'
+                      ) && (
+                        <div
+                          data-testid="successful-referral-banner"
+                          className={`${notificationCss['success-message']}`}>
+                          Successfully submitted referral for {residentInfo?.firstName}{' '}
+                          {residentInfo?.lastName}
+                        </div>
+                      )}
                       <button
                         type="button"
                         className={`govuk-button ${notificationCss['notification-button']}`}
