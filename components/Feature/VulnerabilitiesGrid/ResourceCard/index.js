@@ -88,7 +88,7 @@ const ResourceCard = ({
   const second = fullDescription?.substring(250);
 
   return (
-    <div className={`resource ${css.resource}`} {...others}>
+    <div className={`resource ${css.resource}`} {...others} id={`resource-container-${id}`}>
       <div className={`${css.tags__container} card-header-tag`} data-testid="resource-card-tags">
         {tagsElement}
         {councilTagsElement}
@@ -211,7 +211,7 @@ const ResourceCard = ({
                 {openReferralForm.id == id &&
                   openReferralForm.categoryName == categoryName &&
                   (referralCompletion[id] ? (
-                    <div>
+                    <div className={`govuk-!-padding-top-8`}>
                       {referralCompletion[id].errors?.length > 0 && (
                         <div
                           data-testid="referral-errors-banner"
@@ -227,7 +227,7 @@ const ResourceCard = ({
                       </div>
                       <button
                         type="button"
-                        className="govuk-button"
+                        className={`govuk-button ${notificationCss['notification-button']}`}
                         onClick={e => {
                           setPreserveFormData(true);
                           detailsClicked(
@@ -242,7 +242,7 @@ const ResourceCard = ({
                       </button>
                       <button
                         type="button"
-                        className="govuk-button"
+                        className={`govuk-button ${notificationCss['notification-button']}`}
                         onClick={() => (window.location = process.env.NEXT_PUBLIC_URL)}
                         data-testid="finish-call-button">
                         Finish Call

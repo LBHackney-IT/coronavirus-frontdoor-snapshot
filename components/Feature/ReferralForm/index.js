@@ -90,6 +90,7 @@ const ReferralForm = ({
     setPreserveFormData(false);
 
     if (result.id) {
+      document.getElementById(`resource-container-${id}`)?.scrollIntoView();
       setReferralCompletion({ ...referralCompletion, [serviceId]: result });
       const newReferralSummary = referralSummary.concat([
         {
