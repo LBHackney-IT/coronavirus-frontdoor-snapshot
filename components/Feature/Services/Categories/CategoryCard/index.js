@@ -16,7 +16,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 import styles from './index.module.scss';
-const CategoryCard = ({ category, onclick }) => {
+const CategoryCard = ({ category, onclick, selectedCategory }) => {
   const categoryIcons = {
     'Loneliness or isolation': { icon: faComments, color: '#df1995' },
     'Anxiety or mental health': { icon: faHeadSideVirus, color: '#ff6a13' },
@@ -35,7 +35,9 @@ const CategoryCard = ({ category, onclick }) => {
 
   return (
     <div
-      className={`${styles['card']}`}
+      className={`${styles['card']} ${
+        selectedCategory == category.name ? styles['selected-category'] : ''
+      }`}
       role="button"
       tabIndex="0"
       onKeyDown={e => {

@@ -1,7 +1,7 @@
 import CategoryCard from './CategoryCard';
 import styles from './index.module.scss';
 
-const Categories = ({ categorisedResources, clickCategory }) => {
+const Categories = ({ categorisedResources, clickCategory, selectedCategory }) => {
   let groupedCategories = [];
   let i = 0;
   while (i < categorisedResources.length) {
@@ -18,7 +18,10 @@ const Categories = ({ categorisedResources, clickCategory }) => {
                 <div
                   key={`category-card-${taxonomy.name}`}
                   className={`govuk-grid-column-one-third ${styles['column']}`}>
-                  <CategoryCard category={taxonomy} onclick={clickCategory}></CategoryCard>
+                  <CategoryCard
+                    category={taxonomy}
+                    onclick={clickCategory}
+                    selectedCategory={selectedCategory}></CategoryCard>
                 </div>
               );
             })}
