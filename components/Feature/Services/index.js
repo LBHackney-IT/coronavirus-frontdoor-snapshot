@@ -136,6 +136,7 @@ const Services = ({
 
             {filteredResources.resources.map(resource => (
               <ResourceCard
+                data-testid={`resource-${resource.id}`}
                 {...resource}
                 updateSelectedResources={() => {}}
                 categoryId={filteredResources.id}

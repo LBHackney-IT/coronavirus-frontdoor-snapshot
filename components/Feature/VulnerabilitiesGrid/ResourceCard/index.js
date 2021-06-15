@@ -81,7 +81,7 @@ const ResourceCard = ({
     });
   };
 
-  const fullDescription = serviceDescription + ' ' + description;
+  const fullDescription = [serviceDescription, description].join(' ');
   const first = fullDescription?.substring(0, 250);
   const second = fullDescription?.substring(250);
 
