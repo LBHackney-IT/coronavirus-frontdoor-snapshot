@@ -272,6 +272,8 @@ const ResourceCard = ({
                         preserveFormData={preserveFormData}
                         setPreserveFormData={setPreserveFormData}
                         residentInfo={residentInfo}
+                        detailsClicked={detailsClicked}
+                        categoryId={categoryId}
                       />
                     </div>
                   ))}
