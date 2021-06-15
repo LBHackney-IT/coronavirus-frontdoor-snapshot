@@ -43,9 +43,7 @@ const ResourceCard = ({
   updateSignpostSummary,
   signpostSummary,
   councilTags,
-  residentInfoCallback,
-  showResidentForm,
-  setShowResidentForm,
+  setResidentInfo,
   token,
   referralSummary,
   setReferralSummary,
@@ -83,7 +81,7 @@ const ResourceCard = ({
     });
   };
 
-  const fullDescription = serviceDescription + ' ' + description;
+  const fullDescription = [serviceDescription, description].join(' ');
   const first = fullDescription?.substring(0, 250);
   const second = fullDescription?.substring(250);
 
@@ -251,7 +249,7 @@ const ResourceCard = ({
                   ) : (
                     <div id={`referral-${id}-${categoryId}-form`} className={css['referral-form']}>
                       <ReferralForm
-                        residentInfoCallback={residentInfoCallback}
+                        setResidentInfo={setResidentInfo}
                         token={token}
                         setReferralCompletion={setReferralCompletion}
                         referralCompletion={referralCompletion}

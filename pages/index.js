@@ -19,7 +19,6 @@ const Index = ({ categorisedResources, initialReferral, token, errors, refererIn
     return <p>Loading...</p>;
   }
   const [residentInfo, setResidentInfo] = useState(false);
-  const [showResidentForm, setShowResidentForm] = useState(false);
   const [referralCompletion, setReferralCompletion] = useState({ tis: null });
   const [referralSummary, setReferralSummary] = useState([]);
   const [signpostSummary, setSignpostSummary] = useState([]);
@@ -33,12 +32,6 @@ const Index = ({ categorisedResources, initialReferral, token, errors, refererIn
   });
   const [preserveFormData, setPreserveFormData] = useState(true);
 
-  const residentFormCallback = val => {
-    setShowResidentForm(val);
-  };
-  const residentInfoCallback = value => {
-    setResidentInfo(value);
-  };
   const updateSignpostSummary = service => {
     let newSignpostSummary;
     if (
@@ -78,17 +71,13 @@ const Index = ({ categorisedResources, initialReferral, token, errors, refererIn
       <Services
         categorisedResources={categorisedResources}
         residentInfo={residentInfo}
-        refererInfo={refererInfo}
-        residentFormCallback={residentFormCallback}
         referralCompletion={referralCompletion}
         setReferralCompletion={setReferralCompletion}
         updateSignpostSummary={updateSignpostSummary}
         signpostSummary={signpostSummary}
         referrerData={referrerData}
         setReferrerData={setReferrerData}
-        residentInfoCallback={residentInfoCallback}
-        showResidentForm={showResidentForm}
-        setShowResidentForm={setShowResidentForm}
+        setResidentInfo={setResidentInfo}
         token={token}
         referralSummary={referralSummary}
         setReferralSummary={setReferralSummary}
