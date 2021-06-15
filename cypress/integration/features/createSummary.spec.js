@@ -164,5 +164,17 @@ context('Create summary', () => {
     cy.get('[data-testid=conversation-competition-msg]')
       .contains('To help another resident please refresh this page')
       .should('be.visible');
+
+    cy.get('[data-testid=category-card]')
+      .eq(0)
+      .click();
+    cy.get('#referral-ABC123-1').click({ force: true });
+
+    cy.get('#firstName').should('have.value', '');
+    cy.get('#lastName').should('have.value', '');
+    cy.get('#phone').should('have.value', '');
+    cy.get('#email').should('have.value', '');
+    cy.get('#address').should('have.value', '');
+    cy.get('#postcode').should('have.value', '');
   });
 });
