@@ -75,6 +75,7 @@ jobs:
           name: Run integration tests
           command: |
             export NEXT_PUBLIC_API_URL=http://localhost:3000/api
+            export NEXT_PUBLIC_URL=http://localhost:3000
             export INH_URL=https://inh-admin-test.hackney.gov.uk
             export TABLE_NAME=referrals
             export CONVERSATIONS_TABLE_NAME=conversations

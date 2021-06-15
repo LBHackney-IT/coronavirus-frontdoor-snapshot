@@ -13,6 +13,7 @@ import {
   SEND_SUMMARY_INVALID_COUNT,
   SEND_SUMMARY_SUCCESS_COUNT
 } from 'lib/utils/analyticsConstants';
+import ResidentDetails from '../ResidentDetails';
 
 const SupportSummary = ({
   referralSummary,
@@ -21,11 +22,16 @@ const SupportSummary = ({
   setReferrerData,
   emailBody,
   setEmailBody,
-  residentInfo,
-  residentFormCallback,
   token,
-  updateSignpostSummary
+  updateSignpostSummary,
+  setResidentInfo,
+  residentInfo,
+  updateEmailBody,
+  preserveFormData,
+  setPreserveFormData
 }) => {
+  const [validationError, setValidationError] = useState({});
+
   const { createConversation } = useConversation({ token });
 
   const [hideForm, setHideForm] = useState(true);
@@ -34,20 +40,7 @@ const SupportSummary = ({
   const [toBeDeleted, setToBeDeleted] = useState(null);
 
   const toggleDetail = e => {
-    if (
-      (!residentInfo.firstName ||
-        !residentInfo.lastName ||
-        !residentInfo.phone ||
-        !residentInfo.email ||
-        !residentInfo.address ||
-        !residentInfo.postcode) &&
-      hideForm
-    ) {
-      e.preventDefault();
-      residentFormCallback(true);
-      window.location.href = '#resident-details-header';
-      document.querySelector('#resident-details').checkValidity();
-    } else if (referralSummary.length < 1 && signpostSummary.length < 1) {
+    if (referralSummary.length < 1 && signpostSummary.length < 1) {
       e.preventDefault();
       setFormErrorMsg(true);
     } else {
@@ -56,27 +49,42 @@ const SupportSummary = ({
     }
   };
 
+  const onInvalidField = value => {
+    setValidationError(x => {
+      return { [value]: true, ...x };
+    });
+  };
+
+  const handleOnChange = (id, value) => {
+    delete validationError[id];
+    let newResidentInfo = { ...residentInfo, [id]: value };
+    setResidentInfo(newResidentInfo);
+    setEmailBody(updateEmailBody(undefined, undefined, undefined, newResidentInfo));
+  };
+
   const sendSummary = async e => {
     e.preventDefault();
     e.target['submit-summary'].setAttribute('disabled', true);
     const summary = {
-      firstName: residentInfo.firstName,
-      lastName: residentInfo.lastName,
-      phone: residentInfo.phone,
-      email: residentInfo.email,
-      address: residentInfo.address,
-      postcode: residentInfo.postcode,
+      firstName: e.target.firstName.value,
+      lastName: e.target.lastName.value,
+      phone: e.target.phone.value,
+      email: e.target.email.value,
+      address: e.target.address.value,
+      postcode: e.target.postcode.value,
       userOrganisation: e.target['summary-organisation'].value,
       userName: e.target['summary-name'].value,
       userEmail: e.target['summary-email'].value,
       dateOfBirth: {
-        year: residentInfo['date-of-birth-year'],
-        month: residentInfo['date-of-birth-month'],
-        day: residentInfo['date-of-birth-day']
+        year: e.target['date-of-birth-year'].value,
+        month: e.target['date-of-birth-month'].value,
+        day: e.target['date-of-birth-day'].value
       },
       discussedServices: signpostSummary.concat(referralSummary),
       signPostingMessage: e.target['support-summary-note'].value
     };
+
+    setPreserveFormData(false);
 
     const result = await createConversation(summary);
     if (result.id) {
@@ -195,6 +203,13 @@ const SupportSummary = ({
                 ))}
             </div>
             <form id="summary-form" onInvalid={() => onInvalidAnalytics()} onSubmit={sendSummary}>
+              <ResidentDetails
+                onInvalidField={onInvalidField}
+                validationError={validationError}
+                handleOnChange={handleOnChange}
+                preserveFormData={preserveFormData}
+                residentInfo={residentInfo}
+              />
               <TextArea
                 value={emailBody}
                 label="Add a note for the resident"
@@ -210,7 +225,9 @@ const SupportSummary = ({
                 name="summary-name"
                 value={referrerData['referer-name']}
                 onChange={value => {
-                  setReferrerData({ ...referrerData, 'referer-name': value });
+                  const newReferrerData = { ...referrerData, 'referer-name': value };
+                  setReferrerData(newReferrerData);
+                  setEmailBody(updateEmailBody(undefined, undefined, newReferrerData));
                 }}
                 validate
                 required={true}
@@ -220,7 +237,9 @@ const SupportSummary = ({
                 name="summary-email"
                 value={referrerData['referer-email']}
                 onChange={value => {
-                  setReferrerData({ ...referrerData, 'referer-email': value });
+                  const newReferrerData = { ...referrerData, 'referer-email': value };
+                  setReferrerData(newReferrerData);
+                  setEmailBody(updateEmailBody(undefined, undefined, newReferrerData));
                 }}
                 validate
                 required={true}
@@ -230,7 +249,9 @@ const SupportSummary = ({
                 name="summary-organisation"
                 value={referrerData['referer-organisation']}
                 onChange={value => {
-                  setReferrerData({ ...referrerData, 'referer-organisation': value });
+                  const newReferrerData = { ...referrerData, 'referer-organisation': value };
+                  setReferrerData(newReferrerData);
+                  setEmailBody(updateEmailBody(undefined, undefined, newReferrerData));
                 }}
                 validate
                 required={true}

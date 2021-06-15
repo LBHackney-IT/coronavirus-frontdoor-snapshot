@@ -99,11 +99,6 @@ describe('Referral form', () => {
         cy.injectAxe();
       });
 
-      it('resident form is hidden', () => {
-        cy.contains('Residents details').should('be.visible');
-        cy.get('#resident-details').should('not.be.visible');
-      });
-
       it('referral form', () => {
         cy.get('[data-testid=category-card]')
           .eq(0)
@@ -137,19 +132,6 @@ describe('Referral form', () => {
       before(() => {
         cy.visit('/');
         cy.injectAxe();
-      });
-
-      it('resident form is hidden', () => {
-        cy.contains('Residents details')
-          .should('be.visible')
-          .click();
-
-        cy.get('#firstName').type('Luna');
-        cy.get('#lastName').type('Kitty');
-        cy.get('#phone').type('07123456789');
-        cy.get('#email').type('luna@meow.com');
-        cy.get('#address').type('159 Cute Street');
-        cy.get('#postcode').type('M3 0W');
       });
 
       it('referral form', () => {
@@ -227,6 +209,153 @@ describe('Referral form', () => {
       cy.get('#referer-email-ABC123').type('perm-fail@test.com');
       cy.get('#submit-ABC123').click({ force: true });
       cy.get(`[data-testid=referral-errors-banner]`).should('be.visible');
+    });
+  });
+  describe('Ending a conversation', () => {
+    beforeEach(() => {
+      cy.visit('/');
+      cy.get('[data-testid=category-card]')
+        .eq(0)
+        .click();
+      cy.get('#referral-ABC123-1').click({ force: true });
+      cy.get('#firstName').type('Luna');
+      cy.get('#lastName').type('Kitty');
+      cy.get('#phone').type('07700900000');
+      cy.get('#email').type('luna@meow.com');
+      cy.get('#address').type('159 Cute Street');
+      cy.get('#postcode').type('M3 0W');
+
+      cy.get(
+        '#referral-reason-ABC123'
+      ).type('Sunt in culpa qui officia deserunt mollit anim id est laborum.', { force: true });
+
+      cy.get('#conversation-notes-ABC123').type('Excepteur sint occaecat cupidatat non proident', {
+        force: true
+      });
+
+      cy.get('#consent-ABC123').click({ force: true });
+      cy.get('#referer-name-ABC123').type('Tina Belcher', {
+        force: true
+      });
+      cy.get('#referer-organisation-ABC123').should('have.value', 'Hackney Council');
+    });
+    it('Displays continue call or finish call after a referral was successfully submitted', () => {
+      cy.intercept('/api/referrals', {
+        status: 201,
+        body: {
+          id: '123',
+          errors: []
+        }
+      });
+      cy.get('#referer-email-ABC123').type('simulate-delivered@test.com');
+      cy.get('#submit-ABC123').click();
+
+      cy.get(`[data-testid=continue-call-button]`).should('be.visible');
+      cy.get(`[data-testid=finish-call-button]`).should('be.visible');
+    });
+
+    it('Displays continue call or finish call after a referral was unsuccessfully submitted', () => {
+      cy.intercept('/api/referrals', {
+        status: 201,
+        body: {
+          id: '123',
+          errors: ['error']
+        }
+      });
+      cy.get('#referer-email-ABC123').type('perm-fail@test.com');
+      cy.get('#submit-ABC123').click({ force: true });
+
+      cy.get(`[data-testid=continue-call-button]`).should('be.visible');
+      cy.get(`[data-testid=finish-call-button]`).should('be.visible');
+    });
+
+    it('Persists the data across referrals if continue call is selected', () => {
+      cy.intercept('/api/referrals', {
+        status: 201,
+        body: {
+          id: '123',
+          errors: []
+        }
+      });
+      cy.get('#referer-email-ABC123').type('perm-fail@test.com');
+      cy.get('#submit-ABC123').click({ force: true });
+      cy.get(`[data-testid=continue-call-button]`).click();
+
+      cy.get('[data-testid=category-card]')
+        .eq(1)
+        .click();
+      cy.get('#referral-abc-2').click({ force: true });
+
+      cy.get('#firstName').should('have.value', 'Luna');
+      cy.get('#lastName').should('have.value', 'Kitty');
+      cy.get('#phone').should('have.value', '07700900000');
+      cy.get('#email').should('have.value', 'luna@meow.com');
+      cy.get('#address').should('have.value', '159 Cute Street');
+      cy.get('#postcode').should('have.value', 'M3 0W');
+    });
+
+    it('Does not persist the data across referrals if continue call is not selected', () => {
+      cy.intercept('/api/referrals', {
+        status: 201,
+        body: {
+          id: '123',
+          errors: []
+        }
+      });
+      cy.get('#referer-email-ABC123').type('perm-fail@test.com');
+      cy.get('#submit-ABC123').click({ force: true });
+
+      cy.get('[data-testid=category-card]')
+        .eq(1)
+        .click();
+      cy.get('#referral-abc-2').click({ force: true });
+
+      cy.get('#firstName').should('have.value', '');
+      cy.get('#lastName').should('have.value', '');
+      cy.get('#phone').should('have.value', '');
+      cy.get('#email').should('have.value', '');
+      cy.get('#address').should('have.value', '');
+      cy.get('#postcode').should('have.value', '');
+    });
+
+    it('Persists the data to summary if continue call is selected', () => {
+      cy.intercept('/api/referrals', {
+        status: 201,
+        body: {
+          id: '123',
+          errors: []
+        }
+      });
+      cy.get('#referer-email-ABC123').type('perm-fail@test.com');
+      cy.get('#submit-ABC123').click({ force: true });
+      cy.get(`[data-testid=continue-call-button]`).click();
+
+      cy.get('#add-to-summary-checkbox-1-1').click();
+      cy.get('#summary-summary-form').click();
+
+      cy.get('#firstName').should('have.value', 'Luna');
+      cy.get('#lastName').should('have.value', 'Kitty');
+      cy.get('#phone').should('have.value', '07700900000');
+      cy.get('#email').should('have.value', 'luna@meow.com');
+      cy.get('#address').should('have.value', '159 Cute Street');
+      cy.get('#postcode').should('have.value', 'M3 0W');
+    });
+
+    it('Page is reloaded if finish call is selected', () => {
+      cy.intercept('/api/referrals', {
+        status: 201,
+        body: {
+          id: '123',
+          errors: []
+        }
+      });
+      cy.get('#referer-email-ABC123').type('perm-fail@test.com');
+      cy.get('#submit-ABC123').click({ force: true });
+      cy.get('[data-testid="search-results-header"]').should('exist');
+
+      cy.get(`[data-testid=finish-call-button]`).click();
+
+      cy.get('[data-testid="search-results-header"]').should('not.exist');
     });
   });
 });

@@ -9,28 +9,7 @@ context('Create summary', () => {
     cy.injectAxe();
   });
 
-  it('resident form is hidden', () => {
-    cy.contains('Residents details').should('be.visible');
-    cy.get('#resident-details').should('not.be.visible');
-  });
-
-  it('it displays resident detail form when no details are entered', () => {
-    cy.get('#summary-summary-form')
-      .contains('Email the resident with details of services')
-      .click();
-
-    cy.get('#resident-details').should('be.visible');
-    cy.get('#summary-form').should('not.exist');
-  });
-
   it('displays error message when no services are selected', () => {
-    cy.get('#firstName').type('Luna');
-    cy.get('#lastName').type('Kitty');
-    cy.get('#phone').type('07123456789');
-    cy.get('#email').type('luna@meow.com');
-    cy.get('#address').type('159 Cute Street');
-    cy.get('#postcode').type('M3 0W');
-
     cy.get('#summary-summary-form').click();
 
     cy.get('#summary-form').should('not.exist');
@@ -54,6 +33,13 @@ context('Create summary', () => {
     cy.get('#summary-summary-form').click();
 
     cy.get('#summary-error').should('not.exist');
+
+    cy.get('#firstName').type('Luna');
+    cy.get('#lastName').type('Kitty');
+    cy.get('#phone').type('07123456789');
+    cy.get('#email').type('luna@meow.com');
+    cy.get('#address').type('159 Cute Street');
+    cy.get('#postcode').type('M3 0W');
 
     cy.get('#support-summary-note').should(
       'have.value',
@@ -178,5 +164,17 @@ context('Create summary', () => {
     cy.get('[data-testid=conversation-competition-msg]')
       .contains('To help another resident please refresh this page')
       .should('be.visible');
+
+    cy.get('[data-testid=category-card]')
+      .eq(0)
+      .click();
+    cy.get('#referral-ABC123-1').click({ force: true });
+
+    cy.get('#firstName').should('have.value', '');
+    cy.get('#lastName').should('have.value', '');
+    cy.get('#phone').should('have.value', '');
+    cy.get('#email').should('have.value', '');
+    cy.get('#address').should('have.value', '');
+    cy.get('#postcode').should('have.value', '');
   });
 });

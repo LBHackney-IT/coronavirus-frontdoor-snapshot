@@ -7,7 +7,15 @@
   border-left: 2px solid;
   border-color: #8aa367;
   margin-top: 16px;
+  clear: both;
 }
 .error-message {
   background-color: #f4ccccff !important;
+  clear: both;
+  border-left: 2px solid;
+  border-color: #ab1f13;
+}
+.notification-button {
+  float: right;
+  margin: 8px;
 }

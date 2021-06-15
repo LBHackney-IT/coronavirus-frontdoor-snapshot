@@ -4,7 +4,6 @@ import HttpStatusError from 'lib/api/domain/HttpStatusError';
 import { getTokenFromCookieHeader } from 'lib/utils/token';
 import { getEmailBody } from 'lib/utils/getEmailBody';
 import Services from 'components/Feature/Services';
-import ResidentDetailsForm from 'components/Feature/ResidentDetailsForm';
 import SupportSummary from 'components/Feature/SupportSummary';
 import { useState } from 'react';
 import jsonwebtoken from 'jsonwebtoken';
@@ -20,7 +19,6 @@ const Index = ({ categorisedResources, initialReferral, token, errors, refererIn
     return <p>Loading...</p>;
   }
   const [residentInfo, setResidentInfo] = useState(false);
-  const [showResidentForm, setShowResidentForm] = useState(false);
   const [referralCompletion, setReferralCompletion] = useState({ tis: null });
   const [referralSummary, setReferralSummary] = useState([]);
   const [signpostSummary, setSignpostSummary] = useState([]);
@@ -32,13 +30,8 @@ const Index = ({ categorisedResources, initialReferral, token, errors, refererIn
       : 'Hackney Council',
     'user-groups': refererInfo?.groups
   });
+  const [preserveFormData, setPreserveFormData] = useState(true);
 
-  const residentFormCallback = val => {
-    setShowResidentForm(val);
-  };
-  const residentInfoCallback = value => {
-    setResidentInfo(value);
-  };
   const updateSignpostSummary = service => {
     let newSignpostSummary;
     if (
@@ -54,9 +47,11 @@ const Index = ({ categorisedResources, initialReferral, token, errors, refererIn
 
   const updateEmailBody = (
     newSignpostSummary = signpostSummary,
-    newReferralSummary = referralSummary
+    newReferralSummary = referralSummary,
+    newReferrerData = referrerData,
+    newResidentInfo = residentInfo
   ) => {
-    return getEmailBody(residentInfo, newSignpostSummary, newReferralSummary, referrerData);
+    return getEmailBody(newResidentInfo, newSignpostSummary, newReferralSummary, newReferrerData);
   };
 
   const [emailBody, setEmailBody] = useState(updateEmailBody());
@@ -66,19 +61,6 @@ const Index = ({ categorisedResources, initialReferral, token, errors, refererIn
       <Head>
         <title>Better Conversations</title>
       </Head>
-      <ResidentDetailsForm
-        residentInfoCallback={residentInfoCallback}
-        showResidentForm={showResidentForm}
-        setShowResidentForm={setShowResidentForm}
-        token={token}
-        setReferralCompletion={setReferralCompletion}
-        referralCompletion={referralCompletion}
-        referralSummary={referralSummary}
-        setReferralSummary={setReferralSummary}
-        updateEmailBody={updateEmailBody}
-        setEmailBody={setEmailBody}
-        referrerData={referrerData}
-      />
       <div className="govuk-!-margin-top-9">
         {errors.map((err, index) => (
           <p key={`error-getting-resources-${index}`} className="govuk-error-message">
@@ -89,26 +71,35 @@ const Index = ({ categorisedResources, initialReferral, token, errors, refererIn
       <Services
         categorisedResources={categorisedResources}
         residentInfo={residentInfo}
-        refererInfo={refererInfo}
-        residentFormCallback={residentFormCallback}
         referralCompletion={referralCompletion}
         setReferralCompletion={setReferralCompletion}
         updateSignpostSummary={updateSignpostSummary}
         signpostSummary={signpostSummary}
         referrerData={referrerData}
         setReferrerData={setReferrerData}
+        setResidentInfo={setResidentInfo}
+        token={token}
+        referralSummary={referralSummary}
+        setReferralSummary={setReferralSummary}
+        updateEmailBody={updateEmailBody}
+        setEmailBody={setEmailBody}
+        setPreserveFormData={setPreserveFormData}
+        preserveFormData={preserveFormData}
       />
       <SupportSummary
         referralSummary={referralSummary}
-        residentFormCallback={residentFormCallback}
         signpostSummary={signpostSummary}
         updateSignpostSummary={updateSignpostSummary}
         referrerData={referrerData}
         setReferrerData={setReferrerData}
-        residentInfo={residentInfo}
         emailBody={emailBody}
         setEmailBody={setEmailBody}
         token={token}
+        setResidentInfo={setResidentInfo}
+        residentInfo={residentInfo}
+        updateEmailBody={updateEmailBody}
+        setPreserveFormData={setPreserveFormData}
+        preserveFormData={preserveFormData}
       />
     </>
   );

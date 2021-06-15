@@ -8,13 +8,21 @@ import { CATEGORY_CATEGORIES, CATEGORY_SEARCH } from 'lib/utils/analyticsConstan
 
 const Services = ({
   categorisedResources,
-  residentFormCallback,
   referralCompletion,
   setReferralCompletion,
   updateSignpostSummary,
   referrerData,
   setReferrerData,
-  signpostSummary
+  signpostSummary,
+  setResidentInfo,
+  token,
+  referralSummary,
+  setReferralSummary,
+  updateEmailBody,
+  setEmailBody,
+  residentInfo,
+  setPreserveFormData,
+  preserveFormData
 }) => {
   const [openReferralForm, setOpenReferralForm] = useState({});
   const [referralData, setReferralData] = useState({});
@@ -27,10 +35,8 @@ const Services = ({
     if (!isOpen) {
       document.getElementById(id).setAttribute('open', true);
       setOpenReferralForm({ id: serviceId, categoryName });
-      residentFormCallback(true);
     } else {
       setOpenReferralForm({});
-      residentFormCallback(false);
     }
   };
 
@@ -130,7 +136,6 @@ const Services = ({
 
             {filteredResources.resources.map(resource => (
               <ResourceCard
-                key={`resource-card-${resource.id}-${resource.name}`}
                 data-testid={`resource-${resource.id}`}
                 {...resource}
                 updateSelectedResources={() => {}}
@@ -145,6 +150,15 @@ const Services = ({
                 setReferrerData={setReferrerData}
                 updateSignpostSummary={updateSignpostSummary}
                 signpostSummary={signpostSummary}
+                setResidentInfo={setResidentInfo}
+                token={token}
+                referralSummary={referralSummary}
+                setReferralSummary={setReferralSummary}
+                updateEmailBody={updateEmailBody}
+                setEmailBody={setEmailBody}
+                residentInfo={residentInfo}
+                setPreserveFormData={setPreserveFormData}
+                preserveFormData={preserveFormData}
               />
             ))}
           </div>
