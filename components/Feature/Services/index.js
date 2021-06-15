@@ -118,7 +118,11 @@ const Services = ({
       <h2 id="resources-header" className={`govuk-heading-l`}>
         Explore categories
       </h2>
-      <Categories categorisedResources={categorisedResources} clickCategory={clickCategory} />
+      <Categories
+        categorisedResources={categorisedResources}
+        clickCategory={clickCategory}
+        selectedCategory={filteredResources?.name}
+      />
       <div className="govuk-grid-column-full"></div>
       <div className="govuk-grid-column-full-width">
         <hr
