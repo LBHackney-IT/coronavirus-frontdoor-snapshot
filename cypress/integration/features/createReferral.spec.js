@@ -310,12 +310,12 @@ describe('Referral form', () => {
         .click();
       cy.get('#referral-abc-2').click({ force: true });
 
-      cy.get('#firstName').should('not.have.value', '');
-      cy.get('#lastName').should('not.have.value', '');
-      cy.get('#phone').should('not.have.value', '');
-      cy.get('#email').should('not.have.value', '');
-      cy.get('#address').should('not.have.value', '');
-      cy.get('#postcode').should('not.have.value', '');
+      cy.get('#firstName').should('have.value', '');
+      cy.get('#lastName').should('have.value', '');
+      cy.get('#phone').should('have.value', '');
+      cy.get('#email').should('have.value', '');
+      cy.get('#address').should('have.value', '');
+      cy.get('#postcode').should('have.value', '');
     });
 
     it('Persists the data to summary if continue call is selected', () => {
