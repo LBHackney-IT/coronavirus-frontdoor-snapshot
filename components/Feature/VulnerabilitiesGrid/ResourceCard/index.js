@@ -212,42 +212,41 @@ const ResourceCard = ({
                   openReferralForm.categoryName == categoryName &&
                   (referralCompletion[id] ? (
                     <div>
-                      {referralCompletion[id].errors?.length > 0 ? (
+                      {referralCompletion[id].errors?.length > 0 && (
                         <div
                           data-testid="referral-errors-banner"
                           className={`${notificationCss['error-message']}`}>
                           {referralCompletion[id].errors.join('\n')}
                         </div>
-                      ) : (
-                        <>
-                          <div
-                            data-testid="successful-referral-banner"
-                            className={`${notificationCss['success-message']}`}>
-                            Successfully submitted referral for {residentInfo?.firstName}{' '}
-                            {residentInfo?.lastName}
-                          </div>
-                          <button
-                            type="button"
-                            className="govuk-button"
-                            onClick={e => {
-                              setPreserveFormData(true);
-                              detailsClicked(
-                                e,
-                                `referral-${id}-${categoryId}-details`,
-                                id,
-                                categoryName
-                              );
-                            }}>
-                            Continue Call
-                          </button>
-                          <button
-                            type="button"
-                            className="govuk-button"
-                            onClick={() => (window.location = process.env.NEXT_PUBLIC_URL)}>
-                            Finish Call
-                          </button>
-                        </>
                       )}
+                      <div
+                        data-testid="successful-referral-banner"
+                        className={`${notificationCss['success-message']}`}>
+                        Successfully submitted referral for {residentInfo?.firstName}{' '}
+                        {residentInfo?.lastName}
+                      </div>
+                      <button
+                        type="button"
+                        className="govuk-button"
+                        onClick={e => {
+                          setPreserveFormData(true);
+                          detailsClicked(
+                            e,
+                            `referral-${id}-${categoryId}-details`,
+                            id,
+                            categoryName
+                          );
+                        }}
+                        data-testid="continue-call-button">
+                        Continue Call
+                      </button>
+                      <button
+                        type="button"
+                        className="govuk-button"
+                        onClick={() => (window.location = process.env.NEXT_PUBLIC_URL)}
+                        data-testid="finish-call-button">
+                        Finish Call
+                      </button>
                     </div>
                   ) : (
                     <div id={`referral-${id}-${categoryId}-form`} className={css['referral-form']}>
