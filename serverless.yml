@@ -196,7 +196,7 @@ resources:
         Namespace: AWS/Lambda
         MetricName: 'errors-${self:provider.stage}'
         Statistic: Sum
-        Threshold: 1
+        Threshold: 0
         ComparisonOperator: GreaterThanThreshold
         EvaluationPeriods: 1
         Period: 3600
