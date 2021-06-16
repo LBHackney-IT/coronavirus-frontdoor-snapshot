@@ -193,7 +193,7 @@ resources:
       Type: AWS::CloudWatch::Alarm
       Properties:
         AlarmDescription: Errors detected at better conversations lambda
-        Namespace: AWS/Lambda
+        Namespace: ErrorLogs
         MetricName: 'errors-${self:provider.stage}'
         Statistic: Sum
         Threshold: 0
