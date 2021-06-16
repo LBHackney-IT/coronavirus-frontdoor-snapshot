@@ -189,6 +189,37 @@ resources:
           - MetricName: 'errors-${self:provider.stage}'
             MetricNamespace: ErrorLogs
             MetricValue: '1'
+    FrontdoorLambdaErrorAlarm:
+      Type: AWS::CloudWatch::Alarm
+      Properties:
+        AlarmDescription: Errors detected at better conversations lambda
+        Namespace: AWS/Lambda
+        MetricName: 'errors-${self:provider.stage}'
+        Statistic: Sum
+        Threshold: 1
+        ComparisonOperator: GreaterThanThreshold
+        EvaluationPeriods: 1
+        Period: 3600
+        Dimensions:
+          - Name: FunctionName
+            Value:
+              - ${self:service}-${self:provider.stage}
+          - Name: Stage
+            Value:
+              Ref: ${self:provider.stage}
+        AlarmActions:
+          - Ref: TopicCloudwatchAlarm
+    TopicCloudwatchAlarm:
+      Type: AWS::SNS::Topic
+      Properties:
+        TopicName: ${self:service}-${self:provider.stage}-topic-cloudwatch-alarm
+    TopicCloudwatchAlarmSubscription:
+      Type: AWS::SNS::Subscription
+      Properties:
+        Endpoint: ${ssm:/frontdoor-snapshot/alarm-subscription-email}
+        Protocol: email
+        TopicArn:
+          Ref: TopicCloudwatchAlarm
 
 custom:
   authorizer:
