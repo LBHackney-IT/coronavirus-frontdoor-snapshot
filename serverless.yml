@@ -199,7 +199,7 @@ resources:
         Threshold: 0
         ComparisonOperator: GreaterThanThreshold
         EvaluationPeriods: 1
-        Period: 60
+        Period: 3600
         AlarmActions:
           - Ref: TopicCloudwatchAlarm
     TopicCloudwatchAlarm:
