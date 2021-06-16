@@ -204,9 +204,6 @@ resources:
           - Name: FunctionName
             Value:
               - ${self:service}-${self:provider.stage}
-          - Name: Stage
-            Value:
-              Ref: ${self:provider.stage}
         AlarmActions:
           - Ref: TopicCloudwatchAlarm
     TopicCloudwatchAlarm:
