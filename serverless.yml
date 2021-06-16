@@ -202,8 +202,7 @@ resources:
         Period: 3600
         Dimensions:
           - Name: FunctionName
-            Value:
-              - '${self:service}-${self:provider.stage}'
+            Value: '${self:service}-${self:provider.stage}'
         AlarmActions:
           - Ref: TopicCloudwatchAlarm
     TopicCloudwatchAlarm:
