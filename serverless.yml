@@ -199,10 +199,7 @@ resources:
         Threshold: 0
         ComparisonOperator: GreaterThanThreshold
         EvaluationPeriods: 1
-        Period: 3600
-        Dimensions:
-          - Name: FunctionName
-            Value: '${self:service}-${self:provider.stage}'
+        Period: 60
         AlarmActions:
           - Ref: TopicCloudwatchAlarm
     TopicCloudwatchAlarm:
