@@ -1,10 +1,15 @@
 import { useState } from 'react';
 import ResourceCard from 'components/Feature/VulnerabilitiesGrid/ResourceCard';
 import Categories from './Categories';
+import Details from 'components/Form/Details';
 import styles from './index.module.scss';
 import { sendDataToAnalytics, getUserGroup } from 'lib/utils/analytics';
 import { getSearchResults } from 'lib/utils/search';
-import { CATEGORY_CATEGORIES, CATEGORY_SEARCH } from 'lib/utils/analyticsConstants';
+import {
+  CATEGORY_CATEGORIES,
+  CATEGORY_SEARCH,
+  FEEDBACK_SEARCH
+} from 'lib/utils/analyticsConstants';
 
 const Services = ({
   categorisedResources,
@@ -27,6 +32,8 @@ const Services = ({
   const [openReferralForm, setOpenReferralForm] = useState({});
   const [referralData, setReferralData] = useState({});
   const [filteredResources, setFilteredResources] = useState(null);
+  const [isSearchResult, setIsSearchResult] = useState({});
+  const [feedbackSubmitted, setFeedbackSubmitted] = useState(false);
 
   const detailsClicked = (e, id, serviceId, categoryName) => {
     e.preventDefault();
@@ -37,6 +44,20 @@ const Services = ({
       setOpenReferralForm({ id: serviceId, categoryName });
     } else {
       setOpenReferralForm({});
+    }
+  };
+
+  const sendFeedback = () => {
+    let enteredText = document.getElementById('search-feedback').value;
+    if (enteredText?.length > 0) {
+      sendDataToAnalytics({
+        action: getUserGroup(referrerData['user-groups']),
+        category: FEEDBACK_SEARCH,
+        label: document.getElementById('keyword-search').value,
+        value: filteredResources?.resources?.length,
+        custom_text: enteredText
+      });
+      setFeedbackSubmitted(true);
     }
   };
 
@@ -62,6 +83,8 @@ const Services = ({
 
   const handleSearch = e => {
     e.preventDefault();
+    setIsSearchResult(true);
+    setFeedbackSubmitted(false);
 
     const searchTerm = e.target['search-input'].value;
     const searchResults = getSearchResults(searchTerm, categorisedResources);
@@ -79,6 +102,7 @@ const Services = ({
     window.location.href = '#search-results-divider';
   };
   const clickCategory = e => {
+    setIsSearchResult(false);
     document.getElementsByName('refer-details').forEach(x => x.removeAttribute('open'));
     setOpenReferralForm({});
     window.location.href = '#search-results-divider';
@@ -130,9 +154,39 @@ const Services = ({
             <h2 id="search-results-header">Search results</h2>
             <h2
               data-testid="search-results-header"
-              className={`${styles['search-results-header']}`}>
+              className={`${styles['search-results-header']} ${!isSearchResult &&
+                'govuk-!-margin-bottom-8'}`}>
               {filteredResources.name}
             </h2>
+
+            {isSearchResult && (
+              <div className="govuk-!-margin-bottom-6">
+                <p>
+                  If the search results don't contain a service or information you require, please
+                  let us know.
+                </p>
+                {!feedbackSubmitted ? (
+                  <Details id="feedback-summary" title="Provide feedback">
+                    <div className="govuk-inset-text">
+                      <textarea
+                        id="search-feedback"
+                        maxLength="450"
+                        className={styles['feedback-textarea']}
+                      />
+                      <br />
+                      <button onClick={sendFeedback} className={`govuk-button`}>
+                        Send
+                      </button>
+                    </div>
+                  </Details>
+                ) : (
+                  <div className={styles['success-message']}>
+                    Feedback submitted. Thank you for providing us with information to assist in
+                    improving this tool.
+                  </div>
+                )}
+              </div>
+            )}
 
             {filteredResources.resources.map(resource => (
               <ResourceCard

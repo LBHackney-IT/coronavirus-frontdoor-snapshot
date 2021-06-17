@@ -33,6 +33,8 @@ export default class AppDocument extends Document {
             gtag('js', new Date());
             gtag('config', '${process.env.NEXT_PUBLIC_GTM_ID}', {
               page_path: window.location.pathname,
+              'custom_map': {'dimension1': 'custom_text'},
+              'anonymize_ip': true
             });
           `
             }}
