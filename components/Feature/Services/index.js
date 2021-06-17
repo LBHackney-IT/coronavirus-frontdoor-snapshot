@@ -33,6 +33,7 @@ const Services = ({
   const [referralData, setReferralData] = useState({});
   const [filteredResources, setFilteredResources] = useState(null);
   const [feedbackSubmitted, setFeedbackSubmitted] = useState(false);
+  const [resultsTitle, setResultsTitle] = useState(null);
 
   const detailsClicked = (e, id, serviceId, categoryName) => {
     e.preventDefault();
@@ -46,13 +47,13 @@ const Services = ({
     }
   };
 
-  const sendFeedback = () => {
-    let enteredText = document.getElementById('search-feedback').value;
+  const sendFeedback = e => {
+    let enteredText = e.target['search-feedback'].value;
     if (enteredText?.length > 0) {
       sendDataToAnalytics({
         action: getUserGroup(referrerData['user-groups']),
         category: FEEDBACK_SEARCH,
-        label: document.getElementById('keyword-search').value,
+        label: resultsTitle,
         value: filteredResources?.resources?.length,
         custom_text: enteredText
       });
@@ -85,9 +86,10 @@ const Services = ({
     setFeedbackSubmitted(false);
 
     const searchTerm = e.target['search-input'].value;
+    setResultsTitle(searchTerm);
+
     const searchResults = getSearchResults(searchTerm, categorisedResources);
     const newFilteredResources = flattenSearchResults(searchResults);
-
     newFilteredResources.resources.sort((a, b) => b.weight - a.weight);
 
     setFilteredResources(newFilteredResources);
@@ -101,9 +103,13 @@ const Services = ({
   };
   const clickCategory = e => {
     document.getElementsByName('refer-details').forEach(x => x.removeAttribute('open'));
+
+    setResultsTitle(e);
     setOpenReferralForm({});
     setFeedbackSubmitted(false);
+
     window.location.href = '#search-results-divider';
+
     sendDataToAnalytics({
       action: getUserGroup(referrerData['user-groups']),
       category: CATEGORY_CATEGORIES,
@@ -163,17 +169,20 @@ const Services = ({
               </p>
               {!feedbackSubmitted ? (
                 <Details id="feedback-summary" title="Provide feedback">
-                  <div className="govuk-inset-text">
-                    <textarea
-                      id="search-feedback"
-                      maxLength="450"
-                      className={styles['feedback-textarea']}
-                    />
-                    <br />
-                    <button onClick={sendFeedback} className={`govuk-button`}>
-                      Send
-                    </button>
-                  </div>
+                  <form id="search-feedback-form" onSubmit={sendFeedback}>
+                    <div className="govuk-inset-text">
+                      <textarea
+                        id="search-feedback"
+                        name="search-feedback"
+                        maxLength="450"
+                        className={styles['feedback-textarea']}
+                      />
+                      <br />
+                      <button type="submit" className={`govuk-button`}>
+                        Send
+                      </button>
+                    </div>
+                  </form>
                 </Details>
               ) : (
                 <div className={styles['success-message']}>
