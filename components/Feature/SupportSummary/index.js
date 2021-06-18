@@ -116,9 +116,9 @@ const SupportSummary = ({
 
   return (
     <>
-      <Heading as="h2" id="summary-header">
+      <h1 className={`govuk-heading-l`} id="summary-header">
         Send a summary of today's support
-      </Heading>
+      </h1>
       <Details
         title="Email the resident with details of services"
         id="summary-form"
@@ -174,7 +174,9 @@ const SupportSummary = ({
                           onClick={() => setToBeDeleted(signpost.name)}
                           className={styles['remove-button']}
                           disabled={toBeDeleted == signpost.name}
-                          data-testid="remove-from-summary">
+                          data-testid="remove-from-summary"
+                          role="button"
+                          aria-label={`remove ${signpost.name} from summary`}>
                           <FontAwesomeIcon icon={faTimesCircle} color="red" />
                         </button>
                         {signpost.name}

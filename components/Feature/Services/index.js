@@ -121,11 +121,10 @@ const Services = ({
   return (
     <>
       <form onSubmit={handleSearch}>
-        <label
-          htmlFor="keyword-search"
-          id="search-for-support-header"
-          className={`govuk-heading-l`}>
-          Search for support
+        <label htmlFor="keyword-search">
+          <h1 id="search-for-support-header" className={`govuk-heading-l`}>
+            Search for support
+          </h1>
         </label>
         <input
           id="keyword-search"
@@ -143,9 +142,9 @@ const Services = ({
           Search
         </button>
       </form>
-      <h2 id="resources-header" className={`govuk-heading-l`}>
+      <h1 id="resources-header" className={`govuk-heading-l`}>
         Explore categories
-      </h2>
+      </h1>
       <Categories
         categorisedResources={categorisedResources}
         clickCategory={clickCategory}
@@ -159,7 +158,9 @@ const Services = ({
         />
         {filteredResources && (
           <div key={`search-result-${filteredResources.id}`} data-testid="search-results-container">
-            <h2 id="search-results-header">Search results</h2>
+            <h1 id="search-results-header" className={`govuk-heading-l`}>
+              Search results
+            </h1>
             <h2
               data-testid="search-results-header"
               className={`${styles['search-results-header']}`}>
@@ -175,6 +176,9 @@ const Services = ({
                 <Details id="feedback-summary" title="Provide feedback">
                   <form id="search-feedback-form" onSubmit={sendFeedback}>
                     <div className="govuk-inset-text">
+                      <div>
+                        <label htmlFor="search-feedback">Search results feedback</label>
+                      </div>
                       <textarea
                         id="search-feedback"
                         name="search-feedback"

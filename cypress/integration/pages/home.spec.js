@@ -13,10 +13,6 @@ context('Index page', () => {
     it('displays the search-box', () => {
       cy.contains('Search for support').should('be.visible');
       cy.get('[data-testid=keyword-search]').should('be.visible');
-    });
-
-    it('has no content outside top-level headings', () => {
-      cy.checkA11y('#content > h2', null, cy.terminalLog);
       cy.runCheckA11y();
     });
   });

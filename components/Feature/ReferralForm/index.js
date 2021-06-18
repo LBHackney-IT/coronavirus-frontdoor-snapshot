@@ -144,6 +144,9 @@ const ReferralForm = ({
               />
             </div>
             <div className={`govuk-grid-column-one-half`}>
+              <label htmlFor={`service-name-${id}`} hidden>
+                Service name
+              </label>
               <input
                 id={`service-name-${id}`}
                 name="service-name"
@@ -151,6 +154,9 @@ const ReferralForm = ({
                 type="text"
                 hidden
               />
+              <label htmlFor={`service-contact-email-${id}`} hidden>
+                Service email
+              </label>
               <input
                 id={`service-contact-email-${id}`}
                 name="service-contact-email"
@@ -158,6 +164,9 @@ const ReferralForm = ({
                 type="text"
                 hidden
               />
+              <label htmlFor={`service-contact-phone-${id}`} hidden>
+                Service phone
+              </label>
               <input
                 id={`service-contact-phone-${id}`}
                 name="service-contact-phone"
@@ -165,6 +174,9 @@ const ReferralForm = ({
                 type="text"
                 hidden
               />
+              <label htmlFor={`service-referral-email-${id}`} hidden>
+                Service referral email
+              </label>
               <input
                 id={`service-referral-email-${id}`}
                 name="service-referral-email"
@@ -172,6 +184,9 @@ const ReferralForm = ({
                 type="text"
                 hidden
               />
+              <label htmlFor={`service-address-${id}`} hidden>
+                Service address
+              </label>
               <input
                 id={`service-address-${id}`}
                 name="service-address"
@@ -179,6 +194,9 @@ const ReferralForm = ({
                 type="text"
                 hidden
               />
+              <label htmlFor={`service-websites-${id}`} hidden>
+                Service websites
+              </label>
               <input
                 id={`service-websites-${id}`}
                 name="service-websites"
@@ -186,6 +204,9 @@ const ReferralForm = ({
                 type="text"
                 hidden
               />
+              <label htmlFor={`service-description-${id}`} hidden>
+                Service describtion
+              </label>
               <input
                 id={`service-description-${id}`}
                 name="service-description"
@@ -197,9 +218,11 @@ const ReferralForm = ({
                 className={`govuk-form-group govuk-!-padding-bottom-2 govuk-!-padding-top-4 ${
                   validationError[`referral-reason-${id}`] ? 'govuk-form-group--error' : ''
                 }`}>
-                <legend className="govuk-fieldset__legend govuk-fieldset__legend--s">
-                  Reason for referral, please give as much detail as possible
-                </legend>
+                <label className="govuk-label inline" htmlFor={`referral-reason-${id}`}>
+                  <legend className="govuk-fieldset__legend govuk-fieldset__legend--s">
+                    Reason for referral, please give as much detail as possible
+                  </legend>
+                </label>
                 {validationError[`referral-reason-${id}`] && (
                   <span
                     id="more-detail-error"
@@ -228,9 +251,11 @@ const ReferralForm = ({
                 className={`govuk-form-group govuk-!-padding-bottom-2 ${
                   validationError[`conversation-notes-${id}`] ? 'govuk-form-group--error' : ''
                 }`}>
-                <legend className="govuk-fieldset__legend govuk-fieldset__legend--s">
-                  Notes on wider conversation(other needs, living situation, key information
-                </legend>
+                <label className="govuk-label inline" htmlFor={`conversation-notes-${id}`}>
+                  <legend className="govuk-fieldset__legend govuk-fieldset__legend--s">
+                    Notes on wider conversation(other needs, living situation, key information
+                  </legend>
+                </label>
                 {validationError[`conversation-notes-${id}`] && (
                   <span
                     id="more-detail-error"

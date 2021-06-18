@@ -64,7 +64,7 @@ const severityIndicators = {
   critical: '🔴'
 };
 const callback = violations => {
-  const threshold = 6;
+  const threshold = 3;
   violations.forEach(violation => {
     const nodes = Cypress.$(violation.nodes.map(node => node.target).join(','));
 

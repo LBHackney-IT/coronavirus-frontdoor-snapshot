@@ -60,7 +60,7 @@ const CategoryCard = ({ category, onclick, selectedCategory }) => {
         />
       </div>
       <div className={styles['content']}>
-        <h4>{category.name}</h4>
+        <h2 className={`govuk-heading-s`}>{category.name}</h2>
         <p>{category.description}</p>
       </div>
     </div>
