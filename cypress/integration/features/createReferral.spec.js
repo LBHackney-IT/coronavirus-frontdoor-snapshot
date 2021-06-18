@@ -6,6 +6,7 @@ describe('Referral form', () => {
     cy.visit('/');
   });
   beforeEach(() => {
+    cy.injectAxe();
     cy.get('[data-testid=category-card]')
       .eq(0)
       .click();
@@ -90,6 +91,8 @@ describe('Referral form', () => {
     cy.get('#referer-name-abc').should('have.value', 'Tina Belcher');
     cy.get('#referer-organisation-abc').should('have.value', 'Hackney Council');
     cy.get('#referer-email-abc').should('have.value', 'perm-fail@simulator.notify');
+
+    cy.runCheckA11y();
   });
 
   describe('Validation', () => {
@@ -124,6 +127,8 @@ describe('Referral form', () => {
         cy.get('#phone').should('have.class', 'govuk-input--error');
         cy.get('#address').should('have.class', 'govuk-input--error');
         cy.get('#postcode').should('have.class', 'govuk-input--error');
+
+        cy.runCheckA11y();
       });
     });
 
@@ -159,6 +164,7 @@ describe('Referral form', () => {
   describe('Error handling', () => {
     beforeEach(() => {
       cy.visit('/');
+      cy.injectAxe();
       cy.get('[data-testid=category-card]')
         .eq(0)
         .click();
@@ -184,6 +190,7 @@ describe('Referral form', () => {
       });
       cy.get('#referer-organisation-ABC123').should('have.value', 'Hackney Council');
     });
+
     it('Displays a success message if referral is made', () => {
       cy.intercept('/api/referrals', {
         status: 201,
@@ -208,11 +215,14 @@ describe('Referral form', () => {
       cy.get('#referer-email-ABC123').type('perm-fail@test.com');
       cy.get('#submit-ABC123').click({ force: true });
       cy.get(`[data-testid=referral-errors-banner]`).should('be.visible');
+      cy.runCheckA11y();
     });
   });
   describe('Ending a conversation', () => {
     beforeEach(() => {
       cy.visit('/');
+      cy.injectAxe();
+
       cy.get('[data-testid=category-card]')
         .eq(0)
         .click();
@@ -251,6 +261,8 @@ describe('Referral form', () => {
 
       cy.get(`[data-testid=continue-call-button]`).should('be.visible');
       cy.get(`[data-testid=finish-call-button]`).should('be.visible');
+
+      cy.runCheckA11y();
     });
 
     it('Displays continue call or finish call after a referral was unsuccessfully submitted', () => {
@@ -266,6 +278,8 @@ describe('Referral form', () => {
 
       cy.get(`[data-testid=continue-call-button]`).should('be.visible');
       cy.get(`[data-testid=finish-call-button]`).should('be.visible');
+
+      cy.runCheckA11y();
     });
 
     it('Persists the data across referrals if continue call is selected', () => {
@@ -338,6 +352,8 @@ describe('Referral form', () => {
       cy.get('#email').should('have.value', 'luna@meow.com');
       cy.get('#address').should('have.value', '159 Cute Street');
       cy.get('#postcode').should('have.value', 'M3 0W');
+
+      cy.runCheckA11y();
     });
 
     it('Page is reloaded if finish call is selected', () => {

@@ -17,6 +17,7 @@ context('Index page', () => {
 
     it('has no content outside top-level headings', () => {
       cy.checkA11y('#content > h2', null, cy.terminalLog);
+      cy.runCheckA11y();
     });
   });
 
@@ -36,6 +37,7 @@ context('Index page', () => {
 
       cy.get('[data-testid=search-results-header]').should('not.contain', 'First category');
       cy.get('[data-testid=search-results-header]').should('contain', 'Second category');
+      cy.runCheckA11y();
     });
   });
 
@@ -215,6 +217,7 @@ context('Index page', () => {
       cy.get('[data-testid=resource-abc]')
         .find('input[name="service-contact-email"]')
         .should('have.attr', 'value', 'service@test.testy.com');
+      cy.runCheckA11y();
     });
   });
 
@@ -223,6 +226,7 @@ context('Index page', () => {
       cy.get('[data-testid="keyword-search-button"]').click();
 
       cy.get('[data-testid="search-results-header"]').should('contain', '7 results');
+      cy.runCheckA11y();
     });
 
     it('shows singular text if only 1 result returned', () => {
@@ -299,6 +303,7 @@ context('Index page', () => {
         .eq(1)
         .click();
       cy.get('#add-to-summary-checkbox-1-2').should('be.checked');
+      cy.runCheckA11y();
     });
   });
 });
