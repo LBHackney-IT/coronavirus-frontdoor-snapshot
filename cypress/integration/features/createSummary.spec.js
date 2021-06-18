@@ -63,6 +63,8 @@ context('Create summary', () => {
         '\n' +
         'Hackney Council\n'
     );
+
+    cy.runCheckA11y();
   });
 
   it('add referred services to the summary', () => {
@@ -120,6 +122,8 @@ context('Create summary', () => {
         `${referrerEmail}\n` +
         `${refererOrganisation}\n`
     );
+
+    cy.runCheckA11y();
   });
 
   it('referer details are saved to summary', () => {
@@ -176,5 +180,7 @@ context('Create summary', () => {
     cy.get('#email').should('have.value', '');
     cy.get('#address').should('have.value', '');
     cy.get('#postcode').should('have.value', '');
+
+    cy.runCheckA11y();
   });
 });

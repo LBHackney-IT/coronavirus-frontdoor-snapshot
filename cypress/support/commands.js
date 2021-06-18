@@ -53,5 +53,48 @@ const setHackneyCookie = isValidGroup => {
   });
 };
 
+const runCheckA11y = () => {
+  cy.checkA11y(null, null, callback, { skipFailures: true });
+};
+
+const severityIndicators = {
+  minor: '⚪',
+  moderate: '🟡',
+  serious: '🟠',
+  critical: '🔴'
+};
+const callback = violations => {
+  const threshold = 3;
+  violations.forEach(violation => {
+    const nodes = Cypress.$(violation.nodes.map(node => node.target).join(','));
+
+    Cypress.log({
+      name: `${severityIndicators[violation.impact]} A11Y`,
+      consoleProps: () => violation,
+      $el: nodes,
+      message: `[${violation.help}](${violation.helpUrl})`
+    });
+
+    violation.nodes.forEach(({ target }) => {
+      Cypress.log({
+        name: `🔧`,
+        consoleProps: () => violation,
+        $el: Cypress.$(target.join(',')),
+        message: target
+      });
+    });
+  });
+  if (violations.length > threshold) {
+    Cypress.log({
+      name: `A11Y`,
+      consoleProps: () => violations,
+      $el: '',
+      message: `Acessibility violations have exceeded the maximum threshold of ${threshold}`
+    });
+    assert.isTrue(violations.length < threshold);
+  }
+};
+
 Cypress.Commands.add('terminalLog', terminalLog);
 Cypress.Commands.add('setHackneyCookie', setHackneyCookie);
+Cypress.Commands.add('runCheckA11y', runCheckA11y);
