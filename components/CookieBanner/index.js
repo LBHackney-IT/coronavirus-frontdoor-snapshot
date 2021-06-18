@@ -70,7 +70,7 @@ const CookieBanner = () => {
                 <span className="govuk-heading-m">Tell us whether you accept cookies</span>
                 <p className="govuk-body">
                   We use{' '}
-                  <a href="https://hackney.gov.uk/privacy" className="govuk-link">
+                  <a href="/privacy" className="govuk-link">
                     cookies to collect information
                   </a>{' '}
                   about how you use this site. We use this information to make the website work as
