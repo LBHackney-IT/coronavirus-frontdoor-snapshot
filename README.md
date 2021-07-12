@@ -120,6 +120,55 @@ The page displayed when a user is logged out.
 ### /snapshots/{id}
 Displays a vulnerability snapshot, if there is no data saved this will display the edit view - else it displays a readonly view of the snapshot.
 
+# Debugging
+## To debug in VSCode
+
+1. Add the following configuration to .vscode/launch.json file at the root of the project:
+
+```(bash)
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Yarn Launch",
+      "runtimeExecutable": "yarn",
+      "cwd": "${workspaceFolder}",
+      "runtimeArgs": ["debug"],
+      "port": 9229,
+      "console": "integratedTerminal"
+    },
+    {
+      "type": "node",
+      "request": "attach",
+      "name": "Attach",
+      "cwd": "${workspaceFolder}",
+      "port": 9229,
+      "stopOnEntry": false,
+      "restart": true
+    },
+    {
+      "type": "chrome",
+      "request": "launch",
+      "name": "Chrome",
+      "url": "http://localhost:3000",
+      "webRoot": "${workspaceFolder}"
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Debug-Full",
+      "configurations": ["Yarn Launch", "Attach", "Chrome"]
+    }
+  ]
+}
+```
+
+2. Launch the application in debug mode by running 'Debug-Full' from debug view
+3. Put breakpoints in the code and interact with the app through the chrome window that was opened by the debugger
+4. Use debug console in VSCode to investigate the results at breakpoints
+
 # License
 
 [MIT](./LICENSE)
