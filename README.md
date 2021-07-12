@@ -165,9 +165,13 @@ Displays a vulnerability snapshot, if there is no data saved this will display t
 }
 ```
 
-2. Launch the application in debug mode by running 'Debug-Full' from debug view
+2. Launch the application in debug mode by running 'Debug-Full' from debug view    
+   <img width="323" alt="image" src="https://user-images.githubusercontent.com/54268893/125300357-d9a7a280-e321-11eb-9638-e2010a44ba7f.png">
+
 3. Put breakpoints in the code and interact with the app through the chrome window that was opened by the debugger
+   <img width="1053" alt="image" src="https://user-images.githubusercontent.com/54268893/125301124-926de180-e322-11eb-8c7c-62c08ca4f0c2.png">
 4. Use debug console in VSCode to investigate the results at breakpoints
+   <img width="1080" alt="image" src="https://user-images.githubusercontent.com/54268893/125300976-70745f00-e322-11eb-8220-f2cec794448a.png">
 
 # License
 
