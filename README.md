@@ -120,6 +120,59 @@ The page displayed when a user is logged out.
 ### /snapshots/{id}
 Displays a vulnerability snapshot, if there is no data saved this will display the edit view - else it displays a readonly view of the snapshot.
 
+# Debugging
+## To debug in VSCode
+
+1. Add the following configuration to .vscode/launch.json file at the root of the project:
+
+```(bash)
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Yarn Launch",
+      "runtimeExecutable": "yarn",
+      "cwd": "${workspaceFolder}",
+      "runtimeArgs": ["debug"],
+      "port": 9229,
+      "console": "integratedTerminal"
+    },
+    {
+      "type": "node",
+      "request": "attach",
+      "name": "Attach",
+      "cwd": "${workspaceFolder}",
+      "port": 9229,
+      "stopOnEntry": false,
+      "restart": true
+    },
+    {
+      "type": "chrome",
+      "request": "launch",
+      "name": "Chrome",
+      "url": "http://localhost:3000",
+      "webRoot": "${workspaceFolder}"
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Debug-Full",
+      "configurations": ["Yarn Launch", "Attach", "Chrome"]
+    }
+  ]
+}
+```
+
+2. Launch the application in debug mode by running 'Debug-Full' from debug view    
+   <img width="323" alt="image" src="https://user-images.githubusercontent.com/54268893/125300357-d9a7a280-e321-11eb-9638-e2010a44ba7f.png">
+
+3. Put breakpoints in the code and interact with the app through the chrome window that was opened by the debugger
+   <img width="1053" alt="image" src="https://user-images.githubusercontent.com/54268893/125301124-926de180-e322-11eb-8c7c-62c08ca4f0c2.png">
+4. Use debug console in VSCode to investigate the results at breakpoints
+   <img width="1080" alt="image" src="https://user-images.githubusercontent.com/54268893/125300976-70745f00-e322-11eb-8220-f2cec794448a.png">
+
 # License
 
 [MIT](./LICENSE)
