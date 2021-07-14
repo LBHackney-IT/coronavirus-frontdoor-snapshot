@@ -31,6 +31,7 @@ const SupportSummary = ({
   setPreserveFormData
 }) => {
   const [validationError, setValidationError] = useState({});
+  const [analyticsSubmitted, setAnalyticsSubmitted] = useState(false);
 
   const { createConversation } = useConversation({ token });
 
@@ -204,7 +205,15 @@ const SupportSummary = ({
                   </div>
                 ))}
             </div>
-            <form id="summary-form" onInvalid={() => onInvalidAnalytics()} onSubmit={sendSummary}>
+            <form
+              id="summary-form"
+              onInvalid={() => {
+                if (!analyticsSubmitted) {
+                  onInvalidAnalytics();
+                  setAnalyticsSubmitted(true);
+                }
+              }}
+              onSubmit={sendSummary}>
               <ResidentDetails
                 onInvalidField={onInvalidField}
                 validationError={validationError}
