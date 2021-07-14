@@ -223,14 +223,17 @@ const ReferralForm = ({
                 className={`govuk-form-group govuk-!-padding-bottom-2 govuk-!-padding-top-4 ${
                   validationError[`referral-reason-${id}`] ? 'govuk-form-group--error' : ''
                 }`}>
-                <label className="govuk-label inline" htmlFor={`referral-reason-${id}`}>
+                <label
+                  id="referral-reason-label"
+                  className="govuk-label inline"
+                  htmlFor={`referral-reason-${id}`}>
                   <legend className="govuk-fieldset__legend govuk-fieldset__legend--s">
                     Reason for referral, please give as much detail as possible
                   </legend>
                 </label>
                 {validationError[`referral-reason-${id}`] && (
                   <span
-                    id="more-detail-error"
+                    id="referral-reason-error"
                     className={` ${
                       validationError[`referral-reason-${id}`] ? 'govuk-error-message' : ''
                     }`}>
@@ -244,7 +247,7 @@ const ReferralForm = ({
                   id={`referral-reason-${id}`}
                   name="referral-reason"
                   rows="5"
-                  aria-describedby="more-detail-hint more-detail-error"
+                  aria-describedby="referral-reason-label"
                   defaultValue={preserveFormData ? referralData['referral-reason'] : ''}
                   onChange={e => {
                     setReferralData({ ...referralData, 'referral-reason': e.target.value });
@@ -256,14 +259,17 @@ const ReferralForm = ({
                 className={`govuk-form-group govuk-!-padding-bottom-2 ${
                   validationError[`conversation-notes-${id}`] ? 'govuk-form-group--error' : ''
                 }`}>
-                <label className="govuk-label inline" htmlFor={`conversation-notes-${id}`}>
+                <label
+                  id="conversation-notes-label"
+                  className="govuk-label inline"
+                  htmlFor={`conversation-notes-${id}`}>
                   <legend className="govuk-fieldset__legend govuk-fieldset__legend--s">
                     Notes on wider conversation(other needs, living situation, key information
                   </legend>
                 </label>
                 {validationError[`conversation-notes-${id}`] && (
                   <span
-                    id="more-detail-error"
+                    id="conversation-notes-error"
                     className={` ${
                       validationError[`conversation-notes-${id}`] ? 'govuk-error-message' : ''
                     }`}>
@@ -277,7 +283,7 @@ const ReferralForm = ({
                   id={`conversation-notes-${id}`}
                   name="conversation-notes"
                   rows="5"
-                  aria-describedby="more-detail-hint more-detail-error"
+                  aria-describedby="conversation-notes-label"
                   defaultValue={preserveFormData ? referralData['conversation-notes'] : ''}
                   onChange={e => {
                     setReferralData({
@@ -292,8 +298,11 @@ const ReferralForm = ({
                 className={`govuk-form-group govuk-!-padding-bottom-2 ${
                   validationError[`consent-${id}`] ? 'govuk-form-group--error' : ''
                 }`}>
-                <fieldset className="govuk-fieldset" aria-describedby="consent-hint">
-                  <legend className="govuk-fieldset__legend govuk-fieldset__legend--s">
+                <fieldset className="govuk-fieldset">
+                  <legend
+                    id="consent-label"
+                    className="govuk-fieldset__legend govuk-fieldset__legend--s"
+                    htmlFor={`consent-${id}`}>
                     The resident is happy for their information to be shared with third parties
                   </legend>
                   <div className="govuk-checkboxes govuk-checkboxes--inline">
@@ -312,6 +321,7 @@ const ReferralForm = ({
                         value="true"
                         onInvalid={e => onInvalidField(e.target.id)}
                         required
+                        aria-describedby="consent-label"
                       />
                       <label
                         className="govuk-label govuk-checkboxes__label"
@@ -369,15 +379,15 @@ const ReferralForm = ({
                   className={`govuk-form-group govuk-!-padding-bottom-2 ${
                     validationError[`referer-name-${id}`] ? 'govuk-form-group--error' : ''
                   }`}>
-                  <label className="govuk-label inline" htmlFor={`referer-name-${id}`}>
+                  <label
+                    id="referrer-name-label"
+                    className="govuk-label inline"
+                    htmlFor={`referer-name-${id}`}>
                     <legend className="govuk-fieldset__legend govuk-fieldset__legend--s">
                       Your name
                     </legend>
                   </label>
-                  <span
-                    id="name-error"
-                    className="govuk-error-message"
-                    aria-describedby="input-name-error">
+                  <span id="referrer-name-error" className="govuk-error-message">
                     <span hidden={!validationError[`referer-name-${id}`]} data-testid="name-error">
                       Enter your name
                     </span>
@@ -393,8 +403,7 @@ const ReferralForm = ({
                     onChange={e => {
                       setReferrerData({ ...referrerData, 'referer-name': e.target.value });
                     }}
-                    aria-describedby="refererName-hint"
-                    aria-describedby="refererName"
+                    aria-describedby="referrer-name-label"
                     onInvalid={e => onInvalidField(e.target.id)}
                     required
                   />
@@ -403,15 +412,15 @@ const ReferralForm = ({
                   className={`govuk-form-group govuk-!-padding-bottom-2 ${
                     validationError[`referer-organisation-${id}`] ? 'govuk-form-group--error' : ''
                   }`}>
-                  <label className="govuk-label inline" htmlFor={`referer-organisation-${id}`}>
+                  <label
+                    id="referrer-organisation-label"
+                    className="govuk-label inline"
+                    htmlFor={`referer-organisation-${id}`}>
                     <legend className="govuk-fieldset__legend govuk-fieldset__legend--s">
                       Your organisation
                     </legend>
                   </label>
-                  <span
-                    id="name-error"
-                    className="govuk-error-message"
-                    aria-describedby="input-name-error">
+                  <span id="referrer-organisation-error" className="govuk-error-message">
                     <span
                       hidden={!validationError[`referer-organisation-${id}`]}
                       data-testid="name-error">
@@ -432,8 +441,7 @@ const ReferralForm = ({
                         'referer-organisation': e.target.value
                       });
                     }}
-                    aria-describedby="refererorganisation-hint"
-                    aria-describedby="refererorganisation"
+                    aria-describedby="referrer-organisation-label"
                     onInvalid={e => onInvalidField(e.target.id)}
                     required
                   />
@@ -442,15 +450,15 @@ const ReferralForm = ({
                   className={`govuk-form-group govuk-!-padding-bottom-2 ${
                     validationError[`referer-email-${id}`] ? 'govuk-form-group--error' : ''
                   }`}>
-                  <label className="govuk-label inline" htmlFor={`referer-email-${id}`}>
+                  <label
+                    id="referrer-email-label"
+                    className="govuk-label inline"
+                    htmlFor={`referer-email-${id}`}>
                     <legend className="govuk-fieldset__legend govuk-fieldset__legend--s">
                       Your email
                     </legend>
                   </label>
-                  <span
-                    id="name-error"
-                    className="govuk-error-message"
-                    aria-describedby="input-name-error">
+                  <span id="referrer-email-error" className="govuk-error-message">
                     <span hidden={!validationError[`referer-email-${id}`]} data-testid="name-error">
                       Enter your email
                     </span>
@@ -466,12 +474,14 @@ const ReferralForm = ({
                     onChange={e => {
                       setReferrerData({ ...referrerData, 'referer-email': e.target.value });
                     }}
-                    aria-describedby="refererorganisation-hint"
-                    aria-describedby="refererorganisation"
+                    aria-describedby="referrer-email-label"
                     onInvalid={e => onInvalidField(e.target.id)}
                     required
                   />
-                  <input value={id} name="service-id" hidden />
+                  <label htmlFor={`service-id-${id}`} hidden>
+                    Service id
+                  </label>
+                  <input id={`service-id-${id}`} value={id} name="service-id" hidden />
                 </div>
               </div>
               <div className="govuk-form-group govuk-!-padding-bottom-2">
@@ -485,7 +495,13 @@ const ReferralForm = ({
                     }}>
                     Cancel
                   </button>
-                  <input type="submit" id={`submit-${id}`} className="govuk-button" name="Submit" />
+                  <input
+                    value="Submit"
+                    type="submit"
+                    id={`submit-${id}`}
+                    className="govuk-button"
+                    name="Submit"
+                  />
                 </div>
               </div>
             </div>
