@@ -474,7 +474,7 @@ const ReferralForm = ({
                     required
                   />
                   <label htmlFor={`service-id-${id}`} hidden>
-                    Service name
+                    Service id
                   </label>
                   <input id={`service-id-${id}`} value={id} name="service-id" hidden />
                 </div>

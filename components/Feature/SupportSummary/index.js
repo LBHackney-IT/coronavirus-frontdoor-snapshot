@@ -138,7 +138,7 @@ const SupportSummary = ({
                 Successfully submitted conversation
               </div>
             )}
-            <h2 data-testid="conversation-competition-msg">
+            <h2 className="govuk-heading-s" data-testid="conversation-competition-msg">
               To help another resident please{' '}
               <a href="javascript:window.location.href=window.location.href">refresh this page</a>
             </h2>
