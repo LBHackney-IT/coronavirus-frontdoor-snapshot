@@ -51,6 +51,7 @@ describe('Conversation Api', () => {
         address: '123 Other st, E3 1P'
       }
     ];
+    const sharingMethod = 'email';
 
     const response = await call({
       body: {
@@ -65,31 +66,35 @@ describe('Conversation Api', () => {
         userEmail,
         dateOfBirth,
         discussedServices,
-        signPostingMessage
+        signPostingMessage,
+        sharingMethod
       },
       headers: {}
     });
-    expect(createConversation.execute).toHaveBeenCalledWith({
-      resident: {
-        firstName,
-        lastName,
-        phone,
-        email,
-        address,
-        postcode,
-        dateOfBirth
+    expect(createConversation.execute).toHaveBeenCalledWith(
+      {
+        resident: {
+          firstName,
+          lastName,
+          phone,
+          email,
+          address,
+          postcode,
+          dateOfBirth
+        },
+        user: {
+          name: userName,
+          organisation: userOrganisation,
+          email: userEmail
+        },
+        discussedServices: discussedServices,
+        signPostingMessage: signPostingMessage,
+        id: undefined,
+        systemIds: undefined,
+        created: expect.any(String)
       },
-      user: {
-        name: userName,
-        organisation: userOrganisation,
-        email: userEmail
-      },
-      discussedServices: discussedServices,
-      signPostingMessage: signPostingMessage,
-      id: undefined,
-      systemIds: undefined,
-      created: expect.any(String)
-    });
+      'email'
+    );
     expect(response.statusCode).toBe(201);
   });
 
