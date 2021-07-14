@@ -35,6 +35,7 @@ const ReferralForm = ({
   const { createReferral } = useReferral({ token });
 
   const [validationError, setValidationError] = useState({});
+  const [analyticsSubmitted, setAnalyticsSubmitted] = useState(false);
 
   const handleOnChange = (id, value) => {
     delete validationError[id];
@@ -126,10 +127,14 @@ const ReferralForm = ({
           <form
             id={`referral-form-${id}`}
             onInvalid={() => {
-              sendDataToAnalytics({
-                action: getUserGroup(referrerData['user-groups']),
-                category: REFERRAL_SUBMIT_INVALID
-              });
+              if (!analyticsSubmitted) {
+                sendDataToAnalytics({
+                  action: getUserGroup(referrerData['user-groups']),
+                  category: REFERRAL_SUBMIT_INVALID,
+                  label: name
+                });
+                setAnalyticsSubmitted(true);
+              }
             }}
             onSubmit={onSubmitForm}>
             <div
