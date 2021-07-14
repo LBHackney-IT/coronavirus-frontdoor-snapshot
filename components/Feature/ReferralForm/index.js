@@ -225,7 +225,7 @@ const ReferralForm = ({
                 </label>
                 {validationError[`referral-reason-${id}`] && (
                   <span
-                    id="more-detail-error"
+                    id="referral-reason-error"
                     className={` ${
                       validationError[`referral-reason-${id}`] ? 'govuk-error-message' : ''
                     }`}>
@@ -239,7 +239,7 @@ const ReferralForm = ({
                   id={`referral-reason-${id}`}
                   name="referral-reason"
                   rows="5"
-                  aria-describedby="more-detail-hint more-detail-error"
+                  aria-describedby="referral-reason-error"
                   defaultValue={preserveFormData ? referralData['referral-reason'] : ''}
                   onChange={e => {
                     setReferralData({ ...referralData, 'referral-reason': e.target.value });
@@ -258,7 +258,7 @@ const ReferralForm = ({
                 </label>
                 {validationError[`conversation-notes-${id}`] && (
                   <span
-                    id="more-detail-error"
+                    id="conversation-notes-error"
                     className={` ${
                       validationError[`conversation-notes-${id}`] ? 'govuk-error-message' : ''
                     }`}>
@@ -272,7 +272,7 @@ const ReferralForm = ({
                   id={`conversation-notes-${id}`}
                   name="conversation-notes"
                   rows="5"
-                  aria-describedby="more-detail-hint more-detail-error"
+                  aria-describedby="conversation-notes-error"
                   defaultValue={preserveFormData ? referralData['conversation-notes'] : ''}
                   onChange={e => {
                     setReferralData({
@@ -370,7 +370,7 @@ const ReferralForm = ({
                     </legend>
                   </label>
                   <span
-                    id="name-error"
+                    id="referrer-name-error"
                     className="govuk-error-message"
                     aria-describedby="input-name-error">
                     <span hidden={!validationError[`referer-name-${id}`]} data-testid="name-error">
@@ -404,7 +404,7 @@ const ReferralForm = ({
                     </legend>
                   </label>
                   <span
-                    id="name-error"
+                    id="referrer-organisation-error"
                     className="govuk-error-message"
                     aria-describedby="input-name-error">
                     <span
@@ -443,7 +443,7 @@ const ReferralForm = ({
                     </legend>
                   </label>
                   <span
-                    id="name-error"
+                    id="referrer-email-error"
                     className="govuk-error-message"
                     aria-describedby="input-name-error">
                     <span hidden={!validationError[`referer-email-${id}`]} data-testid="name-error">

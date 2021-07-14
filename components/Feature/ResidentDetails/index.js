@@ -10,9 +10,9 @@ const ResidentDetails = ({
 }) => {
   return (
     <div>
-      <h3 className="govuk-heading-m" id="resident-details-header">
+      <h2 className="govuk-heading-m" id="resident-details-header">
         Who are you helping?
-      </h3>
+      </h2>
 
       <div
         className={`govuk-form-group ${
@@ -22,7 +22,7 @@ const ResidentDetails = ({
           <label className="govuk-label inline" htmlFor="firstName">
             First name
           </label>
-          <span id="name-error" className="govuk-error-message">
+          <span id={`first-name-error-${formType}`} className="govuk-error-message">
             <span hidden={!validationError.firstName} data-testid="name-error">
               Enter the first name
             </span>
@@ -46,7 +46,7 @@ const ResidentDetails = ({
           <label className="govuk-label inline" htmlFor="lastName">
             Last name
           </label>
-          <span id="name-error" className="govuk-error-message">
+          <span id={`last-name-error-${formType}`} className="govuk-error-message">
             <span hidden={!validationError.lastName} data-testid="name-error">
               Enter the last name
             </span>
@@ -69,7 +69,7 @@ const ResidentDetails = ({
           <label className="govuk-label inline" htmlFor="phone">
             Phone
           </label>
-          <span id="phone-error" className="govuk-error-message">
+          <span id={`phone-error-${formType}`} className="govuk-error-message">
             <span hidden={!validationError.phone} data-testid="phone-error">
               Enter the phone number
             </span>
@@ -91,7 +91,7 @@ const ResidentDetails = ({
           <label className="govuk-label inline" htmlFor="email">
             Email
           </label>
-          <span id="email-error" className="govuk-error-message">
+          <span id={`email-error-${formType}`} className="govuk-error-message">
             <span hidden={!validationError.email} data-testid="email-error">
               Enter the email address
             </span>
@@ -115,7 +115,7 @@ const ResidentDetails = ({
           <label className="govuk-label inline" htmlFor="address">
             Address
           </label>
-          <span id="address-error" className="govuk-error-message">
+          <span id={`address-error-${formType}`} className="govuk-error-message">
             <span hidden={!validationError.address} data-testid="address-error">
               Enter the address
             </span>
@@ -138,7 +138,7 @@ const ResidentDetails = ({
           <label className="govuk-label inline" htmlFor="postcode">
             Postcode
           </label>
-          <span id="postcode-error" className="govuk-error-message">
+          <span id={`postcode-error-${formType}`} className="govuk-error-message">
             <span hidden={!validationError.postcode} data-testid="postcode-error">
               Enter the postcode
             </span>

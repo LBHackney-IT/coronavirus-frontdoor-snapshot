@@ -138,10 +138,10 @@ const SupportSummary = ({
                 Successfully submitted conversation
               </div>
             )}
-            <h4 data-testid="conversation-competition-msg">
+            <h2 data-testid="conversation-competition-msg">
               To help another resident please{' '}
               <a href="javascript:window.location.href=window.location.href">refresh this page</a>
-            </h4>
+            </h2>
           </div>
         )}
         {!hideForm && (
