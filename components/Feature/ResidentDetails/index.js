@@ -19,7 +19,10 @@ const ResidentDetails = ({
           validationError.firstName ? 'govuk-form-group--error' : ''
         }`}>
         <div className="govuk-!-padding-bottom-2">
-          <label className="govuk-label inline" htmlFor="firstName">
+          <label
+            id={`first-name-label-${formType}`}
+            className="govuk-label inline"
+            htmlFor="firstName">
             First name
           </label>
           <span id={`first-name-error-${formType}`} className="govuk-error-message">
@@ -34,7 +37,7 @@ const ResidentDetails = ({
             type="text"
             defaultValue={preserveFormData ? residentInfo?.firstName : ''}
             onChange={e => handleOnChange(e.target.id, e.target.value)}
-            aria-describedby="firstName"
+            aria-describedby={`first-name-label-${formType}`}
             onInvalid={e => onInvalidField(e.target.id)}
             required
           />
@@ -43,7 +46,10 @@ const ResidentDetails = ({
       <div
         className={`govuk-form-group ${validationError.lastName ? 'govuk-form-group--error' : ''}`}>
         <div className="govuk-!-padding-bottom-2">
-          <label className="govuk-label inline" htmlFor="lastName">
+          <label
+            id={`last-name-label-${formType}`}
+            className="govuk-label inline"
+            htmlFor="lastName">
             Last name
           </label>
           <span id={`last-name-error-${formType}`} className="govuk-error-message">
@@ -57,7 +63,7 @@ const ResidentDetails = ({
             name="lastName"
             type="text"
             defaultValue={preserveFormData ? residentInfo?.lastName : ''}
-            aria-describedby="lastName"
+            aria-describedby={`last-name-label-${formType}`}
             onChange={e => handleOnChange(e.target.id, e.target.value)}
             onInvalid={e => onInvalidField(e.target.id)}
             required
@@ -66,7 +72,7 @@ const ResidentDetails = ({
       </div>
       <div className={`govuk-form-group ${validationError.phone ? 'govuk-form-group--error' : ''}`}>
         <div className="govuk-!-padding-bottom-2">
-          <label className="govuk-label inline" htmlFor="phone">
+          <label id={`phone-label-${formType}`} className="govuk-label inline" htmlFor="phone">
             Phone
           </label>
           <span id={`phone-error-${formType}`} className="govuk-error-message">
@@ -83,12 +89,13 @@ const ResidentDetails = ({
             defaultValue={preserveFormData ? residentInfo?.phone : ''}
             required
             onInvalid={e => onInvalidField(e.target.id)}
+            aria-describedby={`phone-label-${formType}`}
           />
         </div>
       </div>
       <div className={`govuk-form-group ${validationError.email ? 'govuk-form-group--error' : ''}`}>
         <div className="govuk-!-padding-bottom-2">
-          <label className="govuk-label inline" htmlFor="email">
+          <label id={`email-label-${formType}`} className="govuk-label inline" htmlFor="email">
             Email
           </label>
           <span id={`email-error-${formType}`} className="govuk-error-message">
@@ -106,13 +113,14 @@ const ResidentDetails = ({
             onChange={e => handleOnChange(e.target.id, e.target.value)}
             required={formType == 'summary'}
             onInvalid={e => onInvalidField(e.target.id)}
+            aria-describedby={`email-label-${formType}`}
           />
         </div>
       </div>
       <div
         className={`govuk-form-group ${validationError.address ? 'govuk-form-group--error' : ''}`}>
         <div className="govuk-!-padding-bottom-2">
-          <label className="govuk-label inline" htmlFor="address">
+          <label id={`address-label-${formType}`} className="govuk-label inline" htmlFor="address">
             Address
           </label>
           <span id={`address-error-${formType}`} className="govuk-error-message">
@@ -129,13 +137,17 @@ const ResidentDetails = ({
             onChange={e => handleOnChange(e.target.id, e.target.value)}
             required
             onInvalid={e => onInvalidField(e.target.id)}
+            aria-describedby={`address-label-${formType}`}
           />
         </div>
       </div>
       <div
         className={`govuk-form-group ${validationError.postcode ? 'govuk-form-group--error' : ''}`}>
         <div className="govuk-!-padding-bottom-2">
-          <label className="govuk-label inline" htmlFor="postcode">
+          <label
+            id={`postcode-label-${formType}`}
+            className="govuk-label inline"
+            htmlFor="postcode">
             Postcode
           </label>
           <span id={`postcode-error-${formType}`} className="govuk-error-message">
@@ -152,6 +164,7 @@ const ResidentDetails = ({
             onChange={e => handleOnChange(e.target.id, e.target.value)}
             required
             onInvalid={e => onInvalidField(e.target.id)}
+            aria-describedby={`postcode-label-${formType}`}
           />
         </div>
       </div>
@@ -161,7 +174,10 @@ const ResidentDetails = ({
           <div className="govuk-date-input" id="date-of-birth">
             <div className="govuk-date-input__item">
               <div className="govuk-form-group">
-                <label className="govuk-label govuk-date-input__label" htmlFor="date-of-birth-day">
+                <label
+                  id={`dob-day-label-${formType}`}
+                  className="govuk-label govuk-date-input__label"
+                  htmlFor="date-of-birth-day">
                   Day
                 </label>
                 <input
@@ -175,12 +191,14 @@ const ResidentDetails = ({
                   pattern="[0-9]*"
                   inputMode="numeric"
                   onChange={e => handleOnChange(e.target.id, e.target.value)}
+                  aria-describedby={`dob-day-label-${formType}`}
                 />
               </div>
             </div>
             <div className="govuk-date-input__item">
               <div className="govuk-form-group">
                 <label
+                  id={`dob-month-label-${formType}`}
                   className="govuk-label govuk-date-input__label"
                   htmlFor="date-of-birth-month">
                   Month
@@ -196,12 +214,16 @@ const ResidentDetails = ({
                   pattern="[0-9]*"
                   inputMode="numeric"
                   onChange={e => handleOnChange(e.target.id, e.target.value)}
+                  aria-describedby={`dob-month-label-${formType}`}
                 />
               </div>
             </div>
             <div className="govuk-date-input__item">
               <div className="govuk-form-group">
-                <label className="govuk-label govuk-date-input__label" htmlFor="date-of-birth-year">
+                <label
+                  id={`dob-year-label-${formType}`}
+                  className="govuk-label govuk-date-input__label"
+                  htmlFor="date-of-birth-year">
                   Year
                 </label>
                 <input
@@ -215,6 +237,7 @@ const ResidentDetails = ({
                   pattern="[0-9]*"
                   inputMode="numeric"
                   onChange={e => handleOnChange(e.target.id, e.target.value)}
+                  aria-describedby={`dob-year-label-${formType}`}
                 />
               </div>
             </div>
