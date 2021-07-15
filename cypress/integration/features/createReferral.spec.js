@@ -127,6 +127,9 @@ describe('Referral form', () => {
         cy.get('#phone').should('have.class', 'govuk-input--error');
         cy.get('#address').should('have.class', 'govuk-input--error');
         cy.get('#postcode').should('have.class', 'govuk-input--error');
+        cy.get('#date-of-birth-day').should('have.class', 'govuk-input--error');
+        cy.get('#date-of-birth-month').should('have.class', 'govuk-input--error');
+        cy.get('#date-of-birth-year').should('have.class', 'govuk-input--error');
 
         cy.runCheckA11y();
       });
@@ -175,6 +178,9 @@ describe('Referral form', () => {
       cy.get('#email').type('luna@meow.com');
       cy.get('#address').type('159 Cute Street');
       cy.get('#postcode').type('M3 0W');
+      cy.get('#date-of-birth-day').type('13');
+      cy.get('#date-of-birth-month').type('5');
+      cy.get('#date-of-birth-year').type('1985');
 
       cy.get(
         '#referral-reason-ABC123'
@@ -233,6 +239,9 @@ describe('Referral form', () => {
       cy.get('#email').type('luna@meow.com');
       cy.get('#address').type('159 Cute Street');
       cy.get('#postcode').type('M3 0W');
+      cy.get('#date-of-birth-day').type('13');
+      cy.get('#date-of-birth-month').type('5');
+      cy.get('#date-of-birth-year').type('1985');
 
       cy.get(
         '#referral-reason-ABC123'
@@ -305,6 +314,9 @@ describe('Referral form', () => {
       cy.get('#email').should('have.value', 'luna@meow.com');
       cy.get('#address').should('have.value', '159 Cute Street');
       cy.get('#postcode').should('have.value', 'M3 0W');
+      cy.get('#date-of-birth-day').should('have.value', '13');
+      cy.get('#date-of-birth-month').should('have.value', '5');
+      cy.get('#date-of-birth-year').should('have.value', '1985');
     });
 
     it('Does not persist the data across referrals if continue call is not selected', () => {
@@ -329,6 +341,9 @@ describe('Referral form', () => {
       cy.get('#email').should('have.value', '');
       cy.get('#address').should('have.value', '');
       cy.get('#postcode').should('have.value', '');
+      cy.get('#date-of-birth-day').should('have.value', '');
+      cy.get('#date-of-birth-month').should('have.value', '');
+      cy.get('#date-of-birth-year').should('have.value', '');
     });
 
     it('Persists the data to summary if continue call is selected', () => {
@@ -352,6 +367,9 @@ describe('Referral form', () => {
       cy.get('#email').should('have.value', 'luna@meow.com');
       cy.get('#address').should('have.value', '159 Cute Street');
       cy.get('#postcode').should('have.value', 'M3 0W');
+      cy.get('#date-of-birth-day').should('have.value', '13');
+      cy.get('#date-of-birth-month').should('have.value', '5');
+      cy.get('#date-of-birth-year').should('have.value', '1985');
 
       cy.runCheckA11y();
     });
