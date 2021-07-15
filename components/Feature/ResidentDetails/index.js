@@ -168,7 +168,14 @@ const ResidentDetails = ({
           />
         </div>
       </div>
-      <div className="govuk-form-group">
+      <div
+        className={`govuk-form-group ${
+          validationError['date-of-birth-day'] ||
+          validationError['date-of-birth-month'] ||
+          validationError['date-of-birth-year']
+            ? 'govuk-form-group--error'
+            : ''
+        }`}>
         <fieldset className="govuk-fieldset" role="group">
           <legend className="govuk-fieldset__legend">Date of birth</legend>
           <span id="dob-error" className="govuk-error-message">
@@ -184,10 +191,7 @@ const ResidentDetails = ({
           </span>
           <div className="govuk-date-input" id="date-of-birth">
             <div className="govuk-date-input__item">
-              <div
-                className={`govuk-form-group ${
-                  validationError['date-of-birth-day'] ? 'govuk-form-group--error' : ''
-                }`}>
+              <div className={`govuk-form-group`}>
                 <label
                   id={`dob-day-label-${formType}`}
                   className="govuk-label govuk-date-input__label"
@@ -214,10 +218,7 @@ const ResidentDetails = ({
               </div>
             </div>
             <div className="govuk-date-input__item">
-              <div
-                className={`govuk-form-group ${
-                  validationError['date-of-birth-month'] ? 'govuk-form-group--error' : ''
-                }`}>
+              <div className={`govuk-form-group`}>
                 <label
                   id={`dob-month-label-${formType}`}
                   className="govuk-label govuk-date-input__label"
@@ -244,10 +245,7 @@ const ResidentDetails = ({
               </div>
             </div>
             <div className="govuk-date-input__item">
-              <div
-                className={`govuk-form-group ${
-                  validationError['date-of-birth-year'] ? 'govuk-form-group--error' : ''
-                }`}>
+              <div className={`govuk-form-group`}>
                 <label
                   id={`dob-year-label-${formType}`}
                   className="govuk-label govuk-date-input__label"
