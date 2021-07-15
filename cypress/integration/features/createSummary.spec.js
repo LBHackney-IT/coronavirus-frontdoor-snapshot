@@ -39,7 +39,7 @@ context('Create summary', () => {
     cy.get('#phone').type('07123456789');
     cy.get('#email').type('luna@meow.com');
     cy.get('#address').type('159 Cute Street');
-    cy.get('#postcode').type('M3 0W');
+    cy.get('#postcode').type('M3 0WW');
     cy.get('#summary-sharing-method-email').click();
     cy.get('#date-of-birth-day').type('13');
     cy.get('#date-of-birth-month').type('5');
