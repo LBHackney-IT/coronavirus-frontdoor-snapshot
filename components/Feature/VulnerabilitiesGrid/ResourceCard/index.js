@@ -7,7 +7,7 @@ import {
   REFERRAL_CLICK_WEBSITE,
   SERVICE_CLICK_WEBSITE,
   VIEW_SUMMARY_EMAIL_CLICKED
-} from 'lib/utils/analyticsConstants';
+} from 'lib/utils/constants';
 import ReferralForm from 'components/Feature/ReferralForm';
 
 const ResourceCard = ({

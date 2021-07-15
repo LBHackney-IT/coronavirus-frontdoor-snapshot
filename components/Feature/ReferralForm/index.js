@@ -2,7 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import useReferral from 'lib/api/utils/useReferral';
 import { sendDataToAnalytics, getUserGroup } from 'lib/utils/analytics';
-import { REFERRAL_SUBMIT_SUCCESS, REFERRAL_SUBMIT_INVALID } from 'lib/utils/analyticsConstants';
+import { REFERRAL_SUBMIT_SUCCESS, REFERRAL_SUBMIT_INVALID } from 'lib/utils/constants';
 import ResidentDetails from '../ResidentDetails';
 
 const ReferralForm = ({

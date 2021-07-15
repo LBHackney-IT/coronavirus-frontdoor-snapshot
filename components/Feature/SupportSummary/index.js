@@ -11,8 +11,9 @@ import { sendDataToAnalytics, getUserGroup } from 'lib/utils/analytics';
 import {
   SEND_SUMMARY_SUCCESS,
   SEND_SUMMARY_INVALID_COUNT,
-  SEND_SUMMARY_SUCCESS_COUNT
-} from 'lib/utils/analyticsConstants';
+  SEND_SUMMARY_SUCCESS_COUNT,
+  LETTER
+} from 'lib/utils/constants';
 import ResidentDetails from '../ResidentDetails';
 
 const SupportSummary = ({
@@ -258,7 +259,7 @@ const SupportSummary = ({
                         value="letter"
                         onClick={() => {
                           setEmailBody(
-                            updateEmailBody(undefined, undefined, undefined, undefined, 'letter')
+                            updateEmailBody(undefined, undefined, undefined, undefined, LETTER)
                           );
                         }}
                         required

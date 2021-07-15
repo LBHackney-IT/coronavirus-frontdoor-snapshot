@@ -1,5 +1,6 @@
 import { endpoint } from './index';
 import createMockResponse from 'lib/api/utils/createMockResponse';
+import { EMAIL } from 'lib/utils/constants';
 
 describe('Conversation Api', () => {
   const createConversation = { execute: jest.fn() };
@@ -51,7 +52,7 @@ describe('Conversation Api', () => {
         address: '123 Other st, E3 1P'
       }
     ];
-    const sharingMethod = 'email';
+    const sharingMethod = EMAIL;
 
     const response = await call({
       body: {
@@ -93,7 +94,7 @@ describe('Conversation Api', () => {
         systemIds: undefined,
         created: expect.any(String)
       },
-      'email'
+      EMAIL
     );
     expect(response.statusCode).toBe(201);
   });
