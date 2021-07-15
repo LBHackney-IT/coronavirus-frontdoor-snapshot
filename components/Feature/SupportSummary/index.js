@@ -81,6 +81,7 @@ const SupportSummary = ({
         month: e.target['date-of-birth-month'].value,
         day: e.target['date-of-birth-day'].value
       },
+      sharingMethod: e.target['summary-sharing-method'].value,
       discussedServices: signpostSummary.concat(referralSummary),
       signPostingMessage: e.target['support-summary-note'].value
     };
@@ -121,7 +122,7 @@ const SupportSummary = ({
         Send a summary of today's support
       </h1>
       <Details
-        title="Email the resident with details of services"
+        title="Share information about selected services with a resident"
         id="summary-form"
         onclick={e => {
           toggleDetail(e);
@@ -222,15 +223,66 @@ const SupportSummary = ({
                 residentInfo={residentInfo}
                 formType="summary"
               />
-              <TextArea
-                value={emailBody}
-                label="Add a note for the resident"
-                name="support-summary-note"
-                rows="20"
-                onChange={value => {
-                  setEmailBody(value);
-                }}
-              />
+              <div className="govuk-form-group">
+                <fieldset className="govuk-fieldset">
+                  <div className="govuk-!-padding-top-4">
+                    <label>
+                      <strong>How would you like to share information with the resident?</strong>
+                    </label>
+                  </div>
+                  <div className="govuk-radios">
+                    <div className="govuk-radios__item">
+                      <input
+                        className="govuk-radios__input"
+                        id="summary-sharing-method-email"
+                        name="summary-sharing-method"
+                        type="radio"
+                        value="email"
+                        onClick={() => {
+                          setEmailBody(updateEmailBody());
+                        }}
+                        required
+                      />
+                      <label
+                        className="govuk-label govuk-radios__label"
+                        for="summary-sharing-method-email">
+                        Email
+                      </label>
+                    </div>
+                    <div className="govuk-radios__item">
+                      <input
+                        className="govuk-radios__input"
+                        id="summary-sharing-method-letter"
+                        name="summary-sharing-method"
+                        type="radio"
+                        value="letter"
+                        onClick={() => {
+                          setEmailBody(
+                            updateEmailBody(undefined, undefined, undefined, undefined, 'letter')
+                          );
+                        }}
+                        required
+                      />
+                      <label
+                        className="govuk-label govuk-radios__label"
+                        for="summary-sharing-method-letter">
+                        Letter
+                      </label>
+                    </div>
+                  </div>
+                </fieldset>
+              </div>
+              <div className="govuk-!-padding-top-4">
+                <TextArea
+                  value={emailBody}
+                  label="Add a note for the resident"
+                  name="support-summary-note"
+                  rows="20"
+                  onChange={value => {
+                    setEmailBody(value);
+                  }}
+                />
+              </div>
               <strong>Your details</strong>
               <TextInput
                 label="Name"

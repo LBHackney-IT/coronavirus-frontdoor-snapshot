@@ -49,9 +49,16 @@ const Index = ({ categorisedResources, initialReferral, token, errors, refererIn
     newSignpostSummary = signpostSummary,
     newReferralSummary = referralSummary,
     newReferrerData = referrerData,
-    newResidentInfo = residentInfo
+    newResidentInfo = residentInfo,
+    type = 'email'
   ) => {
-    return getEmailBody(newResidentInfo, newSignpostSummary, newReferralSummary, newReferrerData);
+    return getEmailBody(
+      newResidentInfo,
+      newSignpostSummary,
+      newReferralSummary,
+      newReferrerData,
+      type
+    );
   };
 
   const [emailBody, setEmailBody] = useState(updateEmailBody());
