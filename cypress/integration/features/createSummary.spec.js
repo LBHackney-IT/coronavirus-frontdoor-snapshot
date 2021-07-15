@@ -71,7 +71,7 @@ context('Create summary', () => {
         '    help@gmail.com \n' +
         '    404 error, not, found \n' +
         '    https://www.sample.org.uk  \n\n\n' +
-        'If you require any further support please contact me on xxx.\n\n' +
+        'If you require any further support please contact the council on xxx.\n\n' +
         'Many thanks, \n\n\n' +
         'Hackney Council\n'
     );
@@ -142,7 +142,7 @@ context('Create summary', () => {
         '    service@test.testy.com \n' +
         '    1 test Rd, London \n' +
         '    https://sample.com/test_kingsman  \n\n\n' +
-        'If you require any further support please contact me on xxx.\n\n' +
+        'If you require any further support please contact the council on xxx.\n\n' +
         'Many thanks, \n' +
         `${referrerName}\n` +
         `${referrerEmail}\n` +
