@@ -192,7 +192,7 @@ const ResidentDetails = ({
                   id={`dob-day-label-${formType}`}
                   className="govuk-label govuk-date-input__label"
                   htmlFor="date-of-birth-day">
-                  Year
+                  Day
                 </label>
                 <input
                   className={`govuk-input govuk-date-input__input govuk-input--width-2  ${
