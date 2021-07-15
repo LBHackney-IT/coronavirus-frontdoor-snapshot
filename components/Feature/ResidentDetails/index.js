@@ -152,7 +152,7 @@ const ResidentDetails = ({
           </label>
           <span id={`postcode-error-${formType}`} className="govuk-error-message">
             <span hidden={!validationError.postcode} data-testid="postcode-error">
-              Enter the postcode
+              Enter a valid UK postcode
             </span>
           </span>
           <input
@@ -165,6 +165,7 @@ const ResidentDetails = ({
             required
             onInvalid={e => onInvalidField(e.target.id)}
             aria-describedby={`postcode-label-${formType}`}
+            pattern="([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9][A-Za-z]?))))\s?[0-9][A-Za-z]{2})"
           />
         </div>
       </div>

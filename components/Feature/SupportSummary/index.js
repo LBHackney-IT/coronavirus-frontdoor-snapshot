@@ -72,7 +72,7 @@ const SupportSummary = ({
       phone: e.target.phone.value,
       email: e.target.email.value,
       address: e.target.address.value,
-      postcode: e.target.postcode.value,
+      postcode: e.target.postcode.value.toUpperCase(),
       userOrganisation: e.target['summary-organisation'].value,
       userName: e.target['summary-name'].value,
       userEmail: e.target['summary-email'].value,
@@ -83,7 +83,7 @@ const SupportSummary = ({
       },
       sharingMethod: e.target['summary-sharing-method'].value,
       discussedServices: signpostSummary.concat(referralSummary),
-      signPostingMessage: e.target['support-summary-note'].value
+      signPostingMessage: emailBody
     };
 
     setPreserveFormData(false);
