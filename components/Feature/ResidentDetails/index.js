@@ -158,14 +158,30 @@ const ResidentDetails = ({
       <div className="govuk-form-group">
         <fieldset className="govuk-fieldset" role="group">
           <legend className="govuk-fieldset__legend">Date of birth</legend>
+          <span id="dob-error" className="govuk-error-message">
+            <span
+              hidden={
+                !validationError['date-of-birth-day'] &&
+                !validationError['date-of-birth-month'] &&
+                !validationError['date-of-birth-year']
+              }
+              data-testid="dob-error">
+              Enter the date of birth
+            </span>
+          </span>
           <div className="govuk-date-input" id="date-of-birth">
             <div className="govuk-date-input__item">
-              <div className="govuk-form-group">
+              <div
+                className={`govuk-form-group ${
+                  validationError['date-of-birth-day'] ? 'govuk-form-group--error' : ''
+                }`}>
                 <label className="govuk-label govuk-date-input__label" htmlFor="date-of-birth-day">
                   Day
                 </label>
                 <input
-                  className="govuk-input govuk-date-input__input govuk-input--width-2"
+                  className={`govuk-input govuk-date-input__input govuk-input--width-2  ${
+                    validationError['date-of-birth-day'] ? 'govuk-input--error' : ''
+                  }`}
                   id="date-of-birth-day"
                   name="date-of-birth-day"
                   type="text"
@@ -175,18 +191,25 @@ const ResidentDetails = ({
                   pattern="[0-9]*"
                   inputMode="numeric"
                   onChange={e => handleOnChange(e.target.id, e.target.value)}
+                  onInvalid={e => onInvalidField(e.target.id)}
+                  required
                 />
               </div>
             </div>
             <div className="govuk-date-input__item">
-              <div className="govuk-form-group">
+              <div
+                className={`govuk-form-group ${
+                  validationError['date-of-birth-month'] ? 'govuk-form-group--error' : ''
+                }`}>
                 <label
                   className="govuk-label govuk-date-input__label"
                   htmlFor="date-of-birth-month">
                   Month
                 </label>
                 <input
-                  className="govuk-input govuk-date-input__input govuk-input--width-2"
+                  className={`govuk-input govuk-date-input__input govuk-input--width-2  ${
+                    validationError['date-of-birth-month'] ? 'govuk-input--error' : ''
+                  }`}
                   id="date-of-birth-month"
                   name="date-of-birth-month"
                   type="text"
@@ -196,16 +219,23 @@ const ResidentDetails = ({
                   pattern="[0-9]*"
                   inputMode="numeric"
                   onChange={e => handleOnChange(e.target.id, e.target.value)}
+                  onInvalid={e => onInvalidField(e.target.id)}
+                  required
                 />
               </div>
             </div>
             <div className="govuk-date-input__item">
-              <div className="govuk-form-group">
+              <div
+                className={`govuk-form-group ${
+                  validationError['date-of-birth-year'] ? 'govuk-form-group--error' : ''
+                }`}>
                 <label className="govuk-label govuk-date-input__label" htmlFor="date-of-birth-year">
                   Year
                 </label>
                 <input
-                  className="govuk-input govuk-date-input__input govuk-input--width-4"
+                  className={`govuk-input govuk-date-input__input govuk-input--width-2  ${
+                    validationError['date-of-birth-year'] ? 'govuk-input--error' : ''
+                  }`}
                   id="date-of-birth-year"
                   name="date-of-birth-year"
                   type="text"
@@ -215,6 +245,8 @@ const ResidentDetails = ({
                   pattern="[0-9]*"
                   inputMode="numeric"
                   onChange={e => handleOnChange(e.target.id, e.target.value)}
+                  onInvalid={e => onInvalidField(e.target.id)}
+                  required
                 />
               </div>
             </div>
