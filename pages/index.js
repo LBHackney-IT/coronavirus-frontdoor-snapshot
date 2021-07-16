@@ -1,26 +1,16 @@
 import useReferral from 'lib/api/utils/useReferral';
-import { requestResources, requestPrompts, requestFssResources } from 'lib/api';
+import { requestResources, requestFssResources } from 'lib/api';
 import HttpStatusError from 'lib/api/domain/HttpStatusError';
 import { getTokenFromCookieHeader } from 'lib/utils/token';
 import { getEmailBody } from 'lib/utils/getEmailBody';
 import Services from 'components/Feature/Services';
-import TopicExplorer from 'components/Feature/TopicExplorer';
-import ResidentDetailsForm from 'components/Feature/ResidentDetailsForm';
 import SupportSummary from 'components/Feature/SupportSummary';
 import { useState } from 'react';
 import jsonwebtoken from 'jsonwebtoken';
-import Heading from 'components/Heading';
+import Head from 'next/head';
+import { EMAIL } from 'lib/utils/constants';
 
-const Index = ({
-  resources,
-  initialReferral,
-  token,
-  showTopicExplorer,
-  topics,
-  fssTaxonomies,
-  errors,
-  refererInfo
-}) => {
+const Index = ({ categorisedResources, initialReferral, token, errors, refererInfo }) => {
   const { referral, loading, updateReferral } = useReferral(initialReferral.referralId, {
     initialReferral,
     token
@@ -30,22 +20,19 @@ const Index = ({
     return <p>Loading...</p>;
   }
   const [residentInfo, setResidentInfo] = useState(false);
-  const [showResidentForm, setShowResidentForm] = useState(false);
   const [referralCompletion, setReferralCompletion] = useState({ tis: null });
   const [referralSummary, setReferralSummary] = useState([]);
   const [signpostSummary, setSignpostSummary] = useState([]);
   const [referrerData, setReferrerData] = useState({
     'referer-email': refererInfo?.email,
     'referer-name': refererInfo?.name,
-    'referer-organisation': refererInfo?.iss
+    'referer-organisation': refererInfo?.groups.includes(process.env.EXTERNAL_USER_GROUP)
+      ? ''
+      : 'Hackney Council',
+    'user-groups': refererInfo?.groups
   });
+  const [preserveFormData, setPreserveFormData] = useState(true);
 
-  const residentFormCallback = val => {
-    setShowResidentForm(val);
-  };
-  const residentInfoCallback = value => {
-    setResidentInfo(value);
-  };
   const updateSignpostSummary = service => {
     let newSignpostSummary;
     if (
@@ -61,13 +48,17 @@ const Index = ({
 
   const updateEmailBody = (
     newSignpostSummary = signpostSummary,
-    newReferralSummary = referralSummary
+    newReferralSummary = referralSummary,
+    newReferrerData = referrerData,
+    newResidentInfo = residentInfo,
+    type = EMAIL
   ) => {
     return getEmailBody(
-      residentInfo,
+      newResidentInfo,
       newSignpostSummary,
       newReferralSummary,
-      referrerData
+      newReferrerData,
+      type
     );
   };
 
@@ -75,39 +66,10 @@ const Index = ({
 
   return (
     <>
-      {process.env.NEXT_PUBLIC_SIGNPOST_ENABLED.toLowerCase() === 'true' && (
-        <>
-          <Heading as="h2">How to use this tool?</Heading>
-          <div className="govuk-!-margin-bottom-5">
-            <ol>
-              <li className="govuk-!-margin-bottom-1">
-                <a href="#topic-explorer-header">Search for a topic</a> to discuss the resident's
-                whole story and find out what support they need.
-              </li>
-              <li className="govuk-!-margin-bottom-1">
-                <a href="#resources-header">Search for services</a> and refer residents or signpost
-                residents.
-              </li>
-              <li className="govuk-!-margin-bottom-1">
-                <a href="#summary-header">Send a summary email</a> to the resident about your
-                conversation and the services you have discussed.
-              </li>
-            </ol>
-          </div>
-        </>
-      )}
-      <ResidentDetailsForm
-        residentInfoCallback={residentInfoCallback}
-        showResidentForm={showResidentForm}
-        setShowResidentForm={setShowResidentForm}
-        token={token}
-        setReferralCompletion={setReferralCompletion}
-        referralCompletion={referralCompletion}
-        referralSummary={referralSummary}
-        setReferralSummary={setReferralSummary}
-        updateEmailBody={updateEmailBody}
-        setEmailBody={setEmailBody}
-      />
+      <Head>
+        <title>Better Conversations</title>
+        {process.env.NEXT_PUBLIC_ENV != 'test' && <script src="/js/beforeUnload.js"></script>}
+      </Head>
       <div className="govuk-!-margin-top-9">
         {errors.map((err, index) => (
           <p key={`error-getting-resources-${index}`} className="govuk-error-message">
@@ -115,45 +77,39 @@ const Index = ({
           </p>
         ))}
       </div>
-      {showTopicExplorer && (
-        <>
-          <TopicExplorer topics={topics} />
-          <hr className="govuk-section-break hr-additional-spacing" />
-        </>
-      )}
-      <h2 id="resources-header">Resources for residents</h2>
       <Services
-        taxonomies={fssTaxonomies}
-        resources={resources}
+        categorisedResources={categorisedResources}
         residentInfo={residentInfo}
-        refererInfo={refererInfo}
-        residentFormCallback={residentFormCallback}
         referralCompletion={referralCompletion}
         setReferralCompletion={setReferralCompletion}
         updateSignpostSummary={updateSignpostSummary}
+        signpostSummary={signpostSummary}
         referrerData={referrerData}
         setReferrerData={setReferrerData}
+        setResidentInfo={setResidentInfo}
+        token={token}
+        referralSummary={referralSummary}
+        setReferralSummary={setReferralSummary}
+        updateEmailBody={updateEmailBody}
+        setEmailBody={setEmailBody}
+        setPreserveFormData={setPreserveFormData}
+        preserveFormData={preserveFormData}
       />
-      {process.env.NEXT_PUBLIC_SIGNPOST_ENABLED.toLowerCase() === 'true' && (
-        <SupportSummary
-          referralSummary={referralSummary}
-          residentFormCallback={residentFormCallback}
-          signpostSummary={signpostSummary}
-          referrerData={referrerData}
-          setReferrerData={setReferrerData}
-          residentInfo={residentInfo}
-          emailBody={emailBody}
-          setEmailBody={setEmailBody}
-          token={token}
-        />
-      )}
-      <a
-        href="https://forms.gle/B6vEMgp7sCsjJqNdA"
-        target="_blank"
-        className="govuk-button govuk-!-margin-top-5"
-        data-testid="feedback-link-test">
-        Submit feedback
-      </a>
+      <SupportSummary
+        referralSummary={referralSummary}
+        signpostSummary={signpostSummary}
+        updateSignpostSummary={updateSignpostSummary}
+        referrerData={referrerData}
+        setReferrerData={setReferrerData}
+        emailBody={emailBody}
+        setEmailBody={setEmailBody}
+        token={token}
+        setResidentInfo={setResidentInfo}
+        residentInfo={residentInfo}
+        updateEmailBody={updateEmailBody}
+        setPreserveFormData={setPreserveFormData}
+        preserveFormData={preserveFormData}
+      />
     </>
   );
 };
@@ -165,6 +121,7 @@ Index.getInitialProps = async ({ req: { headers }, res }) => {
       return jsonwebtoken.decode(token);
     };
     const refererInfo = retrieveRefererInfo(token);
+
     const initialReferral = { vulnerabilities: [], assets: [], notes: null };
     const otherResources = await requestResources({ token });
     const fss = await requestFssResources({
@@ -174,20 +131,25 @@ Index.getInitialProps = async ({ req: { headers }, res }) => {
     const fssTaxonomies = fss.data.fssTaxonomies;
     const fssErrors = fss.error;
 
-    const topics = await requestPrompts({ token });
-    const showTopicExplorer = process.env.SHOW_TOPIC_EXPLORER;
     const resources = fssResources.concat(otherResources.data).sort((a, b) => {
       return a.name < b.name ? -1 : a.name > b.name ? 1 : 0;
     });
 
-    const errors = [otherResources.error].concat(fssErrors).concat(topics.error);
+    const categorisedResources = fssTaxonomies.filter(taxonomy =>
+      resources.some(resource => resource.categoryName === taxonomy.name)
+    );
+
+    categorisedResources.forEach(
+      taxonomy =>
+        (taxonomy.resources = resources.filter(resource => taxonomy.name == resource.categoryName))
+    );
+
+    const errors = [otherResources.error].concat(fssErrors);
 
     return {
-      resources,
+      categorisedResources,
       initialReferral,
       token,
-      showTopicExplorer,
-      topics: topics.data,
       fssTaxonomies,
       errors,
       refererInfo

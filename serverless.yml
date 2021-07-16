@@ -44,16 +44,19 @@ functions:
       - http: ANY /{proxy+}
     timeout: 120
     environment:
-      AIRTABLE_API_KEY: ${ssm:/frontdoor-snapshot/airtable-api-key}
-      AIRTABLE_BASE_ID: ${ssm:/frontdoor-snapshot/airtable-base-id}
-      AIRTABLE_PROMPTS_API_KEY: ${ssm:/frontdoor-snapshot/airtable-prompts-api-key}
-      AIRTABLE_PROMPTS_BASE_ID: ${ssm:/frontdoor-snapshot/airtable-prompts-base-id}
-      AIRTABLE_PROMPTS_TABLE_NAME: ${ssm:/frontdoor-snapshot/${self:provider.stage}/airtable-prompts-table-name}
-      AIRTABLE_TABLE_NAMES: ${ssm:/frontdoor-snapshot/airtable-table-names}
+      ENV: ${self:provider.stage}
       ALLOWED_GROUPS: ${ssm:/frontdoor-snapshot/${self:provider.stage}/allowed-groups}
       BASIC_ALLOWED_GROUPS: ${ssm:/frontdoor-snapshot/${self:provider.stage}/basic-allowed-groups}
+      EXTERNAL_USER_GROUP: ${ssm:/frontdoor-snapshot/${self:provider.stage}/external-user-group}
+      JWT_SECRET: ${ssm:/common/hackney-jwt-secret}
+      TABLE_NAME: ${self:provider.environment.TABLE_NAME}
       CONVERSATIONS_TABLE_NAME: ${self:provider.environment.CONVERSATIONS_TABLE_NAME}
-      ENV: ${self:provider.stage}
+      NEXT_PUBLIC_API_URL: https://${self:custom.aliases.${self:provider.stage}}/api
+      NEXT_PUBLIC_URL: https://${self:custom.aliases.${self:provider.stage}}
+      AIRTABLE_API_KEY: ${ssm:/frontdoor-snapshot/airtable-api-key}
+      AIRTABLE_BASE_ID: ${ssm:/frontdoor-snapshot/airtable-base-id}
+      AIRTABLE_TABLE_NAMES: ${ssm:/frontdoor-snapshot/airtable-table-names}
+      INH_URL: ${ssm:/frontdoor-snapshot/inh-url}
       FSS_PUBLIC_API_URL: ${ssm:/frontdoor-snapshot/${self:provider.stage}/fss-public-api-url}
       GOV_NOTIFY_API_KEY: ${ssm:/frontdoor-snapshot/gov-notify-api-key}
       INH_URL: ${ssm:/frontdoor-snapshot/inh-url}
@@ -63,10 +66,12 @@ functions:
       REFERRAL_EMAIL_TEMPLATE_ID: ${ssm:/frontdoor-snapshot/referral-email-template-id}
       REFERRAL_RECEIPT_EMAIL_TEMPLATE_ID: ${ssm:/frontdoor-snapshot/referral-email-receipt-template-id}
       REFERRAL_RESIDENT_EMAIL_TEMPLATE_ID: ${ssm:/frontdoor-snapshot/referral-resident-email-template-id}
+      SIGNPOST_EMAIL_TEMPLATE_ID: ${ssm:/frontdoor-snapshot/signpost-email-template-id}
+      SIGNPOST_LETTER_TEMPLATE_ID: ${ssm:/frontdoor-snapshot/signpost-letter-template-id}
       REFERRAL_RESIDENT_SMS_TEMPLATE_ID: ${ssm:/frontdoor-snapshot/referral-resident-sms-template-id}
-      SHOW_TOPIC_EXPLORER: true
-      SIGNPOSTL_EMAIL_TEMPLATE_ID: ${ssm:/frontdoor-snapshot/signpost-email-template-id}
-      TABLE_NAME: ${self:provider.environment.TABLE_NAME}
+      GOV_NOTIFY_API_KEY: ${ssm:/frontdoor-snapshot/gov-notify-api-key}
+      NEXT_PUBLIC_GENERIC_CONTACT_NUMBER: ${ssm:/frontdoor-snapshot/generic_contact_number}
+      NEXT_PUBLIC_ENV: ${self:provider.stage}
 
   cf-snapshot-authorizer:
     name: ${self:service}-authorizer-${self:provider.stage}
@@ -183,6 +188,39 @@ resources:
                 HTTPPort: 80
                 HTTPSPort: 443
                 OriginProtocolPolicy: https-only
+    ApiMetricFilter:
+      Type: AWS::Logs::MetricFilter
+      Properties:
+        FilterPattern: 'Error'
+        LogGroupName: '/aws/lambda/${self:service}-${self:provider.stage}'
+        MetricTransformations:
+          - MetricName: 'errors-${self:provider.stage}'
+            MetricNamespace: ErrorLogs
+            MetricValue: '1'
+    FrontdoorLambdaErrorAlarm:
+      Type: AWS::CloudWatch::Alarm
+      Properties:
+        AlarmDescription: Errors detected at better conversations lambda
+        Namespace: ErrorLogs
+        MetricName: 'errors-${self:provider.stage}'
+        Statistic: Sum
+        Threshold: 0
+        ComparisonOperator: GreaterThanThreshold
+        EvaluationPeriods: 1
+        Period: 3600
+        AlarmActions:
+          - Ref: TopicCloudwatchAlarm
+    TopicCloudwatchAlarm:
+      Type: AWS::SNS::Topic
+      Properties:
+        TopicName: ${self:service}-${self:provider.stage}-topic-cloudwatch-alarm
+    TopicCloudwatchAlarmSubscription:
+      Type: AWS::SNS::Subscription
+      Properties:
+        Endpoint: ${ssm:/frontdoor-snapshot/alarm-subscription-email}
+        Protocol: email
+        TopicArn:
+          Ref: TopicCloudwatchAlarm
 
 custom:
   authorizer:

@@ -13,17 +13,16 @@ receipts to the resident.
 
 ## Intended Users & Authorisation
 
-* Hackney Customer Services can use the tool to have meaningful conversations on inbound or outbound calls.
-* Voluntary Sector Workers can discover and refer residents to other services, or council services. 
+- Hackney Customer Services can use the tool to have meaningful conversations on inbound or outbound calls.
+- Voluntary Sector Workers can discover and refer residents to other services, or council services.
 
 There are types of authorisation groups that are permitted access to the tool, these are configured using environment
 variables:
 
-* `ALLOWED_GROUPS` - 
-* `BASIC_ALLOWED_GROUPS` - 
+- `ALLOWED_GROUPS` -
+- `BASIC_ALLOWED_GROUPS` -
 
 The groups stored in those environment variables will differ. Speak to an active maintainer for more information.
-
 
 ## History
 
@@ -50,33 +49,33 @@ Please see the separate [Contributing Guide](./CONTRIBUTING.md).
 
 ## Further Documentation
 
-* [Project Drive](https://drive.google.com/drive/u/0/folders/0ADRAoyKRsyCkUk9PVA)
-* [Project Documentation](https://docs.google.com/document/d/1jPv-VTpeJvvCZdRepX-WC6GDgDs2w_J9gPzjyvdevPE/edit)
+- [Project Drive](https://drive.google.com/drive/u/0/folders/0ADRAoyKRsyCkUk9PVA)
+- [Project Documentation](https://docs.google.com/document/d/1jPv-VTpeJvvCZdRepX-WC6GDgDs2w_J9gPzjyvdevPE/edit)
 
 ## See Related Projects
 
-* [LBHackney-IT/cv-19-res-support-v3](https://github.com/LBHackney-IT/cv-19-res-support-v3) API for Here To Help
-* [LBHackney-IT/coronavirus-here-to-help-frontend](https://github.com/LBHackney-IT/coronavirus-here-to-help-frontend) Frontend for Here To Help
+- [LBHackney-IT/cv-19-res-support-v3](https://github.com/LBHackney-IT/cv-19-res-support-v3) API for Here To Help
+- [LBHackney-IT/coronavirus-here-to-help-frontend](https://github.com/LBHackney-IT/coronavirus-here-to-help-frontend) Frontend for Here To Help
 
 ## Contributors
 
 ### Acitve Maintainers
 
-* **Liudvikas Taluntis** - Engineer at Hackney
+- **Liudvikas Taluntis** - Engineer at Hackney
 
 ### Previous Maintainers
 
-* **Andy Carr** - FutureGov
-* **Antony O'Neill** - Lead Engineer at [Made Tech](https://www.madetech.com/) ([antony@ant-web.co.uk](mailto:antony@ant-web.co.uk))
-* **Ben Dalton** - Engineer at [Made Tech](https://www.madetech.com/) ([ben.dalton@madetech.com](mailto:ben.dalton@madetech.com))
-* **Bogdan Zaharia** - Engineer at [Made Tech](https://www.madetech.com/)
-* **Elena Vilimaite** - Senior Engineer at [Made Tech](https://www.madetech.com/) ([elena@madetech.com](mailto:elena@madetech.com))
-* **Katrina Kosiak** - Engineer at [Made Tech](https://www.madetech.com/) ([katrina@madetech.com](mailto:katrina@madetech.com))
-* **Kyle Chapman** - Senior Engineer at [Made Tech](https://www.madetech.com/)
-* **Matt Millar** - Lead Engineer at [Made Tech](https://www.madetech.com/)
-* **Maysa Kanoni** - Engineer at [Made Tech](https://www.madetech.com/) ([maysa@madetech.com](mailto:maysa@madetech.com))
-* **Riccardo Noviello** - FutureGov
-* **Tom Davies** - Senior Engineer at [Made Tech](https://www.madetech.com/)
+- **Andy Carr** - FutureGov
+- **Antony O'Neill** - Lead Engineer at [Made Tech](https://www.madetech.com/) ([antony@ant-web.co.uk](mailto:antony@ant-web.co.uk))
+- **Ben Dalton** - Engineer at [Made Tech](https://www.madetech.com/) ([ben.dalton@madetech.com](mailto:ben.dalton@madetech.com))
+- **Bogdan Zaharia** - Engineer at [Made Tech](https://www.madetech.com/)
+- **Elena Vilimaite** - Senior Engineer at [Made Tech](https://www.madetech.com/) ([elena@madetech.com](mailto:elena@madetech.com))
+- **Katrina Kosiak** - Engineer at [Made Tech](https://www.madetech.com/) ([katrina@madetech.com](mailto:katrina@madetech.com))
+- **Kyle Chapman** - Senior Engineer at [Made Tech](https://www.madetech.com/)
+- **Matt Millar** - Lead Engineer at [Made Tech](https://www.madetech.com/)
+- **Maysa Kanoni** - Engineer at [Made Tech](https://www.madetech.com/) ([maysa@madetech.com](mailto:maysa@madetech.com))
+- **Riccardo Noviello** - FutureGov
+- **Tom Davies** - Senior Engineer at [Made Tech](https://www.madetech.com/)
 
 ## License
 

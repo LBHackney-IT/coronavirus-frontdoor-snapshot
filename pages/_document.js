@@ -3,7 +3,7 @@ import Document, { Html, Head, Main, NextScript } from 'next/document';
 export default class AppDocument extends Document {
   render() {
     return (
-      <Html className="govuk-template lbh-template">
+      <Html lang="en-GB" className="govuk-template lbh-template">
         <Head>
           <script
             dangerouslySetInnerHTML={{
@@ -20,6 +20,8 @@ export default class AppDocument extends Document {
             }}
           />
           <script
+            src={`https://www.googleoptimize.com/optimize.js?id=${process.env.OPTIMIZE_ID}`}></script>
+          <script
             async
             src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GTM_ID}`}
           />
@@ -31,6 +33,8 @@ export default class AppDocument extends Document {
             gtag('js', new Date());
             gtag('config', '${process.env.NEXT_PUBLIC_GTM_ID}', {
               page_path: window.location.pathname,
+              'custom_map': {'dimension1': 'custom_text'},
+              'anonymize_ip': true
             });
           `
             }}

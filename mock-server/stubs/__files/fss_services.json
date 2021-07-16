@@ -78,7 +78,7 @@
         "telephone": "07100 0000000",
         "website": "https://www.sample2.org.uk"
       },
-      "description": "Second service description",
+      "description": "Second service description ostrich",
       "locations": [
         {
           "latitude": 51.5466359,
@@ -100,7 +100,7 @@
       },
       "referral": {
         "email": "",
-        "website": "referal.form2.com"
+        "website": "http://referal.form2.com"
       },
       "status": "active"
     }

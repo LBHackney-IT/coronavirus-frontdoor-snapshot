@@ -15,7 +15,6 @@ export default class MyApp extends App {
           <Component {...pageProps} />
         </Layout>
         <script src="/js/govuk.js"></script>
-        {process.env.NEXT_PUBLIC_ENV != 'test' && <script src="/js/beforeUnload.js"></script>}
       </>
     );
   }

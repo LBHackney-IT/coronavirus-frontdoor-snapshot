@@ -4,6 +4,18 @@ import Heading from 'components/Heading';
 import { useState } from 'react';
 import useConversation from 'lib/api/utils/useConversation';
 import css from '../notification-messages.module.scss';
+import styles from './index.module.scss';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import { sendDataToAnalytics, getUserGroup } from 'lib/utils/analytics';
+import {
+  SEND_SUMMARY_SUCCESS,
+  SEND_SUMMARY_INVALID_COUNT,
+  SEND_SUMMARY_SUCCESS_COUNT,
+  LETTER,
+  EMAIL
+} from 'lib/utils/constants';
+import ResidentDetails from '../ResidentDetails';
 
 const SupportSummary = ({
   referralSummary,
@@ -12,21 +24,27 @@ const SupportSummary = ({
   setReferrerData,
   emailBody,
   setEmailBody,
+  token,
+  updateSignpostSummary,
+  setResidentInfo,
   residentInfo,
-  residentFormCallback,
-  token
+  updateEmailBody,
+  preserveFormData,
+  setPreserveFormData
 }) => {
+  const [validationError, setValidationError] = useState({});
+  const [analyticsSubmitted, setAnalyticsSubmitted] = useState(false);
+
   const { createConversation } = useConversation({ token });
 
   const [hideForm, setHideForm] = useState(true);
   const [formErrorMsg, setFormErrorMsg] = useState(false);
   const [conversationCompletion, setConversationCompletion] = useState(null);
+  const [toBeDeleted, setToBeDeleted] = useState(null);
+  const [sharingMethod, setSharingMethod] = useState(EMAIL);
 
-  const toggle_detail = e => {
-    if (!residentInfo && hideForm) {
-      e.preventDefault();
-      residentFormCallback(true);
-    } else if (referralSummary.length < 1 && signpostSummary.length < 1) {
+  const toggleDetail = e => {
+    if (referralSummary.length < 1 && signpostSummary.length < 1) {
       e.preventDefault();
       setFormErrorMsg(true);
     } else {
@@ -35,42 +53,88 @@ const SupportSummary = ({
     }
   };
 
+  const onInvalidField = value => {
+    setValidationError(x => {
+      return { [value]: true, ...x };
+    });
+  };
+
+  const handleOnChange = (id, value) => {
+    delete validationError[id];
+    let newResidentInfo = { ...residentInfo, [id]: value };
+    setResidentInfo(newResidentInfo);
+    setEmailBody(updateEmailBody(undefined, undefined, undefined, newResidentInfo, sharingMethod));
+  };
+
   const sendSummary = async e => {
     e.preventDefault();
+    e.target['submit-summary'].setAttribute('disabled', true);
+
+    let sharingMethod = EMAIL;
+    if (process.env.NEXT_PUBLIC_ENV != 'production') {
+      sharingMethod = e.target['summary-sharing-method'].value;
+    }
+
     const summary = {
-      firstName: residentInfo.firstName,
-      lastName: residentInfo.lastName,
-      phone: residentInfo.phone,
-      email: residentInfo.email,
-      address: residentInfo.address,
-      postcode: residentInfo.postcode,
+      firstName: e.target.firstName.value,
+      lastName: e.target.lastName.value,
+      phone: e.target.phone.value,
+      email: e.target.email.value,
+      address: e.target.address.value,
+      postcode: e.target.postcode.value.toUpperCase(),
       userOrganisation: e.target['summary-organisation'].value,
       userName: e.target['summary-name'].value,
       userEmail: e.target['summary-email'].value,
       dateOfBirth: {
-        year: residentInfo['date-of-birth-year'],
-        month: residentInfo['date-of-birth-month'],
-        day: residentInfo['date-of-birth-day']
+        year: e.target['date-of-birth-year'].value,
+        month: e.target['date-of-birth-month'].value,
+        day: e.target['date-of-birth-day'].value
       },
+      sharingMethod,
       discussedServices: signpostSummary.concat(referralSummary),
-      signPostingMessage: e.target['support-summary-note'].value
+      signPostingMessage: emailBody
     };
+
+    setPreserveFormData(false);
 
     const result = await createConversation(summary);
     if (result.id) {
       setConversationCompletion(result);
       setHideForm(true);
+      sendDataToAnalytics({
+        action: getUserGroup(referrerData['user-groups']),
+        category: SEND_SUMMARY_SUCCESS_COUNT,
+        label: signpostSummary.length
+      });
+
+      signpostSummary.forEach(signpost => {
+        sendDataToAnalytics({
+          action: getUserGroup(referrerData['user-groups']),
+          category: SEND_SUMMARY_SUCCESS,
+          label: signpost.name
+        });
+      });
     }
   };
+
+  const onInvalidAnalytics = () => {
+    sendDataToAnalytics({
+      action: getUserGroup(referrerData['user-groups']),
+      category: SEND_SUMMARY_INVALID_COUNT,
+      label: signpostSummary.length
+    });
+  };
+
   return (
     <>
-      <Heading as="h2" id="summary-header">
+      <h1 className={`govuk-heading-l`} id="summary-header">
         Send a summary of today's support
-      </Heading>
+      </h1>
       <Details
-        title="Email the resident with details of services"
+        title="Share information about selected services with a resident"
+        id="summary-form"
         onclick={e => {
-          toggle_detail(e);
+          toggleDetail(e);
         }}>
         {conversationCompletion && (
           <div>
@@ -85,10 +149,10 @@ const SupportSummary = ({
                 Successfully submitted conversation
               </div>
             )}
-            <h4>
+            <h2 className="govuk-heading-s" data-testid="conversation-competition-msg">
               To help another resident please{' '}
               <a href="javascript:window.location.href=window.location.href">refresh this page</a>
-            </h4>
+            </h2>
           </div>
         )}
         {!hideForm && (
@@ -114,26 +178,135 @@ const SupportSummary = ({
             <div className="govuk-!-margin-bottom-5">
               {signpostSummary.length > 0 &&
                 signpostSummary.map(signpost => (
-                  <div className="govuk-!-margin-bottom-1">{signpost.name}</div>
+                  <div className="govuk-!-margin-bottom-1">
+                    {toBeDeleted != signpost.name && (
+                      <>
+                        <button
+                          onClick={() => setToBeDeleted(signpost.name)}
+                          className={styles['remove-button']}
+                          disabled={toBeDeleted == signpost.name}
+                          data-testid="remove-from-summary"
+                          role="button"
+                          aria-label={`remove ${signpost.name} from summary`}>
+                          <FontAwesomeIcon icon={faTimesCircle} color="red" />
+                        </button>
+                        {signpost.name}
+                      </>
+                    )}
+                    {toBeDeleted == signpost.name && (
+                      <div>
+                        <strong className={styles['remove-prompt']}>
+                          Are you sure you wish to remove {signpost.name} from the summary?
+                        </strong>
+                        <button
+                          className={`govuk-button govuk-button--secondary ${styles['button']}`}
+                          onClick={() => setToBeDeleted(null)}
+                          data-testid="remove-from-summary-no">
+                          No
+                        </button>
+                        <button
+                          onClick={() => updateSignpostSummary(signpost)}
+                          className={`govuk-button ${styles['button']}`}
+                          data-testid="remove-from-summary-yes">
+                          Yes
+                        </button>
+                      </div>
+                    )}
+                  </div>
                 ))}
             </div>
-            <form id="summary-form" onSubmit={sendSummary}>
-              <TextArea
-                value={emailBody}
-                label="Add a note for the resident"
-                name="support-summary-note"
-                rows="20"
-                onChange={value => {
-                  setEmailBody(value);
-                }}
+            <form
+              id="summary-form"
+              onInvalid={() => {
+                if (!analyticsSubmitted) {
+                  onInvalidAnalytics();
+                  setAnalyticsSubmitted(true);
+                }
+              }}
+              onSubmit={sendSummary}>
+              <ResidentDetails
+                onInvalidField={onInvalidField}
+                validationError={validationError}
+                handleOnChange={handleOnChange}
+                preserveFormData={preserveFormData}
+                residentInfo={residentInfo}
+                formType="summary"
               />
+              {process.env.NEXT_PUBLIC_ENV != 'production' && (
+                <div className="govuk-form-group">
+                  <fieldset className="govuk-fieldset">
+                    <div className="govuk-!-padding-top-4">
+                      <label>
+                        <strong>How would you like to share information with the resident?</strong>
+                      </label>
+                    </div>
+                    <div className="govuk-radios">
+                      <div className="govuk-radios__item">
+                        <input
+                          className="govuk-radios__input"
+                          id="summary-sharing-method-email"
+                          name="summary-sharing-method"
+                          type="radio"
+                          value="email"
+                          onClick={() => {
+                            setSharingMethod(EMAIL);
+                            setEmailBody(updateEmailBody());
+                          }}
+                          required
+                        />
+                        <label
+                          className="govuk-label govuk-radios__label"
+                          for="summary-sharing-method-email">
+                          Email
+                        </label>
+                      </div>
+                      <div className="govuk-radios__item">
+                        <input
+                          className="govuk-radios__input"
+                          id="summary-sharing-method-letter"
+                          name="summary-sharing-method"
+                          type="radio"
+                          value="letter"
+                          onClick={() => {
+                            setSharingMethod(LETTER);
+                            setEmailBody(
+                              updateEmailBody(undefined, undefined, undefined, undefined, LETTER)
+                            );
+                          }}
+                          required
+                        />
+                        <label
+                          className="govuk-label govuk-radios__label"
+                          for="summary-sharing-method-letter">
+                          Letter
+                        </label>
+                      </div>
+                    </div>
+                  </fieldset>
+                </div>
+              )}
+              <div className="govuk-!-padding-top-4">
+                <TextArea
+                  value={emailBody}
+                  label="Add a note for the resident"
+                  name="support-summary-note"
+                  rows="20"
+                  onChange={value => {
+                    setEmailBody(value);
+                  }}
+                />
+              </div>
               <strong>Your details</strong>
               <TextInput
                 label="Name"
                 name="summary-name"
                 value={referrerData['referer-name']}
                 onChange={value => {
-                  setReferrerData({ ...referrerData, 'referer-name': value });
+                  const newReferrerData = { ...referrerData, 'referer-name': value };
+                  setReferrerData(newReferrerData);
+                  setEmailBody(
+                    updateEmailBody(undefined, undefined, newReferrerData, undefined, sharingMethod)
+                  );
                 }}
                 validate
                 required={true}
@@ -143,7 +316,11 @@ const SupportSummary = ({
                 name="summary-email"
                 value={referrerData['referer-email']}
                 onChange={value => {
-                  setReferrerData({ ...referrerData, 'referer-email': value });
+                  const newReferrerData = { ...referrerData, 'referer-email': value };
+                  setReferrerData(newReferrerData);
+                  setEmailBody(
+                    updateEmailBody(undefined, undefined, newReferrerData, undefined, sharingMethod)
+                  );
                 }}
                 validate
                 required={true}
@@ -153,19 +330,23 @@ const SupportSummary = ({
                 name="summary-organisation"
                 value={referrerData['referer-organisation']}
                 onChange={value => {
-                  setReferrerData({ ...referrerData, 'referer-organisation': value });
+                  const newReferrerData = { ...referrerData, 'referer-organisation': value };
+                  setReferrerData(newReferrerData);
+                  setEmailBody(
+                    updateEmailBody(undefined, undefined, newReferrerData, undefined, sharingMethod)
+                  );
                 }}
                 validate
                 required={true}
               />
-              <Button type="submit" text="Send" />
+              <Button type="submit" text="Send" id="summary-submit" name="submit-summary" />
             </form>
           </div>
         )}
       </Details>
       {formErrorMsg && (
         <div className="govuk-!-margin-top-4">
-          <div className={`${css['error-message']}`}>
+          <div className={`${css['error-message']}`} id="summary-error">
             <a href="#resources-header">
               Please make a referral or choose at least one service to add to summary
             </a>

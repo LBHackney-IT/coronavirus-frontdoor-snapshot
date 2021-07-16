@@ -47,6 +47,7 @@ export const endpoint = ({ createConversation }) =>
         userName,
         userEmail,
         dateOfBirth,
+        sharingMethod,
         discussedServices,
         signPostingMessage
       },
@@ -66,7 +67,7 @@ export const endpoint = ({ createConversation }) =>
         discussedServices,
         signPostingMessage
       });
-      const referral = await createConversation.execute(convo);
+      const referral = await createConversation.execute(convo, sharingMethod);
       return Response.created(referral);
     }
   );

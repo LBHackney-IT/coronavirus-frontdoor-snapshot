@@ -1,10 +1,12 @@
 {
   "name": "coronavirus-frontdoor-snapshot",
   "version": "0.1.0",
+  "license": "MIT",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "debug": "cross-env NODE_OPTIONS=--inspect next",
     "start:mock": "wiremock --root-dir ./mock-server/stubs --port 8085",
     "start-test-servers": "yarn start & yarn start:mock",
     "deploy": "yarn && next build && yarn --production=true && sls deploy --aws-profile hnserverless -s staging && yarn",
@@ -17,6 +19,9 @@
     "lint": "eslint --fix --ext js lib/ pages/ && echo 'Lint complete.'"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.35",
+    "@fortawesome/free-solid-svg-icons": "^5.15.3",
+    "@fortawesome/react-fontawesome": "^0.1.14",
     "airtable": "^0.8.1",
     "cookie": "^0.4.1",
     "cookie-parser": "^1.4.5",
@@ -51,6 +56,7 @@
     "babel-jest": "^25.5.1",
     "chai": "^4.2.0",
     "clipboardy": "^2.3.0",
+    "cross-env": "^7.0.3",
     "cypress": "6.8.0",
     "cypress-axe": "^0.8.1",
     "dynamodb-admin": "^4.0.0",
@@ -67,6 +73,7 @@
     "react-test-renderer": "16.13.1",
     "sass": "^1.26.5",
     "serverless": "^1.70.1",
+    "serverless-plugin-metric": "^1.2.2",
     "start-server-and-test": "^1.11.0"
   },
   "license" : "MIT"
