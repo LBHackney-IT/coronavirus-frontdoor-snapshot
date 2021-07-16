@@ -76,5 +76,6 @@
     "serverless": "^1.70.1",
     "serverless-plugin-metric": "^1.2.2",
     "start-server-and-test": "^1.11.0"
-  }
+  },
+  "license" : "MIT"
 }
