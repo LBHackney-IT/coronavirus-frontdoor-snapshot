@@ -16,7 +16,8 @@
     "int-test": "start-server-and-test start-test-servers http://localhost:3000 cypress-run",
     "unit-test": "jest --runInBand",
     "dynamo-admin": "DYNAMO_ENDPOINT=http://localhost:8000 dynamodb-admin",
-    "lint": "eslint --fix --ext js lib/ pages/ && echo 'Lint complete.'"
+    "lint": "eslint --fix --ext js lib/ pages/ && echo 'Lint complete.'",
+    "pretty": "prettier --write \"./**/*.{js,jsx,json}\""
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.35",
