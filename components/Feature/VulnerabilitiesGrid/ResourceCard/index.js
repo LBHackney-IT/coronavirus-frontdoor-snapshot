@@ -7,7 +7,7 @@ import {
   REFERRAL_CLICK_WEBSITE,
   SERVICE_CLICK_WEBSITE,
   VIEW_SUMMARY_EMAIL_CLICKED
-} from 'lib/utils/analyticsConstants';
+} from 'lib/utils/constants';
 import ReferralForm from 'components/Feature/ReferralForm';
 
 const ResourceCard = ({
@@ -320,18 +320,19 @@ const ResourceCard = ({
         <div
           className={`${css['success-message']}`}
           data-testid={`added-to-summary-banner-${id}-${categoryId}`}>
-          You have added a service to your summary email
+          You have added a service to your summary message
           <a
             className={`${css['summary-link']}`}
             href="#summary-header"
-            onClick={() =>
+            onClick={() => {
+              document.getElementById('span-summary-form').click();
               sendDataToAnalytics({
                 action: getUserGroup(referrerData['user-groups']),
                 category: VIEW_SUMMARY_EMAIL_CLICKED,
                 label: name
-              })
-            }>
-            View summary email
+              });
+            }}>
+            View summary message
           </a>
         </div>
       )}

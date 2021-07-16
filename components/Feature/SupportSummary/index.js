@@ -11,8 +11,10 @@ import { sendDataToAnalytics, getUserGroup } from 'lib/utils/analytics';
 import {
   SEND_SUMMARY_SUCCESS,
   SEND_SUMMARY_INVALID_COUNT,
-  SEND_SUMMARY_SUCCESS_COUNT
-} from 'lib/utils/analyticsConstants';
+  SEND_SUMMARY_SUCCESS_COUNT,
+  LETTER,
+  EMAIL
+} from 'lib/utils/constants';
 import ResidentDetails from '../ResidentDetails';
 
 const SupportSummary = ({
@@ -39,6 +41,7 @@ const SupportSummary = ({
   const [formErrorMsg, setFormErrorMsg] = useState(false);
   const [conversationCompletion, setConversationCompletion] = useState(null);
   const [toBeDeleted, setToBeDeleted] = useState(null);
+  const [sharingMethod, setSharingMethod] = useState(EMAIL);
 
   const toggleDetail = e => {
     if (referralSummary.length < 1 && signpostSummary.length < 1) {
@@ -60,19 +63,25 @@ const SupportSummary = ({
     delete validationError[id];
     let newResidentInfo = { ...residentInfo, [id]: value };
     setResidentInfo(newResidentInfo);
-    setEmailBody(updateEmailBody(undefined, undefined, undefined, newResidentInfo));
+    setEmailBody(updateEmailBody(undefined, undefined, undefined, newResidentInfo, sharingMethod));
   };
 
   const sendSummary = async e => {
     e.preventDefault();
     e.target['submit-summary'].setAttribute('disabled', true);
+
+    let sharingMethod = EMAIL;
+    if (process.env.NEXT_PUBLIC_ENV != 'production') {
+      sharingMethod = e.target['summary-sharing-method'].value;
+    }
+
     const summary = {
       firstName: e.target.firstName.value,
       lastName: e.target.lastName.value,
       phone: e.target.phone.value,
       email: e.target.email.value,
       address: e.target.address.value,
-      postcode: e.target.postcode.value,
+      postcode: e.target.postcode.value.toUpperCase(),
       userOrganisation: e.target['summary-organisation'].value,
       userName: e.target['summary-name'].value,
       userEmail: e.target['summary-email'].value,
@@ -81,8 +90,9 @@ const SupportSummary = ({
         month: e.target['date-of-birth-month'].value,
         day: e.target['date-of-birth-day'].value
       },
+      sharingMethod,
       discussedServices: signpostSummary.concat(referralSummary),
-      signPostingMessage: e.target['support-summary-note'].value
+      signPostingMessage: emailBody
     };
 
     setPreserveFormData(false);
@@ -121,7 +131,7 @@ const SupportSummary = ({
         Send a summary of today's support
       </h1>
       <Details
-        title="Email the resident with details of services"
+        title="Share information about selected services with a resident"
         id="summary-form"
         onclick={e => {
           toggleDetail(e);
@@ -222,15 +232,70 @@ const SupportSummary = ({
                 residentInfo={residentInfo}
                 formType="summary"
               />
-              <TextArea
-                value={emailBody}
-                label="Add a note for the resident"
-                name="support-summary-note"
-                rows="20"
-                onChange={value => {
-                  setEmailBody(value);
-                }}
-              />
+              {process.env.NEXT_PUBLIC_ENV != 'production' && (
+                <div className="govuk-form-group">
+                  <fieldset className="govuk-fieldset">
+                    <div className="govuk-!-padding-top-4">
+                      <label>
+                        <strong>How would you like to share information with the resident?</strong>
+                      </label>
+                    </div>
+                    <div className="govuk-radios">
+                      <div className="govuk-radios__item">
+                        <input
+                          className="govuk-radios__input"
+                          id="summary-sharing-method-email"
+                          name="summary-sharing-method"
+                          type="radio"
+                          value="email"
+                          onClick={() => {
+                            setSharingMethod(EMAIL);
+                            setEmailBody(updateEmailBody());
+                          }}
+                          required
+                        />
+                        <label
+                          className="govuk-label govuk-radios__label"
+                          for="summary-sharing-method-email">
+                          Email
+                        </label>
+                      </div>
+                      <div className="govuk-radios__item">
+                        <input
+                          className="govuk-radios__input"
+                          id="summary-sharing-method-letter"
+                          name="summary-sharing-method"
+                          type="radio"
+                          value="letter"
+                          onClick={() => {
+                            setSharingMethod(LETTER);
+                            setEmailBody(
+                              updateEmailBody(undefined, undefined, undefined, undefined, LETTER)
+                            );
+                          }}
+                          required
+                        />
+                        <label
+                          className="govuk-label govuk-radios__label"
+                          for="summary-sharing-method-letter">
+                          Letter
+                        </label>
+                      </div>
+                    </div>
+                  </fieldset>
+                </div>
+              )}
+              <div className="govuk-!-padding-top-4">
+                <TextArea
+                  value={emailBody}
+                  label="Add a note for the resident"
+                  name="support-summary-note"
+                  rows="20"
+                  onChange={value => {
+                    setEmailBody(value);
+                  }}
+                />
+              </div>
               <strong>Your details</strong>
               <TextInput
                 label="Name"
@@ -239,7 +304,9 @@ const SupportSummary = ({
                 onChange={value => {
                   const newReferrerData = { ...referrerData, 'referer-name': value };
                   setReferrerData(newReferrerData);
-                  setEmailBody(updateEmailBody(undefined, undefined, newReferrerData));
+                  setEmailBody(
+                    updateEmailBody(undefined, undefined, newReferrerData, undefined, sharingMethod)
+                  );
                 }}
                 validate
                 required={true}
@@ -251,7 +318,9 @@ const SupportSummary = ({
                 onChange={value => {
                   const newReferrerData = { ...referrerData, 'referer-email': value };
                   setReferrerData(newReferrerData);
-                  setEmailBody(updateEmailBody(undefined, undefined, newReferrerData));
+                  setEmailBody(
+                    updateEmailBody(undefined, undefined, newReferrerData, undefined, sharingMethod)
+                  );
                 }}
                 validate
                 required={true}
@@ -263,7 +332,9 @@ const SupportSummary = ({
                 onChange={value => {
                   const newReferrerData = { ...referrerData, 'referer-organisation': value };
                   setReferrerData(newReferrerData);
-                  setEmailBody(updateEmailBody(undefined, undefined, newReferrerData));
+                  setEmailBody(
+                    updateEmailBody(undefined, undefined, newReferrerData, undefined, sharingMethod)
+                  );
                 }}
                 validate
                 required={true}

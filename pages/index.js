@@ -8,6 +8,7 @@ import SupportSummary from 'components/Feature/SupportSummary';
 import { useState } from 'react';
 import jsonwebtoken from 'jsonwebtoken';
 import Head from 'next/head';
+import { EMAIL } from 'lib/utils/constants';
 
 const Index = ({ categorisedResources, initialReferral, token, errors, refererInfo }) => {
   const { referral, loading, updateReferral } = useReferral(initialReferral.referralId, {
@@ -49,9 +50,16 @@ const Index = ({ categorisedResources, initialReferral, token, errors, refererIn
     newSignpostSummary = signpostSummary,
     newReferralSummary = referralSummary,
     newReferrerData = referrerData,
-    newResidentInfo = residentInfo
+    newResidentInfo = residentInfo,
+    type = EMAIL
   ) => {
-    return getEmailBody(newResidentInfo, newSignpostSummary, newReferralSummary, newReferrerData);
+    return getEmailBody(
+      newResidentInfo,
+      newSignpostSummary,
+      newReferralSummary,
+      newReferrerData,
+      type
+    );
   };
 
   const [emailBody, setEmailBody] = useState(updateEmailBody());

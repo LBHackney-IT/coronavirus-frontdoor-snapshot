@@ -39,31 +39,40 @@ context('Create summary', () => {
     cy.get('#phone').type('07123456789');
     cy.get('#email').type('luna@meow.com');
     cy.get('#address').type('159 Cute Street');
-    cy.get('#postcode').type('M3 0W');
+    cy.get('#postcode').type('M3 0WW');
+    cy.get('#summary-sharing-method-email').click();
     cy.get('#date-of-birth-day').type('13');
     cy.get('#date-of-birth-month').type('5');
     cy.get('#date-of-birth-year').type('1985');
 
     cy.get('#support-summary-note').should(
       'have.value',
-      'If you wish to reply to this email please respond to referrer at \n  \n  Hi Luna Kitty,\n' +
-        '\n' +
+      'If you wish to reply to this email please respond to referrer at  \n  \n' +
+        'Hi Luna Kitty,\n\n' +
         'We discussed the following services in our conversation today:\n' +
-        '    1. First service\n' +
-        '    07000 0000000 ' +
-        '\n' +
-        '    help@gmail.com ' +
-        '\n' +
-        '    404 error, not, found ' +
-        '\n' +
-        '    https://www.sample.org.uk ' +
-        ' \n' +
-        '\n' +
-        '\n' +
-        '\n' +
-        'Thanks, \n' +
-        '\n' +
-        '\n' +
+        '1. First service\n' +
+        '    07000 0000000 \n' +
+        '    help@gmail.com \n' +
+        '    404 error, not, found \n' +
+        '    https://www.sample.org.uk  \n\n\n' +
+        'Thanks, \n\n\n' +
+        'Hackney Council\n'
+    );
+
+    cy.get('#summary-sharing-method-letter').click();
+
+    cy.get('#support-summary-note').should(
+      'have.value',
+      'Hi Luna Kitty,\n\n' +
+        'It was nice speaking with you. I am writing to share the contact details of the support services we discussed in our conversation. \n\n' +
+        'We discussed the following services:\n' +
+        '1. First service\n' +
+        '    07000 0000000 \n' +
+        '    help@gmail.com \n' +
+        '    404 error, not, found \n' +
+        '    https://www.sample.org.uk  \n\n\n' +
+        'If you require any further support please contact the council on xxx.\n\n' +
+        'Many thanks, \n\n\n' +
         'Hackney Council\n'
     );
 
@@ -91,36 +100,50 @@ context('Create summary', () => {
     cy.get('#referer-email-abc').type(referrerEmail);
     cy.get('#submit-abc').click();
     cy.get(`[data-testid=successful-referral-banner]`).should('be.visible');
+    cy.get('#summary-sharing-method-email').click();
 
     cy.get('#support-summary-note').should(
       'have.value',
-      'If you wish to reply to this email please respond to Tina Belcher at tina@bburgers.com\n  \n  Hi Luna Kitty,\n' +
-        '\n' +
+      'If you wish to reply to this email please respond to Tina Belcher at tina@bburgers.com \n  \n' +
+        'Hi Luna Kitty,\n\n' +
         'We discussed the following services in our conversation today:\n' +
-        '    1. First service\n' +
-        '    07000 0000000 ' +
-        '\n' +
-        '    help@gmail.com ' +
-        '\n' +
-        '    404 error, not, found ' +
-        '\n' +
-        '    https://www.sample.org.uk ' +
-        ' \n' +
-        '\n' +
-        '\n' +
+        '1. First service\n' +
+        '    07000 0000000 \n' +
+        '    help@gmail.com \n' +
+        '    404 error, not, found \n' +
+        '    https://www.sample.org.uk  \n\n' +
         'I referred you to the following services:\n' +
-        '    1. Kingsman\n' +
-        '    123456789 ' +
-        '\n' +
-        '    service@test.testy.com ' +
-        '\n' +
-        '    1 test Rd, London ' +
-        '\n' +
-        '    https://sample.com/test_kingsman ' +
-        ' \n' +
-        '\n' +
-        '\n' +
+        '1. Kingsman\n' +
+        '    123456789 \n' +
+        '    service@test.testy.com \n' +
+        '    1 test Rd, London \n' +
+        '    https://sample.com/test_kingsman  \n\n\n' +
         'Thanks, \n' +
+        `${referrerName}\n` +
+        `${referrerEmail}\n` +
+        `${refererOrganisation}\n`
+    );
+
+    cy.get('#summary-sharing-method-letter').click();
+
+    cy.get('#support-summary-note').should(
+      'have.value',
+      'Hi Luna Kitty,\n\n' +
+        'It was nice speaking with you. I am writing to share the contact details of the support services we discussed in our conversation. \n\n' +
+        'We discussed the following services:\n' +
+        '1. First service\n' +
+        '    07000 0000000 \n' +
+        '    help@gmail.com \n' +
+        '    404 error, not, found \n' +
+        '    https://www.sample.org.uk  \n\n' +
+        'I referred you to the following services:\n' +
+        '1. Kingsman\n' +
+        '    123456789 \n' +
+        '    service@test.testy.com \n' +
+        '    1 test Rd, London \n' +
+        '    https://sample.com/test_kingsman  \n\n\n' +
+        'If you require any further support please contact the council on xxx.\n\n' +
+        'Many thanks, \n' +
         `${referrerName}\n` +
         `${referrerEmail}\n` +
         `${refererOrganisation}\n`

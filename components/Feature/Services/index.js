@@ -5,11 +5,7 @@ import Details from 'components/Form/Details';
 import styles from './index.module.scss';
 import { sendDataToAnalytics, getUserGroup } from 'lib/utils/analytics';
 import { getSearchResults } from 'lib/utils/search';
-import {
-  CATEGORY_CATEGORIES,
-  CATEGORY_SEARCH,
-  FEEDBACK_SEARCH
-} from 'lib/utils/analyticsConstants';
+import { CATEGORY_CATEGORIES, CATEGORY_SEARCH, FEEDBACK_SEARCH } from 'lib/utils/constants';
 
 const Services = ({
   categorisedResources,

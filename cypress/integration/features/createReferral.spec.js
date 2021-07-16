@@ -177,7 +177,7 @@ describe('Referral form', () => {
       cy.get('#phone').type('07700900000');
       cy.get('#email').type('luna@meow.com');
       cy.get('#address').type('159 Cute Street');
-      cy.get('#postcode').type('M3 0W');
+      cy.get('#postcode').type('M3 0WW');
       cy.get('#date-of-birth-day').type('13');
       cy.get('#date-of-birth-month').type('5');
       cy.get('#date-of-birth-year').type('1985');
@@ -238,7 +238,7 @@ describe('Referral form', () => {
       cy.get('#phone').type('07700900000');
       cy.get('#email').type('luna@meow.com');
       cy.get('#address').type('159 Cute Street');
-      cy.get('#postcode').type('M3 0W');
+      cy.get('#postcode').type('M3 0WW');
       cy.get('#date-of-birth-day').type('13');
       cy.get('#date-of-birth-month').type('5');
       cy.get('#date-of-birth-year').type('1985');
@@ -313,7 +313,7 @@ describe('Referral form', () => {
       cy.get('#phone').should('have.value', '07700900000');
       cy.get('#email').should('have.value', 'luna@meow.com');
       cy.get('#address').should('have.value', '159 Cute Street');
-      cy.get('#postcode').should('have.value', 'M3 0W');
+      cy.get('#postcode').should('have.value', 'M3 0WW');
       cy.get('#date-of-birth-day').should('have.value', '13');
       cy.get('#date-of-birth-month').should('have.value', '5');
       cy.get('#date-of-birth-year').should('have.value', '1985');
@@ -366,7 +366,7 @@ describe('Referral form', () => {
       cy.get('#phone').should('have.value', '07700900000');
       cy.get('#email').should('have.value', 'luna@meow.com');
       cy.get('#address').should('have.value', '159 Cute Street');
-      cy.get('#postcode').should('have.value', 'M3 0W');
+      cy.get('#postcode').should('have.value', 'M3 0WW');
       cy.get('#date-of-birth-day').should('have.value', '13');
       cy.get('#date-of-birth-month').should('have.value', '5');
       cy.get('#date-of-birth-year').should('have.value', '1985');
