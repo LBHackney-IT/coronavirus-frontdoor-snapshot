@@ -26,9 +26,8 @@ module.exports = (on, config) => {
     secretAccessKey: 'bar'
   });
 
-  
   on('task', {
-    getClipboard () {
+    getClipboard() {
       return clipboardy.readSync();
     }
   });
