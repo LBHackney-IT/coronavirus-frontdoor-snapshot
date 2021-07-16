@@ -69,6 +69,12 @@ const SupportSummary = ({
   const sendSummary = async e => {
     e.preventDefault();
     e.target['submit-summary'].setAttribute('disabled', true);
+
+    let sharingMethod = EMAIL;
+    if (process.env.NEXT_PUBLIC_ENV != 'production') {
+      sharingMethod = e.target['summary-sharing-method'].value;
+    }
+
     const summary = {
       firstName: e.target.firstName.value,
       lastName: e.target.lastName.value,
@@ -84,7 +90,7 @@ const SupportSummary = ({
         month: e.target['date-of-birth-month'].value,
         day: e.target['date-of-birth-day'].value
       },
-      sharingMethod: e.target['summary-sharing-method'].value,
+      sharingMethod,
       discussedServices: signpostSummary.concat(referralSummary),
       signPostingMessage: emailBody
     };
@@ -226,57 +232,59 @@ const SupportSummary = ({
                 residentInfo={residentInfo}
                 formType="summary"
               />
-              <div className="govuk-form-group">
-                <fieldset className="govuk-fieldset">
-                  <div className="govuk-!-padding-top-4">
-                    <label>
-                      <strong>How would you like to share information with the resident?</strong>
-                    </label>
-                  </div>
-                  <div className="govuk-radios">
-                    <div className="govuk-radios__item">
-                      <input
-                        className="govuk-radios__input"
-                        id="summary-sharing-method-email"
-                        name="summary-sharing-method"
-                        type="radio"
-                        value="email"
-                        onClick={() => {
-                          setSharingMethod(EMAIL);
-                          setEmailBody(updateEmailBody());
-                        }}
-                        required
-                      />
-                      <label
-                        className="govuk-label govuk-radios__label"
-                        for="summary-sharing-method-email">
-                        Email
+              {process.env.NEXT_PUBLIC_ENV != 'production' && (
+                <div className="govuk-form-group">
+                  <fieldset className="govuk-fieldset">
+                    <div className="govuk-!-padding-top-4">
+                      <label>
+                        <strong>How would you like to share information with the resident?</strong>
                       </label>
                     </div>
-                    <div className="govuk-radios__item">
-                      <input
-                        className="govuk-radios__input"
-                        id="summary-sharing-method-letter"
-                        name="summary-sharing-method"
-                        type="radio"
-                        value="letter"
-                        onClick={() => {
-                          setSharingMethod(LETTER);
-                          setEmailBody(
-                            updateEmailBody(undefined, undefined, undefined, undefined, LETTER)
-                          );
-                        }}
-                        required
-                      />
-                      <label
-                        className="govuk-label govuk-radios__label"
-                        for="summary-sharing-method-letter">
-                        Letter
-                      </label>
+                    <div className="govuk-radios">
+                      <div className="govuk-radios__item">
+                        <input
+                          className="govuk-radios__input"
+                          id="summary-sharing-method-email"
+                          name="summary-sharing-method"
+                          type="radio"
+                          value="email"
+                          onClick={() => {
+                            setSharingMethod(EMAIL);
+                            setEmailBody(updateEmailBody());
+                          }}
+                          required
+                        />
+                        <label
+                          className="govuk-label govuk-radios__label"
+                          for="summary-sharing-method-email">
+                          Email
+                        </label>
+                      </div>
+                      <div className="govuk-radios__item">
+                        <input
+                          className="govuk-radios__input"
+                          id="summary-sharing-method-letter"
+                          name="summary-sharing-method"
+                          type="radio"
+                          value="letter"
+                          onClick={() => {
+                            setSharingMethod(LETTER);
+                            setEmailBody(
+                              updateEmailBody(undefined, undefined, undefined, undefined, LETTER)
+                            );
+                          }}
+                          required
+                        />
+                        <label
+                          className="govuk-label govuk-radios__label"
+                          for="summary-sharing-method-letter">
+                          Letter
+                        </label>
+                      </div>
                     </div>
-                  </div>
-                </fieldset>
-              </div>
+                  </fieldset>
+                </div>
+              )}
               <div className="govuk-!-padding-top-4">
                 <TextArea
                   value={emailBody}

@@ -66,6 +66,7 @@ functions:
       REFERRAL_RESIDENT_SMS_TEMPLATE_ID: ${ssm:/frontdoor-snapshot/referral-resident-sms-template-id}
       GOV_NOTIFY_API_KEY: ${ssm:/frontdoor-snapshot/gov-notify-api-key}
       NEXT_PUBLIC_GENERIC_CONTACT_NUMBER: ${ssm:/frontdoor-snapshot/generic_contact_number}
+      NEXT_PUBLIC_ENV: ${self:provider.stage}
 
   cf-snapshot-authorizer:
     name: ${self:service}-authorizer-${self:provider.stage}
