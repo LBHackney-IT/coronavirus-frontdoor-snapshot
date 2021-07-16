@@ -12,7 +12,8 @@ import {
   SEND_SUMMARY_SUCCESS,
   SEND_SUMMARY_INVALID_COUNT,
   SEND_SUMMARY_SUCCESS_COUNT,
-  LETTER
+  LETTER,
+  EMAIL
 } from 'lib/utils/constants';
 import ResidentDetails from '../ResidentDetails';
 
@@ -40,6 +41,7 @@ const SupportSummary = ({
   const [formErrorMsg, setFormErrorMsg] = useState(false);
   const [conversationCompletion, setConversationCompletion] = useState(null);
   const [toBeDeleted, setToBeDeleted] = useState(null);
+  const [sharingMethod, setSharingMethod] = useState(EMAIL);
 
   const toggleDetail = e => {
     if (referralSummary.length < 1 && signpostSummary.length < 1) {
@@ -61,7 +63,7 @@ const SupportSummary = ({
     delete validationError[id];
     let newResidentInfo = { ...residentInfo, [id]: value };
     setResidentInfo(newResidentInfo);
-    setEmailBody(updateEmailBody(undefined, undefined, undefined, newResidentInfo));
+    setEmailBody(updateEmailBody(undefined, undefined, undefined, newResidentInfo, sharingMethod));
   };
 
   const sendSummary = async e => {
@@ -240,6 +242,7 @@ const SupportSummary = ({
                         type="radio"
                         value="email"
                         onClick={() => {
+                          setSharingMethod(EMAIL);
                           setEmailBody(updateEmailBody());
                         }}
                         required
@@ -258,6 +261,7 @@ const SupportSummary = ({
                         type="radio"
                         value="letter"
                         onClick={() => {
+                          setSharingMethod(LETTER);
                           setEmailBody(
                             updateEmailBody(undefined, undefined, undefined, undefined, LETTER)
                           );
@@ -292,7 +296,9 @@ const SupportSummary = ({
                 onChange={value => {
                   const newReferrerData = { ...referrerData, 'referer-name': value };
                   setReferrerData(newReferrerData);
-                  setEmailBody(updateEmailBody(undefined, undefined, newReferrerData));
+                  setEmailBody(
+                    updateEmailBody(undefined, undefined, newReferrerData, undefined, sharingMethod)
+                  );
                 }}
                 validate
                 required={true}
@@ -304,7 +310,9 @@ const SupportSummary = ({
                 onChange={value => {
                   const newReferrerData = { ...referrerData, 'referer-email': value };
                   setReferrerData(newReferrerData);
-                  setEmailBody(updateEmailBody(undefined, undefined, newReferrerData));
+                  setEmailBody(
+                    updateEmailBody(undefined, undefined, newReferrerData, undefined, sharingMethod)
+                  );
                 }}
                 validate
                 required={true}
@@ -316,7 +324,9 @@ const SupportSummary = ({
                 onChange={value => {
                   const newReferrerData = { ...referrerData, 'referer-organisation': value };
                   setReferrerData(newReferrerData);
-                  setEmailBody(updateEmailBody(undefined, undefined, newReferrerData));
+                  setEmailBody(
+                    updateEmailBody(undefined, undefined, newReferrerData, undefined, sharingMethod)
+                  );
                 }}
                 validate
                 required={true}
