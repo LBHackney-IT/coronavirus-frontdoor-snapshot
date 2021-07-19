@@ -58,7 +58,8 @@ const Index = ({ categorisedResources, initialReferral, token, errors, refererIn
       newSignpostSummary,
       newReferralSummary,
       newReferrerData,
-      type
+      type,
+      process.env.NEXT_PUBLIC_GENERIC_CONTACT_NUMBER
     );
   };
 
