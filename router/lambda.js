@@ -10,6 +10,7 @@ server.use(files(path.join(__dirname, 'build')));
 server.use(files(path.join(__dirname, 'public')));
 
 // public routes
+server.all('/api/referrals/status', (req, res) => nextRequestHandler(req, res)); // auth is handled by the authorizer
 server.all('/api/resources', (req, res) => nextRequestHandler(req, res)); // auth is handled by the authorizer
 server.all('/api/resources/fss', (req, res) => nextRequestHandler(req, res)); // auth is handled by the authorizer
 server.all('/api/referrals', (req, res) => nextRequestHandler(req, res)); // auth is handled by the authorizer
