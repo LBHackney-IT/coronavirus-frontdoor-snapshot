@@ -37,6 +37,9 @@ functions:
         - router/**
     events:
       - http:
+          path: api/referrals/status/{proxy+}
+          method: get
+      - http:
           path: api/{proxy+}
           method: ANY
           authorizer: ${self:custom.authorizer.${self:service}-authorizer}
