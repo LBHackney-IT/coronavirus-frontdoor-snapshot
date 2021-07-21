@@ -46,7 +46,9 @@ const StatusHistory = ({ referral }) => {
       {submitted ? (
         <div className="govuk-grid-row">
           <div className="govuk-grid-column-two-thirds">
-            <div className="govuk-panel govuk-panel--confirmation">
+            <div
+              className="govuk-panel govuk-panel--confirmation"
+              data-testid="status-confirmation-panel">
               <h1 className="govuk-panel__title">Thank you</h1>
               <div className="govuk-panel__body">Your decision on this referral has been sent</div>
             </div>

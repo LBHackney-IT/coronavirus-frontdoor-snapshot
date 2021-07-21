@@ -61,6 +61,7 @@ const StatusForm = ({ onSubmitForm }) => {
                   id="referral-rejection-reason"
                   name="referral-rejection-reason"
                   spellcheck="false"
+                  data-testid="status-form-rejected-comment-input"
                 />
               </div>
             </div>
@@ -73,6 +74,7 @@ const StatusForm = ({ onSubmitForm }) => {
             id={`submit-referral-status`}
             className="govuk-button"
             name="Submit"
+            data-testid="submit-status-form"
           />
         </div>
       </div>
