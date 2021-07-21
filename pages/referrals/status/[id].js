@@ -5,6 +5,8 @@ import useReferral from 'lib/api/utils/useReferral';
 import { IsoDateTime } from 'lib/domain/isodate';
 import { useState } from 'react';
 import StatusForm from 'components/Feature/StatusForm';
+import Head from 'next/head';
+import { convertIsoDateToDateTimeString } from 'lib/utils/date';
 
 const StatusHistory = ({ referral }) => {
   const { updateReferral } = useReferral(null, {});
@@ -23,7 +25,8 @@ const StatusHistory = ({ referral }) => {
     const newStatusHistory = initialReferral.statusHistory.concat([
       {
         status: newStatus,
-        date: IsoDateTime.now()
+        date: IsoDateTime.now(),
+        comment: e.target['referral-rejection-reason'].value
       }
     ]);
     const newReferral = {
@@ -36,18 +39,32 @@ const StatusHistory = ({ referral }) => {
   };
 
   return (
-    <div>
+    <>
+      <Head>
+        <title>Status page</title>
+      </Head>
       {submitted ? (
-        <div>Thank you, your decision on this referral has been sent</div>
+        <div className="govuk-grid-row">
+          <div className="govuk-grid-column-two-thirds">
+            <div className="govuk-panel govuk-panel--confirmation">
+              <h1 className="govuk-panel__title">Thank you</h1>
+              <div className="govuk-panel__body">Your decision on this referral has been sent</div>
+            </div>
+            <h2 className="govuk-heading-m">What happens next</h2>
+            <p>We’ve let the referrer know your response.</p>
+          </div>
+        </div>
       ) : recentStatus.status == REFERRAL_STATUSES.Approved ||
         recentStatus.status == REFERRAL_STATUSES.Rejected ? (
         <div>
-          The referral was {recentStatus.status} on {recentStatus.date}
+          This referral was {recentStatus.status} on{' '}
+          {convertIsoDateToDateTimeString(new Date(recentStatus.date))}
+          {recentStatus.comment && ` with comment "${recentStatus.comment}".`}
         </div>
       ) : (
         <StatusForm onSubmitForm={onSubmitForm} />
       )}
-    </div>
+    </>
   );
 };
 
