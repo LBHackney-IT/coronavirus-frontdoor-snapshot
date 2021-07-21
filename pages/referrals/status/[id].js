@@ -54,9 +54,9 @@ const StatusHistory = ({ referral }) => {
             <p>We’ve let the referrer know your response.</p>
           </div>
         </div>
-      ) : recentStatus.status == REFERRAL_STATUSES.Approved ||
+      ) : recentStatus.status == REFERRAL_STATUSES.Accepted ||
         recentStatus.status == REFERRAL_STATUSES.Rejected ? (
-        <div>
+        <div data-testid="status-paragraph">
           This referral was {recentStatus.status} on{' '}
           {convertIsoDateToDateTimeString(new Date(recentStatus.date))}
           {recentStatus.comment && ` with comment "${recentStatus.comment}".`}

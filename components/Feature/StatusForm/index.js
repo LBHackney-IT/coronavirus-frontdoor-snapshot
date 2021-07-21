@@ -16,21 +16,22 @@ const StatusForm = ({ onSubmitForm }) => {
             </div>
           </div>
           <div className="govuk-radios">
-            <div className="govuk-radios__item">
+            <div className="govuk-radios__item" data-testid="status-form-accepted-radio-item">
               <input
                 className="govuk-radios__input"
-                id="referral-approved"
+                id="referral-accepted"
                 name="referral-status"
                 type="radio"
-                value={REFERRAL_STATUSES.Approved}
+                value={REFERRAL_STATUSES.Accepted}
                 onClick={() => setReject(false)}
                 required
+                data-testid="status-form-accepted-input"
               />
-              <label className="govuk-label govuk-radios__label" for="referral-approved">
+              <label className="govuk-label govuk-radios__label" for="referral-accepted">
                 Yes
               </label>
             </div>
-            <div className="govuk-radios__item">
+            <div className="govuk-radios__item" data-testid="status-form-rejected-radio-item">
               <input
                 className="govuk-radios__input"
                 id="referral-rejected"
@@ -39,6 +40,7 @@ const StatusForm = ({ onSubmitForm }) => {
                 value={REFERRAL_STATUSES.Rejected}
                 onClick={() => setReject(true)}
                 required
+                data-testid="status-form-rejected-input"
               />
               <label className="govuk-label govuk-radios__label" for="referral-rejected">
                 No
@@ -48,7 +50,8 @@ const StatusForm = ({ onSubmitForm }) => {
               className={`govuk-radios__conditional ${
                 !reject ? 'govuk-radios__conditional--hidden' : ''
               }`}
-              id="conditional-contact">
+              id="conditional-contact"
+              data-testid="status-form-rejected-comment">
               <div className="govuk-form-group">
                 <label className="govuk-label" for="referral-rejection-reason">
                   Reason for not accepting this referral (optional)
