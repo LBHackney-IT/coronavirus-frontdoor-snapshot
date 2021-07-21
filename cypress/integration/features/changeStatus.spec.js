@@ -1,12 +1,10 @@
 /// <reference types="cypress" />
 context('status page', () => {
-  beforeEach(() => {
-    cy.injectAxe();
-  });
-
   describe('Accept referral', () => {
     it('shows status form', () => {
       cy.visit('/referrals/status/1');
+      cy.injectAxe();
+
       cy.get('[data-testid=status-form-accepted-radio-item]').should('contain', 'Yes');
       cy.get('[data-testid=status-form-accepted-input]').click();
       cy.get('[data-testid=status-confirmation-panel]').should('not.exist');
@@ -18,6 +16,8 @@ context('status page', () => {
         'contain',
         'Your decision on this referral has been sent'
       );
+
+      cy.runCheckA11y();
       cy.visit('/referrals/status/1');
 
       cy.get('[data-testid=status-paragraph]').should('contain', 'This referral was ACCEPTED on');
@@ -33,6 +33,8 @@ context('status page', () => {
   describe('Reject referral', () => {
     it('with comment', () => {
       cy.visit('/referrals/status/1');
+      cy.injectAxe();
+
       cy.get('[data-testid=status-form-rejected-radio-item]').should('contain', 'No');
       cy.get('[data-testid=status-form-rejected-input]').click();
       cy.get('[data-testid=status-form-rejected-comment-input]').type('comment');
@@ -46,10 +48,11 @@ context('status page', () => {
         'Your decision on this referral has been sent'
       );
 
+      cy.runCheckA11y();
       cy.visit('/referrals/status/1');
 
       cy.get('[data-testid=status-paragraph]').should('contain', 'This referral was REJECTED on');
-      cy.get('[data-testid=status-paragraph]').should('contain', 'with comment "comment".');
+      cy.get('[data-testid=status-paragraph]').should('contain', 'with comment: "comment".');
       cy.resetReferralStatus('11', [
         {
           date: '2021-07-20T09:17:23.305Z',

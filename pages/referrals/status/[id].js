@@ -58,11 +58,11 @@ const StatusHistory = ({ referral }) => {
         </div>
       ) : recentStatus.status == REFERRAL_STATUSES.Accepted ||
         recentStatus.status == REFERRAL_STATUSES.Rejected ? (
-        <div data-testid="status-paragraph">
+        <h1 className="govuk-heading-m" data-testid="status-paragraph">
           This referral was {recentStatus.status} on{' '}
           {convertIsoDateToDateTimeString(new Date(recentStatus.date))}
-          {recentStatus.comment && ` with comment "${recentStatus.comment}".`}
-        </div>
+          {recentStatus.comment && ` with comment: "${recentStatus.comment}".`}
+        </h1>
       ) : (
         <StatusForm onSubmitForm={onSubmitForm} />
       )}
