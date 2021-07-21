@@ -94,7 +94,34 @@ const callback = violations => {
     assert.isTrue(violations.length < threshold);
   }
 };
+const { DynamoDB } = require('aws-sdk');
+const client = new DynamoDB.DocumentClient({
+  region: 'localhost',
+  endpoint: 'http://localhost:8000',
+  accessKeyId: 'foo',
+  secretAccessKey: 'bar'
+});
+
+const resetReferralStatus = async (id, statusHistory) => {
+  const updateExpression = ['set statusHistory = :h'];
+
+  const expressionAttributeValues = {
+    ':h': statusHistory
+  };
+
+  const request = {
+    TableName: 'referrals',
+    Key: { id: id },
+    ConditionExpression: 'attribute_exists(id)',
+    UpdateExpression: updateExpression.join(', '),
+    ExpressionAttributeValues: expressionAttributeValues,
+    ReturnValues: 'UPDATED_NEW'
+  };
+
+  await client.update(request).promise();
+};
 
 Cypress.Commands.add('terminalLog', terminalLog);
 Cypress.Commands.add('setHackneyCookie', setHackneyCookie);
 Cypress.Commands.add('runCheckA11y', runCheckA11y);
+Cypress.Commands.add('resetReferralStatus', resetReferralStatus);
