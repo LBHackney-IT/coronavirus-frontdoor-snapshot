@@ -15,7 +15,6 @@ const ReferralForm = ({
   updateEmailBody,
   setEmailBody,
   referrerData,
-  id,
   email,
   name,
   description,
@@ -30,6 +29,7 @@ const ReferralForm = ({
   setPreserveFormData,
   residentInfo,
   detailsClicked,
+  resource,
   categoryId
 }) => {
   const { createReferral } = useReferral({ token });
@@ -96,7 +96,7 @@ const ReferralForm = ({
     setPreserveFormData(false);
 
     if (result.id) {
-      document.getElementById(`resource-container-${id}`)?.scrollIntoView();
+      document.getElementById(`resource-container-${resource.id}`)?.scrollIntoView();
       setReferralCompletion({ ...referralCompletion, [serviceId]: result });
       const newReferralSummary = referralSummary.concat([
         {
@@ -125,7 +125,7 @@ const ReferralForm = ({
       {
         <div className={`govuk-grid-row govuk-!-margin-4`}>
           <form
-            id={`referral-form-${id}`}
+            id={`referral-form-${resource.id}`}
             onInvalid={() => {
               if (!analyticsSubmitted) {
                 sendDataToAnalytics({
@@ -149,71 +149,71 @@ const ReferralForm = ({
               />
             </div>
             <div className={`govuk-grid-column-one-half`}>
-              <label htmlFor={`service-name-${id}`} hidden>
+              <label htmlFor={`service-name-${resource.id}`} hidden>
                 Service name
               </label>
               <input
-                id={`service-name-${id}`}
+                id={`service-name-${resource.id}`}
                 name="service-name"
                 value={name}
                 type="text"
                 hidden
               />
-              <label htmlFor={`service-contact-email-${id}`} hidden>
+              <label htmlFor={`service-contact-email-${resource.id}`} hidden>
                 Service email
               </label>
               <input
-                id={`service-contact-email-${id}`}
+                id={`service-contact-email-${resource.id}`}
                 name="service-contact-email"
                 value={email}
                 type="text"
                 hidden
               />
-              <label htmlFor={`service-contact-phone-${id}`} hidden>
+              <label htmlFor={`service-contact-phone-${resource.id}`} hidden>
                 Service phone
               </label>
               <input
-                id={`service-contact-phone-${id}`}
+                id={`service-contact-phone-${resource.id}`}
                 name="service-contact-phone"
                 value={telephone}
                 type="text"
                 hidden
               />
-              <label htmlFor={`service-referral-email-${id}`} hidden>
+              <label htmlFor={`service-referral-email-${resource.id}`} hidden>
                 Service referral email
               </label>
               <input
-                id={`service-referral-email-${id}`}
+                id={`service-referral-email-${resource.id}`}
                 name="service-referral-email"
                 value={referralContact}
                 type="text"
                 hidden
               />
-              <label htmlFor={`service-address-${id}`} hidden>
+              <label htmlFor={`service-address-${resource.id}`} hidden>
                 Service address
               </label>
               <input
-                id={`service-address-${id}`}
+                id={`service-address-${resource.id}`}
                 name="service-address"
                 value={address}
                 type="text"
                 hidden
               />
-              <label htmlFor={`service-websites-${id}`} hidden>
+              <label htmlFor={`service-websites-${resource.id}`} hidden>
                 Service websites
               </label>
               <input
-                id={`service-websites-${id}`}
+                id={`service-websites-${resource.id}`}
                 name="service-websites"
                 value={websites.join(' ')}
                 type="text"
                 hidden
               />
-              <label htmlFor={`service-description-${id}`} hidden>
+              <label htmlFor={`service-description-${resource.id}`} hidden>
                 Service describtion
               </label>
               <input
-                id={`service-description-${id}`}
+                id={`service-description-${resource.id}`}
                 name="service-description"
                 value={description}
                 type="text"
@@ -221,30 +221,30 @@ const ReferralForm = ({
               />
               <div
                 className={`govuk-form-group govuk-!-padding-bottom-2 govuk-!-padding-top-4 ${
-                  validationError[`referral-reason-${id}`] ? 'govuk-form-group--error' : ''
+                  validationError[`referral-reason-${resource.id}`] ? 'govuk-form-group--error' : ''
                 }`}>
                 <label
                   id="referral-reason-label"
                   className="govuk-label inline"
-                  htmlFor={`referral-reason-${id}`}>
+                  htmlFor={`referral-reason-${resource.id}`}>
                   <legend className="govuk-fieldset__legend govuk-fieldset__legend--s">
                     Reason for referral, please give as much detail as possible
                   </legend>
                 </label>
-                {validationError[`referral-reason-${id}`] && (
+                {validationError[`referral-reason-${resource.id}`] && (
                   <span
                     id="referral-reason-error"
                     className={` ${
-                      validationError[`referral-reason-${id}`] ? 'govuk-error-message' : ''
+                      validationError[`referral-reason-${resource.id}`] ? 'govuk-error-message' : ''
                     }`}>
                     <span className="govuk-visually-hidden">Error:</span> Enter more detail
                   </span>
                 )}
                 <textarea
                   className={`govuk-textarea ${
-                    validationError[`referral-reason-${id}`] ? 'govuk-input--error' : ''
+                    validationError[`referral-reason-${resource.id}`] ? 'govuk-input--error' : ''
                   }`}
-                  id={`referral-reason-${id}`}
+                  id={`referral-reason-${resource.id}`}
                   name="referral-reason"
                   rows="5"
                   aria-describedby="referral-reason-label"
@@ -257,30 +257,34 @@ const ReferralForm = ({
               </div>
               <div
                 className={`govuk-form-group govuk-!-padding-bottom-2 ${
-                  validationError[`conversation-notes-${id}`] ? 'govuk-form-group--error' : ''
+                  validationError[`conversation-notes-${resource.id}`]
+                    ? 'govuk-form-group--error'
+                    : ''
                 }`}>
                 <label
                   id="conversation-notes-label"
                   className="govuk-label inline"
-                  htmlFor={`conversation-notes-${id}`}>
+                  htmlFor={`conversation-notes-${resource.id}`}>
                   <legend className="govuk-fieldset__legend govuk-fieldset__legend--s">
                     Notes on wider conversation(other needs, living situation, key information
                   </legend>
                 </label>
-                {validationError[`conversation-notes-${id}`] && (
+                {validationError[`conversation-notes-${resource.id}`] && (
                   <span
                     id="conversation-notes-error"
                     className={` ${
-                      validationError[`conversation-notes-${id}`] ? 'govuk-error-message' : ''
+                      validationError[`conversation-notes-${resource.id}`]
+                        ? 'govuk-error-message'
+                        : ''
                     }`}>
                     <span className="govuk-visually-hidden">Error:</span> Enter more detail
                   </span>
                 )}
                 <textarea
                   className={`govuk-textarea ${
-                    validationError[`conversation-notes-${id}`] ? 'govuk-input--error' : ''
+                    validationError[`conversation-notes-${resource.id}`] ? 'govuk-input--error' : ''
                   }`}
-                  id={`conversation-notes-${id}`}
+                  id={`conversation-notes-${resource.id}`}
                   name="conversation-notes"
                   rows="5"
                   aria-describedby="conversation-notes-label"
@@ -296,18 +300,18 @@ const ReferralForm = ({
               </div>
               <div
                 className={`govuk-form-group govuk-!-padding-bottom-2 ${
-                  validationError[`consent-${id}`] ? 'govuk-form-group--error' : ''
+                  validationError[`consent-${resource.id}`] ? 'govuk-form-group--error' : ''
                 }`}>
                 <fieldset className="govuk-fieldset">
                   <legend
                     id="consent-label"
                     className="govuk-fieldset__legend govuk-fieldset__legend--s"
-                    htmlFor={`consent-${id}`}>
+                    htmlFor={`consent-${resource.id}`}>
                     The resident is happy for their information to be shared with third parties
                   </legend>
                   <div className="govuk-checkboxes govuk-checkboxes--inline">
-                    {validationError[`consent-${id}`] && (
-                      <span id={`consent-${id}-error`} className="govuk-error-message">
+                    {validationError[`consent-${resource.id}`] && (
+                      <span id={`consent-${resource.id}-error`} className="govuk-error-message">
                         <span className="govuk-visually-hidden">Error:</span>
                         This is required in order to make the referral.
                       </span>
@@ -315,7 +319,7 @@ const ReferralForm = ({
                     <div className="govuk-checkboxes__item">
                       <input
                         className="govuk-checkboxes__input"
-                        id={`consent-${id}`}
+                        id={`consent-${resource.id}`}
                         name="consent"
                         type="checkbox"
                         value="true"
@@ -325,7 +329,7 @@ const ReferralForm = ({
                       />
                       <label
                         className="govuk-label govuk-checkboxes__label"
-                        htmlFor={`consent-${id}`}>
+                        htmlFor={`consent-${resource.id}`}>
                         Yes
                       </label>
                     </div>
@@ -377,26 +381,28 @@ const ReferralForm = ({
               <div>
                 <div
                   className={`govuk-form-group govuk-!-padding-bottom-2 ${
-                    validationError[`referer-name-${id}`] ? 'govuk-form-group--error' : ''
+                    validationError[`referer-name-${resource.id}`] ? 'govuk-form-group--error' : ''
                   }`}>
                   <label
                     id="referrer-name-label"
                     className="govuk-label inline"
-                    htmlFor={`referer-name-${id}`}>
+                    htmlFor={`referer-name-${resource.id}`}>
                     <legend className="govuk-fieldset__legend govuk-fieldset__legend--s">
                       Your name
                     </legend>
                   </label>
                   <span id="referrer-name-error" className="govuk-error-message">
-                    <span hidden={!validationError[`referer-name-${id}`]} data-testid="name-error">
+                    <span
+                      hidden={!validationError[`referer-name-${resource.id}`]}
+                      data-testid="name-error">
                       Enter your name
                     </span>
                   </span>
                   <input
                     className={`govuk-input govuk-!-width-two-thirds ${
-                      validationError[`referer-name-${id}`] ? 'govuk-input--error' : ''
+                      validationError[`referer-name-${resource.id}`] ? 'govuk-input--error' : ''
                     }`}
-                    id={`referer-name-${id}`}
+                    id={`referer-name-${resource.id}`}
                     name="referer-name"
                     type="text"
                     defaultValue={referrerData['referer-name']}
@@ -410,28 +416,32 @@ const ReferralForm = ({
                 </div>
                 <div
                   className={`govuk-form-group govuk-!-padding-bottom-2 ${
-                    validationError[`referer-organisation-${id}`] ? 'govuk-form-group--error' : ''
+                    validationError[`referer-organisation-${resource.id}`]
+                      ? 'govuk-form-group--error'
+                      : ''
                   }`}>
                   <label
                     id="referrer-organisation-label"
                     className="govuk-label inline"
-                    htmlFor={`referer-organisation-${id}`}>
+                    htmlFor={`referer-organisation-${resource.id}`}>
                     <legend className="govuk-fieldset__legend govuk-fieldset__legend--s">
                       Your organisation
                     </legend>
                   </label>
                   <span id="referrer-organisation-error" className="govuk-error-message">
                     <span
-                      hidden={!validationError[`referer-organisation-${id}`]}
+                      hidden={!validationError[`referer-organisation-${resource.id}`]}
                       data-testid="name-error">
                       Enter your organisation
                     </span>
                   </span>
                   <input
                     className={`govuk-input govuk-!-width-two-thirds ${
-                      validationError[`referer-organisation-${id}`] ? 'govuk-input--error' : ''
+                      validationError[`referer-organisation-${resource.id}`]
+                        ? 'govuk-input--error'
+                        : ''
                     }`}
-                    id={`referer-organisation-${id}`}
+                    id={`referer-organisation-${resource.id}`}
                     name="referer-organisation"
                     type="text"
                     defaultValue={referrerData['referer-organisation']}
@@ -448,26 +458,28 @@ const ReferralForm = ({
                 </div>
                 <div
                   className={`govuk-form-group govuk-!-padding-bottom-2 ${
-                    validationError[`referer-email-${id}`] ? 'govuk-form-group--error' : ''
+                    validationError[`referer-email-${resource.id}`] ? 'govuk-form-group--error' : ''
                   }`}>
                   <label
                     id="referrer-email-label"
                     className="govuk-label inline"
-                    htmlFor={`referer-email-${id}`}>
+                    htmlFor={`referer-email-${resource.id}`}>
                     <legend className="govuk-fieldset__legend govuk-fieldset__legend--s">
                       Your email
                     </legend>
                   </label>
                   <span id="referrer-email-error" className="govuk-error-message">
-                    <span hidden={!validationError[`referer-email-${id}`]} data-testid="name-error">
+                    <span
+                      hidden={!validationError[`referer-email-${resource.id}`]}
+                      data-testid="name-error">
                       Enter your email
                     </span>
                   </span>
                   <input
                     className={`govuk-input govuk-!-width-two-thirds ${
-                      validationError[`referer-email-${id}`] ? 'govuk-input--error' : ''
+                      validationError[`referer-email-${resource.id}`] ? 'govuk-input--error' : ''
                     }`}
-                    id={`referer-email-${id}`}
+                    id={`referer-email-${resource.id}`}
                     name="referer-email"
                     type="email"
                     defaultValue={referrerData['referer-email']}
@@ -478,10 +490,15 @@ const ReferralForm = ({
                     onInvalid={e => onInvalidField(e.target.id)}
                     required
                   />
-                  <label htmlFor={`service-id-${id}`} hidden>
+                  <label htmlFor={`service-id-${resource.id}`} hidden>
                     Service id
                   </label>
-                  <input id={`service-id-${id}`} value={id} name="service-id" hidden />
+                  <input
+                    id={`service-id-${resource.id}`}
+                    value={resource.id}
+                    name="service-id"
+                    hidden
+                  />
                 </div>
               </div>
               <div className="govuk-form-group govuk-!-padding-bottom-2">
@@ -490,15 +507,21 @@ const ReferralForm = ({
                     type="button"
                     className="govuk-button govuk-button--secondary govuk-!-margin-right-2"
                     onClick={e => {
-                      detailsClicked(e, `referral-${id}-${categoryId}-details`, id);
-                      document.getElementById(`resource-container-${id}`)?.scrollIntoView();
+                      detailsClicked(
+                        e,
+                        `referral-${resource.id}-${categoryId}-details`,
+                        resource.id
+                      );
+                      document
+                        .getElementById(`resource-container-${resource.id}`)
+                        ?.scrollIntoView();
                     }}>
                     Cancel
                   </button>
                   <input
                     value="Submit"
                     type="submit"
-                    id={`submit-${id}`}
+                    id={`submit-${resource.id}`}
                     className="govuk-button"
                     name="Submit"
                   />

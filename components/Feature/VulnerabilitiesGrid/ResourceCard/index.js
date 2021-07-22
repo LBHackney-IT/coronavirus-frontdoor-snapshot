@@ -269,6 +269,7 @@ const ResourceCard = ({
                         updateEmailBody={updateEmailBody}
                         setEmailBody={setEmailBody}
                         referrerData={referrerData}
+                        resource={resource}
                         id={resource.id}
                         email={resource.email}
                         name={resource.name}
