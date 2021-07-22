@@ -12,15 +12,6 @@ import ReferralForm from 'components/Feature/ReferralForm';
 
 const ResourceCard = ({
   updateSelectedResources,
-  email,
-  referralContact,
-  referralWebsite,
-  notes,
-  distance,
-  matches,
-  customerId,
-  categoryName,
-  serviceDescription,
   residentInfo,
   categoryId,
   referralCompletion,
@@ -60,21 +51,20 @@ const ResourceCard = ({
       {trimLength(item, 20)}
     </span>
   ));
-  const snapshot = customerId != undefined ? true : false;
   const updateResource = () => {
     updateSelectedResources({
       name: resource.name,
       description: resource.description,
       address: resource.address,
       telephone: resource.telephone,
-      email: email,
-      referralContact: referralContact,
+      email: resource.email,
+      referralContact: resource.referralContact,
       websites: resource.websites,
-      notes: notes
+      notes: resource.notes
     });
   };
 
-  const fullDescription = [serviceDescription, resource.description].join(' ');
+  const fullDescription = [resource.serviceDescription, resource.description].join(' ');
   const first = fullDescription?.substring(0, 250);
   const second = fullDescription?.substring(250);
 
@@ -117,9 +107,9 @@ const ResourceCard = ({
           <div className={`govuk-grid-column-one-third ${css['contact-container']}`}>
             {resource.telephone?.length > 0 && <h4>{resource.telephone}</h4>}
 
-            {email?.includes('@') && (
+            {resource.email?.includes('@') && (
               <div>
-                <a href={`mailto:${email}`}>{email}</a>
+                <a href={`mailto:${resource.email}`}>{resource.email}</a>
               </div>
             )}
 
@@ -160,11 +150,11 @@ const ResourceCard = ({
                     id: resource.id,
                     name: resource.name,
                     telephone: resource.telephone,
-                    contactEmail: email,
-                    referralEmail: referralContact,
+                    contactEmail: resource.email,
+                    referralEmail: resource.referralContact,
                     address: resource.address,
                     websites: resource.websites.join(', '),
-                    categoryName
+                    categoryName: resource.categoryName
                   });
                 }}
                 value={true}
@@ -178,10 +168,10 @@ const ResourceCard = ({
             </div>
           </div>
           <div>
-            {referralContact?.length > 0 ? (
+            {resource.referralContact?.length > 0 ? (
               <span id={`referral-${resource.id}-${categoryId}-details`} name="refer-details">
                 {(openReferralForm.id != resource.id ||
-                  openReferralForm.categoryName != categoryName) && (
+                  openReferralForm.categoryName != resource.categoryName) && (
                   <button
                     id={`referral-${resource.id}-${categoryId}`}
                     className={`govuk-button ${css['refer-button']}`}
@@ -192,7 +182,7 @@ const ResourceCard = ({
                         e,
                         `referral-${resource.id}-${categoryId}-details`,
                         resource.id,
-                        categoryName
+                        resource.categoryName
                       );
                       sendDataToAnalytics({
                         action: getUserGroup(referrerData['user-groups']),
@@ -204,7 +194,7 @@ const ResourceCard = ({
                   </button>
                 )}
                 {openReferralForm.id == resource.id &&
-                  openReferralForm.categoryName == categoryName && (
+                  openReferralForm.categoryName == resource.categoryName && (
                     <button
                       id={`referral-${resource.id}-${categoryId}`}
                       className={`govuk-button ${css['refer-button']} govuk-button--secondary`}
@@ -215,14 +205,14 @@ const ResourceCard = ({
                           e,
                           `referral-${resource.id}-${categoryId}-details`,
                           resource.id,
-                          categoryName
+                          resource.categoryName
                         )
                       }>
                       Cancel
                     </button>
                   )}
                 {openReferralForm.id == resource.id &&
-                  openReferralForm.categoryName == categoryName &&
+                  openReferralForm.categoryName == resource.categoryName &&
                   (referralCompletion[resource.id] ? (
                     <div className={`govuk-!-padding-top-8`}>
                       {referralCompletion[resource.id].errors?.length > 0 && (
@@ -251,7 +241,7 @@ const ResourceCard = ({
                             e,
                             `referral-${resource.id}-${categoryId}-details`,
                             resource.id,
-                            categoryName
+                            resource.categoryName
                           );
                         }}
                         data-testid="continue-call-button">
@@ -280,13 +270,13 @@ const ResourceCard = ({
                         setEmailBody={setEmailBody}
                         referrerData={referrerData}
                         id={resource.id}
-                        email={email}
+                        email={resource.email}
                         name={resource.name}
                         description={resource.description}
                         websites={resource.websites}
                         address={resource.address}
                         telephone={resource.telephone}
-                        referralContact={referralContact}
+                        referralContact={resource.referralContact}
                         referralData={referralData}
                         setReferrerData={setReferrerData}
                         setReferralData={setReferralData}
@@ -300,10 +290,10 @@ const ResourceCard = ({
                   ))}
               </span>
             ) : (
-              referralWebsite?.length > 0 &&
-              (referralWebsite.startsWith('http') ? (
+              resource.referralWebsite?.length > 0 &&
+              (resource.referralWebsite.startsWith('http') ? (
                 <a
-                  href={referralWebsite}
+                  href={resource.referralWebsite}
                   target="_blank"
                   onClick={() =>
                     sendDataToAnalytics({
@@ -319,7 +309,7 @@ const ResourceCard = ({
               ) : (
                 <span className={css['refer-text']} data-testid="refer-text">
                   <h4>Referral information</h4>
-                  <span>{referralWebsite}</span>
+                  <span>{resource.referralWebsite}</span>
                 </span>
               ))
             )}
@@ -344,20 +334,6 @@ const ResourceCard = ({
             }}>
             View summary message
           </a>
-        </div>
-      )}
-      {snapshot && (
-        <div className="govuk-checkboxes__item">
-          <input
-            className="govuk-checkboxes__input"
-            id={`input-${resource.id}`}
-            onClick={() => updateResource()}
-            type="checkbox"
-            value={resource.name}
-          />
-          <label className="govuk-label govuk-checkboxes__label" id={`label-${resource.id}`}>
-            Would you like to recommend this resource?
-          </label>
         </div>
       )}
       <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
