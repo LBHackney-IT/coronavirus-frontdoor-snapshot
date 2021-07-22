@@ -11,15 +11,7 @@ import {
 import ReferralForm from 'components/Feature/ReferralForm';
 
 const ResourceCard = ({
-  id,
   updateSelectedResources,
-  name,
-  description,
-  websites,
-  address,
-  postcode,
-  tags,
-  telephone,
   email,
   referralContact,
   referralWebsite,
@@ -58,7 +50,7 @@ const ResourceCard = ({
 
   const trimLength = (s, length) => (s.length > length ? s.substring(0, length) + '...' : s);
 
-  const tagsElement = tags.map(item => (
+  const tagsElement = resource.tags.map(item => (
     <span key={'tags-' + item} className={`${css.tags} tag-element`}>
       {trimLength(item, 20)}
     </span>
@@ -71,18 +63,18 @@ const ResourceCard = ({
   const snapshot = customerId != undefined ? true : false;
   const updateResource = () => {
     updateSelectedResources({
-      name: name,
-      description: description,
-      address: address,
-      telephone: telephone,
+      name: resource.name,
+      description: resource.description,
+      address: resource.address,
+      telephone: resource.telephone,
       email: email,
       referralContact: referralContact,
-      websites: websites,
+      websites: resource.websites,
       notes: notes
     });
   };
 
-  const fullDescription = [serviceDescription, description].join(' ');
+  const fullDescription = [serviceDescription, resource.description].join(' ');
   const first = fullDescription?.substring(0, 250);
   const second = fullDescription?.substring(250);
 
@@ -100,30 +92,30 @@ const ResourceCard = ({
           <div
             className={`govuk-grid-column-two-thirds header-container ${css['header-container']}`}>
             <h3 data-testid="resource-card-header">
-              {websites?.length > 0 ? (
+              {resource.websites?.length > 0 ? (
                 <a
-                  key={`website-link-${websites[0]}`}
-                  href={websites[0]}
+                  key={`website-link-${resource.websites[0]}`}
+                  href={resource.websites[0]}
                   target="_blank"
                   onClick={() => {
                     sendDataToAnalytics({
                       action: getUserGroup(referrerData['user-groups']),
                       category: SERVICE_CLICK_WEBSITE,
-                      label: name
+                      label: resource.name
                     });
                   }}
                   rel="noopener noreferrer">
-                  {name}
+                  {resource.name}
                 </a>
               ) : (
-                name
+                resource.name
               )}
             </h3>
             {demographic?.trim().length > 0 && <span>This is for {demographic}</span>}
           </div>
 
           <div className={`govuk-grid-column-one-third ${css['contact-container']}`}>
-            {telephone?.length > 0 && <h4>{telephone}</h4>}
+            {resource.telephone?.length > 0 && <h4>{resource.telephone}</h4>}
 
             {email?.includes('@') && (
               <div>
@@ -131,7 +123,7 @@ const ResourceCard = ({
               </div>
             )}
 
-            {address?.length > 0 && <span>{address}</span>}
+            {resource.address?.length > 0 && <span>{resource.address}</span>}
           </div>
         </div>
         {fullDescription && (
@@ -166,17 +158,17 @@ const ResourceCard = ({
                 onClick={() => {
                   updateSignpostSummary({
                     id: resource.id,
-                    name,
-                    telephone,
+                    name: resource.name,
+                    telephone: resource.telephone,
                     contactEmail: email,
                     referralEmail: referralContact,
-                    address,
-                    websites: websites.join(', '),
+                    address: resource.address,
+                    websites: resource.websites.join(', '),
                     categoryName
                   });
                 }}
                 value={true}
-                checked={signpostSummary?.some(x => x.name == name)}
+                checked={signpostSummary?.some(x => x.name == resource.name)}
               />
               <label
                 className={`govuk-label govuk-checkboxes__label ${css['checkbox-label']}`}
@@ -205,7 +197,7 @@ const ResourceCard = ({
                       sendDataToAnalytics({
                         action: getUserGroup(referrerData['user-groups']),
                         category: REFERRAL_OPEN,
-                        label: name
+                        label: resource.name
                       });
                     }}>
                     Create Referral
@@ -289,11 +281,11 @@ const ResourceCard = ({
                         referrerData={referrerData}
                         id={resource.id}
                         email={email}
-                        name={name}
-                        description={description}
-                        websites={websites}
-                        address={address}
-                        telephone={telephone}
+                        name={resource.name}
+                        description={resource.description}
+                        websites={resource.websites}
+                        address={resource.address}
+                        telephone={resource.telephone}
                         referralContact={referralContact}
                         referralData={referralData}
                         setReferrerData={setReferrerData}
@@ -317,7 +309,7 @@ const ResourceCard = ({
                     sendDataToAnalytics({
                       action: getUserGroup(referrerData['user-groups']),
                       category: REFERRAL_CLICK_WEBSITE,
-                      label: name
+                      label: resource.name
                     })
                   }
                   data-testid="refer-link"
@@ -334,7 +326,7 @@ const ResourceCard = ({
           </div>
         </div>
       </div>
-      {signpostSummary?.some(x => x.name == name) && (
+      {signpostSummary?.some(x => x.name == resource.name) && (
         <div
           className={`${css['success-message']}`}
           data-testid={`added-to-summary-banner-${resource.id}-${categoryId}`}>
@@ -347,7 +339,7 @@ const ResourceCard = ({
               sendDataToAnalytics({
                 action: getUserGroup(referrerData['user-groups']),
                 category: VIEW_SUMMARY_EMAIL_CLICKED,
-                label: name
+                label: resource.name
               });
             }}>
             View summary message
@@ -361,7 +353,7 @@ const ResourceCard = ({
             id={`input-${resource.id}`}
             onClick={() => updateResource()}
             type="checkbox"
-            value={name}
+            value={resource.name}
           />
           <label className="govuk-label govuk-checkboxes__label" id={`label-${resource.id}`}>
             Would you like to recommend this resource?
