@@ -293,7 +293,7 @@ const VulnerabilitiesGrid = ({
                             <ResourceCard
                               key={resource.id}
                               data-testid={`resource-${resource.id}`}
-                              {...resource}
+                              resource={resource}
                               updateSelectedResources={updateSummaryResource}
                               customerId={customerId}
                               referralCompletion={{}}
