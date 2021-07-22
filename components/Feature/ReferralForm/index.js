@@ -15,13 +15,6 @@ const ReferralForm = ({
   updateEmailBody,
   setEmailBody,
   referrerData,
-  email,
-  name,
-  description,
-  websites,
-  address,
-  telephone,
-  referralContact,
   referralData,
   setReferrerData,
   setReferralData,
@@ -131,7 +124,7 @@ const ReferralForm = ({
                 sendDataToAnalytics({
                   action: getUserGroup(referrerData['user-groups']),
                   category: REFERRAL_SUBMIT_INVALID,
-                  label: name
+                  label: resource.name
                 });
                 setAnalyticsSubmitted(true);
               }
@@ -155,7 +148,7 @@ const ReferralForm = ({
               <input
                 id={`service-name-${resource.id}`}
                 name="service-name"
-                value={name}
+                value={resource.name}
                 type="text"
                 hidden
               />
@@ -165,7 +158,7 @@ const ReferralForm = ({
               <input
                 id={`service-contact-email-${resource.id}`}
                 name="service-contact-email"
-                value={email}
+                value={resource.email}
                 type="text"
                 hidden
               />
@@ -175,7 +168,7 @@ const ReferralForm = ({
               <input
                 id={`service-contact-phone-${resource.id}`}
                 name="service-contact-phone"
-                value={telephone}
+                value={resource.telephone}
                 type="text"
                 hidden
               />
@@ -185,7 +178,7 @@ const ReferralForm = ({
               <input
                 id={`service-referral-email-${resource.id}`}
                 name="service-referral-email"
-                value={referralContact}
+                value={resource.referralContact}
                 type="text"
                 hidden
               />
@@ -195,7 +188,7 @@ const ReferralForm = ({
               <input
                 id={`service-address-${resource.id}`}
                 name="service-address"
-                value={address}
+                value={resource.address}
                 type="text"
                 hidden
               />
@@ -205,7 +198,7 @@ const ReferralForm = ({
               <input
                 id={`service-websites-${resource.id}`}
                 name="service-websites"
-                value={websites.join(' ')}
+                value={resource.websites.join(' ')}
                 type="text"
                 hidden
               />
@@ -215,7 +208,7 @@ const ReferralForm = ({
               <input
                 id={`service-description-${resource.id}`}
                 name="service-description"
-                value={description}
+                value={resource.description}
                 type="text"
                 hidden
               />
