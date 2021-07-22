@@ -10,7 +10,7 @@ import { convertIsoDateToDateTimeString } from 'lib/utils/date';
 import { sendDataToAnalytics } from 'lib/utils/analytics';
 
 const StatusHistory = ({ referral }) => {
-  const { updateReferral } = useReferral(null, {});
+  const { updateReferralStatus } = useReferral(null, {});
   const [initialReferral, setInitialReferral] = useState(referral);
   const [submitted, setSubmitted] = useState(false);
 
@@ -31,11 +31,11 @@ const StatusHistory = ({ referral }) => {
       }
     ]);
     const newReferral = {
-      id: initialReferral.id,
+      ...initialReferral,
       statusHistory: newStatusHistory
     };
 
-    await updateReferral(newReferral);
+    await updateReferralStatus(newReferral);
     setSubmitted(true);
 
     sendDataToAnalytics({
