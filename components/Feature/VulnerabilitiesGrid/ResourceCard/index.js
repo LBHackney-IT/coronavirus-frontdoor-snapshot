@@ -11,24 +11,7 @@ import {
 import ReferralForm from 'components/Feature/ReferralForm';
 
 const ResourceCard = ({
-  id,
   updateSelectedResources,
-  name,
-  description,
-  websites,
-  address,
-  postcode,
-  tags,
-  telephone,
-  email,
-  referralContact,
-  referralWebsite,
-  notes,
-  distance,
-  matches,
-  customerId,
-  categoryName,
-  serviceDescription,
   residentInfo,
   categoryId,
   referralCompletion,
@@ -39,10 +22,8 @@ const ResourceCard = ({
   setReferralData,
   referrerData,
   setReferrerData,
-  demographic,
   updateSignpostSummary,
   signpostSummary,
-  councilTags,
   setResidentInfo,
   token,
   referralSummary,
@@ -51,42 +32,45 @@ const ResourceCard = ({
   setEmailBody,
   setPreserveFormData,
   preserveFormData,
+  resource,
   ...others
 }) => {
   const [noteOpen, setNoteOpen] = useState(false);
 
   const trimLength = (s, length) => (s.length > length ? s.substring(0, length) + '...' : s);
 
-  const tagsElement = tags.map(item => (
+  const tagsElement = resource.tags.map(item => (
     <span key={'tags-' + item} className={`${css.tags} tag-element`}>
       {trimLength(item, 20)}
     </span>
   ));
-  const councilTagsElement = councilTags.map(item => (
+  const councilTagsElement = resource.councilTags.map(item => (
     <span key={'tags-' + item} className={`${css.tags} tag-element ${css[`Council-tag`]}`}>
       {trimLength(item, 20)}
     </span>
   ));
-  const snapshot = customerId != undefined ? true : false;
   const updateResource = () => {
     updateSelectedResources({
-      name: name,
-      description: description,
-      address: address,
-      telephone: telephone,
-      email: email,
-      referralContact: referralContact,
-      websites: websites,
-      notes: notes
+      name: resource.name,
+      description: resource.description,
+      address: resource.address,
+      telephone: resource.telephone,
+      email: resource.email,
+      referralContact: resource.referralContact,
+      websites: resource.websites,
+      notes: resource.notes
     });
   };
 
-  const fullDescription = [serviceDescription, description].join(' ');
+  const fullDescription = [resource.serviceDescription, resource.description].join(' ');
   const first = fullDescription?.substring(0, 250);
   const second = fullDescription?.substring(250);
 
   return (
-    <div className={`resource ${css.resource}`} {...others} id={`resource-container-${id}`}>
+    <div
+      className={`resource ${css.resource}`}
+      {...others}
+      id={`resource-container-${resource.id}`}>
       <div className={`${css.tags__container} card-header-tag`} data-testid="resource-card-tags">
         {tagsElement}
         {councilTagsElement}
@@ -96,38 +80,40 @@ const ResourceCard = ({
           <div
             className={`govuk-grid-column-two-thirds header-container ${css['header-container']}`}>
             <h3 data-testid="resource-card-header">
-              {websites?.length > 0 ? (
+              {resource.websites?.length > 0 ? (
                 <a
-                  key={`website-link-${websites[0]}`}
-                  href={websites[0]}
+                  key={`website-link-${resource.websites[0]}`}
+                  href={resource.websites[0]}
                   target="_blank"
                   onClick={() => {
                     sendDataToAnalytics({
                       action: getUserGroup(referrerData['user-groups']),
                       category: SERVICE_CLICK_WEBSITE,
-                      label: name
+                      label: resource.name
                     });
                   }}
                   rel="noopener noreferrer">
-                  {name}
+                  {resource.name}
                 </a>
               ) : (
-                name
+                resource.name
               )}
             </h3>
-            {demographic?.trim().length > 0 && <span>This is for {demographic}</span>}
+            {resource.demographic?.trim().length > 0 && (
+              <span>This is for {resource.demographic}</span>
+            )}
           </div>
 
           <div className={`govuk-grid-column-one-third ${css['contact-container']}`}>
-            {telephone?.length > 0 && <h4>{telephone}</h4>}
+            {resource.telephone?.length > 0 && <h4>{resource.telephone}</h4>}
 
-            {email?.includes('@') && (
+            {resource.email?.includes('@') && (
               <div>
-                <a href={`mailto:${email}`}>{email}</a>
+                <a href={`mailto:${resource.email}`}>{resource.email}</a>
               </div>
             )}
 
-            {address?.length > 0 && <span>{address}</span>}
+            {resource.address?.length > 0 && <span>{resource.address}</span>}
           </div>
         </div>
         {fullDescription && (
@@ -156,75 +142,87 @@ const ResourceCard = ({
             <div className={`govuk-checkboxes__item ${css['inline-header']}`}>
               <input
                 className="govuk-checkboxes__input"
-                id={`add-to-summary-checkbox-${id}-${categoryId}`}
+                id={`add-to-summary-checkbox-${resource.id}-${categoryId}`}
                 name="add-to-summary-checkbox"
                 type="checkbox"
                 onClick={() => {
                   updateSignpostSummary({
-                    id,
-                    name,
-                    telephone,
-                    contactEmail: email,
-                    referralEmail: referralContact,
-                    address,
-                    websites: websites.join(', '),
-                    categoryName
+                    id: resource.id,
+                    name: resource.name,
+                    telephone: resource.telephone,
+                    contactEmail: resource.email,
+                    referralEmail: resource.referralContact,
+                    address: resource.address,
+                    websites: resource.websites.join(', '),
+                    categoryName: resource.categoryName
                   });
                 }}
                 value={true}
-                checked={signpostSummary?.some(x => x.name == name)}
+                checked={signpostSummary?.some(x => x.name == resource.name)}
               />
               <label
                 className={`govuk-label govuk-checkboxes__label ${css['checkbox-label']}`}
-                htmlFor={`add-to-summary-checkbox-${id}-${categoryId}`}>
+                htmlFor={`add-to-summary-checkbox-${resource.id}-${categoryId}`}>
                 Share service with a resident
               </label>
             </div>
           </div>
           <div>
-            {referralContact?.length > 0 ? (
-              <span id={`referral-${id}-${categoryId}-details`} name="refer-details">
-                {(openReferralForm.id != id || openReferralForm.categoryName != categoryName) && (
+            {resource.referralContact?.length > 0 ? (
+              <span id={`referral-${resource.id}-${categoryId}-details`} name="refer-details">
+                {(openReferralForm.id != resource.id ||
+                  openReferralForm.categoryName != resource.categoryName) && (
                   <button
-                    id={`referral-${id}-${categoryId}`}
+                    id={`referral-${resource.id}-${categoryId}`}
                     className={`govuk-button ${css['refer-button']}`}
                     type="button"
                     data-testid="refer-button"
                     onClick={e => {
-                      detailsClicked(e, `referral-${id}-${categoryId}-details`, id, categoryName);
+                      detailsClicked(
+                        e,
+                        `referral-${resource.id}-${categoryId}-details`,
+                        resource.id,
+                        resource.categoryName
+                      );
                       sendDataToAnalytics({
                         action: getUserGroup(referrerData['user-groups']),
                         category: REFERRAL_OPEN,
-                        label: name
+                        label: resource.name
                       });
                     }}>
                     Create Referral
                   </button>
                 )}
-                {openReferralForm.id == id && openReferralForm.categoryName == categoryName && (
-                  <button
-                    id={`referral-${id}-${categoryId}`}
-                    className={`govuk-button ${css['refer-button']} govuk-button--secondary`}
-                    type="button"
-                    data-testid="refer-button"
-                    onClick={e =>
-                      detailsClicked(e, `referral-${id}-${categoryId}-details`, id, categoryName)
-                    }>
-                    Cancel
-                  </button>
-                )}
-                {openReferralForm.id == id &&
-                  openReferralForm.categoryName == categoryName &&
-                  (referralCompletion[id] ? (
+                {openReferralForm.id == resource.id &&
+                  openReferralForm.categoryName == resource.categoryName && (
+                    <button
+                      id={`referral-${resource.id}-${categoryId}`}
+                      className={`govuk-button ${css['refer-button']} govuk-button--secondary`}
+                      type="button"
+                      data-testid="refer-button"
+                      onClick={e =>
+                        detailsClicked(
+                          e,
+                          `referral-${resource.id}-${categoryId}-details`,
+                          resource.id,
+                          resource.categoryName
+                        )
+                      }>
+                      Cancel
+                    </button>
+                  )}
+                {openReferralForm.id == resource.id &&
+                  openReferralForm.categoryName == resource.categoryName &&
+                  (referralCompletion[resource.id] ? (
                     <div className={`govuk-!-padding-top-8`}>
-                      {referralCompletion[id].errors?.length > 0 && (
+                      {referralCompletion[resource.id].errors?.length > 0 && (
                         <div
                           data-testid="referral-errors-banner"
                           className={`${notificationCss['error-message']}`}>
-                          {referralCompletion[id].errors.join('\n')}
+                          {referralCompletion[resource.id].errors.join('\n')}
                         </div>
                       )}
-                      {!referralCompletion[id].errors?.includes(
+                      {!referralCompletion[resource.id].errors?.includes(
                         'Failed to send referral email to service'
                       ) && (
                         <div
@@ -241,9 +239,9 @@ const ResourceCard = ({
                           setPreserveFormData(true);
                           detailsClicked(
                             e,
-                            `referral-${id}-${categoryId}-details`,
-                            id,
-                            categoryName
+                            `referral-${resource.id}-${categoryId}-details`,
+                            resource.id,
+                            resource.categoryName
                           );
                         }}
                         data-testid="continue-call-button">
@@ -258,7 +256,9 @@ const ResourceCard = ({
                       </button>
                     </div>
                   ) : (
-                    <div id={`referral-${id}-${categoryId}-form`} className={css['referral-form']}>
+                    <div
+                      id={`referral-${resource.id}-${categoryId}-form`}
+                      className={css['referral-form']}>
                       <ReferralForm
                         setResidentInfo={setResidentInfo}
                         token={token}
@@ -269,14 +269,7 @@ const ResourceCard = ({
                         updateEmailBody={updateEmailBody}
                         setEmailBody={setEmailBody}
                         referrerData={referrerData}
-                        id={id}
-                        email={email}
-                        name={name}
-                        description={description}
-                        websites={websites}
-                        address={address}
-                        telephone={telephone}
-                        referralContact={referralContact}
+                        resource={resource}
                         referralData={referralData}
                         setReferrerData={setReferrerData}
                         setReferralData={setReferralData}
@@ -290,16 +283,16 @@ const ResourceCard = ({
                   ))}
               </span>
             ) : (
-              referralWebsite?.length > 0 &&
-              (referralWebsite.startsWith('http') ? (
+              resource.referralWebsite?.length > 0 &&
+              (resource.referralWebsite.startsWith('http') ? (
                 <a
-                  href={referralWebsite}
+                  href={resource.referralWebsite}
                   target="_blank"
                   onClick={() =>
                     sendDataToAnalytics({
                       action: getUserGroup(referrerData['user-groups']),
                       category: REFERRAL_CLICK_WEBSITE,
-                      label: name
+                      label: resource.name
                     })
                   }
                   data-testid="refer-link"
@@ -309,17 +302,17 @@ const ResourceCard = ({
               ) : (
                 <span className={css['refer-text']} data-testid="refer-text">
                   <h4>Referral information</h4>
-                  <span>{referralWebsite}</span>
+                  <span>{resource.referralWebsite}</span>
                 </span>
               ))
             )}
           </div>
         </div>
       </div>
-      {signpostSummary?.some(x => x.name == name) && (
+      {signpostSummary?.some(x => x.name == resource.name) && (
         <div
           className={`${css['success-message']}`}
-          data-testid={`added-to-summary-banner-${id}-${categoryId}`}>
+          data-testid={`added-to-summary-banner-${resource.id}-${categoryId}`}>
           You have added a service to your summary message
           <a
             className={`${css['summary-link']}`}
@@ -329,25 +322,11 @@ const ResourceCard = ({
               sendDataToAnalytics({
                 action: getUserGroup(referrerData['user-groups']),
                 category: VIEW_SUMMARY_EMAIL_CLICKED,
-                label: name
+                label: resource.name
               });
             }}>
             View summary message
           </a>
-        </div>
-      )}
-      {snapshot && (
-        <div className="govuk-checkboxes__item">
-          <input
-            className="govuk-checkboxes__input"
-            id={`input-${id}`}
-            onClick={() => updateResource()}
-            type="checkbox"
-            value={name}
-          />
-          <label className="govuk-label govuk-checkboxes__label" id={`label-${id}`}>
-            Would you like to recommend this resource?
-          </label>
         </div>
       )}
       <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
