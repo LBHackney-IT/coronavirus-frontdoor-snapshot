@@ -51,6 +51,7 @@ const ResourceCard = ({
   setEmailBody,
   setPreserveFormData,
   preserveFormData,
+  resource,
   ...others
 }) => {
   const [noteOpen, setNoteOpen] = useState(false);
@@ -86,7 +87,10 @@ const ResourceCard = ({
   const second = fullDescription?.substring(250);
 
   return (
-    <div className={`resource ${css.resource}`} {...others} id={`resource-container-${id}`}>
+    <div
+      className={`resource ${css.resource}`}
+      {...others}
+      id={`resource-container-${resource.id}`}>
       <div className={`${css.tags__container} card-header-tag`} data-testid="resource-card-tags">
         {tagsElement}
         {councilTagsElement}
@@ -156,12 +160,12 @@ const ResourceCard = ({
             <div className={`govuk-checkboxes__item ${css['inline-header']}`}>
               <input
                 className="govuk-checkboxes__input"
-                id={`add-to-summary-checkbox-${id}-${categoryId}`}
+                id={`add-to-summary-checkbox-${resource.id}-${categoryId}`}
                 name="add-to-summary-checkbox"
                 type="checkbox"
                 onClick={() => {
                   updateSignpostSummary({
-                    id,
+                    id: resource.id,
                     name,
                     telephone,
                     contactEmail: email,
@@ -176,22 +180,28 @@ const ResourceCard = ({
               />
               <label
                 className={`govuk-label govuk-checkboxes__label ${css['checkbox-label']}`}
-                htmlFor={`add-to-summary-checkbox-${id}-${categoryId}`}>
+                htmlFor={`add-to-summary-checkbox-${resource.id}-${categoryId}`}>
                 Share service with a resident
               </label>
             </div>
           </div>
           <div>
             {referralContact?.length > 0 ? (
-              <span id={`referral-${id}-${categoryId}-details`} name="refer-details">
-                {(openReferralForm.id != id || openReferralForm.categoryName != categoryName) && (
+              <span id={`referral-${resource.id}-${categoryId}-details`} name="refer-details">
+                {(openReferralForm.id != resource.id ||
+                  openReferralForm.categoryName != categoryName) && (
                   <button
-                    id={`referral-${id}-${categoryId}`}
+                    id={`referral-${resource.id}-${categoryId}`}
                     className={`govuk-button ${css['refer-button']}`}
                     type="button"
                     data-testid="refer-button"
                     onClick={e => {
-                      detailsClicked(e, `referral-${id}-${categoryId}-details`, id, categoryName);
+                      detailsClicked(
+                        e,
+                        `referral-${resource.id}-${categoryId}-details`,
+                        resource.id,
+                        categoryName
+                      );
                       sendDataToAnalytics({
                         action: getUserGroup(referrerData['user-groups']),
                         category: REFERRAL_OPEN,
@@ -201,30 +211,36 @@ const ResourceCard = ({
                     Create Referral
                   </button>
                 )}
-                {openReferralForm.id == id && openReferralForm.categoryName == categoryName && (
-                  <button
-                    id={`referral-${id}-${categoryId}`}
-                    className={`govuk-button ${css['refer-button']} govuk-button--secondary`}
-                    type="button"
-                    data-testid="refer-button"
-                    onClick={e =>
-                      detailsClicked(e, `referral-${id}-${categoryId}-details`, id, categoryName)
-                    }>
-                    Cancel
-                  </button>
-                )}
-                {openReferralForm.id == id &&
+                {openReferralForm.id == resource.id &&
+                  openReferralForm.categoryName == categoryName && (
+                    <button
+                      id={`referral-${resource.id}-${categoryId}`}
+                      className={`govuk-button ${css['refer-button']} govuk-button--secondary`}
+                      type="button"
+                      data-testid="refer-button"
+                      onClick={e =>
+                        detailsClicked(
+                          e,
+                          `referral-${resource.id}-${categoryId}-details`,
+                          resource.id,
+                          categoryName
+                        )
+                      }>
+                      Cancel
+                    </button>
+                  )}
+                {openReferralForm.id == resource.id &&
                   openReferralForm.categoryName == categoryName &&
-                  (referralCompletion[id] ? (
+                  (referralCompletion[resource.id] ? (
                     <div className={`govuk-!-padding-top-8`}>
-                      {referralCompletion[id].errors?.length > 0 && (
+                      {referralCompletion[resource.id].errors?.length > 0 && (
                         <div
                           data-testid="referral-errors-banner"
                           className={`${notificationCss['error-message']}`}>
-                          {referralCompletion[id].errors.join('\n')}
+                          {referralCompletion[resource.id].errors.join('\n')}
                         </div>
                       )}
-                      {!referralCompletion[id].errors?.includes(
+                      {!referralCompletion[resource.id].errors?.includes(
                         'Failed to send referral email to service'
                       ) && (
                         <div
@@ -241,8 +257,8 @@ const ResourceCard = ({
                           setPreserveFormData(true);
                           detailsClicked(
                             e,
-                            `referral-${id}-${categoryId}-details`,
-                            id,
+                            `referral-${resource.id}-${categoryId}-details`,
+                            resource.id,
                             categoryName
                           );
                         }}
@@ -258,7 +274,9 @@ const ResourceCard = ({
                       </button>
                     </div>
                   ) : (
-                    <div id={`referral-${id}-${categoryId}-form`} className={css['referral-form']}>
+                    <div
+                      id={`referral-${resource.id}-${categoryId}-form`}
+                      className={css['referral-form']}>
                       <ReferralForm
                         setResidentInfo={setResidentInfo}
                         token={token}
@@ -269,7 +287,7 @@ const ResourceCard = ({
                         updateEmailBody={updateEmailBody}
                         setEmailBody={setEmailBody}
                         referrerData={referrerData}
-                        id={id}
+                        id={resource.id}
                         email={email}
                         name={name}
                         description={description}
@@ -319,7 +337,7 @@ const ResourceCard = ({
       {signpostSummary?.some(x => x.name == name) && (
         <div
           className={`${css['success-message']}`}
-          data-testid={`added-to-summary-banner-${id}-${categoryId}`}>
+          data-testid={`added-to-summary-banner-${resource.id}-${categoryId}`}>
           You have added a service to your summary message
           <a
             className={`${css['summary-link']}`}
@@ -340,12 +358,12 @@ const ResourceCard = ({
         <div className="govuk-checkboxes__item">
           <input
             className="govuk-checkboxes__input"
-            id={`input-${id}`}
+            id={`input-${resource.id}`}
             onClick={() => updateResource()}
             type="checkbox"
             value={name}
           />
-          <label className="govuk-label govuk-checkboxes__label" id={`label-${id}`}>
+          <label className="govuk-label govuk-checkboxes__label" id={`label-${resource.id}`}>
             Would you like to recommend this resource?
           </label>
         </div>
