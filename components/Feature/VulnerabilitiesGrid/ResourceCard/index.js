@@ -22,10 +22,8 @@ const ResourceCard = ({
   setReferralData,
   referrerData,
   setReferrerData,
-  demographic,
   updateSignpostSummary,
   signpostSummary,
-  councilTags,
   setResidentInfo,
   token,
   referralSummary,
@@ -46,7 +44,7 @@ const ResourceCard = ({
       {trimLength(item, 20)}
     </span>
   ));
-  const councilTagsElement = councilTags.map(item => (
+  const councilTagsElement = resource.councilTags.map(item => (
     <span key={'tags-' + item} className={`${css.tags} tag-element ${css[`Council-tag`]}`}>
       {trimLength(item, 20)}
     </span>
@@ -101,7 +99,9 @@ const ResourceCard = ({
                 resource.name
               )}
             </h3>
-            {demographic?.trim().length > 0 && <span>This is for {demographic}</span>}
+            {resource.demographic?.trim().length > 0 && (
+              <span>This is for {resource.demographic}</span>
+            )}
           </div>
 
           <div className={`govuk-grid-column-one-third ${css['contact-container']}`}>
