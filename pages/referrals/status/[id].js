@@ -71,7 +71,10 @@ const StatusHistory = ({ referral }) => {
           {recentStatus.comment && ` with comment: "${recentStatus.comment}".`}
         </h1>
       ) : (
-        <StatusForm onSubmitForm={onSubmitForm} />
+        <StatusForm
+          onSubmitForm={onSubmitForm}
+          name={`${initialReferral.resident.firstName} ${initialReferral.resident.lastName}`}
+        />
       )}
     </>
   );
