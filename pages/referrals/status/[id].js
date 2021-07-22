@@ -1,12 +1,13 @@
 import { requestByLinkId } from 'lib/api';
 import HttpStatusError from 'lib/api/domain/HttpStatusError';
-import { REFERRAL_STATUSES } from 'lib/utils/constants';
+import { REFERRAL_STATUSES, STATUS_UPDATE } from 'lib/utils/constants';
 import useReferral from 'lib/api/utils/useReferral';
 import { IsoDateTime } from 'lib/domain/isodate';
 import { useState } from 'react';
 import StatusForm from 'components/Feature/StatusForm';
 import Head from 'next/head';
 import { convertIsoDateToDateTimeString } from 'lib/utils/date';
+import { sendDataToAnalytics } from 'lib/utils/analytics';
 
 const StatusHistory = ({ referral }) => {
   const { updateReferral } = useReferral(null, {});
@@ -36,6 +37,12 @@ const StatusHistory = ({ referral }) => {
 
     await updateReferral(newReferral);
     setSubmitted(true);
+
+    sendDataToAnalytics({
+      action: newStatus,
+      category: STATUS_UPDATE,
+      label: initialReferral.service.name
+    });
   };
 
   return (
