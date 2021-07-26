@@ -75,7 +75,7 @@ const StatusHistory = ({ referral }) => {
             {convertIsoDateToDateTimeString(new Date(recentStatus.date))}
             {recentStatus.comment && ` with comment: "${recentStatus.comment}".`}
           </h1>
-          <p className="govuk-hint">Reference number: {referral.referenceNumber}</p>
+          <p className="govuk-hint" data-testid="reference-number-paragraph">Reference number: {referral.referenceNumber}</p>
         </>
       ) : (
         <StatusForm
