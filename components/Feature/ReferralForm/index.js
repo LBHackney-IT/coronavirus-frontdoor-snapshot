@@ -208,7 +208,7 @@ const ReferralForm = ({
               <input
                 id={`service-description-${resource.id}`}
                 name="service-description"
-                value={resource.description}
+                value={resource.serviceDescription}
                 type="text"
                 hidden
               />
