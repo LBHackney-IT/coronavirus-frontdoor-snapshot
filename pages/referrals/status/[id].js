@@ -57,19 +57,26 @@ const StatusHistory = ({ referral }) => {
               className="govuk-panel govuk-panel--confirmation"
               data-testid="status-confirmation-panel">
               <h1 className="govuk-panel__title">Thank you</h1>
-              <div className="govuk-panel__body">Your decision on this referral has been sent</div>
+              <div className="govuk-panel__body">
+                Referral reference number:
+                <br /> {referral.referenceNumber}
+              </div>
             </div>
-            <h2 className="govuk-heading-m">What happens next</h2>
+            <p>Your decision on this referral has been sent.</p>
+            <h2 className="govuk-heading-m">What happens next?</h2>
             <p>We’ve let the referrer know your response.</p>
           </div>
         </div>
       ) : recentStatus.status == REFERRAL_STATUSES.Accepted ||
         recentStatus.status == REFERRAL_STATUSES.Rejected ? (
-        <h1 className="govuk-heading-m" data-testid="status-paragraph">
-          This referral was {recentStatus.status} on{' '}
-          {convertIsoDateToDateTimeString(new Date(recentStatus.date))}
-          {recentStatus.comment && ` with comment: "${recentStatus.comment}".`}
-        </h1>
+        <>
+          <h1 className="govuk-heading-m" data-testid="status-paragraph">
+            This referral was {recentStatus.status} on{' '}
+            {convertIsoDateToDateTimeString(new Date(recentStatus.date))}
+            {recentStatus.comment && ` with comment: "${recentStatus.comment}".`}
+          </h1>
+          <p className="govuk-hint">Reference number: {referral.referenceNumber}</p>
+        </>
       ) : (
         <StatusForm
           onSubmitForm={onSubmitForm}
