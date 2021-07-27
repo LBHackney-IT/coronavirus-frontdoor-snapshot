@@ -28,6 +28,7 @@
     "cookie": "^0.4.1",
     "cookie-parser": "^1.4.5",
     "govuk-frontend": "^3.6.0",
+    "html-entities": "^2.3.2",
     "jsonwebtoken": "^8.5.1",
     "markdown-to-jsx": "^6.11.4",
     "moment": "^2.26.0",
@@ -77,6 +78,5 @@
     "serverless": "^1.70.1",
     "serverless-plugin-metric": "^1.2.2",
     "start-server-and-test": "^1.11.0"
-  },
-  "license" : "MIT"
+  }
 }
