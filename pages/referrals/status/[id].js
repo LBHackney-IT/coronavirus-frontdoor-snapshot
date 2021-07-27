@@ -8,6 +8,7 @@ import StatusForm from 'components/Feature/StatusForm';
 import Head from 'next/head';
 import { convertIsoDateToDateTimeString } from 'lib/utils/date';
 import { sendDataToAnalytics } from 'lib/utils/analytics';
+import { encode } from 'html-entities';
 
 const StatusHistory = ({ referral }) => {
   const { updateReferralStatus } = useReferral(null, {});
@@ -73,9 +74,11 @@ const StatusHistory = ({ referral }) => {
           <h1 className="govuk-heading-m" data-testid="status-paragraph">
             This referral was {recentStatus.status} on{' '}
             {convertIsoDateToDateTimeString(new Date(recentStatus.date))}
-            {recentStatus.comment && ` with comment: "${recentStatus.comment}".`}
+            {recentStatus.comment && ` with comment: "${encode(recentStatus.comment)}".`}
           </h1>
-          <p className="govuk-hint" data-testid="reference-number-paragraph">Reference number: {referral.referenceNumber}</p>
+          <p className="govuk-hint" data-testid="reference-number-paragraph">
+            Reference number: {referral.referenceNumber}
+          </p>
         </>
       ) : (
         <StatusForm
