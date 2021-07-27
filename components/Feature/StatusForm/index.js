@@ -11,7 +11,7 @@ const StatusForm = ({ onSubmitForm, name }) => {
           <fieldset className="govuk-fieldset">
             <div className="govuk-!-padding-top-4">
               <label>
-                <h2 className="govuk-heading-m">Do you acccept this referral?</h2>
+                <h2 className="govuk-heading-m">Are you able to support this resident?</h2>
               </label>
               <div id="resident-referral-hint" className="govuk-hint">
                 Notification will be sent to the relevant team upon your selection
