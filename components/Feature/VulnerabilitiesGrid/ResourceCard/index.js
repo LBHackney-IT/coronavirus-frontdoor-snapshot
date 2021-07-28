@@ -9,6 +9,8 @@ import {
   VIEW_SUMMARY_EMAIL_CLICKED
 } from 'lib/utils/constants';
 import ReferralForm from 'components/Feature/ReferralForm';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 
 const ResourceCard = ({
   updateSelectedResources,
@@ -81,20 +83,23 @@ const ResourceCard = ({
             className={`govuk-grid-column-two-thirds header-container ${css['header-container']}`}>
             <h3 data-testid="resource-card-header">
               {resource.websites?.length > 0 ? (
-                <a
-                  key={`website-link-${resource.websites[0]}`}
-                  href={resource.websites[0]}
-                  target="_blank"
-                  onClick={() => {
-                    sendDataToAnalytics({
-                      action: getUserGroup(referrerData['user-groups']),
-                      category: SERVICE_CLICK_WEBSITE,
-                      label: resource.name
-                    });
-                  }}
-                  rel="noopener noreferrer">
-                  {resource.name}
-                </a>
+                <>
+                  <a
+                    key={`website-link-${resource.websites[0]}`}
+                    href={resource.websites[0]}
+                    target="_blank"
+                    onClick={() => {
+                      sendDataToAnalytics({
+                        action: getUserGroup(referrerData['user-groups']),
+                        category: SERVICE_CLICK_WEBSITE,
+                        label: resource.name
+                      });
+                    }}
+                    rel="noopener noreferrer">
+                    {resource.name}
+                  </a>{' '}
+                  <FontAwesomeIcon icon={faExternalLinkAlt} transform="shrink-6" />
+                </>
               ) : (
                 resource.name
               )}
