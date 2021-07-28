@@ -52,7 +52,7 @@ jobs:
             export NEXT_PUBLIC_GTM_ID=xx
             export NEXT_PUBLIC_API_URL=http://localhost:3000/api
             export NEXT_PUBLIC_ENV=test
-            export SYNONYMS="{"ostrich":["testsynonym"]}"
+            export SYNONYMS="{\"ostrich\":[\"testsynonym\"]}"
             yarn build
       - run:
           name: Run unit tests
@@ -100,7 +100,7 @@ jobs:
             export GOV_NOTIFY_API_KEY=xx
             export NEXT_PUBLIC_ENV=test
             export NEXT_PUBLIC_GTM_ID=xx
-            export SYNONYMS="{"ostrich":["testsynonym"]}"
+            export SYNONYMS="{\"ostrich\":[\"testsynonym\"]}"
             CYPRESS_CACHE_FOLDER=~/repo/cypress_cache yarn run int-test
       - store_artifacts:
           path: ~/repo/cypress/screenshots
