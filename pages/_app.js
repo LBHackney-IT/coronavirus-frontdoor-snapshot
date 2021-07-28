@@ -5,7 +5,6 @@ import './stylesheets/all.scss';
 export default class MyApp extends App {
   componentDidMount = () => {
     window.GOVUKFrontend.initAll();
-    document.getElementsByTagName('noscript')[0].remove();
   };
 
   render() {
