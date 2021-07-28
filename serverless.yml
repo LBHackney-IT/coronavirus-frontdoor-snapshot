@@ -40,6 +40,9 @@ functions:
           path: api/referrals/status/{proxy+}
           method: get
       - http:
+          path: api/referrals/{path}/status
+          method: patch
+      - http:
           path: api/{proxy+}
           method: ANY
           authorizer: ${self:custom.authorizer.${self:service}-authorizer}
