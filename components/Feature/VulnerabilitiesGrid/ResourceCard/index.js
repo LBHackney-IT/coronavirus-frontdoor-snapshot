@@ -140,31 +140,34 @@ const ResourceCard = ({
         <div className={`govuk-grid-row`}>
           <div className={`govuk-grid-column-one-half`}>
             <div className={`govuk-checkboxes__item ${css['inline-header']}`}>
-              <input
-                className="govuk-checkboxes__input"
-                id={`add-to-summary-checkbox-${resource.id}-${categoryId}`}
-                name="add-to-summary-checkbox"
-                type="checkbox"
-                onClick={() => {
-                  updateSignpostSummary({
-                    id: resource.id,
-                    name: resource.name,
-                    telephone: resource.telephone,
-                    contactEmail: resource.email,
-                    referralEmail: resource.referralContact,
-                    address: resource.address,
-                    websites: resource.websites.join(', '),
-                    categoryName: resource.categoryName
-                  });
-                }}
-                value={true}
-                checked={signpostSummary?.some(x => x.name == resource.name)}
-              />
-              <label
-                className={`govuk-label govuk-checkboxes__label ${css['checkbox-label']}`}
-                htmlFor={`add-to-summary-checkbox-${resource.id}-${categoryId}`}>
-                Share service with a resident
-              </label>
+              <fieldset className="govuk-fieldset" role="group">
+                <input
+                  className="govuk-checkboxes__input"
+                  id={`add-to-summary-checkbox-${resource.id}-${categoryId}`}
+                  name="add-to-summary-checkbox"
+                  type="checkbox"
+                  onClick={() => {
+                    updateSignpostSummary({
+                      id: resource.id,
+                      name: resource.name,
+                      telephone: resource.telephone,
+                      contactEmail: resource.email,
+                      referralEmail: resource.referralContact,
+                      address: resource.address,
+                      websites: resource.websites.join(', '),
+                      categoryName: resource.categoryName
+                    });
+                  }}
+                  value={true}
+                  checked={signpostSummary?.some(x => x.name == resource.name)}
+                />
+                <label
+                  className={`govuk-label govuk-checkboxes__label ${css['checkbox-label']}`}
+                  htmlFor={`add-to-summary-checkbox-${resource.id}-${categoryId}`}>
+                  Share service with a resident
+                </label>
+                <legend hidden>Share service with a resident</legend>
+              </fieldset>
             </div>
           </div>
           <div>
