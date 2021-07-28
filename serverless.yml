@@ -40,7 +40,7 @@ functions:
           path: api/referrals/status/{proxy+}
           method: get
       - http:
-          path: api/referrals/{path}/status
+          path: api/referrals/{proxy+}/status
           method: patch
       - http:
           path: api/{proxy+}
