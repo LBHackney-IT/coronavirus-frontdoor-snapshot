@@ -9,6 +9,8 @@ import {
   VIEW_SUMMARY_EMAIL_CLICKED
 } from 'lib/utils/constants';
 import ReferralForm from 'components/Feature/ReferralForm';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 
 const ResourceCard = ({
   updateSelectedResources,
@@ -81,20 +83,23 @@ const ResourceCard = ({
             className={`govuk-grid-column-two-thirds header-container ${css['header-container']}`}>
             <h3 data-testid="resource-card-header">
               {resource.websites?.length > 0 ? (
-                <a
-                  key={`website-link-${resource.websites[0]}`}
-                  href={resource.websites[0]}
-                  target="_blank"
-                  onClick={() => {
-                    sendDataToAnalytics({
-                      action: getUserGroup(referrerData['user-groups']),
-                      category: SERVICE_CLICK_WEBSITE,
-                      label: resource.name
-                    });
-                  }}
-                  rel="noopener noreferrer">
-                  {resource.name}
-                </a>
+                <>
+                  <a
+                    key={`website-link-${resource.websites[0]}`}
+                    href={resource.websites[0]}
+                    target="_blank"
+                    onClick={() => {
+                      sendDataToAnalytics({
+                        action: getUserGroup(referrerData['user-groups']),
+                        category: SERVICE_CLICK_WEBSITE,
+                        label: resource.name
+                      });
+                    }}
+                    rel="noopener noreferrer">
+                    {resource.name}
+                  </a>{' '}
+                  <FontAwesomeIcon icon={faExternalLinkAlt} transform="shrink-6" />
+                </>
               ) : (
                 resource.name
               )}
@@ -140,31 +145,34 @@ const ResourceCard = ({
         <div className={`govuk-grid-row`}>
           <div className={`govuk-grid-column-one-half`}>
             <div className={`govuk-checkboxes__item ${css['inline-header']}`}>
-              <input
-                className="govuk-checkboxes__input"
-                id={`add-to-summary-checkbox-${resource.id}-${categoryId}`}
-                name="add-to-summary-checkbox"
-                type="checkbox"
-                onClick={() => {
-                  updateSignpostSummary({
-                    id: resource.id,
-                    name: resource.name,
-                    telephone: resource.telephone,
-                    contactEmail: resource.email,
-                    referralEmail: resource.referralContact,
-                    address: resource.address,
-                    websites: resource.websites.join(', '),
-                    categoryName: resource.categoryName
-                  });
-                }}
-                value={true}
-                checked={signpostSummary?.some(x => x.name == resource.name)}
-              />
-              <label
-                className={`govuk-label govuk-checkboxes__label ${css['checkbox-label']}`}
-                htmlFor={`add-to-summary-checkbox-${resource.id}-${categoryId}`}>
-                Share service with a resident
-              </label>
+              <fieldset className="govuk-fieldset" role="group">
+                <input
+                  className="govuk-checkboxes__input"
+                  id={`add-to-summary-checkbox-${resource.id}-${categoryId}`}
+                  name="add-to-summary-checkbox"
+                  type="checkbox"
+                  onClick={() => {
+                    updateSignpostSummary({
+                      id: resource.id,
+                      name: resource.name,
+                      telephone: resource.telephone,
+                      contactEmail: resource.email,
+                      referralEmail: resource.referralContact,
+                      address: resource.address,
+                      websites: resource.websites.join(', '),
+                      categoryName: resource.categoryName
+                    });
+                  }}
+                  value={true}
+                  checked={signpostSummary?.some(x => x.name == resource.name)}
+                />
+                <label
+                  className={`govuk-label govuk-checkboxes__label ${css['checkbox-label']}`}
+                  htmlFor={`add-to-summary-checkbox-${resource.id}-${categoryId}`}>
+                  Share service with a resident
+                </label>
+                <legend hidden>Share service with a resident</legend>
+              </fieldset>
             </div>
           </div>
           <div>

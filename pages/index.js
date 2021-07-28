@@ -144,7 +144,7 @@ Index.getInitialProps = async ({ req: { headers }, res }) => {
         (taxonomy.resources = resources.filter(resource => taxonomy.name == resource.categoryName))
     );
 
-    const errors = [otherResources.error].concat(fssErrors);
+    const errors = [otherResources.error].concat(fssErrors).filter(x => x);
 
     return {
       categorisedResources,
