@@ -6,11 +6,9 @@ const Header = ({ serviceName }) => (
     <div
       className={`govuk-header__container govuk-width-container ${css['lbh-header__container']}`}>
       <div className="govuk-header__logo">
-        <a href="/" className="govuk-header__link govuk-header__link--homepage">
-          <span className={`govuk-header__logotype ${css['lbh-header__logotype']}`}>
-            <HackneyLogo />
-          </span>
-        </a>
+        <span className={`govuk-header__logotype ${css['lbh-header__logotype']}`}>
+          <HackneyLogo />
+        </span>
       </div>
       <div className="govuk-header__content">
         <a href="/" className="govuk-header__link govuk-header__link--service-name">
