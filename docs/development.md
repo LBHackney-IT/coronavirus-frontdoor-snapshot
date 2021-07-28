@@ -101,7 +101,6 @@ AIRTABLE_BASE_ID=baseId123
 AIRTABLE_BASE_URL=http://localhost:8085
 AIRTABLE_TABLE_NAMES="Service directory"
 FSS_PUBLIC_API_URL=http://localhost:8085/fss
-HOTJAR_ID=12345
 INH_URL=https://inh-admin-test.hackney.gov.uk
 ```
 
