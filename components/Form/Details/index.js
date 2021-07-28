@@ -10,9 +10,7 @@ const Details = ({ color, children, title, onclick, id }) => (
       style={color && { color: `${color}` }}
       id={`summary-${id}`}
       onClick={onclick}>
-      <span id={`span-${id}`} className="govuk-details__summary-text">
-        {title}
-      </span>
+      <span id={`span-${id}`}>{title}</span>
     </summary>
     <div className={`govuk-details__text ${css['lbh-details__text']}`}>{children}</div>
   </details>
