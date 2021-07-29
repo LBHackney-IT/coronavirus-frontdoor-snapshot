@@ -8,7 +8,8 @@ module.exports = {
     ADDRESSES_API_KEY: process.env.ADDRESSES_API_KEY,
     OPTIMIZE_ID: process.env.OPTIMIZE_ID,
     EXTERNAL_USER_GROUP: process.env.EXTERNAL_USER_GROUP,
-    INH_URL: process.env.INH_URL
+    INH_URL: process.env.INH_URL,
+    SYNONYMS: process.env.SYNONYMS
   },
   distDir: 'build/_next',
   target: 'server',
