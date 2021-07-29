@@ -4,7 +4,7 @@ import Categories from './Categories';
 import Details from 'components/Form/Details';
 import styles from './index.module.scss';
 import { sendDataToAnalytics, getUserGroup } from 'lib/utils/analytics';
-import { getSearchResults } from 'lib/utils/search';
+import { getSearchResults, getWordsToHighlight } from 'lib/utils/search';
 import { CATEGORY_CATEGORIES, CATEGORY_SEARCH, FEEDBACK_SEARCH } from 'lib/utils/constants';
 
 const Services = ({
@@ -221,6 +221,7 @@ const Services = ({
                 residentInfo={residentInfo}
                 setPreserveFormData={setPreserveFormData}
                 preserveFormData={preserveFormData}
+                wordsToHighlight={getWordsToHighlight(resultsTitle)}
               />
             ))}
           </div>

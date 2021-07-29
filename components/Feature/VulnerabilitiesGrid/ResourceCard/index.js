@@ -35,6 +35,7 @@ const ResourceCard = ({
   setPreserveFormData,
   preserveFormData,
   resource,
+  wordsToHighlight,
   ...others
 }) => {
   const [noteOpen, setNoteOpen] = useState(false);
@@ -67,6 +68,18 @@ const ResourceCard = ({
   const fullDescription = [resource.serviceDescription, resource.description].join(' ');
   const first = fullDescription?.substring(0, 250);
   const second = fullDescription?.substring(250);
+
+  const getHighlighted = text => {
+    const words = text.split(' ');
+
+    return (
+      <>
+        {words.map(x => (
+          <> {wordsToHighlight.some(term => x.includes(term)) ? <mark>{x}</mark> : x} </>
+        ))}
+      </>
+    );
+  };
 
   return (
     <div
@@ -123,7 +136,7 @@ const ResourceCard = ({
         </div>
         {fullDescription && (
           <p>
-            {first}
+            {getHighlighted(first)}
             {second.length > 0 && !noteOpen ? (
               <>
                 ...
