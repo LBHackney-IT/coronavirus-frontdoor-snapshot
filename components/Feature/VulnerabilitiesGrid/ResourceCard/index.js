@@ -41,15 +41,35 @@ const ResourceCard = ({
   const [noteOpen, setNoteOpen] = useState(false);
 
   const trimLength = (s, length) => (s.length > length ? s.substring(0, length) + '...' : s);
+  const getHighlighted = text => {
+    const words = text.split(' ');
 
+    if (wordsToHighlight) {
+      return (
+        <>
+          {words.map(x => (
+            <>
+              {wordsToHighlight.some(term => x.toUpperCase().includes(term.toUpperCase())) ? (
+                <mark>{x}</mark>
+              ) : (
+                x
+              )}{' '}
+            </>
+          ))}
+        </>
+      );
+    } else {
+      return text;
+    }
+  };
   const tagsElement = resource.tags.map(item => (
     <span key={'tags-' + item} className={`${css.tags} tag-element`}>
-      {trimLength(item, 20)}
+      {getHighlighted(trimLength(item, 20))}
     </span>
   ));
   const councilTagsElement = resource.councilTags.map(item => (
     <span key={'tags-' + item} className={`${css.tags} tag-element ${css[`Council-tag`]}`}>
-      {trimLength(item, 20)}
+      {getHighlighted(trimLength(item, 20))}
     </span>
   ));
   const updateResource = () => {
@@ -68,22 +88,6 @@ const ResourceCard = ({
   const fullDescription = [resource.serviceDescription, resource.description].join(' ');
   const first = fullDescription?.substring(0, 250);
   const second = fullDescription?.substring(250);
-
-  const getHighlighted = text => {
-    const words = text.split(' ');
-
-    if (wordsToHighlight) {
-      return (
-        <>
-          {words.map(x => (
-            <> {wordsToHighlight.some(term => x.includes(term)) ? <mark>{x}</mark> : x} </>
-          ))}
-        </>
-      );
-    } else {
-      return text;
-    }
-  };
 
   return (
     <div
@@ -113,16 +117,16 @@ const ResourceCard = ({
                       });
                     }}
                     rel="noopener noreferrer">
-                    {resource.name}
+                    {getHighlighted(resource.name)}
                   </a>{' '}
                   <FontAwesomeIcon icon={faExternalLinkAlt} transform="shrink-6" />
                 </>
               ) : (
-                resource.name
+                getHighlighted(resource.name)
               )}
             </h3>
             {resource.demographic?.trim().length > 0 && (
-              <span>This is for {resource.demographic}</span>
+              <span>This is for {getHighlighted(resource.demographic)}</span>
             )}
           </div>
 
@@ -151,7 +155,7 @@ const ResourceCard = ({
             ) : (
               ''
             )}
-            {noteOpen && second}
+            {noteOpen && getHighlighted(second)}
             {noteOpen && (
               <button onClick={() => setNoteOpen(false)} className={css['toggle-button']}>
                 Show less
