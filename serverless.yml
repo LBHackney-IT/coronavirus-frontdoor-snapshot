@@ -75,6 +75,7 @@ functions:
       REFERRAL_ACCEPTED_EMAIL_TEMPLATE_ID: ${ssm:/frontdoor-snapshot/referral-accepted-email-template-id}
       REFERRAL_REJECTED_EMAIL_TEMPLATE_ID: ${ssm:/frontdoor-snapshot/referral-rejected-email-template-id}
       REFERRAL_REJECTED_WITH_COMMENTS_EMAIL_TEMPLATE_ID: ${ssm:/frontdoor-snapshot/referral-rejected-with-comments-email-template-id}
+      SYNONYMS: ${ssm:/frontdoor-snapshot/synonyms}
 
   cf-snapshot-authorizer:
     name: ${self:service}-authorizer-${self:provider.stage}
