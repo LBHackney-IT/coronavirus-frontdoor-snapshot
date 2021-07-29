@@ -72,13 +72,17 @@ const ResourceCard = ({
   const getHighlighted = text => {
     const words = text.split(' ');
 
-    return (
-      <>
-        {words.map(x => (
-          <> {wordsToHighlight.some(term => x.includes(term)) ? <mark>{x}</mark> : x} </>
-        ))}
-      </>
-    );
+    if (wordsToHighlight) {
+      return (
+        <>
+          {words.map(x => (
+            <> {wordsToHighlight.some(term => x.includes(term)) ? <mark>{x}</mark> : x} </>
+          ))}
+        </>
+      );
+    } else {
+      return text;
+    }
   };
 
   return (
