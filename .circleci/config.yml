@@ -141,6 +141,8 @@ jobs:
         type: string
       URL:
         type: string
+      SYNONYMS:
+        type: string
     steps:
       - *attach_workspace
       - checkout
@@ -156,6 +158,7 @@ jobs:
             export NEXT_PUBLIC_URL=<< parameters.URL >>
             export OPTIMIZE_ID=${OPTIMIZE_ID}
             export NEXT_PUBLIC_ENV=<< parameters.stage_name >>
+            export SYNONYMS=<< parameters.SYNONYMS >>
             yarn
             yarn build
             yarn --production=true
@@ -184,6 +187,7 @@ workflows:
           SINGLEVIEW_URL: ${NEXT_PUBLIC_SINGLEVIEW_URL_STAGING}
           INH_URL: ${INH_URL_STAGING}
           URL: ${NEXT_PUBLIC_URL_STAGING}
+          SYNONYMS: ${SYNONYMS_STAGING}
           filters:
             branches:
               only: master
@@ -211,5 +215,6 @@ workflows:
           SINGLEVIEW_URL: ${NEXT_PUBLIC_SINGLEVIEW_URL_PRODUCTION}
           INH_URL: ${INH_URL_PRODUCTION}
           URL: ${NEXT_PUBLIC_URL_PRODUCTION}
+          SYNONYMS: ${SYNONYMS_PRODUCTION}
           requires:
             - assume-role-production
