@@ -50,7 +50,11 @@ const ResourceCard = ({
     if (wordsToHighlight && wordsToHighlight.some(x => text.includes(x))) {
       let newString = text;
       wordsToHighlight.forEach(
-        term => (newString = newString.replace(new RegExp(term, 'g'), wrapKeywordWithHTML(term)))
+        term =>
+          (newString = newString.replace(
+            new RegExp('\\b' + term + '\\b', 'g'),
+            wrapKeywordWithHTML(term)
+          ))
       );
       return (
         <div
@@ -61,6 +65,7 @@ const ResourceCard = ({
     }
     return text;
   };
+
   const tagsElement = resource.tags.map(item => (
     <span key={'tags-' + item} className={`${css.tags} tag-element`}>
       {getHighlighted(trimLength(item, 20))}
