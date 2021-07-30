@@ -96,7 +96,7 @@ const Services = ({
       label: searchTerm,
       value: newFilteredResources.resources.length
     });
-    setWordsToHighlight(getWordsToHighlight(resultsTitle));
+    setWordsToHighlight(getWordsToHighlight(searchTerm));
     window.location.href = '#search-results-divider';
   };
   const clickCategory = e => {
