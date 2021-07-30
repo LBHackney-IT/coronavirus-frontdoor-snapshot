@@ -41,26 +41,25 @@ const ResourceCard = ({
   const [noteOpen, setNoteOpen] = useState(false);
 
   const trimLength = (s, length) => (s.length > length ? s.substring(0, length) + '...' : s);
-  const getHighlighted = text => {
-    const words = text.split(' ');
 
-    if (wordsToHighlight) {
-      return (
-        <>
-          {words.map(x => (
-            <>
-              {wordsToHighlight.some(term => x.toUpperCase().includes(term.toUpperCase())) ? (
-                <mark>{x}</mark>
-              ) : (
-                x
-              )}{' '}
-            </>
-          ))}
-        </>
+  const wrapKeywordWithHTML = keyword => {
+    return `<mark> ${keyword} </mark>`;
+  };
+
+  const getHighlighted = text => {
+    if (wordsToHighlight && wordsToHighlight.some(x => text.includes(x))) {
+      let newString = text;
+      wordsToHighlight.forEach(
+        term => (newString = newString.replace(new RegExp(term, 'g'), wrapKeywordWithHTML(term)))
       );
-    } else {
-      return text;
+      return (
+        <div
+          dangerouslySetInnerHTML={{
+            __html: newString
+          }}></div>
+      );
     }
+    return text;
   };
   const tagsElement = resource.tags.map(item => (
     <span key={'tags-' + item} className={`${css.tags} tag-element`}>
