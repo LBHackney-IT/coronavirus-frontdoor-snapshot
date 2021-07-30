@@ -57,10 +57,11 @@ const ResourceCard = ({
           ))
       );
       return (
-        <div
+        <span
+          style={{ fontSize: 'inherit', color: 'inherit' }}
           dangerouslySetInnerHTML={{
             __html: newString
-          }}></div>
+          }}></span>
       );
     }
     return text;
