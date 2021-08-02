@@ -42,10 +42,6 @@ const ResourceCard = ({
 
   const trimLength = (s, length) => (s.length > length ? s.substring(0, length) + '...' : s);
 
-  const wrapKeywordWithHTML = keyword => {
-    return `<mark> ${keyword} </mark>`;
-  };
-
   const getHighlighted = text => {
     if (wordsToHighlight && wordsToHighlight.some(x => text.includes(x))) {
       let newString = text;
@@ -53,7 +49,7 @@ const ResourceCard = ({
         term =>
           (newString = newString.replace(
             new RegExp('\\b' + term + '\\b', 'g'),
-            wrapKeywordWithHTML(term)
+            `<mark> ${term} </mark>`
           ))
       );
       return (
