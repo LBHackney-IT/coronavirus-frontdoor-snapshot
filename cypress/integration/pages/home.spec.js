@@ -265,7 +265,8 @@ context('Index page', () => {
       cy.get('[data-testid="search-results-container"]')
         .find('[data-testid="resource-card-header"]')
         .first()
-        .should('contain', searchTerm);
+        .should('contain', 'Second')
+        .and('contain', 'service');
     });
 
     it('returns services matched on a synonym', () => {

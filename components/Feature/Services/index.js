@@ -4,7 +4,7 @@ import Categories from './Categories';
 import Details from 'components/Form/Details';
 import styles from './index.module.scss';
 import { sendDataToAnalytics, getUserGroup } from 'lib/utils/analytics';
-import { getSearchResults } from 'lib/utils/search';
+import { getSearchResults, getWordsToHighlight } from 'lib/utils/search';
 import { CATEGORY_CATEGORIES, CATEGORY_SEARCH, FEEDBACK_SEARCH } from 'lib/utils/constants';
 
 const Services = ({
@@ -30,6 +30,7 @@ const Services = ({
   const [filteredResources, setFilteredResources] = useState(null);
   const [feedbackSubmitted, setFeedbackSubmitted] = useState(false);
   const [resultsTitle, setResultsTitle] = useState(null);
+  const [wordsToHighlight, setWordsToHighlight] = useState([]);
 
   const detailsClicked = (e, id, serviceId, categoryName) => {
     e.preventDefault();
@@ -95,6 +96,7 @@ const Services = ({
       label: searchTerm,
       value: newFilteredResources.resources.length
     });
+    setWordsToHighlight(getWordsToHighlight(searchTerm));
     window.location.href = '#search-results-divider';
   };
   const clickCategory = e => {
@@ -112,6 +114,7 @@ const Services = ({
       label: e
     });
     setFilteredResources(categorisedResources[categorisedResources.findIndex(x => x.name === e)]);
+    setWordsToHighlight([]);
   };
 
   return (
@@ -221,6 +224,7 @@ const Services = ({
                 residentInfo={residentInfo}
                 setPreserveFormData={setPreserveFormData}
                 preserveFormData={preserveFormData}
+                wordsToHighlight={wordsToHighlight}
               />
             ))}
           </div>
