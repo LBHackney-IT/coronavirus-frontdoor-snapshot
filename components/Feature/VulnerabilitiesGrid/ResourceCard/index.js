@@ -45,13 +45,9 @@ const ResourceCard = ({
   const getHighlighted = text => {
     if (wordsToHighlight && wordsToHighlight.some(x => text.includes(x))) {
       let newString = text;
-      wordsToHighlight.forEach(
-        term =>
-          (newString = newString.replace(
-            new RegExp('\\b' + term + '\\b', 'g'),
-            `<mark> ${term} </mark>`
-          ))
-      );
+      wordsToHighlight.forEach(term => {
+        newString = newString.replace(new RegExp(term, 'g'), `<mark>${term}</mark>`);
+      });
       return (
         <span
           style={{ fontSize: 'inherit', color: 'inherit' }}
