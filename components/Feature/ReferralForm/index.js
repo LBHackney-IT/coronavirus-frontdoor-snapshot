@@ -82,7 +82,8 @@ const ReferralForm = ({
       serviceWebsite: e.target['service-websites'].value,
       serviceDescription: e.target['service-description'].value,
       sendResidentSms: e.target['resident-referral-sms'].checked,
-      sendResidentEmail: e.target['resident-referral-email'].checked
+      sendResidentEmail: e.target['resident-referral-email'].checked,
+      emailFromToken: referrerData['user-email-from-token']
     };
     const result = await createReferral(referral);
 
