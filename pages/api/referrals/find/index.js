@@ -5,25 +5,14 @@ import { findReferrals } from 'lib/dependencies';
 export const endpoint = ({ findReferrals }) =>
   createEndpoint(
     {
-      allowedMethods: ['POST'],
-      validators: [
-        {
-          name: 'firstName',
-          failureMessage: 'first name is required',
-          validate: ({ body }) => body.firstName?.length > 0
-        },
-        {
-          name: 'lastName',
-          failureMessage: 'last name is required',
-          validate: ({ body }) => body.lastName?.length > 0
-        }
-      ]
+      allowedMethods: ['POST']
     },
-    async ({ body: { firstName, lastName, systemIds } }) => {
+    async ({ body: { firstName, lastName, systemIds, referrerEmail } }) => {
       const result = await findReferrals.execute({
         firstName,
         lastName,
-        systemIds
+        systemIds,
+        referrerEmail
       });
       return Response.ok(result);
     }
