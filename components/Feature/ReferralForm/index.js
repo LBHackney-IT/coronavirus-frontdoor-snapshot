@@ -259,7 +259,7 @@ const ReferralForm = ({
                   className="govuk-label inline"
                   htmlFor={`conversation-notes-${resource.id}`}>
                   <legend className="govuk-fieldset__legend govuk-fieldset__legend--s">
-                    Notes on wider conversation(other needs, living situation, key information
+                    Notes on wider conversation(other needs, living situation, key information)
                   </legend>
                 </label>
                 {validationError[`conversation-notes-${resource.id}`] && (
