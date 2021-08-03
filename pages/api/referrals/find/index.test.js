@@ -16,14 +16,9 @@ describe('Find Referrals Api', () => {
   };
 
   it('can find referrals', async () => {
-    const firstName = 'sue';
-    const lastName = 'taylor';
-    const systemIds = ['xyz'];
-    const response = await call({ body: { firstName, lastName, systemIds } });
+    const response = await call({ body: { referrerEmail: 'email' } });
     expect(findReferrals.execute).toHaveBeenCalledWith({
-      firstName,
-      lastName,
-      systemIds
+      referrerEmail: 'email'
     });
     expect(response.statusCode).toBe(200);
     expect(response.body).toEqual(JSON.stringify({ referralIds: [1, 2] }));
@@ -35,23 +30,9 @@ describe('Find Referrals Api', () => {
   });
 
   describe('validation', () => {
-    it('returns 400 when no firstName', async () => {
+    it('returns 400 when no referrerEmail', async () => {
       const response = await call({
-        body: {
-          lastName: 'taylor',
-          systemIds: ['xyz']
-        }
-      });
-      expect(response.statusCode).toBe(400);
-      expect(JSON.parse(response.body).errors.length).toBe(1);
-    });
-
-    it('returns 400 when no lastName', async () => {
-      const response = await call({
-        body: {
-          firstName: 'sue',
-          systemIds: ['xyz']
-        }
+        body: {}
       });
       expect(response.statusCode).toBe(400);
       expect(JSON.parse(response.body).errors.length).toBe(1);
@@ -64,9 +45,7 @@ describe('Find Referrals Api', () => {
     });
     const response = await call({
       body: {
-        firstName: 'sue',
-        lastName: 'taylor',
-        systemIds: ['xyz']
+        referrerEmail: 'sue'
       }
     });
     expect(response.statusCode).toBe(500);

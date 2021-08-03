@@ -31,7 +31,7 @@ const Index = ({ errors, referrerInfo, myReferrals }) => {
       <Head>
         <title>Better Conversations: My view</title>
       </Head>
-      <h1 className="govuk-heading-l">{referrerInfo?.name} view</h1>
+      <h1 className="govuk-heading-l">My referrals</h1>
 
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-one-quarter">
@@ -111,7 +111,7 @@ Index.getInitialProps = async ({ req: { headers }, res }) => {
 
     let myReferrals = [];
     if (referrerInfo.email) {
-      myReferrals = await findReferrals({ referrerEmail: referrerInfo.email, token });
+      myReferrals = await findReferrals({ referrerEmail: referrerInfo.email, token }).referrals;
     }
     const errors = myReferrals.error;
     return {
