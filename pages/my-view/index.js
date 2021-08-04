@@ -15,17 +15,21 @@ const Index = ({ errors, referrerInfo, myReferrals }) => {
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-one-quarter">
           <ul class="govuk-list">
-            <li>
-              <a href="#">Team view</a>
-            </li>
+            {false && (
+              <li>
+                <a href="#">Team view</a>
+              </li>
+            )}
             <li>
               <a href={`${process.env.NEXT_PUBLIC_URL}/my-view`} style={{ fontWeight: 800 }}>
                 My view
               </a>
             </li>
-            <li>
-              <a href="#">Incoming referrals</a>
-            </li>
+            {false && (
+              <li>
+                <a href="#">Incoming referrals</a>
+              </li>
+            )}
             <li>
               <a href={process.env.NEXT_PUBLIC_URL}>Better conversations</a>
             </li>
