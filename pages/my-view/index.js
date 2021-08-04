@@ -19,13 +19,15 @@ const Index = ({ errors, referrerInfo, myReferrals }) => {
               <a href="#">Team view</a>
             </li>
             <li>
-              <a href="#">My view</a>
+              <a href={`${process.env.NEXT_PUBLIC_URL}/my-view`} style={{ fontWeight: 800 }}>
+                My view
+              </a>
             </li>
             <li>
               <a href="#">Incoming referrals</a>
             </li>
             <li>
-              <a href="#">Better conversations</a>
+              <a href={process.env.NEXT_PUBLIC_URL}>Better conversations</a>
             </li>
           </ul>
         </div>
@@ -45,8 +47,8 @@ Index.getInitialProps = async ({ req: { headers }, res }) => {
 
     const referrerInfo = jsonwebtoken.decode(token);
 
-    let myReferrals = [];
-    if (referrerInfo.email) {
+    let myReferrals = { referrals: [] };
+    if (referrerInfo?.email) {
       myReferrals = await findReferrals('referrerEmail', { token });
     }
     const errors = myReferrals?.error;

@@ -28,7 +28,7 @@ const ReferralsTable = ({ referrals }) => {
       <thead className="govuk-table__head">
         <tr className="govuk-table__row">
           <th scope="col" className="govuk-table__header">
-            Reference number
+            Ref number
           </th>
           <th scope="col" className="govuk-table__header">
             Person referred
@@ -60,9 +60,9 @@ const ReferralsTable = ({ referrals }) => {
                 {convertIsoDateToString(new Date(referral.created))}
               </td>
               <td className={`govuk-table__cell`} data-testid="referrals-table-status">
-                <span className={`${css[statuses[getStatus(referral.statusHistory)]?.class]}`}>
+                <div className={`${css[statuses[getStatus(referral.statusHistory)]?.class]}`}>
                   {statuses[getStatus(referral.statusHistory)]?.label || "no status"}
-                </span>
+                </div>
               </td>
             </tr>
           );

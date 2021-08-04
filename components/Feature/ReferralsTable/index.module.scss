@@ -2,7 +2,14 @@
   background-color: #d4351c;
   color: white;
 }
-.accepted {
+.sent {
   background-color: #1d70b8;
   color: white;
+}
+
+.sent,
+.rejected,
+.accepted {
+  padding: 4px 4px 4px 4px;
+  border: solid 1px black;
 }
