@@ -47,11 +47,11 @@ Index.getInitialProps = async ({ req: { headers }, res }) => {
 
     let myReferrals = [];
     if (referrerInfo.email) {
-      myReferrals = await findReferrals({ referrerEmail: referrerInfo.email, token }).referrals;
+      myReferrals = await findReferrals('referrerEmail', { token });
     }
-    const errors = myReferrals.error;
+    const errors = myReferrals?.error;
     return {
-      myReferrals,
+      myReferrals: myReferrals.referrals,
       errors,
       referrerInfo
     };
