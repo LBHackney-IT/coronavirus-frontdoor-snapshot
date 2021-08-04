@@ -23,12 +23,12 @@ const ReferralsTable = ({ referrals }) => {
     })[0].status;
   };
 
-  return (
+return (<><p>Displaying {referrals.length} record(s)</p>
     <table className="govuk-table">
       <thead className="govuk-table__head">
         <tr className="govuk-table__row">
           <th scope="col" className="govuk-table__header">
-            Ref number
+            Ref ID
           </th>
           <th scope="col" className="govuk-table__header">
             Person referred
@@ -69,6 +69,7 @@ const ReferralsTable = ({ referrals }) => {
         })}
       </tbody>
     </table>
+    </>
   );
 };
 
