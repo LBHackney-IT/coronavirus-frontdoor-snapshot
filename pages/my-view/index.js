@@ -54,9 +54,13 @@ const Index = ({ errors, referrerInfo, myReferrals }) => {
           <h2 className="govuk-heading-m">At a glance</h2>
           <div className="govuk-grid-row">
             <OverviewBox number={myReferrals.length} label="Referrals made" id="referralsMade" />
-            <OverviewBox number={counts['SENT']} label="Referrals pending" id="referralsPending" />
             <OverviewBox
-              number={counts['REJECTED']}
+              number={counts['SENT'] || `0`}
+              label="Referrals pending"
+              id="referralsPending"
+            />
+            <OverviewBox
+              number={counts['REJECTED'] || `0`}
               label="Referrals rejected"
               id="referralsRejected"
             />
