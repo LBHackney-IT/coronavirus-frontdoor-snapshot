@@ -8,7 +8,7 @@ const ReferralsTable = ({ referrals }) => {
       class: 'rejected'
     },
     SENT: {
-      label: 'In Progress',
+      label: 'Pending',
       class: 'sent'
     },
     ACCEPTED: {

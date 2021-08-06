@@ -70,6 +70,6 @@ context('my view page', () => {
 
     cy.get('[data-testid=referrals-table-status]')
       .eq(2)
-      .should('contain', 'In Progress');
+      .should('contain', 'Pending');
   });
 });
