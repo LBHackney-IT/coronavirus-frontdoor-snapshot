@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 context('Index page', () => {
-  beforeEach(() => {
+  before(() => {
     cy.visit('/');
     cy.injectAxe();
   });
@@ -234,6 +234,8 @@ context('Index page', () => {
     });
 
     it('shows plural text if no results', () => {
+      cy.get('[data-testid="keyword-search"]').clear();
+
       cy.get('[data-testid="keyword-search"]').type('sdjkfhdjksfhdjsfhjdksf');
       cy.get('[data-testid="keyword-search-button"]').click();
 
@@ -241,11 +243,15 @@ context('Index page', () => {
     });
 
     it('press enter when focus is in input will also search', () => {
+      cy.get('[data-testid="keyword-search"]').clear();
+
       cy.get('[data-testid="keyword-search"]').type('kingsman {enter}');
       cy.get('[data-testid="search-results-header"]').should('contain', '1 result');
     });
 
     it('returns only services containing search term', () => {
+      cy.get('[data-testid="keyword-search"]').clear();
+
       cy.get('[data-testid="keyword-search"]').type('abc');
       cy.get('[data-testid="keyword-search-button"]').click();
 
@@ -258,6 +264,8 @@ context('Index page', () => {
     });
 
     it('returns services ordered by full match then individual word match', () => {
+      cy.get('[data-testid="keyword-search"]').clear();
+
       const searchTerm = 'Second service';
       cy.get('[data-testid="keyword-search"]').type(searchTerm);
       cy.get('[data-testid="keyword-search-button"]').click();
@@ -270,6 +278,8 @@ context('Index page', () => {
     });
 
     it('returns services matched on a synonym', () => {
+      cy.get('[data-testid="keyword-search"]').clear();
+
       const searchTerm = 'testsynonym';
       cy.get('[data-testid="keyword-search"]').type(searchTerm);
       cy.get('[data-testid="keyword-search-button"]').click();
