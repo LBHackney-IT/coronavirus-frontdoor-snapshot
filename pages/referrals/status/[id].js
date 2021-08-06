@@ -1,6 +1,6 @@
 import { requestByLinkId } from 'lib/api';
 import HttpStatusError from 'lib/api/domain/HttpStatusError';
-import { REFERRAL_STATUSES, STATUS_UPDATE } from 'lib/utils/constants';
+import { REFERRAL_STATUSES, STATUS_UPDATE, EMPTY_STATUS_ERROR } from 'lib/utils/constants';
 import useReferral from 'lib/api/utils/useReferral';
 import { IsoDateTime } from 'lib/domain/isodate';
 import { useState } from 'react';
@@ -25,6 +25,11 @@ const StatusHistory = ({ referral }) => {
   const onSubmitForm = async (status, comment) => {
     if (!status || status == null || status == '') {
       setErrors(true);
+      sendDataToAnalytics({
+        action: EMPTY_STATUS_ERROR,
+        category: STATUS_UPDATE,
+        label: initialReferral.service.name
+      });
       return;
     }
     setErrors(false);
