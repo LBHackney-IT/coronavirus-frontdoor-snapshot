@@ -29,8 +29,7 @@ const Index = ({ categorisedResources, initialReferral, token, errors, refererIn
     'referer-organisation': refererInfo?.groups.includes(process.env.EXTERNAL_USER_GROUP)
       ? ''
       : 'Hackney Council',
-    'user-groups': refererInfo?.groups,
-    'user-email-from-token': refererInfo?.email
+    'user-groups': refererInfo?.groups
   });
   const [preserveFormData, setPreserveFormData] = useState(true);
 

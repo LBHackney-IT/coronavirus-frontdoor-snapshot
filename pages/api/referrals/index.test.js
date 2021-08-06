@@ -97,7 +97,8 @@ describe('Create Referral Api', () => {
         },
         id: undefined,
         systemIds: undefined,
-        created: expect.any(String)
+        created: expect.any(String),
+        referredBy: expect.any(String)
       },
       sendResidentSms,
       sendResidentEmail

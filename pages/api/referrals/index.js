@@ -2,6 +2,8 @@ import createEndpoint from 'lib/api/utils/createEndpoint';
 import Response from 'lib/api/domain/Response';
 import { createReferral } from 'lib/dependencies';
 import { Referral } from '../../../lib/domain';
+import CheckAuth from 'router/use-cases/check-auth';
+import { getTokenFromCookieHeader } from 'lib/utils/token';
 
 export const endpoint = ({ createReferral }) =>
   createEndpoint(
@@ -63,11 +65,15 @@ export const endpoint = ({ createReferral }) =>
         serviceWebsite,
         sendResidentSms,
         sendResidentEmail,
-        serviceDescription,
-        emailFromToken
+        serviceDescription
       },
       headers
     }) => {
+      const token = getTokenFromCookieHeader({ cookie: headers.cookie });
+
+      const checkAuth = new CheckAuth({});
+      const emailFromToken = checkAuth.getEmail(token);
+
       const referral = await createReferral.execute(
         new Referral({
           firstName,
