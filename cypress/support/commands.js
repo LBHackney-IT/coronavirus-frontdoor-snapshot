@@ -46,7 +46,10 @@ import jwt from 'jsonwebtoken';
 
 const setHackneyCookie = isValidGroup => {
   const group = isValidGroup ? 'housingneeds-singleview-beta' : 'some-other-group';
-  const token = jwt.sign({ name: 'My name', groups: [group] }, 'a-secure-signature');
+  const token = jwt.sign(
+    { name: 'My name', groups: [group], email: 'test@email.com' },
+    'a-secure-signature'
+  );
   cy.setCookie('hackneyToken', token, {
     url: 'http://localhost:3000',
     domain: 'localhost'

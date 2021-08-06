@@ -8,23 +8,14 @@ export const endpoint = ({ findReferrals }) =>
       allowedMethods: ['POST'],
       validators: [
         {
-          name: 'firstName',
-          failureMessage: 'first name is required',
-          validate: ({ body }) => body.firstName?.length > 0
-        },
-        {
-          name: 'lastName',
-          failureMessage: 'last name is required',
-          validate: ({ body }) => body.lastName?.length > 0
+          name: 'findBy',
+          failureMessage: 'findBy is required',
+          validate: ({ body }) => body.findBy && ['referrerEmail'].includes(body.findBy)
         }
       ]
     },
-    async ({ body: { firstName, lastName, systemIds } }) => {
-      const result = await findReferrals.execute({
-        firstName,
-        lastName,
-        systemIds
-      });
+    async ({ body: { findBy }, headers }) => {
+      const result = await findReferrals.execute({ findBy }, headers.cookie);
       return Response.ok(result);
     }
   );

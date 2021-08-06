@@ -1,7 +1,10 @@
 {
   "id": { "S": "123" },
   "linkId": { "S": "4" },
-  "created": { "S": "2021-07-21T12:29:17.120Z" },
+  "created": { "S": "2021-07-24T12:29:17.120Z" },
+  "referredBy": { "S": "test@email.com" },
+  "resident": { "M": { "firstName": { "S": "other" }, "lastName": { "S": "name" } } },
+  "service": { "M": { "name": { "S": "service name 3" } } },
   "statusHistory": {
     "L": [
       {

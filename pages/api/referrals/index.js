@@ -63,7 +63,8 @@ export const endpoint = ({ createReferral }) =>
         serviceWebsite,
         sendResidentSms,
         sendResidentEmail,
-        serviceDescription
+        serviceDescription,
+        emailFromToken
       },
       headers
     }) => {
@@ -88,7 +89,8 @@ export const endpoint = ({ createReferral }) =>
           serviceReferralEmail,
           serviceAddress,
           serviceWebsite,
-          serviceDescription
+          serviceDescription,
+          emailFromToken
         }),
         sendResidentSms,
         sendResidentEmail

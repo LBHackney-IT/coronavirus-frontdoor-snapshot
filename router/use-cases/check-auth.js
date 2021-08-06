@@ -17,5 +17,11 @@ class CheckAuth {
       return false;
     }
   }
+
+  getEmail = token => {
+    if (!token) return '';
+    const payload = jwt.verify(token, process.env.JWT_SECRET);
+    return payload ? payload.email : '';
+  };
 }
 module.exports = CheckAuth;
