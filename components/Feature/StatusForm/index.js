@@ -6,7 +6,14 @@ const StatusForm = ({ onSubmitForm, name }) => {
   return (
     <>
       <h1 className="govuk-heading-m">Referral for {name}</h1>
-      <form onSubmit={onSubmitForm}>
+      <form
+        onSubmit={e => {
+          e.preventDefault();
+          onSubmitForm(
+            e.target['referral-status'].value,
+            e.target['referral-rejection-reason'].value
+          );
+        }}>
         <div className="govuk-form-group">
           <fieldset className="govuk-fieldset">
             <div className="govuk-!-padding-top-4">
