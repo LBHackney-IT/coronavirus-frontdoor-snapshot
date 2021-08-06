@@ -8,6 +8,7 @@ import OverviewBox from 'components/Feature/OverviewBox';
 
 const Index = ({ errors, referrerInfo, myReferrals }) => {
   const getStatus = history => {
+    if (!history) return 'NOT_SET';
     return history.sort((a, b) => {
       return new Date(b.date) - new Date(a.date);
     })[0].status;

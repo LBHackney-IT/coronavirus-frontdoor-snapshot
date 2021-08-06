@@ -15,9 +15,14 @@ const ReferralsTable = ({ referrals }) => {
       label: 'Accepted',
       class: 'accepted'
     },
+    NO_STATUS: {
+      label: "No status",
+      class: "empty"
+    }
   };
 
   const getStatus = history => {
+    if (!history) return "NOT_SET";
     return history.sort((a, b) => {
       return new Date(b.date) - new Date(a.date);
     })[0].status;
