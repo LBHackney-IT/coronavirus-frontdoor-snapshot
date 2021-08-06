@@ -9,26 +9,31 @@ import Head from 'next/head';
 import { convertIsoDateToDateTimeString } from 'lib/utils/date';
 import { sendDataToAnalytics } from 'lib/utils/analytics';
 import { encode } from 'html-entities';
+import css from './index.module.scss';
 
 const StatusHistory = ({ referral }) => {
   const { updateReferralStatus } = useReferral(null, {});
   const [initialReferral, setInitialReferral] = useState(referral);
   const [submitted, setSubmitted] = useState(false);
+  const [errors, setErrors] = useState(false);
 
   const maxDate = new Date(Math.max(...referral.statusHistory.map(e => new Date(e.date))));
   const recentStatus = referral.statusHistory.filter(
     status => new Date(status.date).getTime() === maxDate.getTime()
   )[0];
 
-  const onSubmitForm = async e => {
-    e.preventDefault();
+  const onSubmitForm = async (status, comment) => {
+    if (!status || status == null || status == '') {
+      setErrors(true);
+      return;
+    }
+    setErrors(false);
 
-    const newStatus = e.target['referral-status'].value;
     const newStatusHistory = initialReferral.statusHistory.concat([
       {
-        status: newStatus,
+        status,
         date: IsoDateTime.now(),
-        comment: e.target['referral-rejection-reason'].value
+        comment
       }
     ]);
     const newReferral = {
@@ -40,7 +45,7 @@ const StatusHistory = ({ referral }) => {
     setSubmitted(true);
 
     sendDataToAnalytics({
-      action: newStatus,
+      action: status,
       category: STATUS_UPDATE,
       label: initialReferral.service.name
     });
@@ -51,6 +56,11 @@ const StatusHistory = ({ referral }) => {
       <Head>
         <title>Status page</title>
       </Head>
+      {errors && (
+        <div className={css['error-message']}>
+          There was an issue logging your response, please try again.
+        </div>
+      )}
       {submitted ? (
         <div className="govuk-grid-row">
           <div className="govuk-grid-column-two-thirds">
