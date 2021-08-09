@@ -5,6 +5,15 @@ import Head from 'next/head';
 import { SummaryList } from 'components/Form';
 
 const ReferralSummary = ({ referral }) => {
+  const getRecentStatus = history => {
+    if (!history) return { status: 'NOT_SET' };
+    return history.sort((a, b) => {
+      return new Date(b.date) - new Date(a.date);
+    })[0];
+  };
+
+  const recentStatus = getRecentStatus(referral.statusHistory);
+
   const residentDetails = {
     'Ref ID': referral.referenceNumber,
     'First name': referral.resident.firstName,
@@ -22,6 +31,28 @@ const ReferralSummary = ({ referral }) => {
       </span>
     )
   };
+
+  const referralDetails = {
+    'Reason for referral': referral.referralReason,
+    'Reason for rejection': recentStatus.comment || 'N/A',
+    'Notes on wider conversation': referral.conversationNotes
+  };
+
+  const organisationDetails = {
+    'Org referred to': referral.service.name,
+    'Telephone number': referral.service.contactPhone,
+    'Email address': referral.service.contactEmail,
+    Address: (
+      <span>
+        {referral.service.address.split(',').map(addressLine => (
+          <>
+            {addressLine} <br />
+          </>
+        ))}
+      </span>
+    )
+  };
+
   return (
     <>
       <Head>
@@ -47,7 +78,7 @@ const ReferralSummary = ({ referral }) => {
             Referral for {referral.resident.firstName} {referral.resident.lastName}
           </h2>
           <div className="govuk-hint">
-            To {referral.service.name} {referral.statusHistory[0].status}
+            To {referral.service.name} {recentStatus.status}
           </div>
           <h3 className="govuk-heading-m">Resident details</h3>
           <SummaryList
@@ -59,14 +90,14 @@ const ReferralSummary = ({ referral }) => {
           <h3 className="govuk-heading-m">Referral details</h3>
           <SummaryList
             name="referral-details"
-            entries={{}}
+            entries={referralDetails}
             customStyle="govuk-!-padding-bottom-8"
           />
 
           <h3 className="govuk-heading-m">Organisation details</h3>
           <SummaryList
             name="organisation-details"
-            entries={{}}
+            entries={organisationDetails}
             customStyle="govuk-!-padding-bottom-8"
           />
         </div>
