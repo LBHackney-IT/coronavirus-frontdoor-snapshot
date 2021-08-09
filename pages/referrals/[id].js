@@ -12,18 +12,18 @@ const ReferralSummary = ({ referral }) => {
 
   const residentDetails = {
     'Ref ID': referral.referenceNumber,
-    'First name': referral.resident.firstName,
-    'Last name': referral.resident.lastName,
-    'Telephone number': referral.resident.phone,
-    'Email address': referral.resident.email,
+    'First name': referral.resident?.firstName,
+    'Last name': referral.resident?.lastName,
+    'Telephone number': referral.resident?.phone,
+    'Email address': referral.resident?.email,
     Address: (
       <span>
-        {referral.resident.address.split(',').map(addressLine => (
+        {referral.resident?.address?.split(',').map(addressLine => (
           <>
-            {addressLine} <br />
+            {addressLine}<br />
           </>
-        ))}{' '}
-        {referral.resident.postcode}
+        ))}
+        {referral.resident?.postcode}
       </span>
     )
   };
@@ -35,12 +35,12 @@ const ReferralSummary = ({ referral }) => {
   };
 
   const organisationDetails = {
-    'Org referred to': referral.service.name,
-    'Telephone number': referral.service.contactPhone,
-    'Email address': referral.service.contactEmail,
+    'Org referred to': referral.service?.name,
+    'Telephone number': referral.service?.contactPhone,
+    'Email address': referral.service?.contactEmail,
     Address: (
       <span>
-        {referral.service.address.split(',').map(addressLine => (
+        {referral.service?.address?.split(',').map(addressLine => (
           <>
             {addressLine} <br />
           </>
@@ -71,10 +71,10 @@ const ReferralSummary = ({ referral }) => {
 
         <div className="govuk-grid-column-three-quarters">
           <h2 className="govuk-heading-l">
-            Referral for {referral.resident.firstName} {referral.resident.lastName}
+            Referral for {referral.resident?.firstName} {referral.resident?.lastName}
           </h2>
           <div className="govuk-hint">
-            To {referral.service.name} &nbsp;
+            To {referral.service?.name} &nbsp;
             <span className={`${scss[STATUS_MAPPINGS[recentStatus.status]?.class]}`}>
               {STATUS_MAPPINGS[recentStatus.status]?.label}
             </span>
