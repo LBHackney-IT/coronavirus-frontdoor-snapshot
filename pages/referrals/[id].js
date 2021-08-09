@@ -3,15 +3,9 @@ import HttpStatusError from 'lib/api/domain/HttpStatusError';
 import { getTokenFromCookieHeader } from 'lib/utils/token';
 import Head from 'next/head';
 import { SummaryList } from 'components/Form';
+import { getRecentStatus } from 'lib/utils/referralHelper';
 
 const ReferralSummary = ({ referral }) => {
-  const getRecentStatus = history => {
-    if (!history) return { status: 'NOT_SET' };
-    return history.sort((a, b) => {
-      return new Date(b.date) - new Date(a.date);
-    })[0];
-  };
-
   const recentStatus = getRecentStatus(referral.statusHistory);
 
   const residentDetails = {

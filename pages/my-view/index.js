@@ -5,18 +5,12 @@ import jsonwebtoken from 'jsonwebtoken';
 import Head from 'next/head';
 import ReferralsTable from 'components/Feature/ReferralsTable';
 import OverviewBox from 'components/Feature/OverviewBox';
+import { getRecentStatus } from 'lib/utils/referralHelper';
 
 const Index = ({ errors, referrerInfo, myReferrals }) => {
-  const getStatus = history => {
-    if (!history) return 'NOT_SET';
-    return history.sort((a, b) => {
-      return new Date(b.date) - new Date(a.date);
-    })[0].status;
-  };
-
   const counts = {};
 
-  for (const status of myReferrals.map(x => getStatus(x.statusHistory))) {
+  for (const status of myReferrals.map(x => getRecentStatus(x.statusHistory).status)) {
     counts[status] = counts[status] ? counts[status] + 1 : 1;
   }
   return (
