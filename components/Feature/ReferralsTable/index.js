@@ -1,5 +1,5 @@
 import { convertIsoDateToString } from 'lib/utils/date';
-import css from './index.module.scss';
+import css from 'styles/referralStatus.module.scss';
 import { getRecentStatus } from 'lib/utils/referralHelper';
 import { STATUS_MAPPINGS } from 'lib/utils/constants'
 

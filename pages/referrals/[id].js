@@ -4,6 +4,8 @@ import { getTokenFromCookieHeader } from 'lib/utils/token';
 import Head from 'next/head';
 import { SummaryList } from 'components/Form';
 import { getRecentStatus } from 'lib/utils/referralHelper';
+import scss from 'styles/referralStatus.module.scss';
+import { STATUS_MAPPINGS } from 'lib/utils/constants';
 
 const ReferralSummary = ({ referral }) => {
   const recentStatus = getRecentStatus(referral.statusHistory);
@@ -72,7 +74,10 @@ const ReferralSummary = ({ referral }) => {
             Referral for {referral.resident.firstName} {referral.resident.lastName}
           </h2>
           <div className="govuk-hint">
-            To {referral.service.name} {recentStatus.status}
+            To {referral.service.name} &nbsp;
+            <span className={`${scss[STATUS_MAPPINGS[recentStatus.status]?.class]}`}>
+              {STATUS_MAPPINGS[recentStatus.status]?.label}
+            </span>
           </div>
           <h3 className="govuk-heading-m">Resident details</h3>
           <SummaryList
