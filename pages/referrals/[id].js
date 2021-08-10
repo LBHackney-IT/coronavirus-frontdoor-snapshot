@@ -17,14 +17,10 @@ const ReferralSummary = ({ referral }) => {
     'Telephone number': referral.resident?.phone,
     'Email address': referral.resident?.email,
     Address: (
-      <span>
-        {referral.resident?.address?.split(',').map(addressLine => (
-          <>
-            {addressLine}<br />
-          </>
-        ))}
-        {referral.resident?.postcode}
-      </span>
+      <pre>
+        {referral.resident?.address.replace(/,\s*/g, '\n')}
+        {'\n'}{referral.resident?.postcode}
+      </pre>
     )
   };
 
