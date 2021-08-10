@@ -9,6 +9,7 @@ import { STATUS_MAPPINGS } from 'lib/utils/constants';
 
 const ReferralSummary = ({ referral }) => {
   const recentStatus = getRecentStatus(referral.statusHistory);
+  const recentStatusClass = STATUS_MAPPINGS[recentStatus.status]?.class;
 
   const residentDetails = {
     'Ref ID': referral.referenceNumber,
@@ -58,7 +59,7 @@ const ReferralSummary = ({ referral }) => {
           </h2>
           <div className="govuk-hint">
             To {referral.service?.name} &nbsp;
-            <span className={`${scss[STATUS_MAPPINGS[recentStatus.status].class]}`}>
+            <span className={`${scss[recentStatusClass]}`}>
               {STATUS_MAPPINGS[recentStatus.status]?.label}
             </span>
           </div>
