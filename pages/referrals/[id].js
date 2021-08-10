@@ -46,7 +46,8 @@ const ReferralSummary = ({ referral }) => {
 
       <a
         className="govuk-!-margin-bottom-0 govuk-!-margin-top-0 govuk-back-link"
-        href={`${process.env.NEXT_PUBLIC_URL}/my-view`}>
+        href={`${process.env.NEXT_PUBLIC_URL}/my-view`}
+        data-testid="back-button">
         Back
       </a>
       <hr className={`govuk-section-break govuk-section-break--m govuk-section-break--visible`} />
