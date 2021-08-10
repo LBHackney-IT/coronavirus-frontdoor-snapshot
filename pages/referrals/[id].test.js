@@ -30,6 +30,7 @@ describe('ReferralSummary', () => {
 
   describe('Referral page', () => {
     it('Shows ALL resident fields', () => {
+      // arrange
       const referral = {
         referenceNumber: '8CXU5-',
         resident: {
@@ -41,17 +42,72 @@ describe('ReferralSummary', () => {
           email: 'john.wick@mailinator.com'
         }
       };
+
+      // act
       const { getByText } = render(<ReferralSummary referral={referral} />);
-      // Name in the title
+
+      // assert
       expect(
         getByText(`Referral for ${referral.resident.firstName} ${referral.resident.lastName}`)
       ).toBeInTheDocument();
 
-      expect(getByText(`${referral.resident.phone}`)).toBeInTheDocument();
-      expect(getByText(`${referral.resident.email}`)).toBeInTheDocument();
+      expect(getByText(referral.resident.phone)).toBeInTheDocument();
+      expect(getByText(referral.resident.email)).toBeInTheDocument();
+
       expect(getByText('5B Amhurst Road', { exact: false })).toBeInTheDocument();
       expect(getByText('London', { exact: false })).toBeInTheDocument();
-      expect(getByText(`${referral.resident.postcode}`, { exact: false })).toBeInTheDocument();
+      expect(getByText(referral.resident.postcode, { exact: false })).toBeInTheDocument();
+    });
+
+    it('Shows ALL referral details fields', () => {
+      // arrange
+      const referral = {
+        referralReason: 'Desperately needs any vacuuming service for shedded cat fur.',
+        conversationNotes: "Resident says: 'fur in the air, fur in the lungs, fur in the pie...'.",
+        statusHistory: [
+          {
+            date: '2021-07-20T09:17:23.305Z',
+            status: 'SENT'
+          },
+          {
+            date: '2021-07-22T09:17:23.305Z',
+            comment: 'comment',
+            status: 'REJECTED'
+          }
+        ]
+      };
+
+      // act
+      const { getByText } = render(<ReferralSummary referral={referral} />);
+
+      // assert
+      expect(getByText(referral.referralReason)).toBeInTheDocument();
+      expect(getByText(referral.conversationNotes)).toBeInTheDocument();
+      expect(getByText('Rejected')).toBeInTheDocument();
+    });
+
+    it('Shows ALL service details fields', () => {
+      // arrange
+      const referral = {
+        service: {
+          name: 'San Techninis Vamzdis',
+          contactPhone: '02022159138',
+          contactEmail: 'santechninis.vamzdis@vamzsaulis.com',
+          address: '15 Markmanor Ave, OtherCouncil, E17 8HJ'
+        }
+      };
+
+      // act
+      const { getByText } = render(<ReferralSummary referral={referral} />);
+
+      // assert
+      expect(getByText(`To ${referral.service.name}`)).toBeInTheDocument();
+      expect(getByText(referral.service.contactPhone)).toBeInTheDocument();
+      expect(getByText(referral.service.contactEmail)).toBeInTheDocument();
+
+      expect(getByText('15 Markmanor Ave', { exact: false })).toBeInTheDocument();
+      expect(getByText('OtherCouncil', { exact: false })).toBeInTheDocument();
+      expect(getByText('E17 8HJ', { exact: false })).toBeInTheDocument();
     });
   });
 });
