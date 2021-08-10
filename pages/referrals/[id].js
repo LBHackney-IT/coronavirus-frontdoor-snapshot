@@ -5,6 +5,7 @@ import Head from 'next/head';
 import { SummaryList } from 'components/Form';
 import { getRecentStatus, parseAddress } from 'lib/utils/referralHelper';
 import scss from 'styles/referralStatus.module.scss';
+import styles from './index.module.scss';
 import { STATUS_MAPPINGS } from 'lib/utils/constants';
 
 const ReferralSummary = ({ referral }) => {
@@ -17,7 +18,11 @@ const ReferralSummary = ({ referral }) => {
     'Last name': referral.resident?.lastName,
     'Telephone number': referral.resident?.phone,
     'Email address': referral.resident?.email,
-    Address: <pre>{parseAddress(referral.resident?.address, referral.resident?.postcode)}</pre>
+    Address: (
+      <pre className="govuk-!-margin-top-0">
+        {parseAddress(referral.resident?.address, referral.resident?.postcode)}
+      </pre>
+    )
   };
 
   const referralDetails = {
@@ -30,7 +35,7 @@ const ReferralSummary = ({ referral }) => {
     'Org referred to': referral.service?.name,
     'Telephone number': referral.service?.contactPhone,
     'Email address': referral.service?.contactEmail,
-    Address: <pre>{parseAddress(referral.service?.address)}</pre>
+    Address: <pre className="govuk-!-margin-top-0">{parseAddress(referral.service?.address)}</pre>
   };
 
   return (
@@ -39,7 +44,11 @@ const ReferralSummary = ({ referral }) => {
         <title>Better Conversations: View referral</title>
       </Head>
 
-      <h1 className="govuk-heading-m">Support for Hackney resident</h1>
+      <a
+        className="govuk-!-margin-bottom-0 govuk-!-margin-top-0 govuk-back-link"
+        href={`${process.env.NEXT_PUBLIC_URL}/my-view`}>
+        Back
+      </a>
       <hr className={`govuk-section-break govuk-section-break--m govuk-section-break--visible`} />
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-one-quarter">
@@ -67,21 +76,21 @@ const ReferralSummary = ({ referral }) => {
           <SummaryList
             name="resident-details"
             entries={residentDetails}
-            customStyle="govuk-!-padding-bottom-8"
+            customStyle={`govuk-!-padding-bottom-8 ${styles['referral-summary-list']}`}
           />
 
           <h3 className="govuk-heading-m">Referral details</h3>
           <SummaryList
             name="referral-details"
             entries={referralDetails}
-            customStyle="govuk-!-padding-bottom-8"
+            customStyle={`govuk-!-padding-bottom-8 ${styles['referral-summary-list']}`}
           />
 
           <h3 className="govuk-heading-m">Organisation details</h3>
           <SummaryList
             name="organisation-details"
             entries={organisationDetails}
-            customStyle="govuk-!-padding-bottom-8"
+            customStyle={`govuk-!-padding-bottom-8 ${styles['referral-summary-list']}`}
           />
         </div>
       </div>

@@ -23,7 +23,10 @@ context('status page', () => {
       cy.injectAxe();
 
       cy.get('[data-testid=status-paragraph]').should('contain', 'This referral was ACCEPTED on');
-      cy.get('[data-testid=reference-number-paragraph]').should('contain', 'Reference number: E7UK-8');
+      cy.get('[data-testid=reference-number-paragraph]').should(
+        'contain',
+        'Reference number: E7UK-8'
+      );
       cy.resetReferralStatus('11', [
         {
           date: '2021-07-20T09:17:23.305Z',
@@ -59,7 +62,10 @@ context('status page', () => {
       cy.injectAxe();
 
       cy.get('[data-testid=status-paragraph]').should('contain', 'This referral was REJECTED on');
-      cy.get('[data-testid=reference-number-paragraph]').should('contain', 'Reference number: E7UK-8');
+      cy.get('[data-testid=reference-number-paragraph]').should(
+        'contain',
+        'Reference number: E7UK-8'
+      );
       cy.get('[data-testid=status-paragraph]').should('contain', 'with comment: "comment".');
       cy.resetReferralStatus('11', [
         {
