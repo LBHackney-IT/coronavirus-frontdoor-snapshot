@@ -35,8 +35,8 @@ describe('ReferralSummary', () => {
         resident: {
           firstName: 'John',
           lastName: 'Wick',
-          address: '5B Amhurst Road, Hackney',
-          postcode: 'E81LL',
+          address: '5B Amhurst Road, London',
+          postcode: 'E8 1LL',
           phone: '07582999124',
           email: 'john.wick@mailinator.com'
         }
@@ -50,8 +50,8 @@ describe('ReferralSummary', () => {
       expect(getByText(`${referral.resident.phone}`)).toBeInTheDocument();
       expect(getByText(`${referral.resident.email}`)).toBeInTheDocument();
       expect(getByText('5B Amhurst Road', { exact: false })).toBeInTheDocument();
-      expect(getByText('Hackney', { exact: false })).toBeInTheDocument();
-      expect(getByText(`${referral.resident.postcode}`)).toBeInTheDocument();
+      expect(getByText('London', { exact: false })).toBeInTheDocument();
+      expect(getByText(`${referral.resident.postcode}`, { exact: false })).toBeInTheDocument();
     });
   });
 });
