@@ -3,7 +3,7 @@ import HttpStatusError from 'lib/api/domain/HttpStatusError';
 import { getTokenFromCookieHeader } from 'lib/utils/token';
 import Head from 'next/head';
 import { SummaryList } from 'components/Form';
-import { getRecentStatus } from 'lib/utils/referralHelper';
+import { getRecentStatus, parseAddress } from 'lib/utils/referralHelper';
 import scss from 'styles/referralStatus.module.scss';
 import { STATUS_MAPPINGS } from 'lib/utils/constants';
 
@@ -18,8 +18,7 @@ const ReferralSummary = ({ referral }) => {
     'Email address': referral.resident?.email,
     Address: (
       <pre>
-        {referral.resident?.address.replace(/,\s*/g, '\n')}
-        {'\n'}{referral.resident?.postcode}
+        {parseAddress(referral.resident?.address, referral.resident?.postcode)}
       </pre>
     )
   };
@@ -35,13 +34,9 @@ const ReferralSummary = ({ referral }) => {
     'Telephone number': referral.service?.contactPhone,
     'Email address': referral.service?.contactEmail,
     Address: (
-      <span>
-        {referral.service?.address?.split(',').map(addressLine => (
-          <>
-            {addressLine} <br />
-          </>
-        ))}
-      </span>
+      <pre>
+        {parseAddress(referral.service?.address)}
+      </pre>
     )
   };
 
