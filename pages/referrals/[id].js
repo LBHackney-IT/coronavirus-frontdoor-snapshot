@@ -63,34 +63,37 @@ const ReferralSummary = ({ referral }) => {
         </div>
 
         <div className="govuk-grid-column-three-quarters">
-          <h2 className="govuk-heading-l">
+          <h1 className="govuk-heading-l" data-testid="individual-referral-header">
             Referral for {referral.resident?.firstName} {referral.resident?.lastName}
-          </h2>
-          <div className="govuk-hint">
+          </h1>
+          <div className="govuk-hint" data-testid="individual-referral-hint">
             To {referral.service?.name} &nbsp;
             <span className={`${scss[recentStatusClass]}`}>
               {STATUS_MAPPINGS[recentStatus.status]?.label}
             </span>
           </div>
-          <h3 className="govuk-heading-m">Resident details</h3>
+          <h2 className="govuk-heading-m">Resident details</h2>
           <SummaryList
             name="resident-details"
             entries={residentDetails}
             customStyle={`govuk-!-padding-bottom-8 ${styles['referral-summary-list']}`}
+            data-testid="resident-details-summary-list"
           />
 
-          <h3 className="govuk-heading-m">Referral details</h3>
+          <h2 className="govuk-heading-m">Referral details</h2>
           <SummaryList
             name="referral-details"
             entries={referralDetails}
             customStyle={`govuk-!-padding-bottom-8 ${styles['referral-summary-list']}`}
+            data-testid="referral-details-summary-list"
           />
 
-          <h3 className="govuk-heading-m">Organisation details</h3>
+          <h2 className="govuk-heading-m">Organisation details</h2>
           <SummaryList
             name="organisation-details"
             entries={organisationDetails}
             customStyle={`govuk-!-padding-bottom-8 ${styles['referral-summary-list']}`}
+            data-testid="organisation-details-summary-list"
           />
         </div>
       </div>

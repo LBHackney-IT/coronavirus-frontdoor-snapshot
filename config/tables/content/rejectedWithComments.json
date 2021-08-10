@@ -2,6 +2,28 @@
   "id": { "S": "1233" },
   "linkId": { "S": "2" },
   "created": { "S": "2021-07-21T12:29:17.120Z" },
+  "referralReason": { "S": "Desperately needs any vacuuming service for shedded cat fur." },
+  "conversationNotes": {
+    "S": "Resident says: 'fur in the air, fur in the lungs, fur in the pie...'."
+  },
+  "resident": {
+    "M": {
+      "firstName": { "S": "other" },
+      "lastName": { "S": "name" },
+      "address": { "S": "Amhurst Road, Flat 5B, Hackney" },
+      "phone": { "S": "32" },
+      "postcode": { "S": "E81LL" },
+      "email": { "S": "john.wick@mailinator.com" }
+    }
+  },
+  "service": {
+    "M": {
+      "name": { "S": "service name 2" },
+      "address": { "S": "15 Markmanor Ave, OtherCouncil, E17 8HJ" },
+      "contactPhone": { "S": "02022159138" },
+      "contactEmail": { "S": "santechninis.vamzdis@vamzsaulis.com" }
+    }
+  },
   "statusHistory": {
     "L": [
       {

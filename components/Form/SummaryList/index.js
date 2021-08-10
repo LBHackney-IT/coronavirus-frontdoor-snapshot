@@ -1,6 +1,6 @@
-const SummaryList = ({ name, entries, customStyle }) => (
+const SummaryList = ({ name, entries, customStyle, ...others }) => (
   <div>
-    <dl className={customStyle} id={name}>
+    <dl className={customStyle} id={name} {...others}>
       {Object.entries(entries).map(([key, value], index) => {
         return (
           value && (
