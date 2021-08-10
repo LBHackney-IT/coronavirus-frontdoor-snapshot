@@ -16,11 +16,7 @@ const ReferralSummary = ({ referral }) => {
     'Last name': referral.resident?.lastName,
     'Telephone number': referral.resident?.phone,
     'Email address': referral.resident?.email,
-    Address: (
-      <pre>
-        {parseAddress(referral.resident?.address, referral.resident?.postcode)}
-      </pre>
-    )
+    Address: <pre>{parseAddress(referral.resident?.address, referral.resident?.postcode)}</pre>
   };
 
   const referralDetails = {
@@ -33,11 +29,7 @@ const ReferralSummary = ({ referral }) => {
     'Org referred to': referral.service?.name,
     'Telephone number': referral.service?.contactPhone,
     'Email address': referral.service?.contactEmail,
-    Address: (
-      <pre>
-        {parseAddress(referral.service?.address)}
-      </pre>
-    )
+    Address: <pre>{parseAddress(referral.service?.address)}</pre>
   };
 
   return (
@@ -66,7 +58,7 @@ const ReferralSummary = ({ referral }) => {
           </h2>
           <div className="govuk-hint">
             To {referral.service?.name} &nbsp;
-            <span className={`${scss[STATUS_MAPPINGS[recentStatus.status]?.class]}`}>
+            <span className={`${scss[STATUS_MAPPINGS[recentStatus.status].class]}`}>
               {STATUS_MAPPINGS[recentStatus.status]?.label}
             </span>
           </div>
