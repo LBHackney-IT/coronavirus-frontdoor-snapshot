@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 context('Index page', () => {
   before(() => {
-    cy.visit('/');
+    cy.visit('/support-a-resident');
     cy.injectAxe();
   });
 

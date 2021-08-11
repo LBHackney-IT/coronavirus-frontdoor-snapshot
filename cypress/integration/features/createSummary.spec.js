@@ -5,7 +5,7 @@ context('Create summary', () => {
   const referrerEmail = 'tina@bburgers.com';
 
   before(() => {
-    cy.visit('/');
+    cy.visit('/support-a-resident');
     cy.injectAxe();
   });
 

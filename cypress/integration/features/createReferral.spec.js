@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 context('Create referral', () => {});
 before(() => {
-  cy.visit('/');
+  cy.visit('/support-a-resident');
 });
 describe('Referral form', () => {
   beforeEach(() => {
@@ -100,7 +100,7 @@ describe('Referral form', () => {
 
   describe('Validation', () => {
     before(() => {
-      cy.visit('/');
+      cy.visit('/support-a-resident');
       cy.injectAxe();
     });
 
@@ -141,7 +141,7 @@ describe('Referral form', () => {
 
   describe('Ending a conversation and error handling', () => {
     before(() => {
-      cy.visit('/');
+      cy.visit('/support-a-resident');
       cy.injectAxe();
 
       cy.get('[data-testid=category-card]')
