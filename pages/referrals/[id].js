@@ -13,7 +13,7 @@ const ReferralSummary = ({ referral }) => {
   const recentStatusClass = STATUS_MAPPINGS[recentStatus.status]?.class;
 
   const residentDetails = {
-    'Ref ID': referral.referenceNumber,
+    'Reference number': referral.referenceNumber,
     'First name': referral.resident?.firstName,
     'Last name': referral.resident?.lastName,
     'Telephone number': referral.resident?.phone,
