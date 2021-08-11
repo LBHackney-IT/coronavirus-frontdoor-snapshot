@@ -3,15 +3,10 @@ import { render } from '@testing-library/react';
 import ReferralSummary from 'pages/referrals/[id]';
 
 describe('ReferralSummary', () => {
-  const resources = [];
-
   const expectedResponse = {
     id: '1',
     firstName: 'Wayne',
-    lastName: 'Rooney',
-    vulnerabilities: [],
-    assets: [],
-    notes: ''
+    lastName: 'Rooney'
   };
 
   beforeEach(() => {
@@ -19,116 +14,100 @@ describe('ReferralSummary', () => {
     fetch.mockResponse(JSON.stringify(expectedResponse));
   });
 
-  it('fetches referral from the correct url and sets props', async () => {
-    const props = await ReferralSummary.getInitialProps({
-      query: { id: '1' },
-      req: { headers: {} }
+  describe('Get initial props', () => {
+    it('fetches referral from the correct url and sets props', async () => {
+      const props = await ReferralSummary.getInitialProps({
+        query: { id: '1' },
+        req: { headers: {} }
+      });
+      expect(fetch).toHaveBeenCalledWith(
+        expect.stringContaining('/referrals/1'),
+        expect.any(Object)
+      );
+      expect(props.referral).toStrictEqual(expectedResponse);
     });
-    expect(fetch).toHaveBeenCalledWith(expect.stringContaining('/referrals/1'), expect.any(Object));
-    expect(props.initialReferral).toStrictEqual(expectedResponse);
   });
 
-  describe('adding a referral', () => {
-    it('shows the name', () => {
+  describe('Referral page', () => {
+    it('Shows ALL resident fields', () => {
+      // arrange
       const referral = {
-        firstName: 'John',
-        lastName: 'Wick',
-        vulnerabilities: [],
-        assets: []
+        referenceNumber: '8CXU5-',
+        resident: {
+          firstName: 'John',
+          lastName: 'Wick',
+          address: '5B Amhurst Road, London',
+          postcode: 'E8 1LL',
+          phone: '07582999124',
+          email: 'john.wick@mailinator.com'
+        }
       };
-      const { getByText } = render(
-        <ReferralSummary initialReferral={referral} resources={resources} />
-      );
-      expect(getByText(`${referral.firstName}'s resources`)).toBeInTheDocument();
-    });
 
-    it('shows the dob', () => {
-      const d = new Date();
-      const referral = {
-        dob: d.setFullYear(d.getFullYear() - 45),
-        vulnerabilities: [],
-        assets: []
-      };
-      const { getByText } = render(
-        <ReferralSummary initialReferral={referral} resources={resources} />
-      );
-      expect(getByText(/Aged 45/)).toBeInTheDocument();
-    });
+      // act
+      const { getByText } = render(<ReferralSummary referral={referral} />);
 
-    it('shows the vulnerabilities grid', () => {
-      const referral = {
-        vulnerabilities: [],
-        assets: []
-      };
-      const { container } = render(
-        <ReferralSummary initialReferral={referral} resources={resources} />
-      );
-      expect(container.querySelector('.govuk-accordion')).toBeInTheDocument();
-    });
-
-    it('shows the notes', () => {
-      const referral = {
-        vulnerabilities: [],
-        assets: []
-      };
-      const { getByLabelText } = render(
-        <ReferralSummary initialReferral={referral} resources={resources} />
-      );
+      // assert
       expect(
-        getByLabelText(`What prompted the Resident to get in touch today?`)
+        getByText(`Referral for ${referral.resident.firstName} ${referral.resident.lastName}`)
       ).toBeInTheDocument();
+
+      expect(getByText(referral.resident.phone)).toBeInTheDocument();
+      expect(getByText(referral.resident.email)).toBeInTheDocument();
+
+      expect(getByText('5B Amhurst Road', { exact: false })).toBeInTheDocument();
+      expect(getByText('London', { exact: false })).toBeInTheDocument();
+      expect(getByText(referral.resident.postcode, { exact: false })).toBeInTheDocument();
     });
 
-    it('hides the edit view if a vulnerability exists', () => {
+    it('Shows ALL referral details fields', () => {
+      // arrange
       const referral = {
-        vulnerabilities: [{ name: 'v1', data: [] }],
-        assets: []
+        referralReason: 'Desperately needs any vacuuming service for shedded cat fur.',
+        conversationNotes: "Resident says: 'fur in the air, fur in the lungs, fur in the pie...'.",
+        statusHistory: [
+          {
+            date: '2021-07-20T09:17:23.305Z',
+            status: 'SENT'
+          },
+          {
+            date: '2021-07-22T09:17:23.305Z',
+            comment: 'comment',
+            status: 'REJECTED'
+          }
+        ]
       };
-      const { container, getByText } = render(
-        <ReferralSummary initialReferral={referral} resources={resources} />
-      );
-      expect(container.querySelector('.govuk-accordion')).not.toBeInTheDocument();
-      expect(getByText('v1')).toBeInTheDocument();
+
+      // act
+      const { getByText } = render(<ReferralSummary referral={referral} />);
+
+      // assert
+      expect(getByText(referral.referralReason)).toBeInTheDocument();
+      expect(getByText(referral.conversationNotes)).toBeInTheDocument();
+      expect(getByText('Rejected')).toBeInTheDocument();
     });
 
-    it('hides the edit view if a asset exists', () => {
+    it('Shows ALL service details fields', () => {
+      // arrange
       const referral = {
-        vulnerabilities: [],
-        assets: [{ name: 'a1', data: [] }]
+        service: {
+          name: 'San Techninis Vamzdis',
+          contactPhone: '02022159138',
+          contactEmail: 'santechninis.vamzdis@vamzsaulis.com',
+          address: '15 Markmanor Ave, OtherCouncil, E17 8HJ'
+        }
       };
-      const { container, getByText } = render(
-        <ReferralSummary initialReferral={referral} resources={resources} />
-      );
-      expect(container.querySelector('.govuk-accordion')).not.toBeInTheDocument();
-      expect(getByText('a1')).toBeInTheDocument();
-    });
 
-    it('hides the edit view if notes exist', () => {
-      const referral = {
-        vulnerabilities: [],
-        assets: [],
-        notes: 'some notes'
-      };
-      const { container, getByText } = render(
-        <ReferralSummary initialReferral={referral} resources={resources} />
-      );
-      expect(container.querySelector('.govuk-accordion')).not.toBeInTheDocument();
-      expect(getByText('some notes')).toBeInTheDocument();
-    });
+      // act
+      const { getByText } = render(<ReferralSummary referral={referral} />);
 
-    it('sends back to Support For Hackney Residents when Back button is clicked', () => {
-      const referral = {
-        vulnerabilities: [],
-        assets: [],
-        systemIds: ['wub']
-      };
-      const { container, getByTestId } = render(
-        <ReferralSummary initialReferral={referral} resources={resources} />
-      );
-      expect(getByTestId('back-link-test')).toHaveAttribute(
-        'href',
-        'https://inh-admin-test.hackney.gov.uk/help-requests/edit/wub'
-      );
+      // assert
+      expect(getByText(`To ${referral.service.name}`)).toBeInTheDocument();
+      expect(getByText(referral.service.contactPhone)).toBeInTheDocument();
+      expect(getByText(referral.service.contactEmail)).toBeInTheDocument();
+
+      expect(getByText('15 Markmanor Ave', { exact: false })).toBeInTheDocument();
+      expect(getByText('OtherCouncil', { exact: false })).toBeInTheDocument();
+      expect(getByText('E17 8HJ', { exact: false })).toBeInTheDocument();
     });
   });
 });

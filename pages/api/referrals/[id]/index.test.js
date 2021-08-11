@@ -5,13 +5,14 @@ describe('Get/Update Referral Api', () => {
   const id = '1';
   const getReferral = { execute: jest.fn(() => ({ id })) };
   const updateReferral = { execute: jest.fn(() => ({ id })) };
-  const call = async ({ body, method, params }) => {
+  const call = async ({ body, method, params, headers }) => {
     const response = createMockResponse();
     await endpoint({ getReferral, updateReferral })(
       {
         body,
         query: params,
-        method
+        method,
+        headers
       },
       response
     );
@@ -20,8 +21,12 @@ describe('Get/Update Referral Api', () => {
 
   describe('Get', () => {
     it('can get a referral', async () => {
-      const response = await call({ method: 'GET', params: { id } });
-      expect(getReferral.execute).toHaveBeenCalledWith({ id });
+      const response = await call({
+        method: 'GET',
+        params: { id },
+        headers: { cookie: 'hackneyToken=abc' }
+      });
+      expect(getReferral.execute).toHaveBeenCalledWith({ id }, 'hackneyToken=abc');
       expect(response.statusCode).toBe(200);
       expect(response.body).toEqual(JSON.stringify({ id }));
     });

@@ -1,211 +1,106 @@
-import { useState, useEffect } from 'react';
-import useReferral from 'lib/api/utils/useReferral';
-import { requestReferral, requestResources } from 'lib/api';
+import { requestReferral } from 'lib/api';
 import HttpStatusError from 'lib/api/domain/HttpStatusError';
 import { getTokenFromCookieHeader } from 'lib/utils/token';
-import { Button, TextArea } from 'components/Form';
-import VulnerabilitiesGrid from 'components/Feature/VulnerabilitiesGrid';
-import { convertIsoDateToString, convertIsoDateToYears } from 'lib/utils/date';
-import geoCoordinates from 'lib/api/utils/geoCoordinates';
+import Head from 'next/head';
+import { SummaryList } from 'components/Form';
+import { getRecentStatus, parseAddress } from 'lib/utils/referralHelper';
+import scss from 'styles/referralStatus.module.scss';
+import styles from './index.module.scss';
+import { STATUS_MAPPINGS } from 'lib/utils/constants';
 
-const ReferralSummary = ({ resources, initialReferral, token }) => {
-  const { referral, loading, updateReferral } = useReferral(initialReferral.referralId, {
-    initialReferral,
-    token
-  });
+const ReferralSummary = ({ referral }) => {
+  const recentStatus = getRecentStatus(referral.statusHistory);
+  const recentStatusClass = STATUS_MAPPINGS[recentStatus.status]?.class;
 
-  if (loading) {
-    return <p>Loading...</p>;
-  }
-
-  const [editReferral, setEditReferral] = useState(
-    referral.assets.length === 0 && referral.vulnerabilities.length === 0 && !referral.notes
-  );
-  const [hasValue, setHasValue] = useState(false);
-
-  const updateSelected = selected => {
-    referral.assets = selected.assets;
-    referral.vulnerabilities = selected.vulnerabilities;
-    setHasValue(
-      referral.assets.length > 0 || referral.vulnerabilities.length > 0 || referral.notes
-    );
-  };
-  const [selectedResources, setResources] = useState([]);
-
-  const updateSummaryResource = updatedResource => {
-    let updatedResources = selectedResources;
-    if (updatedResources.some(resource => resource.name === updatedResource.name)) {
-      let resourcesRemoved = [];
-      updatedResources.forEach(resource => {
-        if (resource.name != updatedResource.name) {
-          resourcesRemoved.push(resource);
-        }
-      });
-      updatedResources = resourcesRemoved;
-    } else {
-      Object.keys(updatedResource).forEach(key => {
-        if (updatedResource[key] === undefined || updatedResource[key] === '') {
-          delete updatedResource[key];
-        }
-      });
-      let summary = [];
-      Object.keys(updatedResource).forEach(key => {
-        if (key != 'name') {
-          summary.push(updatedResource[key]);
-        }
-      });
-      updatedResource.summary = summary.join(', ');
-      updatedResources.push(updatedResource);
-    }
-    setResources(updatedResources);
-    setHasValue(updatedResources.length > 0);
-  };
-  const handleError = errorMsg => console.log(errorMsg);
-
-  const updateNotes = notes => {
-    referral.notes = notes;
-    setHasValue(
-      referral.assets.length > 0 || referral.vulnerabilities.length > 0 || referral.notes
-    );
+  const residentDetails = {
+    'Reference number': referral.referenceNumber,
+    'First name': referral.resident?.firstName,
+    'Last name': referral.resident?.lastName,
+    'Telephone number': referral.resident?.phone,
+    'Email address': referral.resident?.email,
+    Address: (
+      <pre className="govuk-!-margin-top-0">
+        {parseAddress(referral.resident?.address, referral.resident?.postcode)}
+      </pre>
+    )
   };
 
-  const { dob, firstName, lastName, postcode, assets, vulnerabilities, notes } = referral;
-  let customerId = referral.systemIds?.[0];
-  const residentCoordinates = geoCoordinates(postcode);
-  const INH_URL = process.env.INH_URL;
+  const referralDetails = {
+    'Reason for referral': referral.referralReason,
+    'Reason for rejection': recentStatus.comment || 'N/A',
+    'Notes on wider conversation': referral.conversationNotes
+  };
+
+  const organisationDetails = {
+    'Org referred to': referral.service?.name,
+    'Telephone number': referral.service?.contactPhone,
+    'Email address': referral.service?.contactEmail,
+    Address: <pre className="govuk-!-margin-top-0">{parseAddress(referral.service?.address)}</pre>
+  };
 
   return (
     <>
-      <div>
-        {editReferral && customerId && (
-          <a
-            href={`${INH_URL}/help-requests/edit/${customerId}`}
-            className="govuk-back-link back-button"
-            data-testid="back-link-test">
-            Back
-          </a>
-        )}
-      </div>
-      <h1 className="no-bottom-margin">{firstName}'s resources</h1>
-      <div className="summary-sections">
-        {editReferral && (
-          <>
-            <TextArea
-              name="notes"
-              label="What prompted the Resident to get in touch today?"
-              onChange={updateNotes}
+      <Head>
+        <title>Better Conversations: View referral</title>
+      </Head>
+
+      <a
+        className="govuk-!-margin-bottom-0 govuk-!-margin-top-0 govuk-back-link"
+        href={`${process.env.NEXT_PUBLIC_URL}/my-view`}
+        data-testid="back-button">
+        Back
+      </a>
+      <hr className={`govuk-section-break govuk-section-break--m govuk-section-break--visible`} />
+      <div className="govuk-grid-row">
+        <div className="govuk-grid-column-one-quarter">
+          <ul className="govuk-list">
+            <li>
+              <a href={`${process.env.NEXT_PUBLIC_URL}/my-view`}>My view</a>
+            </li>
+            <li>
+              <a href={process.env.NEXT_PUBLIC_URL}>Better conversations</a>
+            </li>
+          </ul>
+        </div>
+        {referral.error ? (
+          <h1 className="govuk-heading-l">{referral.error}</h1>
+        ) : (
+          <div className="govuk-grid-column-three-quarters">
+            <h1 className="govuk-heading-l" data-testid="individual-referral-header">
+              Referral for {referral.resident?.firstName} {referral.resident?.lastName}
+            </h1>
+            <div className="govuk-hint" data-testid="individual-referral-hint">
+              To {referral.service?.name} &nbsp;
+              <span className={`${scss[recentStatusClass]}`}>
+                {STATUS_MAPPINGS[recentStatus.status]?.label}
+              </span>
+            </div>
+            <h2 className="govuk-heading-m">Resident details</h2>
+            <SummaryList
+              name="resident-details"
+              entries={residentDetails}
+              customStyle={`govuk-!-padding-bottom-8 ${styles['referral-summary-list']}`}
+              data-testid="resident-details-summary-list"
             />
-          </>
+
+            <h2 className="govuk-heading-m">Referral details</h2>
+            <SummaryList
+              name="referral-details"
+              entries={referralDetails}
+              customStyle={`govuk-!-padding-bottom-8 ${styles['referral-summary-list']}`}
+              data-testid="referral-details-summary-list"
+            />
+
+            <h2 className="govuk-heading-m">Organisation details</h2>
+            <SummaryList
+              name="organisation-details"
+              entries={organisationDetails}
+              customStyle={`govuk-!-padding-bottom-8 ${styles['referral-summary-list']}`}
+              data-testid="organisation-details-summary-list"
+            />
+          </div>
         )}
       </div>
-
-      {dob && (
-        <span className="govuk-body govuk-!-font-weight-bold" data-testid="age-and-date-of-birth">
-          Aged {convertIsoDateToYears(dob)} ({convertIsoDateToString(dob)})
-        </span>
-      )}
-      {editReferral && (
-        <>
-          <h2>Explore categories</h2>
-          Resident's postcode: {postcode}
-          <VulnerabilitiesGrid
-            onError={handleError}
-            onUpdate={updateSelected}
-            resources={resources}
-            residentCoordinates={residentCoordinates}
-            updateSelectedResources={updateSummaryResource}
-            customerId={customerId}
-          />
-          <Button
-            text="Finish &amp; save"
-            onClick={async () => {
-              await updateReferral(referral, selectedResources);
-              setEditReferral(false);
-            }}
-            disabled={!hasValue}
-            data-testid="finish-and-save-button"
-          />
-        </>
-      )}
-      {!editReferral && (
-        <>
-          <div className="summary-sections" data-testid="notes-summary">
-            <h3 className="summary-titles">What prompted the Resident to get in touch today?</h3>
-            {notes ? notes : 'Nothing captured'}
-          </div>
-
-          <div className="govuk-grid-row">
-            <div
-              className="summary-sections govuk-grid-column-one-half"
-              data-testid="vulnerabilities-summary">
-              <h3 className="summary-titles">Vulnerabilities</h3>
-              {vulnerabilities.length > 0 ? (
-                <div>
-                  {vulnerabilities.map((v, i) => (
-                    <span key={`vuln-${i}`}>
-                      {v.name}
-                      {v.data.length > 0 && (
-                        <ul>
-                          {v.data.map((data, n) => (
-                            <li key={`vuln-${i}-data-${n}`}>
-                              {data.label}: {data.value}
-                            </li>
-                          ))}
-                        </ul>
-                      )}
-                      <br></br>
-                    </span>
-                  ))}
-                </div>
-              ) : (
-                'None captured'
-              )}
-            </div>
-
-            <div
-              className="summary-sections govuk-grid-column-one-half"
-              data-testid="assets-summary">
-              <h3 className="summary-titles">Strengths identified</h3>
-              {assets.length > 0 ? (
-                <div>
-                  {assets.map((a, i) => (
-                    <span key={`asset-${i}`}>
-                      {a.name}
-                      <br></br>
-                    </span>
-                  ))}
-                </div>
-              ) : (
-                'None captured'
-              )}
-            </div>
-          </div>
-          <div className="summary-sections" data-testid="resources-summary">
-            <h3 className="summary-titles">Resources</h3>
-            {selectedResources.map((r, i) => (
-              <div>
-                <div className="resource-title">{r.name}</div>
-                <div className="resource-description" key={`resource-${i}`}>
-                  {r.summary}
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="govuk-grid-row govuk-!-margin-top-5">
-            {customerId && (
-              <div className="govuk-grid-column-one-half">
-                <a
-                  href={`${INH_URL}/help-requests/complete/${customerId}`}
-                  className="govuk-button"
-                  data-testid="continue-link-to-inh">
-                  Continue
-                </a>
-              </div>
-            )}
-          </div>
-        </>
-      )}
     </>
   );
 };
@@ -213,13 +108,10 @@ const ReferralSummary = ({ resources, initialReferral, token }) => {
 ReferralSummary.getInitialProps = async ({ query: { id }, req: { headers }, res }) => {
   try {
     const token = getTokenFromCookieHeader(headers);
-    const initialReferral = await requestReferral(id, { token });
-    const resources = await requestResources({ token });
+    const referral = await requestReferral(id, { token });
 
     return {
-      resources: resources.data,
-      initialReferral,
-      token
+      referral
     };
   } catch (err) {
     res.writeHead(err instanceof HttpStatusError ? err.statusCode : 500).end();
