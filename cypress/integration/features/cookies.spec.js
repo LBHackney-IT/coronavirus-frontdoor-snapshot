@@ -6,7 +6,7 @@ const selectors = {
 
 context('Cookie consent banner', () => {
   beforeEach(() => {
-    cy.visit('/');
+    cy.visit('/support-a-resident');
   });
 
   describe('on first visit to the app', () => {

@@ -33,9 +33,13 @@ const Header = ({ serviceName }) => {
               </li>
               <li
                 className={`govuk-header__navigation-item ${
-                  !selectedNav.includes('my-view') ? 'govuk-header__navigation-item--active' : ''
+                  selectedNav.includes('support-a-resident')
+                    ? 'govuk-header__navigation-item--active'
+                    : ''
                 }`}>
-                <a className="govuk-header__link" href={`${process.env.NEXT_PUBLIC_URL}`}>
+                <a
+                  className="govuk-header__link"
+                  href={`${process.env.NEXT_PUBLIC_URL}/support-a-resident`}>
                   Support a resident
                 </a>
               </li>
