@@ -1,22 +1,50 @@
 import HackneyLogo from './HackneyLogo';
 import css from './index.module.scss';
+import { useState, useEffect } from 'react';
 
-const Header = ({ serviceName }) => (
-  <header className="govuk-header" role="banner" data-module="govuk-header">
-    <div
-      className={`govuk-header__container govuk-width-container ${css['lbh-header__container']}`}>
-      <div className="govuk-header__logo">
-        <span className={`govuk-header__logotype ${css['lbh-header__logotype']}`}>
-          <HackneyLogo />
-        </span>
+const Header = ({ serviceName }) => {
+  const [selectedNav, setSelectedNav] = useState('');
+
+  useEffect(() => {
+    setSelectedNav(window.location.href);
+  });
+  return (
+    <header className="govuk-header" role="banner" data-module="govuk-header">
+      <div
+        className={`govuk-header__container govuk-width-container ${css['lbh-header__container']}`}>
+        <div className="govuk-header__logo">
+          <span className={`govuk-header__logotype ${css['lbh-header__logotype']}`}>
+            <HackneyLogo />
+          </span>
+        </div>
+        <div className="govuk-header__content">
+          <a href="/" className="govuk-header__link govuk-header__link--service-name">
+            {serviceName}
+          </a>
+          <nav>
+            <ul id="navigation" className="govuk-header__navigation " aria-label="Navigation menu">
+              <li
+                className={`govuk-header__navigation-item ${
+                  selectedNav.includes('my-view') ? 'govuk-header__navigation-item--active' : ''
+                }`}>
+                <a className="govuk-header__link" href={`${process.env.NEXT_PUBLIC_URL}/my-view`}>
+                  My referrals
+                </a>
+              </li>
+              <li
+                className={`govuk-header__navigation-item ${
+                  !selectedNav.includes('my-view') ? 'govuk-header__navigation-item--active' : ''
+                }`}>
+                <a className="govuk-header__link" href={`${process.env.NEXT_PUBLIC_URL}`}>
+                  Support a resident
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
       </div>
-      <div className="govuk-header__content">
-        <a href="/" className="govuk-header__link govuk-header__link--service-name">
-          {serviceName}
-        </a>
-      </div>
-    </div>
-  </header>
-);
+    </header>
+  );
+};
 
 export default Header;

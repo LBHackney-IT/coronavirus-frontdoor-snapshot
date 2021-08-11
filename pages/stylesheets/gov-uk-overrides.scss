@@ -20,3 +20,9 @@
     border-color: black;
   }
 }
+
+.govuk-header__navigation-item--active a:link,
+.govuk-header__navigation-item--active a:hover,
+.govuk-header__navigation-item--active a:visited {
+  color: #008f6f;
+}
