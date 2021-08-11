@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 context('my view page', () => {
   it('Shows resident name in the referral header', () => {
-    cy.setHackneyCookie(true);
+    cy.setHackneyCookie(true, 'cat.litter.boxes@catheaven.com');
     cy.visit('/referrals/1233');
     cy.injectAxe();
 
