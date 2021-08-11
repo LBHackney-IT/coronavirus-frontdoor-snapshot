@@ -7,13 +7,13 @@ export const endpoint = ({ getReferral, updateReferral }) =>
     {
       allowedMethods: ['GET', 'PATCH']
     },
-    async ({ method, params: { id }, body: referral }) => {
+    async ({ method, params: { id }, body: referral, headers }) => {
       if (method === 'PATCH') {
         await updateReferral.execute({ referral });
         return Response.noContent();
       }
 
-      const result = await getReferral.execute({ id });
+      const result = await getReferral.execute({ id }, headers.cookie);
       return Response.ok(result);
     }
   );
