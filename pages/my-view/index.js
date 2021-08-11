@@ -26,49 +26,22 @@ const Index = ({ errors, referrerInfo, myReferrals }) => {
       </Head>
       <h1 className="govuk-heading-l">My referrals</h1>
       <hr className={`govuk-section-break govuk-section-break--m govuk-section-break--visible`} />
+      <h2 className="govuk-heading-m">At a glance</h2>
       <div className="govuk-grid-row">
-        <div className="govuk-grid-column-one-quarter">
-          <ul className="govuk-list">
-            {false && (
-              <li>
-                <a href="#">Team view</a>
-              </li>
-            )}
-            <li>
-              <a href={`${process.env.NEXT_PUBLIC_URL}/my-view`} style={{ fontWeight: 800 }}>
-                My view
-              </a>
-            </li>
-            {false && (
-              <li>
-                <a href="#">Incoming referrals</a>
-              </li>
-            )}
-            <li>
-              <a href={process.env.NEXT_PUBLIC_URL}>Better conversations</a>
-            </li>
-          </ul>
-        </div>
-
-        <div className="govuk-grid-column-three-quarters">
-          <h2 className="govuk-heading-m">At a glance</h2>
-          <div className="govuk-grid-row">
-            <OverviewBox number={myReferrals.length} label="Referrals made" id="referralsMade" />
-            <OverviewBox
-              number={counts['SENT'] || `0`}
-              label="Referrals pending"
-              id="referralsPending"
-            />
-            <OverviewBox
-              number={counts['REJECTED'] || `0`}
-              label="Referrals rejected"
-              id="referralsRejected"
-            />
-          </div>
-          <h2 className="govuk-heading-m">Historic referrals</h2>
-          <ReferralsTable referrals={myReferrals} />
-        </div>
+        <OverviewBox number={myReferrals.length} label="Referrals made" id="referralsMade" />
+        <OverviewBox
+          number={counts['SENT'] || `0`}
+          label="Referrals pending"
+          id="referralsPending"
+        />
+        <OverviewBox
+          number={counts['REJECTED'] || `0`}
+          label="Referrals rejected"
+          id="referralsRejected"
+        />
       </div>
+      <h2 className="govuk-heading-m">Historic referrals</h2>
+      <ReferralsTable referrals={myReferrals} />
     </>
   );
 };
