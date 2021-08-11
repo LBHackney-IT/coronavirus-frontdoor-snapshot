@@ -27,7 +27,10 @@ const Header = ({ serviceName }) => {
                 className={`govuk-header__navigation-item ${
                   selectedNav.includes('my-view') ? 'govuk-header__navigation-item--active' : ''
                 }`}>
-                <a className="govuk-header__link" href={`${process.env.NEXT_PUBLIC_URL}/my-view`}>
+                <a
+                  className="govuk-header__link"
+                  href={`${process.env.NEXT_PUBLIC_URL}/my-view`}
+                  data-testid="my-view-nav">
                   My referrals
                 </a>
               </li>
@@ -39,7 +42,8 @@ const Header = ({ serviceName }) => {
                 }`}>
                 <a
                   className="govuk-header__link"
-                  href={`${process.env.NEXT_PUBLIC_URL}/support-a-resident`}>
+                  href={`${process.env.NEXT_PUBLIC_URL}/support-a-resident`}
+                  data-testid="support-a-resident-nav">
                   Support a resident
                 </a>
               </li>
