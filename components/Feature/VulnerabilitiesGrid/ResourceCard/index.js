@@ -59,16 +59,14 @@ const ResourceCard = ({
     return text;
   };
 
-  const tagsElement = resource.tags.map(item => (
-    <span key={'tags-' + item} className={`${css.tags} tag-element`}>
-      {getHighlighted(trimLength(item, 20))}
-    </span>
-  ));
-  const councilTagsElement = resource.councilTags.map(item => (
-    <span key={'tags-' + item} className={`${css.tags} tag-element ${css[`Council-tag`]}`}>
-      {getHighlighted(trimLength(item, 20))}
-    </span>
-  ));
+  // commented out because council tags were asked to be removed temporarily:
+  // const councilTagsElement = resource.councilTags.map(item => (
+  //   <span key={'tags-' + item} className={`${css.tags} tag-element ${css[`Council-tag`]}`}>
+  //     {getHighlighted(trimLength(item, 20))}
+  //   </span>
+  // ));
+
+  // This is not being used anywhere. Is this intended?
   const updateResource = () => {
     updateSelectedResources({
       name: resource.name,
@@ -91,10 +89,10 @@ const ResourceCard = ({
       className={`resource ${css.resource}`}
       {...others}
       id={`resource-container-${resource.id}`}>
-      <div className={`${css.tags__container} card-header-tag`} data-testid="resource-card-tags">
-        {tagsElement}
+      {/* the following is commented out because council tags were asked to be removed temporarily: */}
+      {/* <div className={`${css.tags__container} card-header-tag`} data-testid="resource-card-tags">
         {councilTagsElement}
-      </div>
+      </div> */}
       <div>
         <div className={`govuk-grid-row`}>
           <div
