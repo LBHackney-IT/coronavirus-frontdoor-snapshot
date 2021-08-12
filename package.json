@@ -18,7 +18,9 @@
     "dynamo-admin": "DYNAMO_ENDPOINT=http://localhost:8000 dynamodb-admin",
     "lint": "eslint --fix --ext js lib/ pages/ && echo 'Lint complete.'",
     "pretty": "prettier --write \"./**/*.{js,jsx,json}\"",
-    "dynamo": "docker-compose up dynamodb"
+    "dynamo": "docker-compose up dynamodb",
+    "seed-dynamo": "$PWD/seed-dynamo.sh",
+    "cypress": "run-s seed-dynamo cypress-open"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.35",
