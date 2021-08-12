@@ -59,11 +59,6 @@ const ResourceCard = ({
     return text;
   };
 
-  const tagsElement = resource.tags.map(item => (
-    <span key={'tags-' + item} className={`${css.tags} tag-element`}>
-      {getHighlighted(trimLength(item, 20))}
-    </span>
-  ));
   const councilTagsElement = resource.councilTags.map(item => (
     <span key={'tags-' + item} className={`${css.tags} tag-element ${css[`Council-tag`]}`}>
       {getHighlighted(trimLength(item, 20))}
@@ -92,7 +87,6 @@ const ResourceCard = ({
       {...others}
       id={`resource-container-${resource.id}`}>
       <div className={`${css.tags__container} card-header-tag`} data-testid="resource-card-tags">
-        {tagsElement}
         {councilTagsElement}
       </div>
       <div>

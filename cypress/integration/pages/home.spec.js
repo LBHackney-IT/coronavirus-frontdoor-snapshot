@@ -91,17 +91,9 @@ context('Index page', () => {
 
       cy.get('[data-testid=resource-card-tags]')
         .eq(0)
-        .should('contain', 'First category')
-        .and('contain', 'Magic')
+        .should('contain', 'Magic')
         .children()
-        .should('have.length', 2);
-
-      cy.get('[data-testid=resource-card-tags]')
-        .eq(2)
-        .should('contain', 'First category')
-        .and('contain', 'Second category')
-        .children()
-        .should('have.length', 2);
+        .should('have.length', 1);
     });
 
     it('Displays the correct resource information for council resources', () => {
@@ -260,7 +252,6 @@ context('Index page', () => {
         .should('have.length', 1);
 
       cy.get('[data-testid="resource-card-tags"]').should('contain', 'Magic');
-      cy.get('[data-testid="resource-card-tags"]').should('contain', 'First category');
     });
 
     it('returns services ordered by full match then individual word match', () => {
