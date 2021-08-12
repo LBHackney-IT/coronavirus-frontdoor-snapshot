@@ -8,7 +8,6 @@
 #   0 if operation successful, non-zero if unexpected error occurs.
 #######################################
 function create_table() {
-    echo $1
     local LOC_TABLE_NAME=$1
     echo "Creating table: $LOC_TABLE_NAME"
     
@@ -16,14 +15,14 @@ function create_table() {
     local LOC_TABLE_FOUND=$?
 
     if [[ $LOC_TABLE_FOUND -eq 0 ]]; then
-        echo 'Table already exists. Skipping creation.'
+        echo -e 'Table already exists. Skipping creation.\n'
     else
         aws dynamodb create-table \
             --cli-input-json file://./config/tables/$LOC_TABLE_NAME.json \
             --endpoint-url http://localhost:8000 \
             > /dev/null \
-            && printf '\nTable successfully created.\n' \
-            || (printf '\nAn error occured table was not created!\n' \
+            && echo -e 'Table successfully created.\n' \
+            || (echo -e '\nAn error occured table was not created!\n' \
                 && exit 1)
     fi
 
@@ -38,13 +37,13 @@ declare -a TABLES_TO_CREATE=(
     )
 
 echo "Setting-up test dynamo database."
-echo "Creating tables..."
+echo -e "Creating tables...\n"
 
 # Create the tables
 printf "%s\n" "${TABLES_TO_CREATE[@]}" | xargs -n1 -I {} bash -c 'create_table "{}"'
 
-echo "Inserting / refreshing records."
-
+echo -e "Inserting / refreshing records...\n"
+echo "Inserting records to referrals table:"
 # Insert the records from contents folder
 # Or reset the existing ones
 find ./config/tables/content/ -type f -exec aws dynamodb put-item \
