@@ -84,17 +84,17 @@ context('Index page', () => {
         .should('not.contain', 'This is for');
     });
 
-    it('Displays the correct tags', () => {
-      cy.get('[data-testid=category-card]')
-        .eq(0)
-        .click();
+    // it('Displays the correct tags', () => {
+    //   cy.get('[data-testid=category-card]')
+    //     .eq(0)
+    //     .click();
 
-      cy.get('[data-testid=resource-card-tags]')
-        .eq(0)
-        .should('contain', 'Magic')
-        .children()
-        .should('have.length', 1);
-    });
+    //   cy.get('[data-testid=resource-card-tags]')
+    //     .eq(0)
+    //     .should('contain', 'Magic')
+    //     .children()
+    //     .should('have.length', 1);
+    // });
 
     it('Displays the correct resource information for council resources', () => {
       cy.get('[data-testid=category-card]')
@@ -247,11 +247,14 @@ context('Index page', () => {
       cy.get('[data-testid="keyword-search"]').type('abc');
       cy.get('[data-testid="keyword-search-button"]').click();
 
-      cy.get('[data-testid="search-results-container"]')
-        .find('[data-testid="resource-card-tags"]')
-        .should('have.length', 1);
+      cy.get('[data-testid=resource-ABC123]').contains('ABC mental health Test');
 
-      cy.get('[data-testid="resource-card-tags"]').should('contain', 'Magic');
+      // commented out because council tags were asked to be removed temporarily:
+      // cy.get('[data-testid="search-results-container"]')
+      //   .find('[data-testid="resource-card-tags"]')
+      //   .should('have.length', 1);
+
+      // cy.get('[data-testid="resource-card-tags"]').should('contain', 'Magic');
     });
 
     it('returns services ordered by full match then individual word match', () => {
