@@ -3,6 +3,9 @@ import { useState } from 'react';
 
 const StatusForm = ({ onSubmitForm, name }) => {
   const [reject, setReject] = useState(false);
+  const [status, setStatus] = useState();
+  const [comment, setComment] = useState();
+
   return (
     <>
       <h1 className="govuk-heading-m">Referral for {name}</h1>
@@ -10,11 +13,8 @@ const StatusForm = ({ onSubmitForm, name }) => {
         onSubmit={e => {
           e.preventDefault();
           onSubmitForm(
-            (e.target['referral-status'] || window.event.srcElement['referral-status']).value,
-            (
-              e.target['referral-rejection-reason'] ||
-              window.event.srcElement['referral-rejection-reason']
-            ).value
+            e.target['referral-status'].value || status,
+            e.target['referral-rejection-reason'].value || comment
           );
         }}>
         <div className="govuk-form-group">
@@ -35,7 +35,10 @@ const StatusForm = ({ onSubmitForm, name }) => {
                   name="referral-status"
                   type="radio"
                   value={REFERRAL_STATUSES.Accepted}
-                  onClick={() => setReject(false)}
+                  onClick={() => {
+                    setStatus(REFERRAL_STATUSES.Accepted);
+                    setReject(false);
+                  }}
                   required
                   data-testid="status-form-accepted-input"
                 />
@@ -50,7 +53,10 @@ const StatusForm = ({ onSubmitForm, name }) => {
                   name="referral-status"
                   type="radio"
                   value={REFERRAL_STATUSES.Rejected}
-                  onClick={() => setReject(true)}
+                  onClick={() => {
+                    setStatus(REFERRAL_STATUSES.Rejected);
+                    setReject(true);
+                  }}
                   required
                   data-testid="status-form-rejected-input"
                 />
@@ -74,6 +80,9 @@ const StatusForm = ({ onSubmitForm, name }) => {
                     name="referral-rejection-reason"
                     spellcheck="false"
                     data-testid="status-form-rejected-comment-input"
+                    onChange={e => {
+                      setComment(e.target.value);
+                    }}
                   />
                 </div>
               </div>
