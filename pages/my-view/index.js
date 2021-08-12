@@ -18,51 +18,35 @@ const Index = ({ errors, referrerInfo, myReferrals }) => {
       <Head>
         <title>Better Conversations: My view</title>
       </Head>
-      <h1 className="govuk-heading-l">My referrals</h1>
-      <hr className={`govuk-section-break govuk-section-break--m govuk-section-break--visible`} />
-      <div className="govuk-grid-row">
-        <div className="govuk-grid-column-one-quarter">
-          <ul className="govuk-list">
-            {false && (
-              <li>
-                <a href="#">Team view</a>
-              </li>
-            )}
-            <li>
-              <a href={`${process.env.NEXT_PUBLIC_URL}/my-view`} style={{ fontWeight: 800 }}>
-                My view
-              </a>
-            </li>
-            {false && (
-              <li>
-                <a href="#">Incoming referrals</a>
-              </li>
-            )}
-            <li>
-              <a href={process.env.NEXT_PUBLIC_URL}>Better conversations</a>
-            </li>
-          </ul>
+      <div className="govuk-notification-banner" aria-labelledby="govuk-notification-banner-title">
+        <div className="govuk-notification-banner__header">
+          <h2 className="govuk-notification-banner__title" id="govuk-notification-banner-title">
+            Important
+          </h2>
         </div>
-
-        <div className="govuk-grid-column-three-quarters">
-          <h2 className="govuk-heading-m">At a glance</h2>
-          <div className="govuk-grid-row">
-            <OverviewBox number={myReferrals.length} label="Referrals made" id="referralsMade" />
-            <OverviewBox
-              number={counts['SENT'] || `0`}
-              label="Referrals pending"
-              id="referralsPending"
-            />
-            <OverviewBox
-              number={counts['REJECTED'] || `0`}
-              label="Referrals rejected"
-              id="referralsRejected"
-            />
-          </div>
-          <h2 className="govuk-heading-m">Historic referrals</h2>
-          <ReferralsTable referrals={myReferrals} />
+        <div className="govuk-notification-banner__content">
+          This is a new design. You can go signpost and make referrals by selecting 'Support a
+          resident' from the top menu
         </div>
       </div>
+      <h1 className="govuk-heading-l">My referrals</h1>
+      <hr className={`govuk-section-break govuk-section-break--m govuk-section-break--visible`} />
+      <h2 className="govuk-heading-m">At a glance</h2>
+      <div className="govuk-grid-row">
+        <OverviewBox number={myReferrals.length} label="Referrals made" id="referralsMade" />
+        <OverviewBox
+          number={counts['SENT'] || `0`}
+          label="Referrals pending"
+          id="referralsPending"
+        />
+        <OverviewBox
+          number={counts['REJECTED'] || `0`}
+          label="Referrals rejected"
+          id="referralsRejected"
+        />
+      </div>
+      <h2 className="govuk-heading-m">Historic referrals</h2>
+      <ReferralsTable referrals={myReferrals} />
     </>
   );
 };

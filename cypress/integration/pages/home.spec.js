@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
-context('Index page', () => {
+context('Support a resident page', () => {
   before(() => {
-    cy.visit('/');
+    cy.visit('/support-a-resident');
     cy.injectAxe();
   });
 
@@ -311,6 +311,13 @@ context('Index page', () => {
         .click();
       cy.get('#add-to-summary-checkbox-1-2').should('be.checked');
       cy.runCheckA11y();
+    });
+  });
+
+  describe('navigation', () => {
+    it('Redirects to my view when it is selected from the navigation', () => {
+      cy.get('[data-testid=my-view-nav]').click({ force: true });
+      cy.url().should('include', '/my-view');
     });
   });
 });

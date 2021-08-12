@@ -1,12 +1,16 @@
 /// <reference types="cypress" />
 context('my view page', () => {
-  it('Shows a table with correct number of referrals', () => {
+  it('redirects to my view from base url', () => {
     cy.setHackneyCookie(true);
-    cy.visit('/my-view');
+    cy.visit('/');
     cy.injectAxe();
 
-    cy.get('[data-testid=referrals-table-row]').should('have.length', '3');
+    cy.url().should('include', '/my-view');
     cy.runCheckA11y();
+  });
+
+  it('Shows a table with correct number of referrals', () => {
+    cy.get('[data-testid=referrals-table-row]').should('have.length', '3');
   });
 
   it('shows newest referrals first', () => {
@@ -71,5 +75,10 @@ context('my view page', () => {
     cy.get('[data-testid=referrals-table-status]')
       .eq(2)
       .should('contain', 'Pending');
+  });
+
+  it('Redirects to support a resident when it is selected from the navigation', () => {
+    cy.get('[data-testid=support-a-resident-nav]').click({ force: true });
+    cy.url().should('include', '/support-a-resident');
   });
 });

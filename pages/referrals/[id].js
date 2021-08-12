@@ -51,56 +51,44 @@ const ReferralSummary = ({ referral }) => {
         Back
       </a>
       <hr className={`govuk-section-break govuk-section-break--m govuk-section-break--visible`} />
-      <div className="govuk-grid-row">
-        <div className="govuk-grid-column-one-quarter">
-          <ul className="govuk-list">
-            <li>
-              <a href={`${process.env.NEXT_PUBLIC_URL}/my-view`}>My view</a>
-            </li>
-            <li>
-              <a href={process.env.NEXT_PUBLIC_URL}>Better conversations</a>
-            </li>
-          </ul>
-        </div>
-        {referral.error ? (
-          <h1 className="govuk-heading-l">{referral.error}</h1>
-        ) : (
-          <div className="govuk-grid-column-three-quarters">
-            <h1 className="govuk-heading-l" data-testid="individual-referral-header">
-              Referral for {referral.resident?.firstName} {referral.resident?.lastName}
-            </h1>
-            <div className="govuk-hint" data-testid="individual-referral-hint">
-              To {referral.service?.name} &nbsp;
-              <span className={`${scss[recentStatusClass]}`}>
-                {STATUS_MAPPINGS[recentStatus.status]?.label}
-              </span>
-            </div>
-            <h2 className="govuk-heading-m">Resident details</h2>
-            <SummaryList
-              name="resident-details"
-              entries={residentDetails}
-              customStyle={`govuk-!-padding-bottom-8 ${styles['referral-summary-list']}`}
-              data-testid="resident-details-summary-list"
-            />
-
-            <h2 className="govuk-heading-m">Referral details</h2>
-            <SummaryList
-              name="referral-details"
-              entries={referralDetails}
-              customStyle={`govuk-!-padding-bottom-8 ${styles['referral-summary-list']}`}
-              data-testid="referral-details-summary-list"
-            />
-
-            <h2 className="govuk-heading-m">Organisation details</h2>
-            <SummaryList
-              name="organisation-details"
-              entries={organisationDetails}
-              customStyle={`govuk-!-padding-bottom-8 ${styles['referral-summary-list']}`}
-              data-testid="organisation-details-summary-list"
-            />
+      {referral.error ? (
+        <h1 className="govuk-heading-l">{referral.error}</h1>
+      ) : (
+        <div>
+          <h1 className="govuk-heading-l" data-testid="individual-referral-header">
+            Referral for {referral.resident?.firstName} {referral.resident?.lastName}
+          </h1>
+          <div className="govuk-hint" data-testid="individual-referral-hint">
+            To {referral.service?.name} &nbsp;
+            <span className={`${scss[recentStatusClass]}`}>
+              {STATUS_MAPPINGS[recentStatus.status]?.label}
+            </span>
           </div>
-        )}
-      </div>
+          <h2 className="govuk-heading-m">Resident details</h2>
+          <SummaryList
+            name="resident-details"
+            entries={residentDetails}
+            customStyle={`govuk-!-padding-bottom-8 ${styles['referral-summary-list']}`}
+            data-testid="resident-details-summary-list"
+          />
+
+          <h2 className="govuk-heading-m">Referral details</h2>
+          <SummaryList
+            name="referral-details"
+            entries={referralDetails}
+            customStyle={`govuk-!-padding-bottom-8 ${styles['referral-summary-list']}`}
+            data-testid="referral-details-summary-list"
+          />
+
+          <h2 className="govuk-heading-m">Organisation details</h2>
+          <SummaryList
+            name="organisation-details"
+            entries={organisationDetails}
+            customStyle={`govuk-!-padding-bottom-8 ${styles['referral-summary-list']}`}
+            data-testid="organisation-details-summary-list"
+          />
+        </div>
+      )}
     </>
   );
 };
