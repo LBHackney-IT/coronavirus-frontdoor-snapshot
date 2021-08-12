@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import ResourceCard from 'components/Feature/VulnerabilitiesGrid/ResourceCard';
+import ResourceCard from 'components/Feature/ResourceCard';
 import Categories from './Categories';
 import Details from 'components/Form/Details';
 import styles from './index.module.scss';
