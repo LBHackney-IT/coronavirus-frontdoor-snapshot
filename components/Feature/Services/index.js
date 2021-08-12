@@ -203,7 +203,6 @@ const Services = ({
               <ResourceCard
                 data-testid={`resource-${resource.id}`}
                 resource={resource}
-                updateSelectedResources={() => {}}
                 categoryId={filteredResources.id}
                 referralCompletion={referralCompletion}
                 setReferralCompletion={setReferralCompletion}
