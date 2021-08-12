@@ -20,6 +20,7 @@
     "pretty": "prettier --write \"./**/*.{js,jsx,json}\"",
     "dynamo": "docker-compose up dynamodb",
     "seed-dynamo": "$PWD/seed-dynamo.sh",
+    "servers": "run-p dynamo start:mock dynamo-admin",
     "cypress": "run-s seed-dynamo cypress-open"
   },
   "dependencies": {
