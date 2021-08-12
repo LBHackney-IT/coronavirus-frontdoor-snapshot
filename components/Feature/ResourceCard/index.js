@@ -1,5 +1,5 @@
 import css from './index.module.scss';
-import notificationCss from '../../notification-messages.module.scss';
+import notificationCss from '../notification-messages.module.scss';
 import { useState } from 'react';
 import { sendDataToAnalytics, getUserGroup } from 'lib/utils/analytics';
 import {
