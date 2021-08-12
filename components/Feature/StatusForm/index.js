@@ -10,8 +10,9 @@ const StatusForm = ({ onSubmitForm, name }) => {
         onSubmit={e => {
           e.preventDefault();
           onSubmitForm(
-            e.target['referral-status'].value,
-            e.target['referral-rejection-reason'].value
+            (e.target['referral-status'] || e.srcElement['referral-status']).value,
+            (e.target['referral-rejection-reason'] || e.srcElement['referral-rejection-reason'])
+              .value
           );
         }}>
         <div className="govuk-form-group">
