@@ -68,18 +68,8 @@ jobs:
           aws-secret-access-key: CYPRESS_AWS_SECRET_ACCESS_KEY
           aws-region: CYPRESS_AWS_REGION
       - run:
-          name: Create local DynamoDB referrals table
-          command: aws dynamodb create-table --cli-input-json file://./config/tables/referrals.json --endpoint-url http://localhost:8000 > /dev/null
-      - run:
-          name: Add data to DynamoDB referrals table
-          command: |
-            aws dynamodb put-item --table-name referrals --item file://./config/tables/content/sent.json --endpoint-url http://localhost:8000 > /dev/null
-            aws dynamodb put-item --table-name referrals --item file://./config/tables/content/rejectedWithComments.json --endpoint-url http://localhost:8000 > /dev/null
-            aws dynamodb put-item --table-name referrals --item file://./config/tables/content/rejected.json --endpoint-url http://localhost:8000 > /dev/null
-            aws dynamodb put-item --table-name referrals --item file://./config/tables/content/accepted.json --endpoint-url http://localhost:8000 > /dev/null
-      - run:
-          name: Create local DynamoDB conversations table
-          command: aws dynamodb create-table --cli-input-json file://./config/tables/conversations.json --endpoint-url http://localhost:8000 > /dev/null
+          name: Create DynamoDB tables and seed the database
+          command: yarn seed-dynamo
       - run:
           name: Run integration tests
           command: |
