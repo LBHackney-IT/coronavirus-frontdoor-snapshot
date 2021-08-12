@@ -6,7 +6,6 @@ describe('ReferralHistory', () => {
     id: '1',
     firstName: 'Wayne',
     lastName: 'Rooney',
-    vulnerabilities: [],
     assets: [],
     linkId: 'abc123',
     notes: ''
