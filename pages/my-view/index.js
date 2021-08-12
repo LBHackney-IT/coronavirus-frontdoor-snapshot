@@ -18,6 +18,17 @@ const Index = ({ errors, referrerInfo, myReferrals }) => {
       <Head>
         <title>Better Conversations: My view</title>
       </Head>
+      <div className="govuk-notification-banner" aria-labelledby="govuk-notification-banner-title">
+        <div className="govuk-notification-banner__header">
+          <h2 className="govuk-notification-banner__title" id="govuk-notification-banner-title">
+            Important
+          </h2>
+        </div>
+        <div className="govuk-notification-banner__content">
+          This is a new design. You can go signpost and make referrals by selecting 'Support a
+          resident' from the top menu
+        </div>
+      </div>
       <h1 className="govuk-heading-l">My referrals</h1>
       <hr className={`govuk-section-break govuk-section-break--m govuk-section-break--visible`} />
       <h2 className="govuk-heading-m">At a glance</h2>
