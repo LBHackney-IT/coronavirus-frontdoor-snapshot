@@ -44,22 +44,6 @@ module.exports = (on, config) => {
       console.table(message);
 
       return null;
-    },
-    createReferral(referral) {
-      return client
-        .put({
-          TableName: 'vulnerabilities',
-          Item: referral
-        })
-        .promise();
-    },
-    deleteReferral(id) {
-      return client
-        .delete({
-          TableName: 'vulnerabilities',
-          Key: { id }
-        })
-        .promise();
     }
   });
   config.ignoreTestFiles = '**/examples/*.spec.js';

@@ -1,5 +1,5 @@
 import css from './index.module.scss';
-import notificationCss from '../../notification-messages.module.scss';
+import notificationCss from '../notification-messages.module.scss';
 import { useState } from 'react';
 import { sendDataToAnalytics, getUserGroup } from 'lib/utils/analytics';
 import {
@@ -13,7 +13,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 
 const ResourceCard = ({
-  updateSelectedResources,
   residentInfo,
   categoryId,
   referralCompletion,
@@ -65,20 +64,6 @@ const ResourceCard = ({
   //     {getHighlighted(trimLength(item, 20))}
   //   </span>
   // ));
-
-  // This is not being used anywhere. Is this intended?
-  const updateResource = () => {
-    updateSelectedResources({
-      name: resource.name,
-      description: resource.description,
-      address: resource.address,
-      telephone: resource.telephone,
-      email: resource.email,
-      referralContact: resource.referralContact,
-      websites: resource.websites,
-      notes: resource.notes
-    });
-  };
 
   const fullDescription = [resource.serviceDescription, resource.description].join(' ');
   const first = fullDescription?.substring(0, 250);

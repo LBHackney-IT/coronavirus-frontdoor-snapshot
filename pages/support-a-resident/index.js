@@ -122,7 +122,7 @@ Index.getInitialProps = async ({ req: { headers }, res }) => {
     };
     const refererInfo = retrieveRefererInfo(token);
 
-    const initialReferral = { vulnerabilities: [], assets: [], notes: null };
+    const initialReferral = { assets: [], notes: null };
     const otherResources = await requestResources({ token });
     const fss = await requestFssResources({
       token
