@@ -16,8 +16,11 @@ const Categories = ({ categorisedResources, selectedCategories, setSelectedCateg
 
   const categoryChanged = e => {
     let ids = selectedCategories;
-    ids = ids.filter(item => item !== e.target.value);
-    if (e.target.checked) ids.push(e.target.value);
+    const selectedCategoryId = parseInt(e.target.value);
+    ids = ids.filter(item => item !== selectedCategoryId);
+    if (e.target.checked && selectedCategoryId) {
+      ids.push(selectedCategoryId);
+    }
     setSelectedCategories(ids);
   };
 

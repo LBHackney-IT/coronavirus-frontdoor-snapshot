@@ -4,7 +4,7 @@ import Categories from './Categories';
 import Details from 'components/Form/Details';
 import styles from './index.module.scss';
 import { sendDataToAnalytics, getUserGroup } from 'lib/utils/analytics';
-import { getSearchResults, getWordsToHighlight } from 'lib/utils/search';
+import { filterByCategories, getSearchResults, getWordsToHighlight } from 'lib/utils/search';
 import { CATEGORY_SEARCH, FEEDBACK_SEARCH } from 'lib/utils/constants';
 
 const Services = ({
@@ -86,7 +86,13 @@ const Services = ({
     const searchTerm = e.target['search-input'].value;
     setResultsTitle(searchTerm);
 
-    const searchResults = getSearchResults(searchTerm, categorisedResources);
+    const filteredByCategory = filterByCategories(selectedCategories, categorisedResources);
+
+    const searchResults = getSearchResults(searchTerm, filteredByCategory);
+
+    // If any categories selected..
+    // // weightByCategory(selectedCategories, categorisedResources) (See Doc. TDD this!)
+
     const newFilteredResources = flattenSearchResults(searchResults);
     newFilteredResources.resources.sort((a, b) => b.weight - a.weight);
 
