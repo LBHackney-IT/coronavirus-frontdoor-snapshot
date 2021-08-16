@@ -57,11 +57,12 @@ When you next launch the app, it should be on `http://localdev.hackney.gov.uk:30
 3. [Set up DynamoDB Local](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBLocal.html)
    or start a local dynamodb container with Docker like so: `docker-compose up`
 4. Configure AWS cli with `aws configure`
-5. Create local DynamoDB plans table
+5. Create local DynamoDB tables and seed them _(or you can optionally skip this step as it will be taken care off when running tests with: `yarn cypress`)_.
+
    ```bash
-   aws dynamodb create-table --cli-input-json file://./config/tables/referrals.json --endpoint-url http://localhost:8000
-   aws dynamodb create-table --cli-input-json file://./config/tables/conversations.json --endpoint-url http://localhost:8000 > /dev/null
+   yarn seed-dynamo
    ```
+
 6. Start running your local copy of the application.
    ```
    yarn dev
@@ -71,7 +72,7 @@ When you next launch the app, it should be on `http://localdev.hackney.gov.uk:30
 ## Working with DynamoDB locally
 
 If you need to view, edit or delete data from your local copy of DynamoDB when working on a feature
-there is a useful admin tool you can run.
+there is a useful admin tool you can run. _(Will be run automatically as part of the `yarn servers` command)_
 
 ```(bash)
 yarn dynamo-admin
@@ -113,25 +114,39 @@ NEXT_PUBLIC_API_URL=http://localdev.hackney.gov.uk:3000/api
 
 2. Build the application
 
-```(bash)
-yarn build
-```
+   ```(bash)
+   yarn build
+   ```
 
 3. Run the tests:
    To run in cypress UI:
 
-Start the servers and run cypress-open to launch cypress UI tool:
+   Depending on whether you want to test the built _(with `yarn build`)_ or launched dev _(with `yarn dev`)_ version of the application, you will either have to run:
 
-```(bash)
-yarn start-test-servers
-yarn cypress-open
-```
+   ```(bash)
+   yarn start
+   ```
 
-To run headless (this will launch a local application copy and mock server for you):
+   or
 
-```(bash)
-yarn int-test
-```
+   ```(bash)
+   yarn dev
+   ```
+
+   After this, you'll also want to start the dynamodb, api wiremock & dynamo-ui application servers and launch cypress UI tool:
+
+   ```(bash)
+   yarn servers
+   yarn cypress
+   ```
+
+   You can inspect the test dynamo database contents by visiting the: `localhost:8001` url.
+
+   To run the build application version tests headless (this will launch a local application copy and mock server for you):
+
+   ```(bash)
+   yarn int-test
+   ```
 
 ## Deployment
 
