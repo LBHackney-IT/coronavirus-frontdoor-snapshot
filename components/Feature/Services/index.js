@@ -5,7 +5,7 @@ import Details from 'components/Form/Details';
 import styles from './index.module.scss';
 import { sendDataToAnalytics, getUserGroup } from 'lib/utils/analytics';
 import { getSearchResults, getWordsToHighlight } from 'lib/utils/search';
-import { CATEGORY_CATEGORIES, CATEGORY_SEARCH, FEEDBACK_SEARCH } from 'lib/utils/constants';
+import { CATEGORY_SEARCH, FEEDBACK_SEARCH } from 'lib/utils/constants';
 
 const Services = ({
   categorisedResources,
@@ -31,6 +31,7 @@ const Services = ({
   const [feedbackSubmitted, setFeedbackSubmitted] = useState(false);
   const [resultsTitle, setResultsTitle] = useState(null);
   const [wordsToHighlight, setWordsToHighlight] = useState([]);
+  const [selectedCategories, setSelectedCategories] = useState([]);
 
   const detailsClicked = (e, id, serviceId, categoryName) => {
     e.preventDefault();
@@ -99,136 +100,130 @@ const Services = ({
     setWordsToHighlight(getWordsToHighlight(searchTerm));
     window.location.href = '#search-results-divider';
   };
-  const clickCategory = e => {
-    document.getElementsByName('refer-details').forEach(x => x.removeAttribute('open'));
-
-    setResultsTitle(e);
-    setOpenReferralForm({});
-    setFeedbackSubmitted(false);
-
-    window.location.href = '#search-results-divider';
-
-    sendDataToAnalytics({
-      action: getUserGroup(referrerData['user-groups']),
-      category: CATEGORY_CATEGORIES,
-      label: e
-    });
-    setFilteredResources(categorisedResources[categorisedResources.findIndex(x => x.name === e)]);
-    setWordsToHighlight([]);
-  };
 
   return (
     <>
       <form onSubmit={handleSearch}>
-        <label htmlFor="keyword-search">
-          <h1 id="search-for-support-header" className={`govuk-heading-l`}>
-            Search for support
-          </h1>
-        </label>
-        <input
-          id="keyword-search"
-          data-testid="keyword-search"
-          list="input-tags"
-          type="search"
-          name="search-input"
-          placeholder="Type here what you are looking for..."
-          className="govuk-input govuk-input--width-30"
-        />
-        <button
-          type="submit"
-          className="govuk-button govuk-!-margin-left-2"
-          data-testid="keyword-search-button">
-          Search
-        </button>
-      </form>
-      <h1 id="resources-header" className={`govuk-heading-l`}>
-        Explore categories
-      </h1>
-      <Categories
-        categorisedResources={categorisedResources}
-        clickCategory={clickCategory}
-        selectedCategory={filteredResources?.name}
-      />
-      <div className="govuk-grid-column-full"></div>
-      <div className="govuk-grid-column-full-width">
-        <hr
-          id="search-results-divider"
-          className={`govuk-section-break govuk-section-break--m govuk-section-break--visible ${styles['horizontal-divider']}`}
-        />
-        {filteredResources && (
-          <div key={`search-result-${filteredResources.id}`} data-testid="search-results-container">
-            <h1 id="search-results-header" className={`govuk-heading-l`}>
-              Search results
-            </h1>
-            <h2
-              data-testid="search-results-header"
-              className={`${styles['search-results-header']}`}>
-              {filteredResources.name}
-            </h2>
+        <div class="govuk-grid-row">
+          <div className="govuk-grid-column-one-quarter">
+            <div class="govuk-grid-row">
+              <h1 id="search-for-support-header" className={`govuk-heading-l`}>
+                Personalise
+              </h1>
+              <p>All fields are optional.</p>
+            </div>
+            <div class="govuk-grid-row govuk-!-margin-bottom-6">
+              <h2 className={`govuk-heading-m`}>Problems faced</h2>
 
-            <div className="govuk-!-margin-bottom-6">
+              <Categories
+                categorisedResources={categorisedResources}
+                selectedCategories={selectedCategories}
+                setSelectedCategories={setSelectedCategories}
+              />
+            </div>
+            <div class="govuk-grid-row govuk-!-margin-bottom-6">
+              <h2 className={`govuk-heading-m`}>Additional needs</h2>
+
+              <input
+                id="keyword-search"
+                data-testid="keyword-search"
+                list="input-tags"
+                type="search"
+                name="search-input"
+                placeholder="e.g. autism, disabilities"
+                className="govuk-input govuk-input--width-30"
+              />
+            </div>
+            <div class="govuk-grid-row">
+              <button type="submit" className="govuk-button" data-testid="keyword-search-button">
+                Suggest services
+              </button>
+            </div>
+          </div>
+          <div className="govuk-grid-column-three-quarters">
+            <h1 id="search-for-support-header" className={`govuk-heading-l`}>
+              Suggested services
+            </h1>
+            {filteredResources ? (
               <p>
                 If the results don't contain a service or information you require, please let us
                 know.
               </p>
-              {!feedbackSubmitted ? (
-                <Details id="feedback-summary" title="Provide feedback">
-                  <form id="search-feedback-form" onSubmit={sendFeedback}>
-                    <div className="govuk-inset-text">
-                      <div>
-                        <label htmlFor="search-feedback">Search results feedback</label>
-                      </div>
-                      <textarea
-                        id="search-feedback"
-                        name="search-feedback"
-                        maxLength="450"
-                        className={styles['feedback-textarea']}
-                      />
-                      <br />
-                      <button type="submit" className={`govuk-button`}>
-                        Send
-                      </button>
+            ) : (
+              <p>
+                Use the personalisation options to find services relevant to the needs and situation
+                of the resident.
+              </p>
+            )}
+            <hr
+              id="search-results-divider"
+              className={`govuk-section-break govuk-section-break--m govuk-section-break--hidden`}
+            />
+            {filteredResources && (
+              <div
+                key={`search-result-${filteredResources.id}`}
+                data-testid="search-results-container">
+                <div className="govuk-!-margin-bottom-6">
+                  {!feedbackSubmitted ? (
+                    <Details id="feedback-summary" title="Provide feedback">
+                      <form id="search-feedback-form" onSubmit={sendFeedback}>
+                        <div className="govuk-inset-text">
+                          <div>
+                            <label htmlFor="search-feedback">Search results feedback</label>
+                          </div>
+                          <textarea
+                            id="search-feedback"
+                            name="search-feedback"
+                            maxLength="450"
+                            className={styles['feedback-textarea']}
+                          />
+                          <br />
+                          <button type="submit" className={`govuk-button`}>
+                            Send
+                          </button>
+                        </div>
+                      </form>
+                    </Details>
+                  ) : (
+                    <div className={styles['success-message']}>
+                      Feedback submitted. Thank you for providing us with information to assist in
+                      improving this tool.
                     </div>
-                  </form>
-                </Details>
-              ) : (
-                <div className={styles['success-message']}>
-                  Feedback submitted. Thank you for providing us with information to assist in
-                  improving this tool.
+                  )}
                 </div>
-              )}
-            </div>
 
-            {filteredResources.resources.map(resource => (
-              <ResourceCard
-                data-testid={`resource-${resource.id}`}
-                resource={resource}
-                categoryId={filteredResources.id}
-                referralCompletion={referralCompletion}
-                setReferralCompletion={setReferralCompletion}
-                detailsClicked={detailsClicked}
-                openReferralForm={openReferralForm}
-                referralData={referralData}
-                setReferralData={setReferralData}
-                referrerData={referrerData}
-                setReferrerData={setReferrerData}
-                updateSignpostSummary={updateSignpostSummary}
-                signpostSummary={signpostSummary}
-                setResidentInfo={setResidentInfo}
-                token={token}
-                referralSummary={referralSummary}
-                setReferralSummary={setReferralSummary}
-                updateEmailBody={updateEmailBody}
-                setEmailBody={setEmailBody}
-                residentInfo={residentInfo}
-                setPreserveFormData={setPreserveFormData}
-                preserveFormData={preserveFormData}
-                wordsToHighlight={wordsToHighlight}
-              />
-            ))}
+                {filteredResources.resources.map(resource => (
+                  <ResourceCard
+                    data-testid={`resource-${resource.id}`}
+                    resource={resource}
+                    categoryId={filteredResources.id}
+                    referralCompletion={referralCompletion}
+                    setReferralCompletion={setReferralCompletion}
+                    detailsClicked={detailsClicked}
+                    openReferralForm={openReferralForm}
+                    referralData={referralData}
+                    setReferralData={setReferralData}
+                    referrerData={referrerData}
+                    setReferrerData={setReferrerData}
+                    updateSignpostSummary={updateSignpostSummary}
+                    signpostSummary={signpostSummary}
+                    setResidentInfo={setResidentInfo}
+                    token={token}
+                    referralSummary={referralSummary}
+                    setReferralSummary={setReferralSummary}
+                    updateEmailBody={updateEmailBody}
+                    setEmailBody={setEmailBody}
+                    residentInfo={residentInfo}
+                    setPreserveFormData={setPreserveFormData}
+                    preserveFormData={preserveFormData}
+                    wordsToHighlight={wordsToHighlight}
+                  />
+                ))}
+              </div>
+            )}
           </div>
-        )}
-      </div>
+        </div>
+      </form>
     </>
   );
 };
