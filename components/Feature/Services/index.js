@@ -97,7 +97,7 @@ const Services = ({
 
     if (selectedCategories.length > 0) weightByCategories(selectedCategories, categorisedResources);
 
-    const newFilteredResources = flattenSearchResults(searchResults);
+    let newFilteredResources = flattenSearchResults(searchResults);
     newFilteredResources.resources.sort(
       (a, b) => b.weight - a.weight || b.demographic?.length - a.demographic?.length
     );
@@ -115,13 +115,11 @@ const Services = ({
 
   return (
     <>
-      <form onSubmit={handleSearch}>
-        <div class="govuk-grid-row">
-          <div className="govuk-grid-column-one-quarter">
+      <div class="govuk-grid-row">
+        <div className="govuk-grid-column-one-quarter">
+          <form onSubmit={handleSearch}>
             <div class="govuk-grid-row">
-              <h1 id="search-for-support-header" className={`govuk-heading-l`}>
-                Personalise
-              </h1>
+              <h2 className={`govuk-heading-l`}>Personalise</h2>
               <p>All fields are optional.</p>
             </div>
             <div class="govuk-grid-row govuk-!-margin-bottom-6">
@@ -134,8 +132,10 @@ const Services = ({
               />
             </div>
             <div class="govuk-grid-row govuk-!-margin-bottom-6">
-              <h2 className={`govuk-heading-m`}>Additional needs</h2>
-
+              <h3 className={`govuk-heading-m`}>Additional needs</h3>
+              <label htmlFor="keyword-search">
+                Enter keywords for further needs the resident may have.
+              </label>
               <input
                 id="keyword-search"
                 data-testid="keyword-search"
@@ -151,91 +151,87 @@ const Services = ({
                 Suggest services
               </button>
             </div>
-          </div>
-          <div className="govuk-grid-column-three-quarters">
-            <h1 id="search-for-support-header" className={`govuk-heading-l`}>
-              Suggested services
-            </h1>
-            {filteredResources ? (
-              <p>
-                If the results don't contain a service or information you require, please let us
-                know.
-              </p>
-            ) : (
-              <p>
-                Use the personalisation options to find services relevant to the needs and situation
-                of the resident.
-              </p>
-            )}
-            <hr
-              id="search-results-divider"
-              className={`govuk-section-break govuk-section-break--m govuk-section-break--hidden`}
-            />
-            {filteredResources && (
-              <div
-                key={`search-result-${filteredResources.id}`}
-                data-testid="search-results-container">
-                <div className="govuk-!-margin-bottom-6">
-                  {!feedbackSubmitted ? (
-                    <Details id="feedback-summary" title="Provide feedback">
-                      <form id="search-feedback-form" onSubmit={sendFeedback}>
-                        <div className="govuk-inset-text">
-                          <div>
-                            <label htmlFor="search-feedback">Search results feedback</label>
-                          </div>
-                          <textarea
-                            id="search-feedback"
-                            name="search-feedback"
-                            maxLength="450"
-                            className={styles['feedback-textarea']}
-                          />
-                          <br />
-                          <button type="submit" className={`govuk-button`}>
-                            Send
-                          </button>
-                        </div>
-                      </form>
-                    </Details>
-                  ) : (
-                    <div className={styles['success-message']}>
-                      Feedback submitted. Thank you for providing us with information to assist in
-                      improving this tool.
-                    </div>
-                  )}
-                </div>
-
-                {filteredResources.resources.map(resource => (
-                  <ResourceCard
-                    data-testid={`resource-${resource.id}`}
-                    resource={resource}
-                    categoryId={filteredResources.id}
-                    referralCompletion={referralCompletion}
-                    setReferralCompletion={setReferralCompletion}
-                    detailsClicked={detailsClicked}
-                    openReferralForm={openReferralForm}
-                    referralData={referralData}
-                    setReferralData={setReferralData}
-                    referrerData={referrerData}
-                    setReferrerData={setReferrerData}
-                    updateSignpostSummary={updateSignpostSummary}
-                    signpostSummary={signpostSummary}
-                    setResidentInfo={setResidentInfo}
-                    token={token}
-                    referralSummary={referralSummary}
-                    setReferralSummary={setReferralSummary}
-                    updateEmailBody={updateEmailBody}
-                    setEmailBody={setEmailBody}
-                    residentInfo={residentInfo}
-                    setPreserveFormData={setPreserveFormData}
-                    preserveFormData={preserveFormData}
-                    wordsToHighlight={wordsToHighlight}
-                  />
-                ))}
-              </div>
-            )}
-          </div>
+          </form>
         </div>
-      </form>
+        <div className="govuk-grid-column-three-quarters">
+          <h2 className={`govuk-heading-l`}>Suggested services</h2>
+          {filteredResources ? (
+            <p>
+              If the results don't contain a service or information you require, please let us know.
+            </p>
+          ) : (
+            <p>
+              Use the personalisation options to find services relevant to the needs and situation
+              of the resident.
+            </p>
+          )}
+          <hr
+            id="search-results-divider"
+            className={`govuk-section-break govuk-section-break--m govuk-section-break--hidden`}
+          />
+          {filteredResources && (
+            <div
+              key={`search-result-${filteredResources.id}`}
+              data-testid="search-results-container">
+              <div className="govuk-!-margin-bottom-6">
+                {!feedbackSubmitted ? (
+                  <Details id="feedback-summary" title="Provide feedback">
+                    <form id="search-feedback-form" onSubmit={sendFeedback}>
+                      <div className="govuk-inset-text">
+                        <div>
+                          <label htmlFor="search-feedback">Search results feedback</label>
+                        </div>
+                        <textarea
+                          id="search-feedback"
+                          name="search-feedback"
+                          maxLength="450"
+                          className={styles['feedback-textarea']}
+                        />
+                        <br />
+                        <button type="submit" className={`govuk-button`}>
+                          Send
+                        </button>
+                      </div>
+                    </form>
+                  </Details>
+                ) : (
+                  <div className={styles['success-message']}>
+                    Feedback submitted. Thank you for providing us with information to assist in
+                    improving this tool.
+                  </div>
+                )}
+              </div>
+
+              {filteredResources.resources.map(resource => (
+                <ResourceCard
+                  data-testid={`resource-${resource.id}`}
+                  resource={resource}
+                  referralCompletion={referralCompletion}
+                  setReferralCompletion={setReferralCompletion}
+                  detailsClicked={detailsClicked}
+                  openReferralForm={openReferralForm}
+                  referralData={referralData}
+                  setReferralData={setReferralData}
+                  referrerData={referrerData}
+                  setReferrerData={setReferrerData}
+                  updateSignpostSummary={updateSignpostSummary}
+                  signpostSummary={signpostSummary}
+                  setResidentInfo={setResidentInfo}
+                  token={token}
+                  referralSummary={referralSummary}
+                  setReferralSummary={setReferralSummary}
+                  updateEmailBody={updateEmailBody}
+                  setEmailBody={setEmailBody}
+                  residentInfo={residentInfo}
+                  setPreserveFormData={setPreserveFormData}
+                  preserveFormData={preserveFormData}
+                  wordsToHighlight={wordsToHighlight}
+                />
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
     </>
   );
 };

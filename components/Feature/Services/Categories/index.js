@@ -35,6 +35,7 @@ const Categories = ({ categorisedResources, selectedCategories, setSelectedCateg
               id={`category-cb-${group.id}`}
               name={`category-cb-${group.id}`}
               type="checkbox"
+              data-testid="category-checkbox"
               onChange={e => categoryChanged(e)}
               value={group.id}
             />
