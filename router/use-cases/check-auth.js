@@ -23,5 +23,11 @@ class CheckAuth {
     const payload = jwt.verify(token, process.env.JWT_SECRET);
     return payload ? payload.email : '';
   };
+
+  getIat = token => {
+    if (!token) return '';
+    const payload = jwt.verify(token, process.env.JWT_SECRET);
+    return payload ? payload.iat : '';
+  };
 }
 module.exports = CheckAuth;
