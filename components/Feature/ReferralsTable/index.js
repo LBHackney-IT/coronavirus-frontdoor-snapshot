@@ -30,7 +30,9 @@ const ReferralsTable = ({ referrals }) => {
         <tbody className="govuk-table__body">
           {referrals.map((referral, index) => {
             const recentStatus = getRecentStatus(referral.statusHistory).status;
-            const recentStatusClass = STATUS_MAPPINGS[recentStatus]?.class;
+            const recentStatusClass = STATUS_MAPPINGS[recentStatus]
+              ? STATUS_MAPPINGS[recentStatus].class
+              : '';
 
             return (
               <tr
@@ -53,7 +55,9 @@ const ReferralsTable = ({ referrals }) => {
                 </td>
                 <td className={`govuk-table__cell`} data-testid="referrals-table-status">
                   <div className={`${css[recentStatusClass]}`}>
-                    {STATUS_MAPPINGS[recentStatus]?.label || 'no status'}
+                    {STATUS_MAPPINGS[recentStatus]
+                      ? STATUS_MAPPINGS[recentStatus].label
+                      : 'no status'}
                   </div>
                 </td>
               </tr>
