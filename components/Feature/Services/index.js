@@ -98,7 +98,9 @@ const Services = ({
     if (selectedCategories.length > 0) weightByCategories(selectedCategories, categorisedResources);
 
     const newFilteredResources = flattenSearchResults(searchResults);
-    newFilteredResources.resources.sort((a, b) => b.weight - a.weight);
+    newFilteredResources.resources.sort(
+      (a, b) => b.weight - a.weight || b.demographic?.length - a.demographic?.length
+    );
 
     setFilteredResources(newFilteredResources);
     sendDataToAnalytics({

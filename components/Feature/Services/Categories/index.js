@@ -11,7 +11,8 @@ const Categories = ({ categorisedResources, selectedCategories, setSelectedCateg
     'Money advice': { problemDescription: 'Money' },
     'Employment advice': { problemDescription: 'Employment' },
     'Housing advice': { problemDescription: 'Housing' },
-    'Immigration advice': { problemDescription: 'Immigration' }
+    'Immigration advice': { problemDescription: 'Immigration' },
+    'Faith-led activities': { problemDescription: 'Religious needs' }
   };
 
   const categoryChanged = e => {
@@ -26,25 +27,25 @@ const Categories = ({ categorisedResources, selectedCategories, setSelectedCateg
 
   return (
     <div>
-      {categorisedResources
-        .filter(c => categoryProblems[c.name])
-        .map(group => {
-          return (
-            <div class="govuk-checkboxes__item">
-              <input
-                class="govuk-checkboxes__input"
-                id={`category-cb-${group.id}`}
-                name={`category-cb-${group.id}`}
-                type="checkbox"
-                onChange={e => categoryChanged(e)}
-                value={group.id}
-              />
-              <label class="govuk-label govuk-checkboxes__label" for={`category-cb-${group.id}`}>
-                {categoryProblems[group.name].problemDescription}
-              </label>
-            </div>
-          );
-        })}
+      {categorisedResources.map(group => {
+        return (
+          <div class="govuk-checkboxes__item">
+            <input
+              class="govuk-checkboxes__input"
+              id={`category-cb-${group.id}`}
+              name={`category-cb-${group.id}`}
+              type="checkbox"
+              onChange={e => categoryChanged(e)}
+              value={group.id}
+            />
+            <label class="govuk-label govuk-checkboxes__label" for={`category-cb-${group.id}`}>
+              {categoryProblems[group.name]
+                ? categoryProblems[group.name].problemDescription
+                : group.name}
+            </label>
+          </div>
+        );
+      })}
     </div>
   );
 };
