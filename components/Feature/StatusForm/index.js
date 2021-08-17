@@ -1,5 +1,6 @@
 import { REFERRAL_STATUSES } from 'lib/utils/constants';
 import { useState } from 'react';
+import css from './index.module.css';
 
 const StatusForm = ({ onSubmitForm, name }) => {
   const [reject, setReject] = useState(false);
@@ -70,20 +71,27 @@ const StatusForm = ({ onSubmitForm, name }) => {
                 }`}
                 id="conditional-contact"
                 data-testid="status-form-rejected-comment">
-                <div className="govuk-form-group">
-                  <label className="govuk-label" for="referral-rejection-reason">
-                    Reason for not accepting this referral (optional)
-                  </label>
-                  <textarea
-                    className="govuk-textarea"
-                    id="referral-rejection-reason"
-                    name="referral-rejection-reason"
-                    spellcheck="false"
-                    data-testid="status-form-rejected-comment-input"
-                    onChange={e => {
-                      setComment(e.target.value);
-                    }}
-                  />
+                <div className={`govuk-form-group ${false ? 'govuk-form-group--error' : ''}`}>
+                  <div className="govuk-!-padding-bottom-2">
+                    <label className="govuk-label" for="referral-rejection-reason">
+                      Reason for not accepting this referral (optional)
+                    </label>
+                    <span id={`reject-comment-error`} className="govuk-error-message">
+                      <span hidden={!false} data-testid="reject-comment-error">
+                        Please provide a reason for not accepting this referral.
+                      </span>
+                    </span>
+                    <textarea
+                      className={`govuk-textarea ${false ? 'govuk-input--error' : ''}`}
+                      id={`${css['referral-rejection-reason']}`}
+                      name="referral-rejection-reason"
+                      spellcheck="false"
+                      data-testid="status-form-rejected-comment-input"
+                      onChange={e => {
+                        setComment(e.target.value);
+                      }}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
