@@ -68,7 +68,6 @@ const Index = ({ categorisedResources, initialReferral, token, errors, refererIn
     <>
       <Head>
         <title>Better Conversations</title>
-        {process.env.NEXT_PUBLIC_ENV != 'test' && <script src="/js/beforeUnload.js"></script>}
       </Head>
       <div className="govuk-!-margin-top-9">
         {errors.map((err, index) => (
