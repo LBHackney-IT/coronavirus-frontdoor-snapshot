@@ -6,6 +6,14 @@ const StatusForm = ({ onSubmitForm, name }) => {
   const [reject, setReject] = useState(false);
   const [status, setStatus] = useState();
   const [comment, setComment] = useState();
+  const [validationError, setValidationError] = useState({ rejectReason: false });
+
+  const onChangeRejectReason = event => {
+    const fieldValue = event.target.value;
+    const isValueEmpty = !Boolean(fieldValue);
+    setComment(fieldValue);
+    setValidationError({ ...validationError, rejectReason: isValueEmpty });
+  };
 
   return (
     <>
@@ -71,25 +79,34 @@ const StatusForm = ({ onSubmitForm, name }) => {
                 }`}
                 id="conditional-contact"
                 data-testid="status-form-rejected-comment">
-                <div className={`govuk-form-group ${false ? 'govuk-form-group--error' : ''}`}>
+                <div
+                  className={`govuk-form-group ${
+                    validationError.rejectReason ? 'govuk-form-group--error' : ''
+                  }`}>
                   <div className="govuk-!-padding-bottom-2">
                     <label className="govuk-label" for="referral-rejection-reason">
                       Reason for not accepting this referral (optional)
                     </label>
                     <span id={`reject-comment-error`} className="govuk-error-message">
-                      <span hidden={!false} data-testid="reject-comment-error">
+                      <span
+                        hidden={!validationError.rejectReason}
+                        data-testid="reject-comment-error">
                         Please provide a reason for not accepting this referral.
                       </span>
                     </span>
                     <textarea
-                      className={`govuk-textarea ${false ? 'govuk-input--error' : ''}`}
+                      className={`govuk-textarea ${
+                        validationError.rejectReason ? 'govuk-input--error' : ''
+                      }`}
                       id={`${css['referral-rejection-reason']}`}
                       name="referral-rejection-reason"
                       spellcheck="false"
                       data-testid="status-form-rejected-comment-input"
-                      onChange={e => {
-                        setComment(e.target.value);
-                      }}
+                      onChange={onChangeRejectReason}
+                      required
+                      onInvalid={() =>
+                        setValidationError({ ...validationError, rejectReason: true })
+                      }
                     />
                   </div>
                 </div>
