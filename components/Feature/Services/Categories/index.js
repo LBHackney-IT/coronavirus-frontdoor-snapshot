@@ -1,30 +1,50 @@
-import CategoryCard from './CategoryCard';
-import styles from './index.module.scss';
+const Categories = ({ categorisedResources, selectedCategories, setSelectedCategories }) => {
+  const categoryProblems = {
+    'Anxiety or mental health': { problemDescription: 'Mental health' },
+    'Exercise and wellbeing': { problemDescription: 'Exercise' },
+    'Safe and healthy body': {
+      problemDescription: 'Medical conditions, addictions or safety concerns'
+    },
+    'Arts and creativity': { problemDescription: 'Emotional wellbeing' },
+    'Money advice': { problemDescription: 'Money' },
+    'Employment advice': { problemDescription: 'Employment' },
+    'Housing advice': { problemDescription: 'Housing' },
+    'Immigration advice': { problemDescription: 'Immigration' },
+    'Faith-led activities': { problemDescription: 'Religious needs' }
+  };
 
-const Categories = ({ categorisedResources, clickCategory, selectedCategory }) => {
-  let groupedCategories = [];
-  let i = 0;
-  while (i < categorisedResources.length) {
-    groupedCategories.push(categorisedResources.slice(i, (i += 3)));
-  }
+  const categoryChanged = e => {
+    let ids = selectedCategories;
+    const selectedCategoryId = parseInt(e.target.value);
+    ids = ids.filter(item => item !== selectedCategoryId);
+    if (e.target.checked && selectedCategoryId) {
+      ids.push(selectedCategoryId);
+    }
+    setSelectedCategories(ids);
+  };
 
   return (
     <div>
-      {groupedCategories.map((group, i) => {
+      {categorisedResources.map(group => {
         return (
-          <div key={`category-group-${i}`} className={`govuk-grid-row ${styles['row']}`}>
-            {group.map(taxonomy => {
-              return (
-                <div
-                  key={`category-card-${taxonomy.name}`}
-                  className={`govuk-grid-column-one-third ${styles['column']}`}>
-                  <CategoryCard
-                    category={taxonomy}
-                    onclick={clickCategory}
-                    selectedCategory={selectedCategory}></CategoryCard>
-                </div>
-              );
-            })}
+          <div class="govuk-checkboxes__item">
+            <input
+              class="govuk-checkboxes__input"
+              id={`category-cb-${group.id}`}
+              name={`category-cb-${group.id}`}
+              type="checkbox"
+              data-testid="category-checkbox"
+              onChange={e => categoryChanged(e)}
+              value={group.id}
+            />
+            <label
+              class="govuk-label govuk-checkboxes__label"
+              for={`category-cb-${group.id}`}
+              data-testid="category-label">
+              {categoryProblems[group.name]
+                ? categoryProblems[group.name].problemDescription
+                : group.name}
+            </label>
           </div>
         );
       })}

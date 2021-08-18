@@ -9,40 +9,48 @@ describe('Referral form', () => {
   });
 
   it('Collapses other referral forms if a new form is expanded', () => {
-    cy.get('[data-testid=category-card]')
+    cy.get('[data-testid=category-checkbox]')
       .eq(0)
       .click();
 
+    cy.get('[data-testid="keyword-search-button"]').click();
+
     cy.get('#referral-ABC123-form').should('not.exist');
 
-    cy.get('#referral-ABC123-1').click();
-    cy.get('#referral-ABC123-1-form').should('exist');
+    cy.get('#referral-ABC123').click();
+    cy.get('#referral-ABC123-form').should('exist');
 
-    cy.get('#referral-abc-1').click();
+    cy.get('#referral-abc').click();
 
-    cy.get('#referral-ABC123-1-form').should('not.exist');
+    cy.get('#referral-ABC123-form').should('not.exist');
 
-    cy.get('[data-testid=category-card]')
+    cy.get('[data-testid=category-checkbox]')
+      .eq(0)
+      .click();
+
+    cy.get('[data-testid=category-checkbox]')
       .eq(1)
       .click();
 
-    cy.get('#referral-abc-2').click();
+    cy.get('[data-testid="keyword-search-button"]').click();
 
-    cy.get('#referral-abc-2-form').should('exist');
+    cy.get('#referral-abc').click();
 
-    cy.get('#referral-abc-1-form').should('not.exist');
+    cy.get('#referral-abc-form').should('exist');
   });
 
   it('Services without and email do not have a refer button', () => {
-    cy.get('#referral-1-2').should('not.exist');
+    cy.get('#referral-1').should('not.exist');
   });
 
   it('Renders hidden referral fields', () => {
-    cy.get('[data-testid=category-card]')
+    cy.get('[data-testid=category-checkbox]')
       .eq(1)
       .click();
 
-    cy.get('#referral-abc-2').click();
+    cy.get('[data-testid="keyword-search-button"]').click();
+
+    cy.get('#referral-abc').click();
 
     cy.get('#service-name-abc')
       .should('not.be.visible')
@@ -70,27 +78,29 @@ describe('Referral form', () => {
   });
 
   it('Persists referral information across different referral fields', () => {
-    cy.get('[data-testid=category-card]')
+    cy.get('[data-testid=category-checkbox]')
       .eq(0)
       .click();
-    cy.get('#referral-ABC123-1').click();
+
+    cy.get('[data-testid="keyword-search-button"]').click();
+    cy.get('#referral-ABC123').click();
 
     cy.get('#referral-reason-ABC123').type('First referral reason value');
     cy.get('#conversation-notes-ABC123').type('First conversation notes value');
 
-    cy.get('#referral-abc-1').click();
+    cy.get('#referral-abc').click();
     cy.get('#referral-reason-abc').should('have.value', 'First referral reason value');
     cy.get('#conversation-notes-abc').should('have.value', 'First conversation notes value');
   });
 
   it('Persists referrer information across different referral fields', () => {
-    cy.get('#referral-ABC123-1').click();
+    cy.get('#referral-ABC123').click();
 
     cy.get('#referer-name-ABC123').type('Tina Belcher');
     cy.get('#referer-organisation-ABC123').should('have.value', 'Hackney Council');
     cy.get('#referer-email-ABC123').type('perm-fail@simulator.notify');
 
-    cy.get('#referral-abc-1').click();
+    cy.get('#referral-abc').click();
     cy.get('#referer-name-abc').should('have.value', 'Tina Belcher');
     cy.get('#referer-organisation-abc').should('have.value', 'Hackney Council');
     cy.get('#referer-email-abc').should('have.value', 'perm-fail@simulator.notify');
@@ -105,12 +115,14 @@ describe('Referral form', () => {
     });
 
     it('resident form validation', () => {
-      cy.get('[data-testid=category-card]')
+      cy.get('[data-testid=category-checkbox]')
         .eq(0)
         .click();
 
-      cy.get('#referral-ABC123-1-form').should('not.exist');
-      cy.get('#referral-ABC123-1')
+      cy.get('[data-testid="keyword-search-button"]').click();
+
+      cy.get('#referral-ABC123-form').should('not.exist');
+      cy.get('#referral-ABC123')
         .contains('Refer')
         .click();
 
@@ -144,10 +156,12 @@ describe('Referral form', () => {
       cy.visit('/support-a-resident');
       cy.injectAxe();
 
-      cy.get('[data-testid=category-card]')
+      cy.get('[data-testid=category-checkbox]')
         .eq(0)
         .click();
-      cy.get('#referral-ABC123-1').click({ force: true });
+
+      cy.get('[data-testid="keyword-search-button"]').click();
+      cy.get('#referral-ABC123').click({ force: true });
       cy.get('#firstName').type('Luna');
       cy.get('#lastName').type('Kitty');
       cy.get('#phone').type('07700900000');
@@ -193,12 +207,14 @@ describe('Referral form', () => {
     });
 
     it('Persists the data across referrals if continue call is selected', () => {
-      cy.get(`[data-testid=continue-call-button]`).click();
+      cy.get(`[data-testid=continue-call-button]`).click({ force: true });
 
-      cy.get('[data-testid=category-card]')
+      cy.get('[data-testid=category-checkbox]')
         .eq(1)
-        .click();
-      cy.get('#referral-abc-2').click({ force: true });
+        .click({ force: true });
+
+      cy.get('[data-testid="keyword-search-button"]').click();
+      cy.get('#referral-abc').click({ force: true });
 
       cy.get('#firstName').should('have.value', 'Luna');
       cy.get('#lastName').should('have.value', 'Kitty');
@@ -234,10 +250,12 @@ describe('Referral form', () => {
     });
 
     it('Does not persist the data across referrals if continue call is not selected', () => {
-      cy.get('[data-testid=category-card]')
+      cy.get('[data-testid=category-checkbox]')
         .eq(2)
         .click();
-      cy.get('#referral-6661hZ8POgMfnWtJt-3').click({ force: true });
+
+      cy.get('[data-testid="keyword-search-button"]').click();
+      cy.get('#referral-6661hZ8POgMfnWtJt').click({ force: true });
 
       cy.get('#firstName').should('have.value', '');
       cy.get('#lastName').should('have.value', '');
@@ -251,14 +269,16 @@ describe('Referral form', () => {
     });
 
     it('Persists the data to summary if continue call is selected', () => {
-      cy.get('[data-testid=category-card]')
+      cy.get('[data-testid=category-checkbox]')
         .eq(1)
         .click();
-      cy.get('#referral-abc-2').click({ force: true });
+
+      cy.get('[data-testid="keyword-search-button"]').click();
+      cy.get('#referral-abc').click({ force: true });
 
       cy.get(`[data-testid=continue-call-button]`).click();
 
-      cy.get('#add-to-summary-checkbox-1-2').click();
+      cy.get('#add-to-summary-checkbox-1').click();
       cy.get('#summary-summary-form').click();
 
       cy.get('#firstName').should('have.value', 'Luna');
@@ -275,7 +295,7 @@ describe('Referral form', () => {
     });
 
     it('Page is reloaded if finish call is selected', () => {
-      cy.get('#referral-abc-2').click({ force: true });
+      cy.get('#referral-abc').click({ force: true });
 
       cy.get(`[data-testid=finish-call-button]`).click();
 

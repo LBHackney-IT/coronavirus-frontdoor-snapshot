@@ -22,8 +22,7 @@ const ReferralForm = ({
   setPreserveFormData,
   residentInfo,
   detailsClicked,
-  resource,
-  categoryId
+  resource
 }) => {
   const { createReferral } = useReferral({ token });
 
@@ -500,11 +499,7 @@ const ReferralForm = ({
                     type="button"
                     className="govuk-button govuk-button--secondary govuk-!-margin-right-2"
                     onClick={e => {
-                      detailsClicked(
-                        e,
-                        `referral-${resource.id}-${categoryId}-details`,
-                        resource.id
-                      );
+                      detailsClicked(e, `referral-${resource.id}-details`, resource.id);
                       document
                         .getElementById(`resource-container-${resource.id}`)
                         ?.scrollIntoView();

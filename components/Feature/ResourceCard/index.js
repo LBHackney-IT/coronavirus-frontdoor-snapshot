@@ -14,7 +14,6 @@ import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 
 const ResourceCard = ({
   residentInfo,
-  categoryId,
   referralCompletion,
   setReferralCompletion,
   detailsClicked,
@@ -149,7 +148,7 @@ const ResourceCard = ({
               <fieldset className="govuk-fieldset" role="group">
                 <input
                   className="govuk-checkboxes__input"
-                  id={`add-to-summary-checkbox-${resource.id}-${categoryId}`}
+                  id={`add-to-summary-checkbox-${resource.id}`}
                   name="add-to-summary-checkbox"
                   type="checkbox"
                   onClick={() => {
@@ -169,7 +168,7 @@ const ResourceCard = ({
                 />
                 <label
                   className={`govuk-label govuk-checkboxes__label ${css['checkbox-label']}`}
-                  htmlFor={`add-to-summary-checkbox-${resource.id}-${categoryId}`}>
+                  htmlFor={`add-to-summary-checkbox-${resource.id}`}>
                   Share service with a resident
                 </label>
                 <legend hidden>Share service with a resident</legend>
@@ -178,18 +177,18 @@ const ResourceCard = ({
           </div>
           <div>
             {resource.referralContact?.length > 0 ? (
-              <span id={`referral-${resource.id}-${categoryId}-details`} name="refer-details">
+              <span id={`referral-${resource.id}-details`} name="refer-details">
                 {(openReferralForm.id != resource.id ||
                   openReferralForm.categoryName != resource.categoryName) && (
                   <button
-                    id={`referral-${resource.id}-${categoryId}`}
+                    id={`referral-${resource.id}`}
                     className={`govuk-button ${css['refer-button']}`}
                     type="button"
                     data-testid="refer-button"
                     onClick={e => {
                       detailsClicked(
                         e,
-                        `referral-${resource.id}-${categoryId}-details`,
+                        `referral-${resource.id}-details`,
                         resource.id,
                         resource.categoryName
                       );
@@ -205,14 +204,14 @@ const ResourceCard = ({
                 {openReferralForm.id == resource.id &&
                   openReferralForm.categoryName == resource.categoryName && (
                     <button
-                      id={`referral-${resource.id}-${categoryId}`}
+                      id={`referral-${resource.id}`}
                       className={`govuk-button ${css['refer-button']} govuk-button--secondary`}
                       type="button"
                       data-testid="refer-button"
                       onClick={e =>
                         detailsClicked(
                           e,
-                          `referral-${resource.id}-${categoryId}-details`,
+                          `referral-${resource.id}-details`,
                           resource.id,
                           resource.categoryName
                         )
@@ -248,7 +247,7 @@ const ResourceCard = ({
                           setPreserveFormData(true);
                           detailsClicked(
                             e,
-                            `referral-${resource.id}-${categoryId}-details`,
+                            `referral-${resource.id}-details`,
                             resource.id,
                             resource.categoryName
                           );
@@ -259,15 +258,15 @@ const ResourceCard = ({
                       <button
                         type="button"
                         className={`govuk-button ${notificationCss['notification-button']}`}
-                        onClick={() => (window.location = process.env.NEXT_PUBLIC_URL)}
+                        onClick={() =>
+                          (window.location = `${process.env.NEXT_PUBLIC_URL}/support-a-resident`)
+                        }
                         data-testid="finish-call-button">
                         Finish Call
                       </button>
                     </div>
                   ) : (
-                    <div
-                      id={`referral-${resource.id}-${categoryId}-form`}
-                      className={css['referral-form']}>
+                    <div id={`referral-${resource.id}-form`} className={css['referral-form']}>
                       <ReferralForm
                         setResidentInfo={setResidentInfo}
                         token={token}
@@ -286,7 +285,6 @@ const ResourceCard = ({
                         setPreserveFormData={setPreserveFormData}
                         residentInfo={residentInfo}
                         detailsClicked={detailsClicked}
-                        categoryId={categoryId}
                       />
                     </div>
                   ))}
@@ -321,7 +319,7 @@ const ResourceCard = ({
       {signpostSummary?.some(x => x.name == resource.name) && (
         <div
           className={`${css['success-message']}`}
-          data-testid={`added-to-summary-banner-${resource.id}-${categoryId}`}>
+          data-testid={`added-to-summary-banner-${resource.id}`}>
           You have added a service to your summary message
           <a
             className={`${css['summary-link']}`}

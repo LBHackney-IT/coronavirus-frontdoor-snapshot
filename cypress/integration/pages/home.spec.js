@@ -7,53 +7,63 @@ context('Support a resident page', () => {
 
   describe('Page structure', () => {
     it('has the right headings', () => {
-      cy.contains('Explore categories').should('be.visible');
+      cy.contains('Personalise').should('be.visible');
     });
 
     it('displays the search-box', () => {
-      cy.contains('Search for support').should('be.visible');
-      cy.get('[data-testid=keyword-search]').should('be.visible');
+      cy.contains('Additional needs').should('be.visible');
+      cy.get('[data-testid=keyword-search-button]').should('be.visible');
       cy.runCheckA11y();
     });
   });
 
   describe('Categories', () => {
     it('shows category headers containing resources', () => {
-      cy.get('[data-testid=search-results-header]').should('not.exist');
+      cy.get('[data-testid=search-results-container]').should('not.exist');
 
-      cy.get('[data-testid=category-card]')
+      cy.get('[data-testid=category-checkbox]')
         .eq(0)
         .click();
 
-      cy.get('[data-testid=search-results-header]').should('contain', 'First category');
+      cy.get('[data-testid=keyword-search-button]').click();
 
-      cy.get('[data-testid=category-card]')
+      cy.get('[data-testid=search-results-container]').should('contain', 'First service');
+
+      cy.get('[data-testid=category-checkbox]')
         .eq(1)
         .click();
 
-      cy.get('[data-testid=search-results-header]').should('not.contain', 'First category');
-      cy.get('[data-testid=search-results-header]').should('contain', 'Second category');
+      cy.get('[data-testid=category-checkbox]')
+        .eq(0)
+        .click();
+
+      cy.get('[data-testid=keyword-search-button]').click();
+
+      cy.get('[data-testid=search-results-container]').should('not.contain', 'Second service');
+      cy.get('[data-testid=search-results-container]').should('contain', 'First service');
       cy.runCheckA11y();
     });
   });
 
   describe('Resources', () => {
     it('shows category headers containing resources', () => {
-      cy.get('[data-testid=category-card]').should('have.length', 3);
-      cy.get('[data-testid=category-card]')
+      cy.get('[data-testid=category-label]').should('have.length', 3);
+      cy.get('[data-testid=category-label]')
         .should('contain', 'First category')
         .and('contain', 'Second category')
         .and('contain', 'Third category');
     });
 
     it('does not show category headers without resources', () => {
-      cy.get('[data-testid=category-card]').should('not.contain', 'Fourth category');
+      cy.get('[data-testid=category-checkbox]').should('not.contain', 'Fourth category');
     });
 
     it('Displays the resources', () => {
-      cy.get('[data-testid=category-card]')
+      cy.get('[data-testid=category-checkbox]')
         .eq(0)
         .click();
+
+      cy.get('[data-testid=keyword-search-button]').click();
 
       cy.get('[data-testid=resource-card-header]').should('have.length', 5);
 
@@ -67,9 +77,11 @@ context('Support a resident page', () => {
     });
 
     it('Does not show demographics label when there are no demographics', () => {
-      cy.get('[data-testid=category-card]')
-        .eq(0)
+      cy.get('[data-testid=category-checkbox]')
+        .eq(1)
         .click();
+
+      cy.get('[data-testid=keyword-search-button]').click();
 
       cy.get('[data-testid=resource-2]')
         .eq(0)
@@ -97,9 +109,11 @@ context('Support a resident page', () => {
     // });
 
     it('Displays the correct resource information for council resources', () => {
-      cy.get('[data-testid=category-card]')
+      cy.get('[data-testid=category-checkbox]')
         .eq(0)
         .click();
+
+      cy.get('[data-testid=keyword-search-button]').click();
 
       cy.get('[data-testid=resource-ABC123]')
         .eq(0)
@@ -120,9 +134,11 @@ context('Support a resident page', () => {
     });
 
     it('Displays the correct resource information for FSS resources', () => {
-      cy.get('[data-testid=category-card]')
+      cy.get('[data-testid=category-checkbox]')
         .eq(0)
         .click();
+
+      cy.get('[data-testid=keyword-search-button]').click();
 
       cy.get('[data-testid=resource-1]')
         .eq(0)
@@ -143,9 +159,11 @@ context('Support a resident page', () => {
     });
 
     it('Displays only the Create Referral button if both an email and website exist in service data', () => {
-      cy.get('[data-testid=category-card]')
+      cy.get('[data-testid=category-checkbox]')
         .eq(0)
         .click();
+
+      cy.get('[data-testid=keyword-search-button]').click();
 
       cy.get('[data-testid=resource-abc]')
         .eq(0)
@@ -166,9 +184,11 @@ context('Support a resident page', () => {
     });
 
     it('Displays only the Referral Link if only a website exists in service data', () => {
-      cy.get('[data-testid=category-card]')
+      cy.get('[data-testid=category-checkbox]')
         .eq(0)
         .click();
+
+      cy.get('[data-testid=keyword-search-button]').click();
 
       cy.get('[data-testid=resource-2]')
         .eq(0)
@@ -186,9 +206,11 @@ context('Support a resident page', () => {
     });
 
     it('Clicking Create Referral opens a form that will send to the correct email address', () => {
-      cy.get('[data-testid=category-card]')
+      cy.get('[data-testid=category-checkbox]')
         .eq(0)
         .click();
+
+      cy.get('[data-testid=keyword-search-button]').click();
 
       cy.get('[data-testid=resource-abc]')
         .eq(0)
@@ -210,35 +232,36 @@ context('Support a resident page', () => {
   });
 
   describe('Search', () => {
-    it('shows all resources if the search input is empty', () => {
+    it('shows all resources if the search input is empty and no categories selected', () => {
       cy.get('[data-testid="keyword-search-button"]').click();
 
-      cy.get('[data-testid="search-results-header"]').should('contain', '7 results');
+      cy.get('[data-testid="search-results-container"]')
+        .find('[data-testid="resource-card-header"]')
+        .should('have.length', 7);
+
+      cy.get('[data-testid="show-more-button"]').should('not.exist');
+
       cy.runCheckA11y();
     });
 
-    it('shows singular text if only 1 result returned', () => {
-      cy.get('[data-testid="keyword-search"]').type('abc mental health');
-      cy.get('[data-testid="keyword-search-button"]').click();
-
-      cy.get('[data-testid="search-results-header"]').should('contain', '1 result');
-      cy.get('[data-testid="search-results-header"]').should('not.contain', '1 results');
-    });
-
-    it('shows plural text if no results', () => {
+    it('shows empty text if no results', () => {
       cy.get('[data-testid="keyword-search"]').clear();
 
       cy.get('[data-testid="keyword-search"]').type('sdjkfhdjksfhdjsfhjdksf');
       cy.get('[data-testid="keyword-search-button"]').click();
 
-      cy.get('[data-testid="search-results-header"]').should('contain', '0 results');
+      cy.get('[data-testid="results-text"]').should('contain', 'Your search returned no results.');
+
+      cy.get('[data-testid="show-more-button"]').should('not.exist');
     });
 
     it('press enter when focus is in input will also search', () => {
       cy.get('[data-testid="keyword-search"]').clear();
 
       cy.get('[data-testid="keyword-search"]').type('kingsman {enter}');
-      cy.get('[data-testid="search-results-header"]').should('contain', '1 result');
+      cy.get('[data-testid="search-results-container"]')
+        .find('[data-testid="resource-card-header"]')
+        .should('have.length', 1);
     });
 
     it('returns only services containing search term', () => {
@@ -287,23 +310,28 @@ context('Support a resident page', () => {
 
   describe('Add to summary', () => {
     it('persists checked summaries across different service views', () => {
-      cy.get('[data-testid=category-card]')
+      cy.get('[data-testid=category-checkbox]')
         .eq(1)
         .click();
-      cy.get('#add-to-summary-checkbox-1-2').should('not.be.checked');
 
-      cy.get('#add-to-summary-checkbox-1-2').click();
+      cy.get('[data-testid="keyword-search"]').clear();
 
-      cy.get('#add-to-summary-checkbox-1-2').should('be.checked');
+      cy.get('[data-testid=keyword-search-button]').click();
 
-      cy.get('[data-testid=category-card]')
+      cy.get('#add-to-summary-checkbox-1').should('not.be.checked');
+
+      cy.get('#add-to-summary-checkbox-1').click();
+
+      cy.get('#add-to-summary-checkbox-1').should('be.checked');
+
+      cy.get('[data-testid=category-checkbox]')
         .eq(2)
         .click();
 
-      cy.get('[data-testid=category-card]')
+      cy.get('[data-testid=category-checkbox]')
         .eq(1)
         .click();
-      cy.get('#add-to-summary-checkbox-1-2').should('be.checked');
+      cy.get('#add-to-summary-checkbox-1').should('be.checked');
       cy.runCheckA11y();
     });
   });

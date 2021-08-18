@@ -122,6 +122,7 @@ const SupportSummary = ({
 
   return (
     <>
+      <hr className={`govuk-section-break govuk-section-break--m govuk-section-break--visible`} />
       <h1 className={`govuk-heading-l`} id="summary-header">
         Send a summary of today's support
       </h1>

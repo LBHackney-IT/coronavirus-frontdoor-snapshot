@@ -20,15 +20,17 @@ context('Create summary', () => {
   });
 
   it('adds selected services to summary', () => {
-    cy.get('[data-testid=category-card]')
+    cy.get('[data-testid=category-checkbox]')
       .eq(1)
-      .click();
+      .click({ force: true });
 
-    cy.get('[data-testid=added-to-summary-banner-1-2]').should('not.exist');
+    cy.get('[data-testid="keyword-search-button"]').click();
 
-    cy.get('#add-to-summary-checkbox-1-2').click();
+    cy.get('[data-testid=added-to-summary-banner-1]').should('not.exist');
 
-    cy.get('[data-testid=added-to-summary-banner-1-2]').should('exist');
+    cy.get('#add-to-summary-checkbox-1').click();
+
+    cy.get('[data-testid=added-to-summary-banner-1]').should('exist');
 
     cy.get('#summary-summary-form').click();
 
@@ -80,7 +82,7 @@ context('Create summary', () => {
   });
 
   it('add referred services to the summary', () => {
-    cy.get('#referral-abc-2').click();
+    cy.get('#referral-abc').click();
 
     cy.get('#referral-reason-abc').type(
       'Sunt in culpa qui officia deserunt mollit anim id est laborum.'
@@ -195,10 +197,12 @@ context('Create summary', () => {
       .contains('To help another resident please refresh this page')
       .should('be.visible');
 
-    cy.get('[data-testid=category-card]')
+    cy.get('[data-testid=category-checkbox]')
       .eq(0)
-      .click();
-    cy.get('#referral-ABC123-1').click({ force: true });
+      .click({ force: true });
+
+    cy.get('[data-testid="keyword-search-button"]').click();
+    cy.get('#referral-ABC123').click({ force: true });
 
     cy.get('#firstName').should('have.value', '');
     cy.get('#lastName').should('have.value', '');
