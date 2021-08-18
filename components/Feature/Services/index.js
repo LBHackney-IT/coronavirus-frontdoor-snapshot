@@ -10,7 +10,7 @@ import {
   getWordsToHighlight,
   weightByCategories
 } from 'lib/utils/search';
-import { CATEGORY_SEARCH, FEEDBACK_SEARCH } from 'lib/utils/constants';
+import { CATEGORY_SEARCH, FEEDBACK_SEARCH, SHOW_MORE_RESULTS } from 'lib/utils/constants';
 
 const Services = ({
   categorisedResources,
@@ -87,11 +87,18 @@ const Services = ({
 
   const showAllClicked = e => {
     SetShowMoreResults(!showMoreResults);
+    sendDataToAnalytics({
+      action: getUserGroup(referrerData['user-groups']),
+      category: SHOW_MORE_RESULTS,
+      label: resultsTitle,
+      value: filteredResources.resources.length
+    });
   };
 
   const handleSearch = e => {
     e.preventDefault();
     setFeedbackSubmitted(false);
+    SetShowMoreResults(false);
 
     const searchTerm = e.target['search-input'].value;
     setResultsTitle(searchTerm);
