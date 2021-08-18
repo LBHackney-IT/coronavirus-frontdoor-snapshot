@@ -254,7 +254,7 @@ const Services = ({
               {filteredResources.resources.length > 8 && (
                 <>
                   <div className={showMoreResults ? '' : styles.hidden} id="show-more-container">
-                    {filteredResources.resources.slice(9).map(resource => (
+                    {filteredResources.resources.slice(8).map(resource => (
                       <ResourceCard
                         data-testid={`resource-${resource.id}`}
                         resource={resource}
