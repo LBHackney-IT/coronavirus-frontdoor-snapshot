@@ -39,7 +39,10 @@ const Categories = ({ categorisedResources, selectedCategories, setSelectedCateg
               onChange={e => categoryChanged(e)}
               value={group.id}
             />
-            <label class="govuk-label govuk-checkboxes__label" for={`category-cb-${group.id}`}>
+            <label
+              class="govuk-label govuk-checkboxes__label"
+              for={`category-cb-${group.id}`}
+              data-testid="category-label">
               {categoryProblems[group.name]
                 ? categoryProblems[group.name].problemDescription
                 : group.name}

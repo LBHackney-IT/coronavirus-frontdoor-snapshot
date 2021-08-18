@@ -156,9 +156,19 @@ const Services = ({
         <div className="govuk-grid-column-three-quarters">
           <h2 className={`govuk-heading-l`}>Suggested services</h2>
           {filteredResources ? (
-            <p>
-              If the results don't contain a service or information you require, please let us know.
-            </p>
+            <>
+              {filteredResources.resources.length == 0 ? (
+                <p data-testid="results-text">
+                  Your search returned no results. If you were looking for a specific service please
+                  provide feedback using the form.
+                </p>
+              ) : (
+                <p data-testid="results-text">
+                  If the results don't contain a service or information you require, please let us
+                  know.
+                </p>
+              )}
+            </>
           ) : (
             <p>
               Use the personalisation options to find services relevant to the needs and situation
