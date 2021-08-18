@@ -84,7 +84,10 @@ const StatusForm = ({ onSubmitForm, name }) => {
                     validationError.rejectReason ? 'govuk-form-group--error' : ''
                   }`}>
                   <div className="govuk-!-padding-bottom-2">
-                    <label className="govuk-label" for="referral-rejection-reason">
+                    <label
+                      id="rejection-reason"
+                      className="govuk-label"
+                      for="referral-rejection-reason">
                       Reason for not accepting this referral (optional)
                     </label>
                     <span id={`reject-comment-error`} className="govuk-error-message">
@@ -100,6 +103,7 @@ const StatusForm = ({ onSubmitForm, name }) => {
                       }`}
                       id={`${css['referral-rejection-reason']}`}
                       name="referral-rejection-reason"
+                      aria-labelledby="rejection-reason"
                       spellcheck="false"
                       data-testid="status-form-rejected-comment-input"
                       onChange={onChangeRejectReason}
