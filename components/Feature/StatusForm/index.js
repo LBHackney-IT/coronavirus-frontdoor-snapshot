@@ -5,13 +5,13 @@ const StatusForm = ({ onSubmitForm, name }) => {
   const [reject, setReject] = useState(false);
   const [status, setStatus] = useState();
   const [comment, setComment] = useState();
-  const [validationError, setValidationError] = useState({ rejectReason: false });
+  const [validationError, setValidationError] = useState({ rejectReasonHasError: false });
 
   const onChangeRejectReason = event => {
     const fieldValue = event.target.value;
     const isValueEmpty = !Boolean(fieldValue);
     setComment(fieldValue);
-    setValidationError({ ...validationError, rejectReason: isValueEmpty });
+    setValidationError({ ...validationError, rejectReasonHasError: isValueEmpty });
   };
 
   return (
@@ -80,7 +80,7 @@ const StatusForm = ({ onSubmitForm, name }) => {
                 data-testid="status-form-rejected-comment">
                 <div
                   className={`govuk-form-group ${
-                    validationError.rejectReason ? 'govuk-form-group--error' : ''
+                    validationError.rejectReasonHasError ? 'govuk-form-group--error' : ''
                   }`}>
                   <div className="govuk-!-padding-bottom-2">
                     <label
@@ -91,14 +91,14 @@ const StatusForm = ({ onSubmitForm, name }) => {
                     </label>
                     <span id={`reject-comment-error`} className="govuk-error-message">
                       <span
-                        hidden={!validationError.rejectReason}
+                        hidden={!validationError.rejectReasonHasError}
                         data-testid="reject-comment-error">
                         Please provide a reason for not accepting this referral.
                       </span>
                     </span>
                     <textarea
                       className={`govuk-textarea govuk-!-margin-bottom-0 ${
-                        validationError.rejectReason ? 'govuk-input--error' : ''
+                        validationError.rejectReasonHasError ? 'govuk-input--error' : ''
                       }`}
                       name="referral-rejection-reason"
                       aria-labelledby="rejection-reason"
@@ -107,7 +107,7 @@ const StatusForm = ({ onSubmitForm, name }) => {
                       onChange={onChangeRejectReason}
                       required={reject}
                       onInvalid={() =>
-                        setValidationError({ ...validationError, rejectReason: true })
+                        setValidationError({ ...validationError, rejectReasonHasError: true })
                       }
                     />
                   </div>
