@@ -38,6 +38,20 @@ context('status page', () => {
   });
 
   describe('Reject referral', () => {
+    it('should not allow to submit the form without mandatory fields selected', () => {
+      cy.visit('/referrals/status/1');
+
+      // Try submitting the form without giving an Accept/Reject answer
+      cy.get('[data-testid=submit-status-form]').click();
+      cy.get('[data-testid=status-confirmation-panel]').should('not.exist');
+
+      // Try submitting a rejection without giving a rejection reason
+      cy.get('[data-testid=status-form-rejected-input]').click();
+      cy.get('[data-testid=submit-status-form]').click();
+      cy.get('[data-testid=reject-comment-error]').should('not.be.hidden');
+      cy.get('[data-testid=status-confirmation-panel]').should('not.exist');
+    });
+
     it('with comment', () => {
       cy.visit('/referrals/status/1');
       cy.injectAxe();

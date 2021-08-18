@@ -5,6 +5,14 @@ const StatusForm = ({ onSubmitForm, name }) => {
   const [reject, setReject] = useState(false);
   const [status, setStatus] = useState();
   const [comment, setComment] = useState();
+  const [validationError, setValidationError] = useState({ rejectReasonHasError: false });
+
+  const onChangeRejectReason = event => {
+    const fieldValue = event.target.value;
+    const isValueEmpty = !Boolean(fieldValue);
+    setComment(fieldValue);
+    setValidationError({ ...validationError, rejectReasonHasError: isValueEmpty });
+  };
 
   return (
     <>
@@ -70,20 +78,39 @@ const StatusForm = ({ onSubmitForm, name }) => {
                 }`}
                 id="conditional-contact"
                 data-testid="status-form-rejected-comment">
-                <div className="govuk-form-group">
-                  <label className="govuk-label" for="referral-rejection-reason">
-                    Reason for not accepting this referral (optional)
-                  </label>
-                  <textarea
-                    className="govuk-textarea"
-                    id="referral-rejection-reason"
-                    name="referral-rejection-reason"
-                    spellcheck="false"
-                    data-testid="status-form-rejected-comment-input"
-                    onChange={e => {
-                      setComment(e.target.value);
-                    }}
-                  />
+                <div
+                  className={`govuk-form-group ${
+                    validationError.rejectReasonHasError ? 'govuk-form-group--error' : ''
+                  }`}>
+                  <div className="govuk-!-padding-bottom-2">
+                    <label
+                      id="rejection-reason"
+                      className="govuk-label"
+                      for="referral-rejection-reason">
+                      Reason for not accepting this referral (optional)
+                    </label>
+                    <span id={`reject-comment-error`} className="govuk-error-message">
+                      <span
+                        hidden={!validationError.rejectReasonHasError}
+                        data-testid="reject-comment-error">
+                        Please provide a reason for not accepting this referral.
+                      </span>
+                    </span>
+                    <textarea
+                      className={`govuk-textarea govuk-!-margin-bottom-0 ${
+                        validationError.rejectReasonHasError ? 'govuk-input--error' : ''
+                      }`}
+                      name="referral-rejection-reason"
+                      aria-labelledby="rejection-reason"
+                      spellcheck="false"
+                      data-testid="status-form-rejected-comment-input"
+                      onChange={onChangeRejectReason}
+                      required={reject}
+                      onInvalid={() =>
+                        setValidationError({ ...validationError, rejectReasonHasError: true })
+                      }
+                    />
+                  </div>
                 </div>
               </div>
             </div>
