@@ -107,7 +107,7 @@ const StatusForm = ({ onSubmitForm, name }) => {
                       spellcheck="false"
                       data-testid="status-form-rejected-comment-input"
                       onChange={onChangeRejectReason}
-                      required
+                      required={reject}
                       onInvalid={() =>
                         setValidationError({ ...validationError, rejectReason: true })
                       }
