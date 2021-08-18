@@ -37,7 +37,7 @@ const Services = ({
   const [resultsTitle, setResultsTitle] = useState(null);
   const [wordsToHighlight, setWordsToHighlight] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
-  const [showMoreResults, SetShowMoreResults] = useState(false);
+  const [showMoreResults, setShowMoreResults] = useState(false);
 
   const detailsClicked = (e, id, serviceId, categoryName) => {
     e.preventDefault();
@@ -86,7 +86,7 @@ const Services = ({
   };
 
   const showAllClicked = e => {
-    SetShowMoreResults(!showMoreResults);
+    setShowMoreResults(!showMoreResults);
     sendDataToAnalytics({
       action: getUserGroup(referrerData['user-groups']),
       category: SHOW_MORE_RESULTS,
@@ -98,7 +98,7 @@ const Services = ({
   const handleSearch = e => {
     e.preventDefault();
     setFeedbackSubmitted(false);
-    SetShowMoreResults(false);
+    setShowMoreResults(false);
 
     const searchTerm = e.target['search-input'].value;
     setResultsTitle(searchTerm);
