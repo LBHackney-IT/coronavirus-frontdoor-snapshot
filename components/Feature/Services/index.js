@@ -105,9 +105,11 @@ const Services = ({
 
     const filteredByCategory = filterByCategories(selectedCategories, categorisedResources);
 
-    const searchResults = getSearchResults(searchTerm, filteredByCategory);
+    let searchResults = getSearchResults(searchTerm, filteredByCategory);
 
-    if (selectedCategories.length > 0) weightByCategories(selectedCategories, categorisedResources);
+    if (selectedCategories.length > 0) {
+      searchResults = weightByCategories(selectedCategories, searchResults);
+    }
 
     let newFilteredResources = flattenSearchResults(searchResults);
     newFilteredResources.resources.sort(
@@ -127,14 +129,14 @@ const Services = ({
 
   return (
     <>
-      <div class="govuk-grid-row">
+      <div className="govuk-grid-row">
         <div className="govuk-grid-column-one-quarter">
           <form onSubmit={handleSearch}>
-            <div class="govuk-grid-row">
+            <div className="govuk-grid-row">
               <h2 className={`govuk-heading-l`}>Personalise</h2>
               <p>All fields are optional.</p>
             </div>
-            <div class="govuk-grid-row govuk-!-margin-bottom-6">
+            <div className="govuk-grid-row govuk-!-margin-bottom-6">
               <h2 className={`govuk-heading-m`}>Problems faced</h2>
 
               <Categories
@@ -143,7 +145,7 @@ const Services = ({
                 setSelectedCategories={setSelectedCategories}
               />
             </div>
-            <div class="govuk-grid-row govuk-!-margin-bottom-6">
+            <div className="govuk-grid-row govuk-!-margin-bottom-6">
               <h3 className={`govuk-heading-m`}>Additional needs</h3>
               <label htmlFor="keyword-search">
                 Enter keywords for further needs the resident may have.
@@ -158,7 +160,7 @@ const Services = ({
                 className="govuk-input govuk-input--width-30"
               />
             </div>
-            <div class="govuk-grid-row">
+            <div className="govuk-grid-row">
               <button type="submit" className="govuk-button" data-testid="keyword-search-button">
                 Suggest services
               </button>

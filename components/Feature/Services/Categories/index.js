@@ -1,13 +1,11 @@
 const Categories = ({ categorisedResources, selectedCategories, setSelectedCategories }) => {
   const categoryProblems = {
-    'Loneliness or isolation': { problemDescription: 'Loneliness or isolation' },
     'Anxiety or mental health': { problemDescription: 'Mental health' },
     'Exercise and wellbeing': { problemDescription: 'Exercise' },
     'Safe and healthy body': {
       problemDescription: 'Medical conditions, addictions or safety concerns'
     },
     'Arts and creativity': { problemDescription: 'Emotional wellbeing' },
-    'Food or shopping': { problemDescription: 'Food or shopping' },
     'Money advice': { problemDescription: 'Money' },
     'Employment advice': { problemDescription: 'Employment' },
     'Housing advice': { problemDescription: 'Housing' },
