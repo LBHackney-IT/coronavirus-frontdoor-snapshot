@@ -252,49 +252,48 @@ const Services = ({
                   wordsToHighlight={wordsToHighlight}
                 />
               ))}
-
+              {showMoreResults && (
+                <div id="show-more-container">
+                  {filteredResources.resources.slice(8).map(resource => (
+                    <ResourceCard
+                      data-testid={`resource-${resource.id}`}
+                      resource={resource}
+                      referralCompletion={referralCompletion}
+                      setReferralCompletion={setReferralCompletion}
+                      detailsClicked={detailsClicked}
+                      openReferralForm={openReferralForm}
+                      referralData={referralData}
+                      setReferralData={setReferralData}
+                      referrerData={referrerData}
+                      setReferrerData={setReferrerData}
+                      updateSignpostSummary={updateSignpostSummary}
+                      signpostSummary={signpostSummary}
+                      setResidentInfo={setResidentInfo}
+                      token={token}
+                      referralSummary={referralSummary}
+                      setReferralSummary={setReferralSummary}
+                      updateEmailBody={updateEmailBody}
+                      setEmailBody={setEmailBody}
+                      residentInfo={residentInfo}
+                      setPreserveFormData={setPreserveFormData}
+                      preserveFormData={preserveFormData}
+                      wordsToHighlight={wordsToHighlight}
+                    />
+                  ))}
+                </div>
+              )}
               {filteredResources.resources.length > 8 && (
-                <>
-                  <div className={showMoreResults ? '' : styles.hidden} id="show-more-container">
-                    {filteredResources.resources.slice(8).map(resource => (
-                      <ResourceCard
-                        data-testid={`resource-${resource.id}`}
-                        resource={resource}
-                        referralCompletion={referralCompletion}
-                        setReferralCompletion={setReferralCompletion}
-                        detailsClicked={detailsClicked}
-                        openReferralForm={openReferralForm}
-                        referralData={referralData}
-                        setReferralData={setReferralData}
-                        referrerData={referrerData}
-                        setReferrerData={setReferrerData}
-                        updateSignpostSummary={updateSignpostSummary}
-                        signpostSummary={signpostSummary}
-                        setResidentInfo={setResidentInfo}
-                        token={token}
-                        referralSummary={referralSummary}
-                        setReferralSummary={setReferralSummary}
-                        updateEmailBody={updateEmailBody}
-                        setEmailBody={setEmailBody}
-                        residentInfo={residentInfo}
-                        setPreserveFormData={setPreserveFormData}
-                        preserveFormData={preserveFormData}
-                        wordsToHighlight={wordsToHighlight}
-                      />
-                    ))}
-                  </div>
-                  <div className={`govuk-grid-row`}>
-                    <button
-                      type="button"
-                      className="govuk-button"
-                      data-testid="show-more-button"
-                      onClick={showAllClicked}>
-                      {!showMoreResults
-                        ? `Show all (${filteredResources.resources.length - 8})`
-                        : 'Show less'}
-                    </button>
-                  </div>
-                </>
+                <div className={`govuk-grid-row`}>
+                  <button
+                    type="button"
+                    className="govuk-button"
+                    data-testid="show-more-button"
+                    onClick={showAllClicked}>
+                    {!showMoreResults
+                      ? `Show all (${filteredResources.resources.length - 8})`
+                      : 'Show less'}
+                  </button>
+                </div>
               )}
             </div>
           )}

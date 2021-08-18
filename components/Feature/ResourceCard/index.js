@@ -258,7 +258,9 @@ const ResourceCard = ({
                       <button
                         type="button"
                         className={`govuk-button ${notificationCss['notification-button']}`}
-                        onClick={() => (window.location = process.env.NEXT_PUBLIC_URL)}
+                        onClick={() =>
+                          (window.location = `${process.env.NEXT_PUBLIC_URL}/support-a-resident`)
+                        }
                         data-testid="finish-call-button">
                         Finish Call
                       </button>
