@@ -66,7 +66,7 @@
     "cypress": "6.8.0",
     "cypress-axe": "^0.8.1",
     "dynamodb-admin": "^4.0.0",
-    "eslint": "^6.6.0",
+    "eslint": "^7.32.0",
     "eslint-config-prettier": "^6.5.0",
     "eslint-plugin-jest": "^23.9.0",
     "eslint-plugin-prettier": "^3.1.1",
