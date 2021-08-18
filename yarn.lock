@@ -2,13 +2,13 @@
 # yarn lockfile v1
 
 
-"0http@^2.5.2":
-  version "2.5.2"
-  resolved "https://registry.yarnpkg.com/0http/-/0http-2.5.2.tgz#8fd3407445605a9ce43f9e5c47beb459579728cc"
-  integrity sha512-9W+7pp7rhL/ha4ekrtTgEqDY66LnEdPSb5EGeHUvdYyS6IAwe6uutZ7It+WjCEwru/egqCV7hZengsGEJoqfyQ==
+"0http@^3.1.1":
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/0http/-/0http-3.1.1.tgz#682dbf66e827e8c6763598b08909a13afcce691c"
+  integrity sha512-qyWvQJzOEr+rMtmzUYgrMn9E2PKLxc6a74LkSuowK8W/qq2qUjBzCNwXbfjBJCZdFHpJcvewQ5FKkySTGCZuag==
   dependencies:
-    lru-cache "^5.1.1"
-    trouter "^3.1.0"
+    lru-cache "^6.0.0"
+    trouter "^3.2.0"
 
 "2-thenable@^1.0.0":
   version "1.0.0"
@@ -10479,11 +10479,11 @@ responselike@1.0.2, responselike@^1.0.2:
     lowercase-keys "^1.0.0"
 
 restana@^4.3.4:
-  version "4.7.2"
-  resolved "https://registry.yarnpkg.com/restana/-/restana-4.7.2.tgz#0ad3bd3d0c518c6e584aea6ca32ed6a856da6db7"
-  integrity sha512-KTqc2s+zGmMiyav9uNurx+w/vHZdrksYvcDPaeo5zJVsu2EOBFsY2Fk2BLSFLML3+6ir1FflwmeRmVizDDm0XA==
+  version "4.9.1"
+  resolved "https://registry.yarnpkg.com/restana/-/restana-4.9.1.tgz#1168a86ea5c7fcf3868855f8b1c4889973cb6acc"
+  integrity sha512-V2AgZCs54/Q3AffX/M5ru3vVAeQB6fmInccIzluxYGXdEGhF+ANbHrzeKUTKgk1cx0cgAGDikr9gPdZreD1e7A==
   dependencies:
-    "0http" "^2.5.2"
+    "0http" "^3.1.1"
 
 restore-cursor@^1.0.1:
   version "1.0.1"
@@ -11941,10 +11941,10 @@ triple-beam@^1.2.0, triple-beam@^1.3.0:
   resolved "https://registry.yarnpkg.com/triple-beam/-/triple-beam-1.3.0.tgz#a595214c7298db8339eeeee083e4d10bd8cb8dd9"
   integrity sha512-XrHUvV5HpdLmIj4uVMxHggLbFSZYIn7HEWsqePZcI50pco+MPqJ50wMGY794X7AOOhxOBAjbkqfAbEe/QMp2Lw==
 
-trouter@^3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/trouter/-/trouter-3.1.0.tgz#76f4faea81d5ebd11bba4762c664a3b55eda9b23"
-  integrity sha512-3Swwu638QQWOefHLss9cdyLi5/9BKYmXZEXpH0KOFfB9YZwUAwHbDAcoYxaHfqAeFvbi/LqAK7rGkhCr1v1BJA==
+trouter@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/trouter/-/trouter-3.2.0.tgz#a9c510fce21b8e659a28732c9de9d82871efe8df"
+  integrity sha512-rLLXbhTObLy2MBVjLC+jTnoIKw99n0GuJs9ov10J870vDw5qhTurPzsDrudNtBf5w/CZ9ctZy2p2IMmhGcel2w==
   dependencies:
     regexparam "^1.3.0"
 
