@@ -239,6 +239,8 @@ context('Support a resident page', () => {
         .find('[data-testid="resource-card-header"]')
         .should('have.length', 7);
 
+      cy.get('[data-testid="show-more-button"]').should('not.exist');
+
       cy.runCheckA11y();
     });
 
@@ -249,6 +251,8 @@ context('Support a resident page', () => {
       cy.get('[data-testid="keyword-search-button"]').click();
 
       cy.get('[data-testid="results-text"]').should('contain', 'Your search returned no results.');
+
+      cy.get('[data-testid="show-more-button"]').should('not.exist');
     });
 
     it('press enter when focus is in input will also search', () => {
