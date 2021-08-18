@@ -18,7 +18,10 @@
     "dynamo-admin": "DYNAMO_ENDPOINT=http://localhost:8000 dynamodb-admin",
     "lint": "eslint --fix --ext js lib/ pages/ && echo 'Lint complete.'",
     "pretty": "prettier --write \"./**/*.{js,jsx,json}\"",
-    "dynamo": "docker-compose up dynamodb"
+    "dynamo": "docker-compose up dynamodb",
+    "seed-dynamo": "$PWD/seed-dynamo.sh",
+    "servers": "run-p dynamo start:mock dynamo-admin",
+    "cypress": "run-s seed-dynamo cypress-open"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.35",
@@ -72,6 +75,7 @@
     "jest-fetch-mock": "^3.0.3",
     "mockdate": "^3.0.2",
     "nock": "^12.0.3",
+    "npm-run-all": "^4.1.5",
     "prettier": "^1.18.2",
     "react-test-renderer": "16.13.1",
     "sass": "^1.26.5",

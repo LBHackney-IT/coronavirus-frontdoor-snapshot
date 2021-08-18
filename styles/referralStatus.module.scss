@@ -1,17 +1,26 @@
+@import '../pages/stylesheets/vars.scss';
+
 .rejected {
   background-color: #d4351c;
-  color: white;
 }
 .sent {
   background-color: #1d70b8;
-  color: white;
 }
 .accepted {
-  border: solid 2px lightgray;
+  background-color: $hackney-green;
 }
+
+.sent,
+.rejected,
+.accepted {
+  color: white;
+}
+
 .sent,
 .rejected,
 .accepted,
 .empty {
   padding: 4px 15px 4px 15px;
+  text-align: center;
+  vertical-align: middle;
 }
