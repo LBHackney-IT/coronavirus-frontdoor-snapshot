@@ -1,6 +1,5 @@
 import { REFERRAL_STATUSES } from 'lib/utils/constants';
 import { useState } from 'react';
-import css from './index.module.css';
 
 const StatusForm = ({ onSubmitForm, name }) => {
   const [reject, setReject] = useState(false);
@@ -98,10 +97,9 @@ const StatusForm = ({ onSubmitForm, name }) => {
                       </span>
                     </span>
                     <textarea
-                      className={`govuk-textarea ${
+                      className={`govuk-textarea govuk-!-margin-bottom-0 ${
                         validationError.rejectReason ? 'govuk-input--error' : ''
                       }`}
-                      id={`${css['referral-rejection-reason']}`}
                       name="referral-rejection-reason"
                       aria-labelledby="rejection-reason"
                       spellcheck="false"
