@@ -14,13 +14,13 @@ const Categories = ({ categorisedResources, selectedCategories, setSelectedCateg
   };
 
   const categoryChanged = e => {
-    let ids = selectedCategories;
-    const selectedCategoryId = parseInt(e.target.value);
-    ids = ids.filter(item => item !== selectedCategoryId);
-    if (e.target.checked && selectedCategoryId) {
-      ids.push(selectedCategoryId);
+    let selectedCategoryIds = selectedCategories;
+    const changedCategoryId = parseInt(e.target.value);
+    selectedCategoryIds = selectedCategoryIds.filter(item => item !== changedCategoryId);
+    if (e.target.checked && changedCategoryId) {
+      selectedCategoryIds.push(changedCategoryId);
     }
-    setSelectedCategories(ids);
+    setSelectedCategories(selectedCategoryIds);
   };
 
   return (
