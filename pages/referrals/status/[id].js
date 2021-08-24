@@ -5,22 +5,30 @@ import useReferral from 'lib/api/utils/useReferral';
 import { IsoDateTime } from 'lib/domain/isodate';
 import { useState } from 'react';
 import StatusForm from 'components/Feature/StatusForm';
+import ShareWithResident from 'components/Feature/StatusForm/ShareWithResident';
 import Head from 'next/head';
 import { convertIsoDateToDateTimeString } from 'lib/utils/date';
 import { sendDataToAnalytics } from 'lib/utils/analytics';
 import { encode } from 'html-entities';
 import css from './index.module.scss';
+import { requestSendResidentMessage } from 'lib/api';
 
 const StatusHistory = ({ referral }) => {
   const { updateReferralStatus } = useReferral(null, {});
   const [initialReferral, setInitialReferral] = useState(referral);
   const [submitted, setSubmitted] = useState(false);
   const [errors, setErrors] = useState(false);
+  const [messageSent, setMessageSent] = useState(false);
 
   const maxDate = new Date(Math.max(...referral.statusHistory.map(e => new Date(e.date))));
   const recentStatus = referral.statusHistory.filter(
     status => new Date(status.date).getTime() === maxDate.getTime()
   )[0];
+
+  const onSendResidentMessage = async sendBySms => {
+    await requestSendResidentMessage({ sendBySms, id: referral.id });
+    setMessageSent(true);
+  };
 
   const onSubmitForm = async (status, comment) => {
     if (!status || status == null || status == '') {
@@ -81,6 +89,10 @@ const StatusHistory = ({ referral }) => {
             <p>Your decision on this referral has been sent.</p>
             <h2 className="govuk-heading-m">What happens next?</h2>
             <p>We’ve let the referrer know your response.</p>
+            {/^(?:0|\+?44)(?:\d\s?){9,10}$/.test(referral.resident.phone) && !messageSent && (
+              <ShareWithResident onSubmitForm={onSendResidentMessage} />
+            )}
+            {messageSent && <strong>Thank you for sending the message to the resident</strong>}
           </div>
         </div>
       ) : recentStatus.status == REFERRAL_STATUSES.Accepted ||
