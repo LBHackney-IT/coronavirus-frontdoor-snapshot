@@ -9,7 +9,7 @@ const StatusForm = ({ onSubmitForm, name }) => {
 
   const onChangeRejectReason = event => {
     const fieldValue = event.target.value;
-    const isValueEmpty = !Boolean(fieldValue);
+    const isValueEmpty = !fieldValue;
     setComment(fieldValue);
     setValidationError({ ...validationError, rejectReasonHasError: isValueEmpty });
   };
