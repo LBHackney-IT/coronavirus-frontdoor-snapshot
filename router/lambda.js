@@ -34,10 +34,13 @@ const authoriseHandler = (req, res, next) => {
   const isAuthenticated = checkAuth.execute({
     token: req.cookies.hackneyToken
   });
+  if (!isAuthenticated && req.url !== '/loggedout') {
+    res.writeHead(302, { Location: '/loggedout' });
+    return res.end();
+  }
   if (
-    !isAuthenticated ||
-    (process.env.TOKEN_RESET_IAT > checkAuth.getIat(req.cookies.hackneyToken) &&
-      req.url !== '/loggedout')
+    process.env.TOKEN_RESET_IAT > checkAuth.getIat(req.cookies.hackneyToken) &&
+    req.url !== '/loggedout'
   ) {
     res.writeHead(302, { Location: '/loggedout' });
     return res.end();
@@ -49,10 +52,13 @@ const basicAuthoriseHandler = (req, res, next) => {
   const isAuthenticated = checkBasicAuth.execute({
     token: req.cookies.hackneyToken
   });
+  if (!isAuthenticated && req.url !== '/loggedout') {
+    res.writeHead(302, { Location: '/loggedout' });
+    return res.end();
+  }
   if (
-    !isAuthenticated ||
-    (process.env.TOKEN_RESET_IAT > checkAuth.getIat(req.cookies.hackneyToken) &&
-      req.url !== '/loggedout')
+    process.env.TOKEN_RESET_IAT > checkAuth.getIat(req.cookies.hackneyToken) &&
+    req.url !== '/loggedout'
   ) {
     res.writeHead(302, { Location: '/loggedout' });
     return res.end();
