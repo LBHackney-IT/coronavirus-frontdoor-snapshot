@@ -105,7 +105,7 @@ const ResourceCard = ({
               )}
             </h3>
             {resource.demographic?.trim().length > 0 && (
-              <span>This is for {getHighlighted(resource.demographic)}</span>
+              <span>This is for {resource.demographic}</span>
             )}
           </div>
 
