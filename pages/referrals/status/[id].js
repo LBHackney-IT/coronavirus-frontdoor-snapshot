@@ -1,6 +1,11 @@
 import { requestByLinkId } from 'lib/api';
 import HttpStatusError from 'lib/api/domain/HttpStatusError';
-import { REFERRAL_STATUSES, STATUS_UPDATE, EMPTY_STATUS_ERROR } from 'lib/utils/constants';
+import {
+  REFERRAL_STATUSES,
+  STATUS_UPDATE,
+  EMPTY_STATUS_ERROR,
+  TEMPLATE_NAMES
+} from 'lib/utils/constants';
 import useReferral from 'lib/api/utils/useReferral';
 import { IsoDateTime } from 'lib/domain/isodate';
 import { useState } from 'react';
@@ -12,12 +17,14 @@ import { sendDataToAnalytics } from 'lib/utils/analytics';
 import { encode } from 'html-entities';
 import css from './index.module.scss';
 import { requestSendResidentMessage } from 'lib/api';
+import { requestTemplatePreview } from 'lib/api';
 
-const StatusHistory = ({ referral }) => {
+const StatusHistory = ({ referral, smsTemplate }) => {
   const { updateReferralStatus } = useReferral(null, {});
   const [initialReferral, setInitialReferral] = useState(referral);
   const [submitted, setSubmitted] = useState(false);
   const [errors, setErrors] = useState(false);
+  const [status, setStatus] = useState(false);
   const [messageSent, setMessageSent] = useState(false);
 
   const maxDate = new Date(Math.max(...referral.statusHistory.map(e => new Date(e.date))));
@@ -26,8 +33,8 @@ const StatusHistory = ({ referral }) => {
   )[0];
 
   const onSendResidentMessage = async sendBySms => {
-    await requestSendResidentMessage({ sendBySms, id: referral.id });
     setMessageSent(true);
+    await requestSendResidentMessage({ sendBySms, id: referral.id });
   };
 
   const onSubmitForm = async (status, comment) => {
@@ -41,6 +48,7 @@ const StatusHistory = ({ referral }) => {
       return;
     }
     setErrors(false);
+    setStatus(status);
 
     const newStatusHistory = initialReferral.statusHistory.concat([
       {
@@ -89,10 +97,16 @@ const StatusHistory = ({ referral }) => {
             <p>Your decision on this referral has been sent.</p>
             <h2 className="govuk-heading-m">What happens next?</h2>
             <p>We’ve let the referrer know your response.</p>
-            {/^(?:0|\+?44)(?:\d\s?){9,10}$/.test(referral.resident.phone) && !messageSent && (
-              <ShareWithResident onSubmitForm={onSendResidentMessage} />
+            {/^(?:0|\+?44)(?:\d\s?){9,10}$/.test(referral.resident.phone) &&
+              status == REFERRAL_STATUSES.Accepted &&
+              !messageSent && (
+                <ShareWithResident onSubmitForm={onSendResidentMessage} smsTemplate={smsTemplate} />
+              )}
+            {messageSent && (
+              <strong data-testid="change-status-resident-message-confirmation">
+                Thank you for sending the message to the resident
+              </strong>
             )}
-            {messageSent && <strong>Thank you for sending the message to the resident</strong>}
           </div>
         </div>
       ) : recentStatus.status == REFERRAL_STATUSES.Accepted ||
@@ -120,8 +134,13 @@ const StatusHistory = ({ referral }) => {
 StatusHistory.getInitialProps = async ({ query: { id }, req: { headers }, res }) => {
   try {
     const referral = await requestByLinkId(id, { token: undefined });
+    const smsTemplate = await requestTemplatePreview({
+      templateName: TEMPLATE_NAMES.RESIDENT_STATUS_SMS,
+      id: referral.id
+    });
     return {
-      referral
+      referral,
+      smsTemplate: smsTemplate.data || smsTemplate.error
     };
   } catch (err) {
     console.log(err);
