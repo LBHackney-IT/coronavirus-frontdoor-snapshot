@@ -2,18 +2,6 @@
 context('status page', () => {
   describe('Accept referral', () => {
     it('shows status form', () => {
-      // cy.intercept('/api/notify/xx', {
-      //   status: 200,
-      //   body: {
-      //     data: 'preview'
-      //   }
-      // });
-
-      // cy.intercept('/api/referrals/11/status/send-resident-message', {
-      //   status: 201,
-      //   body: {}
-      // });
-
       cy.visit('/referrals/status/1');
       cy.injectAxe();
 
@@ -36,16 +24,11 @@ context('status page', () => {
       cy.get('[data-testid=status-change-sms-checkbox]').click({ force: true });
 
       cy.get('[data-testid=sms-template-preview]').should('exist');
-      // cy.get('[data-testid=sms-template-preview]').should('contain', 'preview');
+      cy.get('[data-testid=sms-template-preview]').should('contain', 'could not get a preview');
       cy.get('[data-testid=change-status-resident-message-confirmation]').should('not.exist');
 
-      // cy.intercept('/api/referrals/11/status/send-resident-message', {
-      //   status: 201,
-      //   body: {}
-      // });
-
-      // cy.get('[data-testid=submit-resident-message]').click({ force: true });
-      // cy.get('[data-testid=change-status-resident-message-confirmation]').should('exist');
+      cy.get('[data-testid=submit-resident-message]').click({ force: true });
+      cy.get('[data-testid=change-status-resident-message-confirmation]').should('exist');
 
       cy.runCheckA11y();
     });
