@@ -14,6 +14,10 @@ server.all('/api/referrals/status/*', (req, res) => {
   nextRequestHandler(req, res);
 });
 server.all('/api/referrals/*/status', (req, res) => nextRequestHandler(req, res));
+server.all('/api/referrals/*/status/send-resident-message', (req, res) =>
+  nextRequestHandler(req, res)
+);
+server.all('/api/notify/*', (req, res) => nextRequestHandler(req, res));
 server.all('/api/resources', (req, res) => nextRequestHandler(req, res)); // auth is handled by the authorizer
 server.all('/api/resources/fss', (req, res) => nextRequestHandler(req, res)); // auth is handled by the authorizer
 server.all('/api/referrals', (req, res) => nextRequestHandler(req, res)); // auth is handled by the authorizer

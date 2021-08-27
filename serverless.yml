@@ -43,6 +43,12 @@ functions:
           path: api/referrals/{path}/status
           method: patch
       - http:
+          path: api/notify/REFERRAL_RESIDENT_STATUS_SMS_TEMPLATE_ID
+          method: post
+      - http:
+          path: api/referrals/{path}/status/send-resident-message
+          method: post
+      - http:
           path: api/{proxy+}
           method: ANY
           authorizer: ${self:custom.authorizer.${self:service}-authorizer}
