@@ -41,7 +41,7 @@ const StatusHistory = ({ referral, smsTemplate }) => {
       category: STATUS_CHANGE_MESSAGE,
       label: initialReferral.service.name
     });
-    await requestSendResidentMessage({ sendBySms, id: referral.id });
+    await requestSendResidentMessage({ sendBySms, id: initialReferral.id });
   };
 
   const onSubmitForm = async (status, comment) => {
@@ -104,7 +104,7 @@ const StatusHistory = ({ referral, smsTemplate }) => {
             <p>Your decision on this referral has been sent.</p>
             <h2 className="govuk-heading-m">What happens next?</h2>
             <p>We’ve let the referrer know your response.</p>
-            {/^(?:0|\+?44)(?:\d\s?){9,10}$/.test(referral.resident.phone) &&
+            {/^(?:0|\+?44)(?:\d\s?){9,10}$/.test(initialReferral.resident.phone) &&
               status == REFERRAL_STATUSES.Accepted &&
               !messageSent && (
                 <ShareWithResident onSubmitForm={onSendResidentMessage} smsTemplate={smsTemplate} />
