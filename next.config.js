@@ -9,7 +9,8 @@ module.exports = {
     OPTIMIZE_ID: process.env.OPTIMIZE_ID,
     EXTERNAL_USER_GROUP: process.env.EXTERNAL_USER_GROUP,
     INH_URL: process.env.INH_URL,
-    SYNONYMS: process.env.SYNONYMS
+    SYNONYMS: process.env.SYNONYMS,
+    SEARCH_EXCLUSIONS: process.env.SEARCH_EXCLUSIONS
   },
   distDir: 'build/_next',
   target: 'server',

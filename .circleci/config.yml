@@ -53,6 +53,7 @@ jobs:
             export NEXT_PUBLIC_API_URL=http://localhost:3000/api
             export NEXT_PUBLIC_ENV=test
             export SYNONYMS="{\"ostrich\":[\"testsynonym\"]}"
+            export SEARCH_EXCLUSIONS="[{\"label\": \"Rick Grimes\", \"excludeWords\": [\"rickgrimes\",\"mrzombie\"]}]"
             export JWT_SECRET=a-secure-signature
             yarn build
       - run:
@@ -92,6 +93,7 @@ jobs:
             export NEXT_PUBLIC_ENV=test
             export NEXT_PUBLIC_GTM_ID=xx
             export SYNONYMS="{\"ostrich\":[\"testsynonym\"]}"
+            export SEARCH_EXCLUSIONS="[{\"label\": \"Rick Grimes\", \"excludeWords\": [\"rickgrimes\",\"mrzombie\"]}]"
             export JWT_SECRET=a-secure-signature
             CYPRESS_CACHE_FOLDER=~/repo/cypress_cache yarn run int-test
       - store_artifacts:
@@ -135,6 +137,8 @@ jobs:
         type: string
       SYNONYMS:
         type: string
+      SEARCH_EXCLUSIONS:
+        type: string
     steps:
       - *attach_workspace
       - checkout
@@ -151,6 +155,7 @@ jobs:
             export OPTIMIZE_ID=${OPTIMIZE_ID}
             export NEXT_PUBLIC_ENV=<< parameters.stage_name >>
             export SYNONYMS=<< parameters.SYNONYMS >>
+            export SEARCH_EXCLUSIONS<< parameters.SEARCH_EXCLUSIONS >>
             yarn
             yarn build
             yarn --production=true
@@ -180,6 +185,7 @@ workflows:
           INH_URL: ${INH_URL_STAGING}
           URL: ${NEXT_PUBLIC_URL_STAGING}
           SYNONYMS: ${SYNONYMS_STAGING}
+          SEARCH_EXCLUSIONS: ${SEARCH_EXCLUSIONS_STAGING}
           filters:
             branches:
               only: master
@@ -208,5 +214,6 @@ workflows:
           INH_URL: ${INH_URL_PRODUCTION}
           URL: ${NEXT_PUBLIC_URL_PRODUCTION}
           SYNONYMS: ${SYNONYMS_PRODUCTION}
+          SEARCH_EXCLUSIONS: ${SEARCH_EXCLUSIONS_PRODUCTION}
           requires:
             - assume-role-production
