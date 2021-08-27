@@ -4,7 +4,13 @@
   "referenceNumber": { "S": "E7UK-8" },
   "created": { "S": "2021-04-02T12:29:17.120Z" },
   "referredBy": { "S": "test@email.com" },
-  "resident": { "M": { "firstName": { "S": "more" }, "lastName": { "S": "name" } } },
+  "resident": {
+    "M": {
+      "firstName": { "S": "more" },
+      "lastName": { "S": "name" },
+      "phone": { "S": "07000000000" }
+    }
+  },
   "service": { "M": { "name": { "S": "service name 1" } } },
   "statusHistory": {
     "L": [
