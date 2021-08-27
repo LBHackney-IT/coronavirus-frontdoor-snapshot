@@ -4,7 +4,9 @@ import {
   REFERRAL_STATUSES,
   STATUS_UPDATE,
   EMPTY_STATUS_ERROR,
-  TEMPLATE_NAMES
+  TEMPLATE_NAMES,
+  SEND_RESIDENT_SMS,
+  STATUS_CHANGE_MESSAGE
 } from 'lib/utils/constants';
 import useReferral from 'lib/api/utils/useReferral';
 import { IsoDateTime } from 'lib/domain/isodate';
@@ -34,6 +36,11 @@ const StatusHistory = ({ referral, smsTemplate }) => {
 
   const onSendResidentMessage = async sendBySms => {
     setMessageSent(true);
+    sendDataToAnalytics({
+      action: SEND_RESIDENT_SMS,
+      category: STATUS_CHANGE_MESSAGE,
+      label: initialReferral.service.name
+    });
     await requestSendResidentMessage({ sendBySms, id: referral.id });
   };
 
