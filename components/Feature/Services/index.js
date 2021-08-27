@@ -112,9 +112,7 @@ const Services = ({
     }
 
     let newFilteredResources = flattenSearchResults(searchResults);
-    newFilteredResources.resources.sort(
-      (a, b) => b.weight - a.weight || b.demographic?.length - a.demographic?.length
-    );
+    newFilteredResources.resources.sort((a, b) => b.weight - a.weight);
 
     setFilteredResources(newFilteredResources);
     sendDataToAnalytics({

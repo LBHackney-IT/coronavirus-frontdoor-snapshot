@@ -17,5 +17,6 @@ process.env = Object.assign(process.env, {
   AIRTABLE_TABLE_NAMES: 'not.a.real.table.name',
   NEXT_PUBLIC_SINGLEVIEW_URL: 'https://staging-singleview.hackney.gov.uk',
   INH_URL: 'https://inh-admin-test.hackney.gov.uk',
-  SYNONYMS: '{"ostrich":["testsynonym"]}'
+  SYNONYMS: '{"ostrich":["testsynonym"]}',
+  SEARCH_EXCLUSIONS: '[{"label": "Rick Grimes", "excludeWords": ["rickgrimes","mrzombie"]}]'
 });
