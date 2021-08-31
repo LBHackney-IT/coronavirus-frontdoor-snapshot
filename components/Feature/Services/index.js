@@ -6,7 +6,7 @@ import styles from './index.module.scss';
 import { sendDataToAnalytics, getUserGroup } from 'lib/utils/analytics';
 import {
   filterByCategories,
-  getSearchResults,
+  getSearchWithWeights,
   getWordsToHighlight,
   weightByCategories
 } from 'lib/utils/search';
@@ -105,7 +105,15 @@ const Services = ({
 
     const filteredByCategory = filterByCategories(selectedCategories, categorisedResources);
 
-    let searchResults = getSearchResults(searchTerm, filteredByCategory);
+    let searchResults;
+    if (!searchTerm) {
+      searchResults = getSearchWithWeights(selectedCategories.join(' '), filteredByCategory);
+    } else {
+      searchResults = getSearchWithWeights(searchTerm, filteredByCategory).map(item => {
+        item.resources = item.resources.filter(x => x.weight > 0);
+        return item;
+      });
+    }
 
     if (selectedCategories.length > 0) {
       searchResults = weightByCategories(selectedCategories, searchResults);
