@@ -104,7 +104,6 @@ const ResourceCard = ({
                 getHighlighted(resource.name)
               )}
             </h3>
-            <h1> {resource.weight}</h1>
             {resource.demographic?.trim().length > 0 && (
               <span>This is for {resource.demographic}</span>
             )}

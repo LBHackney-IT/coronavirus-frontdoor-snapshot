@@ -75,6 +75,7 @@ const Services = ({
           .filter(x => x?.trim())
           .map(x => x.trim())
           .join('. ');
+        res[index].weight = Math.floor((res[index].weight + resource.weight) / 2);
       } else {
         res.push(resource);
       }
