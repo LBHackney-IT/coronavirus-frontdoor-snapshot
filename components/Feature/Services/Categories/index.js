@@ -15,7 +15,7 @@ const Categories = ({ categorisedResources, selectedCategories, setSelectedCateg
 
   const categoryChanged = e => {
     let selectedCategoryIds = selectedCategories;
-    const changedCategoryId = parseInt(e.target.value);
+    const changedCategoryId = e.target.value;
     selectedCategoryIds = selectedCategoryIds.filter(item => item !== changedCategoryId);
     if (e.target.checked && changedCategoryId) {
       selectedCategoryIds.push(changedCategoryId);
@@ -35,7 +35,7 @@ const Categories = ({ categorisedResources, selectedCategories, setSelectedCateg
               type="checkbox"
               data-testid="category-checkbox"
               onChange={e => categoryChanged(e)}
-              value={group.id}
+              value={group.name}
             />
             <label
               class="govuk-label govuk-checkboxes__label"

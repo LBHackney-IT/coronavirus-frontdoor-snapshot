@@ -121,7 +121,11 @@ const Services = ({
       label: searchTerm,
       value: newFilteredResources.resources.length
     });
-    setWordsToHighlight(getWordsToHighlight(searchTerm));
+
+    const toHighlight = searchTerm
+      ? getWordsToHighlight(searchTerm)
+      : selectedCategories.map(x => getWordsToHighlight(x)).flat();
+    setWordsToHighlight(toHighlight);
     window.location.href = '#search-results-divider';
   };
 
