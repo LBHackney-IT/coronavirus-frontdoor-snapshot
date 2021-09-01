@@ -2,6 +2,7 @@ import { useState } from 'react';
 import ResourceCard from 'components/Feature/ResourceCard';
 import Categories from './Categories';
 import Details from 'components/Form/Details';
+import SpecificNeeds from './SpecificNeeds';
 import styles from './index.module.scss';
 import { sendDataToAnalytics, getUserGroup } from 'lib/utils/analytics';
 import {
@@ -37,6 +38,7 @@ const Services = ({
   const [resultsTitle, setResultsTitle] = useState(null);
   const [wordsToHighlight, setWordsToHighlight] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
+  const [selectedSpecificNeeds, setSelectedSpecificNeeds] = useState([]);
   const [showMoreResults, setShowMoreResults] = useState(false);
 
   const detailsClicked = (e, id, serviceId, categoryName) => {
@@ -108,9 +110,17 @@ const Services = ({
 
     let searchResults;
     if (!searchTerm) {
-      searchResults = getSearchWithWeights(selectedCategories.join(' '), filteredByCategory);
+      searchResults = getSearchWithWeights(
+        selectedCategories.join(' '),
+        filteredByCategory,
+        selectedSpecificNeeds
+      );
     } else {
-      searchResults = getSearchWithWeights(searchTerm, filteredByCategory).map(item => {
+      searchResults = getSearchWithWeights(
+        searchTerm,
+        filteredByCategory,
+        selectedSpecificNeeds
+      ).map(item => {
         item.resources = item.resources.filter(x => x.weight > 0);
         return item;
       });
@@ -154,6 +164,14 @@ const Services = ({
                 categorisedResources={categorisedResources}
                 selectedCategories={selectedCategories}
                 setSelectedCategories={setSelectedCategories}
+              />
+            </div>
+            <div className="govuk-grid-row govuk-!-margin-bottom-6">
+              <h2 className={`govuk-heading-m`}>Select all that apply</h2>
+
+              <SpecificNeeds
+                selectedSpecificNeeds={selectedSpecificNeeds}
+                setSelectedSpecificNeeds={setSelectedSpecificNeeds}
               />
             </div>
             <div className="govuk-grid-row govuk-!-margin-bottom-6">
