@@ -6,7 +6,7 @@ import styles from './index.module.scss';
 import { sendDataToAnalytics, getUserGroup } from 'lib/utils/analytics';
 import {
   filterByCategories,
-  getSearchResults,
+  getSearchWithWeights,
   getWordsToHighlight,
   weightByCategories
 } from 'lib/utils/search';
@@ -75,6 +75,7 @@ const Services = ({
           .filter(x => x?.trim())
           .map(x => x.trim())
           .join('. ');
+        res[index].weight = Math.floor((res[index].weight + resource.weight) / 2);
       } else {
         res.push(resource);
       }
@@ -105,7 +106,15 @@ const Services = ({
 
     const filteredByCategory = filterByCategories(selectedCategories, categorisedResources);
 
-    let searchResults = getSearchResults(searchTerm, filteredByCategory);
+    let searchResults;
+    if (!searchTerm) {
+      searchResults = getSearchWithWeights(selectedCategories.join(' '), filteredByCategory);
+    } else {
+      searchResults = getSearchWithWeights(searchTerm, filteredByCategory).map(item => {
+        item.resources = item.resources.filter(x => x.weight > 0);
+        return item;
+      });
+    }
 
     if (selectedCategories.length > 0) {
       searchResults = weightByCategories(selectedCategories, searchResults);
@@ -121,7 +130,11 @@ const Services = ({
       label: searchTerm,
       value: newFilteredResources.resources.length
     });
-    setWordsToHighlight(getWordsToHighlight(searchTerm));
+
+    const toHighlight = searchTerm
+      ? getWordsToHighlight(searchTerm)
+      : selectedCategories.map(x => getWordsToHighlight(x)).flat();
+    setWordsToHighlight(toHighlight);
     window.location.href = '#search-results-divider';
   };
 
