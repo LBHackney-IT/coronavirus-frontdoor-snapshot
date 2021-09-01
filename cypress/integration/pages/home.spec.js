@@ -21,21 +21,15 @@ context('Support a resident page', () => {
     it('shows category headers containing resources', () => {
       cy.get('[data-testid=search-results-container]').should('not.exist');
 
-      cy.get('[data-testid=category-checkbox]')
-        .eq(0)
-        .click();
+      cy.get('[data-testid=category-checkbox]').eq(0).click();
 
       cy.get('[data-testid=keyword-search-button]').click();
 
       cy.get('[data-testid=search-results-container]').should('contain', 'First service');
 
-      cy.get('[data-testid=category-checkbox]')
-        .eq(1)
-        .click();
+      cy.get('[data-testid=category-checkbox]').eq(1).click();
 
-      cy.get('[data-testid=category-checkbox]')
-        .eq(0)
-        .click();
+      cy.get('[data-testid=category-checkbox]').eq(0).click();
 
       cy.get('[data-testid=keyword-search-button]').click();
 
@@ -59,59 +53,31 @@ context('Support a resident page', () => {
     });
 
     it('Displays the resources', () => {
-      cy.get('[data-testid=category-checkbox]')
-        .eq(0)
-        .click();
+      cy.get('[data-testid=category-checkbox]').eq(0).click();
 
       cy.get('[data-testid=keyword-search-button]').click();
 
       cy.get('[data-testid=resource-card-header]').should('have.length', 5);
 
-      cy.get('[data-testid=resource-1]')
-        .eq(0)
-        .should('contain', 'First service');
+      cy.get('[data-testid=resource-1]').eq(0).should('contain', 'First service');
 
-      cy.get('[data-testid=resource-2]')
-        .eq(0)
-        .should('contain', 'Second service');
+      cy.get('[data-testid=resource-2]').eq(0).should('contain', 'Second service');
     });
 
     it('Does not show demographics label when there are no demographics', () => {
-      cy.get('[data-testid=category-checkbox]')
-        .eq(1)
-        .click();
+      cy.get('[data-testid=category-checkbox]').eq(1).click();
 
       cy.get('[data-testid=keyword-search-button]').click();
 
-      cy.get('[data-testid=resource-2]')
-        .eq(0)
-        .should('contain', 'Second service');
+      cy.get('[data-testid=resource-2]').eq(0).should('contain', 'Second service');
 
-      cy.get('[data-testid=resource-1]')
-        .eq(0)
-        .should('contain', 'This is for');
+      cy.get('[data-testid=resource-1]').eq(0).should('contain', 'This is for');
 
-      cy.get('[data-testid=resource-2]')
-        .eq(0)
-        .should('not.contain', 'This is for');
+      cy.get('[data-testid=resource-2]').eq(0).should('not.contain', 'This is for');
     });
 
-    // it('Displays the correct tags', () => {
-    //   cy.get('[data-testid=category-card]')
-    //     .eq(0)
-    //     .click();
-
-    //   cy.get('[data-testid=resource-card-tags]')
-    //     .eq(0)
-    //     .should('contain', 'Magic')
-    //     .children()
-    //     .should('have.length', 1);
-    // });
-
     it('Displays the correct resource information for council resources', () => {
-      cy.get('[data-testid=category-checkbox]')
-        .eq(0)
-        .click();
+      cy.get('[data-testid=category-checkbox]').eq(0).click();
 
       cy.get('[data-testid=keyword-search-button]').click();
 
@@ -134,9 +100,7 @@ context('Support a resident page', () => {
     });
 
     it('Displays the correct resource information for FSS resources', () => {
-      cy.get('[data-testid=category-checkbox]')
-        .eq(0)
-        .click();
+      cy.get('[data-testid=category-checkbox]').eq(0).click();
 
       cy.get('[data-testid=keyword-search-button]').click();
 
@@ -159,44 +123,30 @@ context('Support a resident page', () => {
     });
 
     it('Displays only the Create Referral button if both an email and website exist in service data', () => {
-      cy.get('[data-testid=category-checkbox]')
-        .eq(0)
-        .click();
+      cy.get('[data-testid=category-checkbox]').eq(0).click();
 
       cy.get('[data-testid=keyword-search-button]').click();
 
-      cy.get('[data-testid=resource-abc]')
-        .eq(0)
-        .should('contain', 'Kingsman');
+      cy.get('[data-testid=resource-abc]').eq(0).should('contain', 'Kingsman');
 
       cy.get('[data-testid=resource-abc]')
         .find('[data-testid=refer-button]')
         .first()
         .should('contain', 'Create Referral');
 
-      cy.get('[data-testid=resource-abc]')
-        .find('[data-testid=refer-link]')
-        .should('not.exist');
+      cy.get('[data-testid=resource-abc]').find('[data-testid=refer-link]').should('not.exist');
 
-      cy.get('[data-testid=resource-2]')
-        .find('[data-testid=refer-text]')
-        .should('not.exist');
+      cy.get('[data-testid=resource-2]').find('[data-testid=refer-text]').should('not.exist');
     });
 
     it('Displays only the Referral Link if only a website exists in service data', () => {
-      cy.get('[data-testid=category-checkbox]')
-        .eq(0)
-        .click();
+      cy.get('[data-testid=category-checkbox]').eq(0).click();
 
       cy.get('[data-testid=keyword-search-button]').click();
 
-      cy.get('[data-testid=resource-2]')
-        .eq(0)
-        .should('contain', 'Second service');
+      cy.get('[data-testid=resource-2]').eq(0).should('contain', 'Second service');
 
-      cy.get('[data-testid=resource-2]')
-        .find('[data-testid=refer-text]')
-        .should('not.exist');
+      cy.get('[data-testid=resource-2]').find('[data-testid=refer-text]').should('not.exist');
 
       cy.get('[data-testid=resource-2]')
         .find('[data-testid=refer-link]')
@@ -206,19 +156,13 @@ context('Support a resident page', () => {
     });
 
     it('Clicking Create Referral opens a form that will send to the correct email address', () => {
-      cy.get('[data-testid=category-checkbox]')
-        .eq(0)
-        .click();
+      cy.get('[data-testid=category-checkbox]').eq(0).click();
 
       cy.get('[data-testid=keyword-search-button]').click();
 
-      cy.get('[data-testid=resource-abc]')
-        .eq(0)
-        .should('contain', 'Kingsman');
+      cy.get('[data-testid=resource-abc]').eq(0).should('contain', 'Kingsman');
 
-      cy.get('[data-testid=resource-abc]')
-        .find('[data-testid=refer-button]')
-        .click();
+      cy.get('[data-testid=resource-abc]').find('[data-testid=refer-button]').click();
 
       cy.get('[data-testid=resource-abc]')
         .find('input[name="service-referral-email"]')
@@ -271,13 +215,6 @@ context('Support a resident page', () => {
       cy.get('[data-testid="keyword-search-button"]').click();
 
       cy.get('[data-testid=resource-ABC123]').contains('ABC mental health Test');
-
-      // commented out because council tags were asked to be removed temporarily:
-      // cy.get('[data-testid="search-results-container"]')
-      //   .find('[data-testid="resource-card-tags"]')
-      //   .should('have.length', 1);
-
-      // cy.get('[data-testid="resource-card-tags"]').should('contain', 'Magic');
     });
 
     it('returns services ordered by full match then individual word match', () => {
@@ -310,9 +247,7 @@ context('Support a resident page', () => {
 
   describe('Add to summary', () => {
     it('persists checked summaries across different service views', () => {
-      cy.get('[data-testid=category-checkbox]')
-        .eq(1)
-        .click();
+      cy.get('[data-testid=category-checkbox]').eq(1).click();
 
       cy.get('[data-testid="keyword-search"]').clear();
 
@@ -324,13 +259,9 @@ context('Support a resident page', () => {
 
       cy.get('#add-to-summary-checkbox-1').should('be.checked');
 
-      cy.get('[data-testid=category-checkbox]')
-        .eq(2)
-        .click();
+      cy.get('[data-testid=category-checkbox]').eq(2).click();
 
-      cy.get('[data-testid=category-checkbox]')
-        .eq(1)
-        .click();
+      cy.get('[data-testid=category-checkbox]').eq(1).click();
       cy.get('#add-to-summary-checkbox-1').should('be.checked');
       cy.runCheckA11y();
     });
@@ -340,6 +271,31 @@ context('Support a resident page', () => {
     it('Redirects to my view when it is selected from the navigation', () => {
       cy.get('[data-testid=my-view-nav]').click({ force: true });
       cy.url().should('include', '/my-view');
+    });
+  });
+
+  describe('Specific Needs', () => {
+    it('shows correct specific needs checkboxes', () => {
+      cy.visit('/support-a-resident');
+
+      cy.get('[data-testid=search-results-container]').should('not.exist');
+
+      const searchTerm = 'First service';
+      cy.get('[data-testid="keyword-search"]').type(searchTerm);
+
+      cy.get('[data-testid=keyword-search-button]').click();
+
+      cy.get('[data-testid=search-results-container]').should('contain', 'First service');
+
+      cy.get('[data-testid=search-results-container]').should('not.contain', 'mrzombie');
+
+      cy.get('[data-testid=specific-needs-checkbox]').eq(0).click();
+
+      cy.get('[data-testid=keyword-search-button]').click();
+
+      cy.get('[data-testid=search-results-container]').should('contain', 'First service');
+
+      cy.get('[data-testid=search-results-container]').should('contain', 'mrzombie');
     });
   });
 });
