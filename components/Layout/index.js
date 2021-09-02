@@ -3,6 +3,7 @@ import Footer from './Footer';
 import Header from './Header';
 import SkipLink from './SkipLink';
 import PhaseBanner from './PhaseBanner';
+import IEBanner from './IEBanner';
 
 const Layout = ({ children }) => (
   <>
@@ -15,6 +16,7 @@ const Layout = ({ children }) => (
         phase="beta"
         feedbackUrl="https://docs.google.com/forms/d/e/1FAIpQLSdBO_CFqBUVwrmGPy3jsRBj5mXpiEfrkWOUKzDKOpaSeVVtLQ/viewform"
       />
+      <IEBanner />
       <main className="govuk-main-wrapper app-main-class" id="content" role="main">
         {children}
       </main>
