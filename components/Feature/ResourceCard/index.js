@@ -34,6 +34,7 @@ const ResourceCard = ({
   preserveFormData,
   resource,
   wordsToHighlight,
+  index,
   ...others
 }) => {
   const [noteOpen, setNoteOpen] = useState(false);
@@ -195,7 +196,8 @@ const ResourceCard = ({
                       sendDataToAnalytics({
                         action: getUserGroup(referrerData['user-groups']),
                         category: REFERRAL_OPEN,
-                        label: resource.name
+                        label: resource.name,
+                        custom_text: index
                       });
                     }}>
                     Create Referral

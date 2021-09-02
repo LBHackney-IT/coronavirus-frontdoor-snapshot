@@ -95,7 +95,8 @@ const Services = ({
       action: getUserGroup(referrerData['user-groups']),
       category: SHOW_MORE_RESULTS,
       label: resultsTitle,
-      value: filteredResources.resources.length
+      value: filteredResources.resources.length,
+      custom_text: selectedCategories.join('|')
     });
   };
 
@@ -136,7 +137,8 @@ const Services = ({
       action: getUserGroup(referrerData['user-groups']),
       category: CATEGORY_SEARCH,
       label: searchTerm,
-      value: newFilteredResources.resources.length
+      value: newFilteredResources.resources.length,
+      custom_text: selectedCategories.join('|')
     });
 
     const toHighlight = searchTerm
@@ -155,42 +157,44 @@ const Services = ({
               <h2 className={`govuk-heading-l`}>Personalise</h2>
               <p>All fields are optional.</p>
             </div>
-            <div className="govuk-grid-row govuk-!-margin-bottom-6">
-              <h2 className={`govuk-heading-m`}>Problems faced</h2>
+            <div className={`${styles['personalise-panel']} govuk-grid-row `}>
+              <div className="govuk-!-margin-bottom-6">
+                <h2 className={`govuk-heading-m`}>Problems faced</h2>
 
-              <Categories
-                categorisedResources={categorisedResources}
-                selectedCategories={selectedCategories}
-                setSelectedCategories={setSelectedCategories}
-              />
-            </div>
-            <div className="govuk-grid-row govuk-!-margin-bottom-6">
-              <h2 className={`govuk-heading-m`}>Select all that apply</h2>
+                <Categories
+                  categorisedResources={categorisedResources}
+                  selectedCategories={selectedCategories}
+                  setSelectedCategories={setSelectedCategories}
+                />
+              </div>
+              <div className="govuk-!-margin-bottom-6">
+                <h2 className={`govuk-heading-m`}>Select all that apply</h2>
 
-              <SpecificNeeds
-                selectedSpecificNeeds={selectedSpecificNeeds}
-                setSelectedSpecificNeeds={setSelectedSpecificNeeds}
-              />
-            </div>
-            <div className="govuk-grid-row govuk-!-margin-bottom-6">
-              <h3 className={`govuk-heading-m`}>Additional needs</h3>
-              <label htmlFor="keyword-search">
-                Enter keywords for further needs the resident may have.
-              </label>
-              <input
-                id="keyword-search"
-                data-testid="keyword-search"
-                list="input-tags"
-                type="search"
-                name="search-input"
-                placeholder="e.g. autism, disabilities"
-                className="govuk-input govuk-input--width-30"
-              />
-            </div>
-            <div className="govuk-grid-row">
-              <button type="submit" className="govuk-button" data-testid="keyword-search-button">
-                Suggest services
-              </button>
+                <SpecificNeeds
+                  selectedSpecificNeeds={selectedSpecificNeeds}
+                  setSelectedSpecificNeeds={setSelectedSpecificNeeds}
+                />
+              </div>
+              <div className="govuk-!-margin-bottom-6">
+                <h3 className={`govuk-heading-m`}>Additional needs</h3>
+                <label htmlFor="keyword-search">
+                  Enter keywords for further needs the resident may have.
+                </label>
+                <input
+                  id="keyword-search"
+                  data-testid="keyword-search"
+                  list="input-tags"
+                  type="search"
+                  name="search-input"
+                  placeholder="e.g. autism, disabilities"
+                  className="govuk-input govuk-input--width-30"
+                />
+              </div>
+              <div>
+                <button type="submit" className="govuk-button" data-testid="keyword-search-button">
+                  Suggest services
+                </button>
+              </div>
             </div>
           </form>
         </div>
@@ -253,7 +257,7 @@ const Services = ({
                 )}
               </div>
 
-              {filteredResources.resources.slice(0, 8).map(resource => (
+              {filteredResources.resources.slice(0, 8).map((resource, index) => (
                 <ResourceCard
                   data-testid={`resource-${resource.id}`}
                   resource={resource}
@@ -277,11 +281,12 @@ const Services = ({
                   setPreserveFormData={setPreserveFormData}
                   preserveFormData={preserveFormData}
                   wordsToHighlight={wordsToHighlight}
+                  index={index}
                 />
               ))}
               {showMoreResults && (
                 <div id="show-more-container">
-                  {filteredResources.resources.slice(8).map(resource => (
+                  {filteredResources.resources.slice(8).map((resource, index) => (
                     <ResourceCard
                       data-testid={`resource-${resource.id}`}
                       resource={resource}
@@ -305,6 +310,7 @@ const Services = ({
                       setPreserveFormData={setPreserveFormData}
                       preserveFormData={preserveFormData}
                       wordsToHighlight={wordsToHighlight}
+                      index={index + 8}
                     />
                   ))}
                 </div>
