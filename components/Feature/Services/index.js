@@ -129,7 +129,8 @@ const Services = ({
       action: getUserGroup(referrerData['user-groups']),
       category: CATEGORY_SEARCH,
       label: searchTerm,
-      value: newFilteredResources.resources.length
+      value: newFilteredResources.resources.length,
+      custom_text: selectedCategories.join('|')
     });
 
     const toHighlight = searchTerm
