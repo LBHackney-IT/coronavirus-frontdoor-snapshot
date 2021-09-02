@@ -1,20 +1,28 @@
 const { detect } = require('detect-browser');
-import css from '../../styles/ieBanner.module.scss';
+import css from '../../styles/banners.module.scss';
 
 const IEBanner = () => {
   const browser = detect();
   const isIE = browser.name === 'ie';
-  return (
-    <div hidden={!isIE} className={css['ie-support-warning-banner']}>
-      <p className={css['ie-banner__content']}>
-        <strong id={css['ie-banner__tag']} className={`govuk-tag govuk-phase-banner__content__tag`}>
-          Warning!
-        </strong>
-        <span className="govuk-phase-banner__text">
-          Internet Explorer browser is not supported - some features might not behave as expected.
-        </span>
-      </p>
+
+  return isIE ? (
+    <div
+      id={css['ie-support-warning-banner']}
+      hidden={!isIE}
+      className="govuk-notification-banner"
+      aria-labelledby="govuk-notification-banner-title">
+      <div className="govuk-notification-banner__header">
+        <h2 className="govuk-notification-banner__title" id="govuk-notification-banner-title">
+          Warning
+        </h2>
+      </div>
+      <div className="govuk-notification-banner__content">
+        You may experience difficulties in completing actions on the tool when using Internet
+        Explorer.
+      </div>
     </div>
+  ) : (
+    <></>
   );
 };
 
