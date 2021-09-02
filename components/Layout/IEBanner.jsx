@@ -8,7 +8,6 @@ const IEBanner = () => {
   return isIE ? (
     <div
       id={css['ie-support-warning-banner']}
-      hidden={!isIE}
       className="govuk-notification-banner"
       aria-labelledby="govuk-notification-banner-title">
       <div className="govuk-notification-banner__header">
