@@ -32,7 +32,7 @@ const StatusForm = ({ onSubmitForm, name }) => {
                 <h2 className="govuk-heading-m">Are you able to support this resident?</h2>
               </label>
               <div id="resident-referral-hint" className="govuk-hint">
-                Notification will be sent to the relevant team upon your selection
+                A notification will be sent to the referrer
               </div>
             </div>
             <div className="govuk-radios">
