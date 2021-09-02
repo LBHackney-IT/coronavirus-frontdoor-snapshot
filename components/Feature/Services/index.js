@@ -239,7 +239,7 @@ const Services = ({
                 )}
               </div>
 
-              {filteredResources.resources.slice(0, 8).map(resource => (
+              {filteredResources.resources.slice(0, 8).map((resource, index) => (
                 <ResourceCard
                   data-testid={`resource-${resource.id}`}
                   resource={resource}
@@ -263,11 +263,12 @@ const Services = ({
                   setPreserveFormData={setPreserveFormData}
                   preserveFormData={preserveFormData}
                   wordsToHighlight={wordsToHighlight}
+                  index={index}
                 />
               ))}
               {showMoreResults && (
                 <div id="show-more-container">
-                  {filteredResources.resources.slice(8).map(resource => (
+                  {filteredResources.resources.slice(8).map((resource, index) => (
                     <ResourceCard
                       data-testid={`resource-${resource.id}`}
                       resource={resource}
@@ -291,6 +292,7 @@ const Services = ({
                       setPreserveFormData={setPreserveFormData}
                       preserveFormData={preserveFormData}
                       wordsToHighlight={wordsToHighlight}
+                      index={index + 8}
                     />
                   ))}
                 </div>
