@@ -9,7 +9,8 @@ import {
   filterByCategories,
   getSearchWithWeights,
   getWordsToHighlight,
-  weightByCategories
+  weightByCategories,
+  filterOutExcludedWords
 } from 'lib/utils/search';
 import { CATEGORY_SEARCH, FEEDBACK_SEARCH, SHOW_MORE_RESULTS } from 'lib/utils/constants';
 
@@ -108,19 +109,16 @@ const Services = ({
 
     const filteredByCategory = filterByCategories(selectedCategories, categorisedResources);
 
+    const filteredOutExcludedWords =
+      searchTerm || selectedCategories.length > 0
+        ? filterOutExcludedWords(searchTerm, filteredByCategory, selectedSpecificNeeds)
+        : filteredByCategory;
+
     let searchResults;
     if (!searchTerm) {
-      searchResults = getSearchWithWeights(
-        selectedCategories.join(' '),
-        filteredByCategory,
-        selectedSpecificNeeds
-      );
+      searchResults = getSearchWithWeights(selectedCategories.join(' '), filteredOutExcludedWords);
     } else {
-      searchResults = getSearchWithWeights(
-        searchTerm,
-        filteredByCategory,
-        selectedSpecificNeeds
-      ).map(item => {
+      searchResults = getSearchWithWeights(searchTerm, filteredOutExcludedWords).map(item => {
         item.resources = item.resources.filter(x => x.weight > 0);
         return item;
       });

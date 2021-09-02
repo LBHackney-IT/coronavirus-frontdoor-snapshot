@@ -7,7 +7,7 @@
         {
           "id": 1,
           "name": "First category",
-          "description": "Help with first category from the first service mrzombie"
+          "description": "Help with first category from the first service"
         },
         {
           "id": 2,
@@ -101,6 +101,64 @@
       "referral": {
         "email": "",
         "website": "http://referal.form2.com"
+      },
+      "status": "active"
+    },
+    {
+      "id": 3,
+      "name": "Third service",
+      "categories": [
+        {
+          "id": 1,
+          "name": "First category",
+          "description": "Help with first category from the third service mrzombie"
+        },
+        {
+          "id": 2,
+          "name": "Second category",
+          "description": "Help with second category from the third service"
+        }
+      ],
+      "contact": {
+        "email": "help@gmail.com",
+        "telephone": "07000 0000000",
+        "website": "https://www.sample.org.uk"
+      },
+      "demographic": [
+        {
+          "id": 10,
+          "name": "Housing advice",
+          "vocabulary": "demographic"
+        },
+        {
+          "id": 19,
+          "name": "Cultural",
+          "vocabulary": "demographic"
+        }
+      ],
+      "description": "Third service description",
+      "locations": [
+        {
+          "latitude": 51.5466359,
+          "longitude": -0.0821704,
+          "uprn": "10093625362",
+          "address1": "404 error",
+          "address2": "not",
+          "city": "found",
+          "stateProvince": "",
+          "postalCode": "A1 2BC",
+          "country": "United Kingdom",
+          "distance": null
+        }
+      ],
+      "organization": {
+        "id": 1,
+        "name": "Organization Name",
+        "status": "published"
+      },
+      "referral": {
+        "email": "",
+        "website": "referal.form.com"
       },
       "status": "active"
     }

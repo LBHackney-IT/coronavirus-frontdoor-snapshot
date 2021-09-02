@@ -57,7 +57,7 @@ context('Support a resident page', () => {
 
       cy.get('[data-testid=keyword-search-button]').click();
 
-      cy.get('[data-testid=resource-card-header]').should('have.length', 5);
+      cy.get('[data-testid=resource-card-header]').should('have.length', 6);
 
       cy.get('[data-testid=resource-1]').eq(0).should('contain', 'First service');
 
@@ -181,7 +181,7 @@ context('Support a resident page', () => {
 
       cy.get('[data-testid="search-results-container"]')
         .find('[data-testid="resource-card-header"]')
-        .should('have.length', 7);
+        .should('have.length', 8);
 
       cy.get('[data-testid="show-more-button"]').should('not.exist');
 
@@ -280,12 +280,12 @@ context('Support a resident page', () => {
 
       cy.get('[data-testid=search-results-container]').should('not.exist');
 
-      const searchTerm = 'First service';
+      const searchTerm = 'Third service';
       cy.get('[data-testid="keyword-search"]').type(searchTerm);
 
       cy.get('[data-testid=keyword-search-button]').click();
 
-      cy.get('[data-testid=search-results-container]').should('contain', 'First service');
+      cy.get('[data-testid=search-results-container]').should('contain', 'Third service');
 
       cy.get('[data-testid=search-results-container]').should('not.contain', 'mrzombie');
 
@@ -293,7 +293,43 @@ context('Support a resident page', () => {
 
       cy.get('[data-testid=keyword-search-button]').click();
 
-      cy.get('[data-testid=search-results-container]').should('contain', 'First service');
+      cy.get('[data-testid=search-results-container]').should('contain', 'Third service');
+
+      cy.get('[data-testid=search-results-container]').should('contain', 'mrzombie');
+    });
+
+    it('shows excluded service when nothing is selected', () => {
+      cy.get('[data-testid=specific-needs-checkbox]').eq(0).click();
+
+      cy.get('[data-testid="keyword-search"]').clear();
+
+      cy.get('[data-testid=keyword-search-button]').click();
+
+      cy.get('[data-testid=search-results-container]').should('contain', 'Third service');
+
+      cy.get('[data-testid=search-results-container]').should('contain', 'mrzombie');
+    });
+
+    it('excludes service when category is selected', () => {
+      cy.get('[data-testid=category-checkbox]').eq(0).click();
+
+      cy.get('[data-testid=category-checkbox]').eq(1).click();
+
+      cy.get('[data-testid=keyword-search-button]').click();
+
+      cy.get('[data-testid=search-results-container]').should('contain', 'Third service');
+
+      cy.get('[data-testid=search-results-container]').should('not.contain', 'mrzombie');
+    });
+
+    it('shows the excluded service when the specific need checkbox is checked', () => {
+      cy.get('[data-testid=specific-needs-label]').eq(0).should('contain', 'Rick Grimes');
+
+      cy.get('[data-testid=specific-needs-checkbox]').eq(0).click();
+
+      cy.get('[data-testid=keyword-search-button]').click();
+
+      cy.get('[data-testid=search-results-container]').should('contain', 'Third service');
 
       cy.get('[data-testid=search-results-container]').should('contain', 'mrzombie');
     });
