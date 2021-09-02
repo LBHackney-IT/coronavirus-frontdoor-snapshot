@@ -92,7 +92,8 @@ const Services = ({
       action: getUserGroup(referrerData['user-groups']),
       category: SHOW_MORE_RESULTS,
       label: resultsTitle,
-      value: filteredResources.resources.length
+      value: filteredResources.resources.length,
+      custom_text: selectedCategories.join('|')
     });
   };
 
