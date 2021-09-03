@@ -333,5 +333,15 @@ context('Support a resident page', () => {
 
       cy.get('[data-testid=search-results-container]').should('contain', 'mrzombie');
     });
+
+    it('only shows the excluded service when only the specific need checkbox is checked', () => {
+      cy.get('[data-testid=category-checkbox]').eq(0).click();
+      cy.get('[data-testid=category-checkbox]').eq(1).click();
+      cy.get('[data-testid=keyword-search-button]').click();
+
+      cy.get('[data-testid=search-results-container]').should('contain', 'Third service');
+      cy.get('[data-testid=search-results-container]').should('contain', 'mrzombie');
+      cy.get('[data-testid=resource-card-header]').should('have.length', 1);
+    });
   });
 });

@@ -10,7 +10,8 @@ import {
   getSearchWithWeights,
   getWordsToHighlight,
   weightByCategories,
-  filterOutExcludedWords
+  filterOutExcludedWords,
+  getSpecificNeedsWords
 } from 'lib/utils/search';
 import { CATEGORY_SEARCH, FEEDBACK_SEARCH, SHOW_MORE_RESULTS } from 'lib/utils/constants';
 
@@ -69,6 +70,7 @@ const Services = ({
   };
 
   const flattenSearchResults = searchResults => {
+    if (!searchResults) return { resources: [] };
     const resources = searchResults.map(category => category.resources).flat();
     let res = [];
     resources.forEach(resource => {
@@ -114,12 +116,22 @@ const Services = ({
       searchTerm || selectedCategories.length > 0
         ? filterOutExcludedWords(searchTerm, filteredByCategory, selectedSpecificNeeds)
         : filteredByCategory;
+    const specificNeedsWords = getSpecificNeedsWords(selectedSpecificNeeds);
 
     let searchResults;
-    if (!searchTerm) {
-      searchResults = getSearchWithWeights(selectedCategories.join(' '), filteredOutExcludedWords);
-    } else {
+    if (searchTerm) {
       searchResults = getSearchWithWeights(searchTerm, filteredOutExcludedWords).map(item => {
+        item.resources = item.resources.filter(x => x.weight > 0);
+        return item;
+      });
+    } else {
+      searchResults = getSearchWithWeights(selectedCategories.join(' '), filteredOutExcludedWords);
+    }
+    if (selectedSpecificNeeds.length > 0 && selectedCategories.length <= 0) {
+      searchResults = getSearchWithWeights(
+        specificNeedsWords.join(' '),
+        filteredOutExcludedWords
+      ).map(item => {
         item.resources = item.resources.filter(x => x.weight > 0);
         return item;
       });
@@ -143,7 +155,9 @@ const Services = ({
 
     const toHighlight = searchTerm
       ? getWordsToHighlight(searchTerm)
-      : selectedCategories.map(x => getWordsToHighlight(x)).flat();
+      : selectedCategories.length > 0
+      ? selectedCategories.map(x => getWordsToHighlight(x)).flat()
+      : specificNeedsWords.map(x => getWordsToHighlight(x)).flat();
     setWordsToHighlight(toHighlight);
     window.location.href = '#search-results-divider';
   };
