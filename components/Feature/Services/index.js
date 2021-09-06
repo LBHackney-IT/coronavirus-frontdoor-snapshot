@@ -5,14 +5,7 @@ import Details from 'components/Form/Details';
 import SpecificNeeds from './SpecificNeeds';
 import styles from './index.module.scss';
 import { sendDataToAnalytics, getUserGroup } from 'lib/utils/analytics';
-import {
-  filterByCategories,
-  getSearchWithWeights,
-  getWordsToHighlight,
-  weightByCategories,
-  filterOutExcludedWords,
-  getSpecificNeedsWords
-} from 'lib/utils/search';
+import { getWordsToHighlight, getSpecificNeedsWords, getSearchResult } from 'lib/utils/search';
 import { CATEGORY_SEARCH, FEEDBACK_SEARCH, SHOW_MORE_RESULTS } from 'lib/utils/constants';
 
 const Services = ({
@@ -69,28 +62,6 @@ const Services = ({
     }
   };
 
-  const flattenSearchResults = searchResults => {
-    if (!searchResults) return { resources: [] };
-    const resources = searchResults.map(category => category.resources).flat();
-    let res = [];
-    resources.forEach(resource => {
-      let index = res.findIndex(x => x.id === resource.id);
-      if (index > -1) {
-        res[index].description = [res[index].description, resource.description]
-          .filter(x => x?.trim())
-          .map(x => x.trim())
-          .join('. ');
-        res[index].weight = Math.floor((res[index].weight + resource.weight) / 2);
-      } else {
-        res.push(resource);
-      }
-    });
-    return {
-      name: `${res.length} ${res.length == 1 ? 'result' : 'results'}`,
-      resources: res
-    };
-  };
-
   const showAllClicked = e => {
     setShowMoreResults(!showMoreResults);
     sendDataToAnalytics({
@@ -110,39 +81,14 @@ const Services = ({
     const searchTerm = e.target['search-input'].value;
     setResultsTitle(searchTerm);
 
-    const filteredByCategory = filterByCategories(selectedCategories, categorisedResources);
+    const newFilteredResources = getSearchResult({
+      categorisedResources,
+      searchTerm,
+      selectedCategories,
+      selectedSpecificNeeds
+    });
 
-    const filteredOutExcludedWords =
-      searchTerm || selectedCategories.length > 0
-        ? filterOutExcludedWords(searchTerm, filteredByCategory, selectedSpecificNeeds)
-        : filteredByCategory;
     const specificNeedsWords = getSpecificNeedsWords(selectedSpecificNeeds);
-
-    let searchResults;
-    if (searchTerm) {
-      searchResults = getSearchWithWeights(searchTerm, filteredOutExcludedWords).map(item => {
-        item.resources = item.resources.filter(x => x.weight > 0);
-        return item;
-      });
-    } else {
-      searchResults = getSearchWithWeights(selectedCategories.join(' '), filteredOutExcludedWords);
-    }
-    if (selectedSpecificNeeds.length > 0 && selectedCategories.length <= 0) {
-      searchResults = getSearchWithWeights(
-        specificNeedsWords.join(' '),
-        filteredOutExcludedWords
-      ).map(item => {
-        item.resources = item.resources.filter(x => x.weight > 0);
-        return item;
-      });
-    }
-
-    if (selectedCategories.length > 0) {
-      searchResults = weightByCategories(selectedCategories, searchResults);
-    }
-
-    let newFilteredResources = flattenSearchResults(searchResults);
-    newFilteredResources.resources.sort((a, b) => b.weight - a.weight);
 
     setFilteredResources(newFilteredResources);
     sendDataToAnalytics({
