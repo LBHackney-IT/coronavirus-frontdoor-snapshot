@@ -78,6 +78,8 @@ describe('Referral form', () => {
   });
 
   it('Persists referral information across different referral fields', () => {
+    cy.visit('/support-a-resident');
+
     cy.get('[data-testid=category-checkbox]')
       .eq(0)
       .click();
