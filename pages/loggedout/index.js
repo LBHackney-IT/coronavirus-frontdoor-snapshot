@@ -16,8 +16,7 @@ export default function LoggedOut() {
         </a>
       </p>
       <p className="govuk-body">
-        If you're already signed in, contact Chris Caden to get access
-        (christopher.caden@hackney.gov.uk).
+        If you're already signed in, contact Zoe Tyndall to get access (zoe.tyndall@hackney.gov.uk).
       </p>
     </>
   );
