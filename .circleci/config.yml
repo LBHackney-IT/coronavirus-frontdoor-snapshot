@@ -45,7 +45,7 @@ jobs:
       - checkout
       - run:
           name: Install dependencies
-          command: CYPRESS_CACHE_FOLDER=~/repo/cypress_cache yarn install --frozen-lockfile
+          command: WIREMOCK_VERSION=2.27.2 CYPRESS_CACHE_FOLDER=~/repo/cypress_cache yarn install --frozen-lockfile
       - run:
           name: Build the application
           command: |
